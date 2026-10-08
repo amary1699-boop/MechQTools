@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Control Plan Tool - Free Quality Control Plan | MechQTools</title>
+
+<meta name="description"
+content="Free Control Plan Tool for manufacturing and quality engineering. Create process control plans with characteristics, specifications, measurement methods, frequency and reaction plans.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.section-title span{
+    color:#e53232;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#777;
+    max-width:800px;
+    margin:0 auto 35px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:30px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+.card h2{
+    color:#e53232;
+    margin-bottom:20px;
+    font-size:22px;
+}
+
+.card h3{
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d8d8d8;
+    border-radius:6px;
+    font-size:15px;
+    font-family:Arial, Helvetica, sans-serif;
+    outline:none;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#e53232;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+}
+
+.btn{
+    padding:13px 25px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92727;
+}
+
+.btn-secondary{
+    background:#fff;
+    color:#e53232;
+    border:1px solid #e53232;
+}
+
+.btn-secondary:hover{
+    background:#fff4f4;
+}
+
+.btn-danger{
+    background:#fff;
+    color:#d00000;
+    border:1px solid #d00000;
+}
+
+.btn-small{
+    padding:8px 12px;
+    font-size:13px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    background:#fff;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:9px;
+    text-align:left;
+    vertical-align:top;
+}
+
+th{
+    background:#f5f5f5;
+    font-weight:600;
+}
+
+.control-table{
+    min-width:1600px;
+}
+
+.control-table th{
+    text-align:center;
+    white-space:nowrap;
+}
+
+.control-table td input,
+.control-table td textarea,
+.control-table td select{
+    width:100%;
+    border:1px solid #ddd;
+    padding:8px;
+    border-radius:4px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+    background:#fff;
+}
+
+.control-table td textarea{
+    min-height:65px;
+    resize:vertical;
+}
+
+/* SUMMARY */
+
+.result-box{
+    background:#f7f8fa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.result-item{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:15px;
+}
+
+.result-item strong{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.result-item span{
+    font-size:20px;
+    font-weight:700;
+    color:#e53232;
+}
+
+/* INFO */
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-card{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+}
+
+.info-card h3{
+    color:#e53232;
+    margin-bottom:10px;
+}
+
+.info-card ul,
+.info-card ol{
+    padding-left:20px;
+}
+
+.info-card li{
+    margin-bottom:7px;
+}
+
+/* PRINT */
+
+.print-report{
+    display:none;
+}
+
+/* FOOTER */
+
+footer{
+    background:#151515;
+    color:#fff;
+    margin-top:30px;
+}
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-logo{
+    color:#e53232;
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-text{
+    color:#aaa;
+    font-size:14px;
+    max-width:450px;
+}
+
+.footer-column a{
+    display:block;
+    color:#aaa;
+    text-decoration:none;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.footer-column a:hover{
+    color:#fff;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    text-align:center;
+    padding:18px;
+    color:#888;
+    font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .section{
+        padding:40px 15px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .form-grid,
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+}
+
+
+/* =====================================================
+   PROPER HTML PRINT REPORT
+===================================================== */
+
+@media print{
+
+    @page{
+        size:A4 landscape;
+        margin:8mm;
+    }
+
+    body{
+        background:#fff;
+        color:#000;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:9px;
+    }
+
+    header,
+    footer,
+    .no-print,
+    .section-title,
+    .section-subtitle{
+        display:none !important;
+    }
+
+    .section{
+        max-width:none;
+        padding:0;
+        margin:0;
+    }
+
+    .print-report{
+        display:block !important;
+        width:100%;
+    }
+
+    .print-title{
+        text-align:center;
+        font-size:20px;
+        font-weight:700;
+        margin-bottom:12px;
+    }
+
+    .print-basic-table{
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:14px;
+    }
+
+    .print-basic-table th,
+    .print-basic-table td{
+        border:1px solid #000;
+        padding:6px;
+        vertical-align:top;
+    }
+
+    .print-basic-table th{
+        background:#eee;
+        font-weight:700;
+        width:14%;
+    }
+
+    .print-section-title{
+        font-size:13px;
+        font-weight:700;
+        margin:12px 0 6px;
+    }
+
+    .print-main-table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        font-size:7.5px;
+    }
+
+    .print-main-table th,
+    .print-main-table td{
+        border:1px solid #000;
+        padding:4px;
+        vertical-align:top;
+        word-wrap:break-word;
+        overflow-wrap:break-word;
+    }
+
+    .print-main-table th{
+        background:#eee;
+        text-align:center;
+        font-weight:700;
+    }
+
+    .print-main-table th:nth-child(1){
+        width:3%;
+    }
+
+    .print-main-table th:nth-child(2){
+        width:10%;
+    }
+
+    .print-main-table th:nth-child(3){
+        width:11%;
+    }
+
+    .print-main-table th:nth-child(4){
+        width:13%;
+    }
+
+    .print-main-table th:nth-child(5){
+        width:12%;
+    }
+
+    .print-main-table th:nth-child(6){
+        width:10%;
+    }
+
+    .print-main-table th:nth-child(7){
+        width:9%;
+    }
+
+    .print-main-table th:nth-child(8){
+        width:12%;
+    }
+
+    .print-main-table th:nth-child(9){
+        width:11%;
+    }
+
+    .print-main-table th:nth-child(10){
+        width:9%;
+    }
+
+    .print-main-table th:nth-child(11){
+        width:10%;
+    }
+
+    .print-main-table th:nth-child(12){
+        width:10%;
+    }
+
+    .print-summary{
+        margin-top:14px;
+    }
+
+    .print-summary table{
+        width:100%;
+        border-collapse:collapse;
+    }
+
+    .print-summary th,
+    .print-summary td{
+        border:1px solid #000;
+        padding:6px;
+        vertical-align:top;
+    }
+
+    .print-summary th{
+        background:#eee;
+    }
+
+    .print-note{
+        margin-top:12px;
+        border:1px solid #000;
+        padding:8px;
+        line-height:1.5;
+    }
+
+    thead{
+        display:table-header-group;
+    }
+
+    tr{
+        page-break-inside:avoid;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="navbar">
+
+        <a href="index.html" class="logo">
+            MechQTools
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="index.html#mechanical">Mechanical</a>
+            </li>
+
+            <li>
+                <a href="index.html#quality">Quality</a>
+            </li>
+
+            <li>
+                <a href="index.html#templates">Templates</a>
+            </li>
+
+            <li>
+                <a href="index.html#guides">Guides</a>
+            </li>
+
+            <li>
+                <a href="index.html#about">About</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<section class="section">
+
+
+    <h1 class="section-title">
+        Control <span>Plan Tool</span>
+    </h1>
+
+    <p class="section-subtitle">
+        Create a practical manufacturing Control Plan for defining
+        process controls, product characteristics, measurement methods,
+        inspection frequency and reaction plans.
+    </p>
+
+
+    <!-- BASIC INFORMATION -->
+
+    <div class="card no-print">
+
+        <h2>Control Plan Basic Information</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Control Plan Title</label>
+
+                <input
+                type="text"
+                id="planTitle"
+                placeholder="Example: Sheet Metal Bending Control Plan">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Control Plan No.</label>
+
+                <input
+                type="text"
+                id="planNo"
+                placeholder="Example: CP-001">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Part / Process No.</label>
+
+                <input
+                type="text"
+                id="partNo"
+                placeholder="Enter part or process number">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Part / Process Name</label>
+
+                <input
+                type="text"
+                id="partName"
+                placeholder="Enter part or process name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Prepared By</label>
+
+                <input
+                type="text"
+                id="preparedBy"
+                placeholder="Enter name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Date</label>
+
+                <input
+                type="date"
+                id="planDate">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Customer</label>
+
+                <input
+                type="text"
+                id="customer"
+                placeholder="Enter customer name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Revision</label>
+
+                <input
+                type="text"
+                id="revision"
+                placeholder="Example: Rev. 00">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTROL PLAN TABLE -->
+
+    <div class="card no-print">
+
+        <h2>Control Plan</h2>
+
+        <p style="color:#666;margin-bottom:15px;">
+
+            Define each process operation, important characteristics,
+            specification, measurement method, sample size, frequency,
+            control method and reaction plan.
+
+        </p>
+
+
+        <div class="table-wrap">
+
+            <table class="control-table" id="controlTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Sr.</th>
+
+                        <th>Process / Operation</th>
+
+                        <th>Machine / Equipment</th>
+
+                        <th>Product / Process Characteristic</th>
+
+                        <th>Specification / Tolerance</th>
+
+                        <th>Measurement Method / Gauge</th>
+
+                        <th>Sample Size</th>
+
+                        <th>Frequency</th>
+
+                        <th>Control Method</th>
+
+                        <th>Reaction Plan</th>
+
+                        <th>Responsible</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="controlBody"></tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button
+            class="btn btn-secondary"
+            onclick="addRow()">
+
+                + Add Control Row
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTION BUTTONS -->
+
+    <div class="card no-print">
+
+        <div class="buttons">
+
+            <button
+            class="btn btn-primary"
+            onclick="generateControlPlan()">
+
+                Generate Control Plan
+
+            </button>
+
+
+            <button
+            class="btn btn-secondary"
+            onclick="loadExample()">
+
+                Load Example
+
+            </button>
+
+
+            <button
+            class="btn btn-secondary"
+            onclick="printReport()">
+
+                Print Report
+
+            </button>
+
+
+            <button
+            class="btn btn-danger"
+            onclick="clearAll()">
+
+                Clear All
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="card no-print">
+
+        <h2>Control Plan Summary</h2>
+
+        <div class="result-grid">
+
+            <div class="result-item">
+
+                <strong>Total Control Rows</strong>
+
+                <span id="totalRows">0</span>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <strong>Process Operations</strong>
+
+                <span id="processCount">0</span>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <strong>Measurement Methods</strong>
+
+                <span id="measurementCount">0</span>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <strong>Reaction Plans</strong>
+
+                <span id="reactionCount">0</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="result-box">
+
+            <strong>Summary:</strong>
+
+            <p
+            id="summaryText"
+            style="margin-top:8px;color:#555;">
+
+                Add control plan rows and generate the summary.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPLANATION -->
+
+    <div class="card no-print">
+
+        <h2>What is a Control Plan?</h2>
+
+        <p>
+
+            A Control Plan is a structured document used in manufacturing
+            to define how a process and its important characteristics will
+            be controlled and inspected.
+
+        </p>
+
+
+        <h3>Purpose of Control Plan</h3>
+
+        <ul style="padding-left:20px;">
+
+            <li>
+                Define process and product characteristics.
+            </li>
+
+            <li>
+                Define specifications and tolerances.
+            </li>
+
+            <li>
+                Define measurement methods and gauges.
+            </li>
+
+            <li>
+                Define inspection sample size and frequency.
+            </li>
+
+            <li>
+                Define how the process will be controlled.
+            </li>
+
+            <li>
+                Define what action should be taken when a result is not acceptable.
+            </li>
+
+        </ul>
+
+
+        <h3>Important Control Plan Columns</h3>
+
+        <ul style="padding-left:20px;">
+
+            <li>
+                <strong>Process / Operation:</strong>
+                The manufacturing step being controlled.
+            </li>
+
+            <li>
+                <strong>Machine / Equipment:</strong>
+                Machine, tool, fixture or equipment used.
+            </li>
+
+            <li>
+                <strong>Characteristic:</strong>
+                The product or process feature that must be controlled.
+            </li>
+
+            <li>
+                <strong>Specification / Tolerance:</strong>
+                Required drawing or process requirement.
+            </li>
+
+            <li>
+                <strong>Measurement Method:</strong>
+                Instrument or method used for inspection.
+            </li>
+
+            <li>
+                <strong>Sample Size:</strong>
+                Number of parts or measurements to inspect.
+            </li>
+
+            <li>
+                <strong>Frequency:</strong>
+                How often the inspection is performed.
+            </li>
+
+            <li>
+                <strong>Control Method:</strong>
+                Method used to keep the process under control.
+            </li>
+
+            <li>
+                <strong>Reaction Plan:</strong>
+                Action to take when a result is out of specification.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- HOW TO USE -->
+
+    <div class="card no-print">
+
+        <h2>How to Use Control Plan</h2>
+
+        <ol style="padding-left:20px;">
+
+            <li>
+                Enter basic part and control plan information.
+            </li>
+
+            <li>
+                Add one row for each important process operation.
+            </li>
+
+            <li>
+                Enter the machine or equipment used.
+            </li>
+
+            <li>
+                Enter important product or process characteristics.
+            </li>
+
+            <li>
+                Enter the drawing specification or tolerance.
+            </li>
+
+            <li>
+                Select the appropriate measurement method or gauge.
+            </li>
+
+            <li>
+                Define sample size and inspection frequency.
+            </li>
+
+            <li>
+                Define the control method.
+            </li>
+
+            <li>
+                Define the reaction plan for an abnormal result.
+            </li>
+
+            <li>
+                Generate and print the Control Plan Report.
+            </li>
+
+        </ol>
+
+    </div>
+
+
+    <!-- EXAMPLE -->
+
+    <div class="card no-print">
+
+        <h2>Control Plan Example</h2>
+
+        <h3>Process</h3>
+
+        <p>
+            Sheet Metal Bending
+        </p>
+
+        <h3>Characteristic</h3>
+
+        <p>
+            Bend Angle
+        </p>
+
+        <h3>Specification</h3>
+
+        <p>
+            90° ± 1°
+        </p>
+
+        <h3>Measurement Method</h3>
+
+        <p>
+            Digital Angle Gauge
+        </p>
+
+        <h3>Sample Size</h3>
+
+        <p>
+            1st piece + 1 piece every 2 hours
+        </p>
+
+        <h3>Control Method</h3>
+
+        <p>
+            Verify machine setup and inspect bend angle according to
+            the defined inspection frequency.
+        </p>
+
+        <h3>Reaction Plan</h3>
+
+        <p>
+            Stop process, segregate suspect parts, correct machine setting,
+            reinspect affected parts and restart production after verification.
+        </p>
+
+    </div>
+
+
+    <!-- IMPORTANT POINTS -->
+
+    <div class="card no-print">
+
+        <h2>Important Points</h2>
+
+        <ul style="padding-left:20px;">
+
+            <li>
+                Control Plan should be based on actual process risks and
+                important product/process characteristics.
+            </li>
+
+            <li>
+                Specifications should match the applicable drawing,
+                customer requirement or process standard.
+            </li>
+
+            <li>
+                Measurement equipment should be suitable for the required
+                accuracy and properly controlled.
+            </li>
+
+            <li>
+                Inspection frequency should be appropriate to the process risk.
+            </li>
+
+            <li>
+                Reaction plans should clearly define what happens when
+                the process goes out of control or specification.
+            </li>
+
+            <li>
+                Control Plan should be reviewed and updated when the process,
+                drawing, equipment or control method changes.
+            </li>
+
+            <li>
+                Control Plan is commonly linked with Process Flow,
+                PFMEA and other quality planning documents.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- ================= PRINT REPORT ================= -->
+
+    <div class="print-report" id="printReport">
+
+        <div class="print-title">
+            CONTROL PLAN REPORT
+        </div>
+
+
+        <!-- BASIC INFORMATION -->
+
+        <table class="print-basic-table">
+
+            <tr>
+
+                <th>Control Plan Title</th>
+                <td id="pPlanTitle"></td>
+
+                <th>Control Plan No.</th>
+                <td id="pPlanNo"></td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Part / Process No.</th>
+                <td id="pPartNo"></td>
+
+                <th>Part / Process Name</th>
+                <td id="pPartName"></td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Prepared By</th>
+                <td id="pPreparedBy"></td>
+
+                <th>Date</th>
+                <td id="pPlanDate"></td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Customer</th>
+                <td id="pCustomer"></td>
+
+                <th>Revision</th>
+                <td id="pRevision"></td>
+
+            </tr>
+
+        </table>
+
+
+        <!-- MAIN TABLE -->
+
+        <div class="print-section-title">
+            CONTROL PLAN
+        </div>
+
+
+        <table class="print-main-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Sr.</th>
+
+                    <th>Process / Operation</th>
+
+                    <th>Machine / Equipment</th>
+
+                    <th>Product / Process Characteristic</th>
+
+                    <th>Specification / Tolerance</th>
+
+                    <th>Measurement Method / Gauge</th>
+
+                    <th>Sample Size</th>
+
+                    <th>Frequency</th>
+
+                    <th>Control Method</th>
+
+                    <th>Reaction Plan</th>
+
+                    <th>Responsible</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="printControlBody"></tbody>
+
+        </table>
+
+
+        <!-- SUMMARY -->
+
+        <div class="print-summary">
+
+            <div class="print-section-title">
+                CONTROL PLAN SUMMARY
+            </div>
+
+
+            <table>
+
+                <tr>
+
+                    <th>Total Control Rows</th>
+
+                    <td id="pTotalRows"></td>
+
+                    <th>Process Operations</th>
+
+                    <td id="pProcessCount"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>Measurement Methods</th>
+
+                    <td id="pMeasurementCount"></td>
+
+                    <th>Reaction Plans</th>
+
+                    <td id="pReactionCount"></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <div class="print-note">
+
+            <strong>Important Note:</strong>
+
+            The Control Plan should be reviewed against the applicable
+            drawing, customer requirements, Process Flow and PFMEA.
+            Measurement methods, inspection frequency and reaction plans
+            should be suitable for the actual manufacturing process.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div>
+
+            <div class="footer-logo">
+                MechQTools
+            </div>
+
+            <p class="footer-text">
+
+                Engineering & Quality Tools for Professionals.
+                Free practical tools for Mechanical Engineering,
+                Quality Engineering and Manufacturing professionals.
+
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Quick Links</h4>
+
+            <a href="index.html#mechanical-tools">
+                Mechanical Tools
+            </a>
+
+            <a href="index.html#quality-tools">
+                Quality Tools
+            </a>
+
+            <a href="index.html#templates">
+                Templates
+            </a>
+
+            <a href="index.html#guides-section">
+                Guides
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Quality Tools</h4>
+
+            <a href="inspection-calculator.html">
+                Inspection Calculator
+            </a>
+
+            <a href="cp-cpk-calculator.html">
+                Cp & Cpk Calculator
+            </a>
+
+            <a href="8d-problem-solving-tool.html">
+                8D Problem Solving
+            </a>
+
+            <a href="fmea-tool.html">
+                PFMEA Tool
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 MechQTools. All Rights Reserved.
+
+    </div>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   CONTROL PLAN ROW MANAGEMENT
+===================================================== */
+
+let rowCounter = 0;
+
+
+/* ADD ROW */
+
+function addRow(
+    process = "",
+    machine = "",
+    characteristic = "",
+    specification = "",
+    measurement = "",
+    sample = "",
+    frequency = "",
+    control = "",
+    reaction = "",
+    responsible = ""
+){
+
+    rowCounter++;
+
+    const tbody =
+        document.getElementById("controlBody");
+
+    const row =
+        document.createElement("tr");
+
+
+    row.innerHTML = `
+
+        <td class="sr-cell">
+            ${rowCounter}
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="process-input"
+            placeholder="Process / Operation">${escapeHtml(process)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="machine-input"
+            placeholder="Machine / Equipment">${escapeHtml(machine)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="characteristic-input"
+            placeholder="Product / Process Characteristic">${escapeHtml(characteristic)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="specification-input"
+            placeholder="Specification / Tolerance">${escapeHtml(specification)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="measurement-input"
+            placeholder="Measurement Method / Gauge">${escapeHtml(measurement)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <input
+            type="text"
+            class="sample-input"
+            placeholder="Example: 1 pc">
+
+        </td>
+
+
+        <td>
+
+            <input
+            type="text"
+            class="frequency-input"
+            placeholder="Example: Every 2 hr">
+
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="control-input"
+            placeholder="Control Method">${escapeHtml(control)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <textarea
+            class="reaction-input"
+            placeholder="Reaction Plan">${escapeHtml(reaction)}</textarea>
+
+        </td>
+
+
+        <td>
+
+            <input
+            type="text"
+            class="responsible-input"
+            placeholder="Quality / Production">
+
+        </td>
+
+
+        <td>
+
+            <button
+            class="btn btn-danger btn-small"
+            onclick="deleteRow(this)">
+
+                Delete
+
+            </button>
+
+        </td>
+
+    `;
+
+
+    tbody.appendChild(row);
+
+
+    row.querySelector(".sample-input").value =
+        sample;
+
+    row.querySelector(".frequency-input").value =
+        frequency;
+
+    row.querySelector(".responsible-input").value =
+        responsible;
+
+
+    updateSerialNumbers();
+
+}
+
+
+/* DELETE ROW */
+
+function deleteRow(button){
+
+    const row =
+        button.closest("tr");
+
+    row.remove();
+
+    updateSerialNumbers();
+
+}
+
+
+/* SERIAL NUMBERS */
+
+function updateSerialNumbers(){
+
+    const rows =
+        document.querySelectorAll("#controlBody tr");
+
+    rows.forEach((row,index)=>{
+
+        row.querySelector(".sr-cell").textContent =
+            index + 1;
+
+    });
+
+    rowCounter = rows.length;
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   GENERATE SUMMARY
+===================================================== */
+
+function generateControlPlan(){
+
+    const rows =
+        document.querySelectorAll("#controlBody tr");
+
+
+    let processCount = 0;
+    let measurementCount = 0;
+    let reactionCount = 0;
+
+
+    rows.forEach(row=>{
+
+        const process =
+            row.querySelector(".process-input").value.trim();
+
+        const measurement =
+            row.querySelector(".measurement-input").value.trim();
+
+        const reaction =
+            row.querySelector(".reaction-input").value.trim();
+
+
+        if(process !== ""){
+            processCount++;
+        }
+
+        if(measurement !== ""){
+            measurementCount++;
+        }
+
+        if(reaction !== ""){
+            reactionCount++;
+        }
+
+    });
+
+
+    document.getElementById("totalRows").textContent =
+        rows.length;
+
+    document.getElementById("processCount").textContent =
+        processCount;
+
+    document.getElementById("measurementCount").textContent =
+        measurementCount;
+
+    document.getElementById("reactionCount").textContent =
+        reactionCount;
+
+
+    let message;
+
+
+    if(rows.length === 0){
+
+        message =
+            "Please add at least one Control Plan row.";
+
+    }
+    else{
+
+        message =
+            "Control Plan contains " +
+            rows.length +
+            " control row(s). Review the specifications, measurement methods, frequency and reaction plans before finalizing the report.";
+
+    }
+
+
+    document.getElementById("summaryText").textContent =
+        message;
+
+}
+
+
+/* =====================================================
+   LOAD EXAMPLE
+===================================================== */
+
+function loadExample(){
+
+    document.getElementById("planTitle").value =
+        "Sheet Metal Bending Control Plan";
+
+    document.getElementById("planNo").value =
+        "CP-001";
+
+    document.getElementById("partNo").value =
+        "SM-1001";
+
+    document.getElementById("partName").value =
+        "Sheet Metal Bracket";
+
+    document.getElementById("preparedBy").value =
+        "Quality Engineer";
+
+    document.getElementById("planDate").value =
+        new Date().toISOString().split("T")[0];
+
+    document.getElementById("customer").value =
+        "Customer";
+
+    document.getElementById("revision").value =
+        "Rev. 00";
+
+
+    document.getElementById("controlBody").innerHTML = "";
+
+    rowCounter = 0;
+
+
+    addRow(
+        "Incoming Material Inspection",
+        "Inspection Area",
+        "Material Thickness",
+        "2.0 ± 0.10 mm",
+        "Digital Micrometer",
+        "3 pcs",
+        "Each Lot",
+        "Verify material thickness against specification.",
+        "Hold lot if out of specification. Inform supplier and Quality.",
+        "Quality"
+    );
+
+
+    addRow(
+        "Laser Cutting",
+        "Laser Cutting Machine",
+        "Part Length / Width",
+        "As per Drawing",
+        "Vernier Caliper",
+        "1st pc + 1 pc every 2 hr",
+        "Every 2 hr",
+        "Verify program, setup and dimensions.",
+        "Stop process, segregate suspect parts, correct setting and reinspect.",
+        "Production / Quality"
+    );
+
+
+    addRow(
+        "Sheet Metal Bending",
+        "Press Brake",
+        "Bend Angle",
+        "90° ± 1°",
+        "Digital Angle Gauge",
+        "1st pc + 1 pc every 2 hr",
+        "Every 2 hr",
+        "Verify machine setup and bend angle.",
+        "Stop process, correct machine setting, segregate and reinspect parts.",
+        "Production / Quality"
+    );
+
+
+    addRow(
+        "Final Inspection",
+        "Inspection Area",
+        "Final Dimensions",
+        "As per Drawing",
+        "Vernier / Micrometer",
+        "5 pcs",
+        "Each Lot",
+        "Final dimensional inspection.",
+        "Hold lot and perform 100% inspection if required.",
+        "Quality"
+    );
+
+
+    generateControlPlan();
+
+}
+
+
+/* =====================================================
+   BUILD PRINT REPORT
+===================================================== */
+
+function buildPrintReport(){
+
+    /* BASIC INFORMATION */
+
+    document.getElementById("pPlanTitle").textContent =
+        document.getElementById("planTitle").value || "-";
+
+    document.getElementById("pPlanNo").textContent =
+        document.getElementById("planNo").value || "-";
+
+    document.getElementById("pPartNo").textContent =
+        document.getElementById("partNo").value || "-";
+
+    document.getElementById("pPartName").textContent =
+        document.getElementById("partName").value || "-";
+
+    document.getElementById("pPreparedBy").textContent =
+        document.getElementById("preparedBy").value || "-";
+
+    document.getElementById("pPlanDate").textContent =
+        document.getElementById("planDate").value || "-";
+
+    document.getElementById("pCustomer").textContent =
+        document.getElementById("customer").value || "-";
+
+    document.getElementById("pRevision").textContent =
+        document.getElementById("revision").value || "-";
+
+
+    /* SUMMARY */
+
+    generateControlPlan();
+
+
+    document.getElementById("pTotalRows").textContent =
+        document.getElementById("totalRows").textContent;
+
+    document.getElementById("pProcessCount").textContent =
+        document.getElementById("processCount").textContent;
+
+    document.getElementById("pMeasurementCount").textContent =
+        document.getElementById("measurementCount").textContent;
+
+    document.getElementById("pReactionCount").textContent =
+        document.getElementById("reactionCount").textContent;
+
+
+    /* PRINT TABLE */
+
+    const printBody =
+        document.getElementById("printControlBody");
+
+    printBody.innerHTML = "";
+
+
+    const rows =
+        document.querySelectorAll("#controlBody tr");
+
+
+    if(rows.length === 0){
+
+        const tr =
+            document.createElement("tr");
+
+        tr.innerHTML = `
+
+            <td>1</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>No control row entered.</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+            <td>-</td>
+
+        `;
+
+        printBody.appendChild(tr);
+
+        return;
+
+    }
+
+
+    rows.forEach((row,index)=>{
+
+        const process =
+            row.querySelector(".process-input").value;
+
+        const machine =
+            row.querySelector(".machine-input").value;
+
+        const characteristic =
+            row.querySelector(".characteristic-input").value;
+
+        const specification =
+            row.querySelector(".specification-input").value;
+
+        const measurement =
+            row.querySelector(".measurement-input").value;
+
+        const sample =
+            row.querySelector(".sample-input").value;
+
+        const frequency =
+            row.querySelector(".frequency-input").value;
+
+        const control =
+            row.querySelector(".control-input").value;
+
+        const reaction =
+            row.querySelector(".reaction-input").value;
+
+        const responsible =
+            row.querySelector(".responsible-input").value;
+
+
+        const tr =
+            document.createElement("tr");
+
+
+        const values = [
+
+            index + 1,
+            process,
+            machine,
+            characteristic,
+            specification,
+            measurement,
+            sample,
+            frequency,
+            control,
+            reaction,
+            responsible
+
+        ];
+
+
+        values.forEach(value=>{
+
+            const td =
+                document.createElement("td");
+
+            td.textContent =
+                value || "-";
+
+            tr.appendChild(td);
+
+        });
+
+
+        printBody.appendChild(tr);
+
+    });
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+function printReport(){
+
+    buildPrintReport();
+
+    window.print();
+
+}
+
+
+/* =====================================================
+   CLEAR ALL
+===================================================== */
+
+function clearAll(){
+
+    if(!confirm(
+        "Are you sure you want to clear all data?"
+    )){
+        return;
+    }
+
+
+    document.querySelectorAll(
+        "input, textarea, select"
+    ).forEach(element=>{
+
+        element.value = "";
+
+    });
+
+
+    document.getElementById("controlBody").innerHTML = "";
+
+    rowCounter = 0;
+
+
+    document.getElementById("totalRows").textContent =
+        "0";
+
+    document.getElementById("processCount").textContent =
+        "0";
+
+    document.getElementById("measurementCount").textContent =
+        "0";
+
+    document.getElementById("reactionCount").textContent =
+        "0";
+
+    document.getElementById("summaryText").textContent =
+        "Add control plan rows and generate the summary.";
+
+}
+
+
+/* =====================================================
+   INITIAL ROW
+===================================================== */
+
+addRow();
+
+</script>
+
+</body>
+</html>
