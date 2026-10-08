@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Material Weight Calculator - Free Engineering Tool | MechQTools</title>
+
+<meta name="description"
+content="Free Material Weight Calculator for sheet metal, plates, round bars and pipes. Calculate material weight for Mild Steel, Stainless Steel, Aluminium, Copper and Brass.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fa;
+    color:#222;
+}
+
+header{
+    background:#e53232;
+    color:white;
+    padding:18px 20px;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-size:15px;
+}
+
+.container{
+    max-width:950px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
+h1{
+    margin-top:0;
+    font-size:30px;
+}
+
+.subtitle{
+    color:#666;
+    line-height:1.6;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:25px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select,
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+    background:white;
+}
+
+select:focus,
+input:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    background:#e53232;
+    color:white;
+    border:none;
+    border-radius:7px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#c92525;
+}
+
+.result{
+    margin-top:25px;
+    background:#fff4f4;
+    border:1px solid #ffd1d1;
+    border-radius:8px;
+    padding:20px;
+}
+
+.result h2{
+    margin-top:0;
+    color:#e53232;
+}
+
+.weight{
+    font-size:34px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.formula{
+    background:#f7f7f7;
+    padding:15px;
+    border-radius:7px;
+    margin-top:18px;
+    line-height:1.7;
+}
+
+.info{
+    margin-top:30px;
+    line-height:1.7;
+}
+
+.hidden{
+    display:none;
+}
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#666;
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    nav a{
+        margin-left:0;
+        margin-right:15px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+MechQTools
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="index.html#mechanical">Mechanical Tools</a>
+<a href="index.html#quality">Quality Tools</a>
+</nav>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="card">
+
+<h1>Material Weight Calculator</h1>
+
+<p class="subtitle">
+Calculate the approximate weight of sheet metal, plates, round bars
+and pipes using material density and dimensions.
+</p>
+
+
+<div class="form-grid">
+
+<div>
+
+<label for="material">
+Material
+</label>
+
+<select id="material">
+
+<option value="7850">
+Mild Steel / Carbon Steel
+</option>
+
+<option value="7850">
+GI / Galvanized Steel
+</option>
+
+<option value="8000">
+Stainless Steel
+</option>
+
+<option value="2700">
+Aluminium
+</option>
+
+<option value="8960">
+Copper
+</option>
+
+<option value="8500">
+Brass
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label for="shape">
+Shape
+</label>
+
+<select id="shape" onchange="changeShape()">
+
+<option value="sheet">
+Sheet / Plate
+</option>
+
+<option value="round">
+Round Bar
+</option>
+
+<option value="pipe">
+Pipe / Tube
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<!-- SHEET / PLATE -->
+
+<div id="sheetInputs">
+
+<div class="form-grid">
+
+<div>
+
+<label for="sheetLength">
+Length — mm
+</label>
+
+<input
+type="number"
+id="sheetLength"
+step="any"
+min="0"
+placeholder="Example: 1000"
+>
+
+</div>
+
+
+<div>
+
+<label for="sheetWidth">
+Width — mm
+</label>
+
+<input
+type="number"
+id="sheetWidth"
+step="any"
+min="0"
+placeholder="Example: 500"
+>
+
+</div>
+
+
+<div>
+
+<label for="sheetThickness">
+Thickness — mm
+</label>
+
+<input
+type="number"
+id="sheetThickness"
+step="any"
+min="0"
+placeholder="Example: 2"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ROUND BAR -->
+
+<div id="roundInputs" class="hidden">
+
+<div class="form-grid">
+
+<div>
+
+<label for="roundDiameter">
+Diameter — mm
+</label>
+
+<input
+type="number"
+id="roundDiameter"
+step="any"
+min="0"
+placeholder="Example: 20"
+>
+
+</div>
+
+
+<div>
+
+<label for="roundLength">
+Length — mm
+</label>
+
+<input
+type="number"
+id="roundLength"
+step="any"
+min="0"
+placeholder="Example: 1000"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PIPE -->
+
+<div id="pipeInputs" class="hidden">
+
+<div class="form-grid">
+
+<div>
+
+<label for="outerDiameter">
+Outer Diameter — mm
+</label>
+
+<input
+type="number"
+id="outerDiameter"
+step="any"
+min="0"
+placeholder="Example: 50"
+>
+
+</div>
+
+
+<div>
+
+<label for="innerDiameter">
+Inner Diameter — mm
+</label>
+
+<input
+type="number"
+id="innerDiameter"
+step="any"
+min="0"
+placeholder="Example: 40"
+>
+
+</div>
+
+
+<div>
+
+<label for="pipeLength">
+Length — mm
+</label>
+
+<input
+type="number"
+id="pipeLength"
+step="any"
+min="0"
+placeholder="Example: 1000"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button onclick="calculateWeight()">
+Calculate Material Weight
+</button>
+
+
+<div class="result" id="result" style="display:none;">
+
+<h2>Result</h2>
+
+<div class="weight" id="weightResult">
+0.000 kg
+</div>
+
+<div id="details"></div>
+
+<div class="formula" id="formula"></div>
+
+</div>
+
+
+<div class="info">
+
+<h2>How to use</h2>
+
+<ol>
+
+<li>Select the material.</li>
+
+<li>Select the shape.</li>
+
+<li>Enter the required dimensions.</li>
+
+<li>Click <strong>Calculate Material Weight</strong>.</li>
+
+</ol>
+
+<p>
+The calculator uses material density to calculate the approximate
+weight. Actual weight can vary slightly due to material composition,
+tolerances and manufacturing conditions.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+function changeShape(){
+
+    const shape =
+        document.getElementById("shape").value;
+
+    document.getElementById("sheetInputs")
+        .classList.add("hidden");
+
+    document.getElementById("roundInputs")
+        .classList.add("hidden");
+
+    document.getElementById("pipeInputs")
+        .classList.add("hidden");
+
+
+    if(shape === "sheet"){
+
+        document.getElementById("sheetInputs")
+            .classList.remove("hidden");
+
+    }
+
+    if(shape === "round"){
+
+        document.getElementById("roundInputs")
+            .classList.remove("hidden");
+
+    }
+
+    if(shape === "pipe"){
+
+        document.getElementById("pipeInputs")
+            .classList.remove("hidden");
+
+    }
+
+}
+
+
+function calculateWeight(){
+
+    const density =
+        parseFloat(
+            document.getElementById("material").value
+        );
+
+    const shape =
+        document.getElementById("shape").value;
+
+    let volumeMM3 = 0;
+
+    let formulaText = "";
+
+
+    /* SHEET */
+
+    if(shape === "sheet"){
+
+        const L =
+            parseFloat(
+                document.getElementById("sheetLength").value
+            );
+
+        const W =
+            parseFloat(
+                document.getElementById("sheetWidth").value
+            );
+
+        const T =
+            parseFloat(
+                document.getElementById("sheetThickness").value
+            );
+
+
+        if(
+            isNaN(L) ||
+            isNaN(W) ||
+            isNaN(T)
+        ){
+
+            alert("Please enter all sheet dimensions.");
+
+            return;
+        }
+
+
+        if(L <= 0 || W <= 0 || T <= 0){
+
+            alert("All dimensions must be greater than 0.");
+
+            return;
+        }
+
+
+        volumeMM3 = L * W * T;
+
+        formulaText =
+            `
+            <strong>Formula:</strong><br>
+            Weight = Length × Width × Thickness × Density
+            <br><br>
+            ${L} × ${W} × ${T} × ${density}
+            `;
+
+    }
+
+
+    /* ROUND BAR */
+
+    if(shape === "round"){
+
+        const D =
+            parseFloat(
+                document.getElementById("roundDiameter").value
+            );
+
+        const L =
+            parseFloat(
+                document.getElementById("roundLength").value
+            );
+
+
+        if(
+            isNaN(D) ||
+            isNaN(L)
+        ){
+
+            alert("Please enter diameter and length.");
+
+            return;
+        }
+
+
+        if(D <= 0 || L <= 0){
+
+            alert("All dimensions must be greater than 0.");
+
+            return;
+        }
+
+
+        volumeMM3 =
+            Math.PI *
+            (D * D / 4) *
+            L;
+
+
+        formulaText =
+            `
+            <strong>Formula:</strong><br>
+            Volume = π × D² / 4 × Length
+            <br><br>
+            Weight = Volume × Density
+            `;
+
+    }
+
+
+    /* PIPE */
+
+    if(shape === "pipe"){
+
+        const OD =
+            parseFloat(
+                document.getElementById("outerDiameter").value
+            );
+
+        const ID =
+            parseFloat(
+                document.getElementById("innerDiameter").value
+            );
+
+        const L =
+            parseFloat(
+                document.getElementById("pipeLength").value
+            );
+
+
+        if(
+            isNaN(OD) ||
+            isNaN(ID) ||
+            isNaN(L)
+        ){
+
+            alert("Please enter all pipe dimensions.");
+
+            return;
+        }
+
+
+        if(OD <= 0 || ID < 0 || L <= 0){
+
+            alert("Please enter valid dimensions.");
+
+            return;
+        }
+
+
+        if(ID >= OD){
+
+            alert("Inner Diameter must be smaller than Outer Diameter.");
+
+            return;
+        }
+
+
+        volumeMM3 =
+            Math.PI *
+            ((OD * OD - ID * ID) / 4) *
+            L;
+
+
+        formulaText =
+            `
+            <strong>Formula:</strong><br>
+            Volume = π × (OD² − ID²) / 4 × Length
+            <br><br>
+            Weight = Volume × Density
+            `;
+
+    }
+
+
+    /*
+       Density is kg/m³.
+
+       Volume is currently mm³.
+
+       1 m³ = 1,000,000,000 mm³
+
+       Therefore:
+       Weight kg =
+       Volume mm³ × Density / 1,000,000,000
+    */
+
+    const weight =
+        volumeMM3 *
+        density /
+        1000000000;
+
+
+    document.getElementById("weightResult")
+        .textContent =
+        weight.toFixed(3) + " kg";
+
+
+    document.getElementById("details")
+        .innerHTML =
+        `
+        <strong>Material Density:</strong>
+        ${density} kg/m³
+        <br>
+        <strong>Calculated Volume:</strong>
+        ${volumeMM3.toFixed(2)} mm³
+        `;
+
+
+    document.getElementById("formula")
+        .innerHTML = formulaText;
+
+
+    document.getElementById("result")
+        .style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>
