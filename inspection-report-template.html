@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -397,12 +398,31 @@ footer{
         page-break-inside:avoid;
     }
 
+
+    /* INSPECTION INFORMATION - 3 COLUMNS */
+
+    .info-grid{
+        display:grid !important;
+        grid-template-columns:repeat(3,1fr) !important;
+        gap:10px !important;
+    }
+
+    .form-group{
+        min-width:0;
+    }
+
+    .form-group label{
+        font-size:11px;
+        margin-bottom:3px;
+    }
+
     input,
     textarea,
     select{
         border:none !important;
         padding:2px !important;
         background:#fff !important;
+        font-size:11px !important;
     }
 
     table{
@@ -705,14 +725,16 @@ Action
 <td>
 <input
 type="text"
-placeholder="Length">
+placeholder="Length"
+required>
 
 </td>
 
 <td>
 <input
 type="text"
-placeholder="Drawing Ref.">
+placeholder="Drawing Ref."
+required>
 
 </td>
 
@@ -748,7 +770,7 @@ class="actual">
 
 </td>
 
-<td class="result-cell">
+<td class="result-cell result-pending">
 Pending
 </td>
 
@@ -917,13 +939,15 @@ function addRow(){
         <td>
             <input
             type="text"
-            placeholder="Characteristic">
+            placeholder="Characteristic"
+            required>
         </td>
 
         <td>
             <input
             type="text"
-            placeholder="Drawing Ref.">
+            placeholder="Drawing Ref."
+            required>
         </td>
 
         <td>
@@ -954,7 +978,7 @@ function addRow(){
             class="actual">
         </td>
 
-        <td class="result-cell">
+        <td class="result-cell result-pending">
             Pending
         </td>
 
@@ -1041,6 +1065,12 @@ function updateSerialNumbers(){
 
 function calculateRow(row){
 
+    const characteristicInput =
+    row.cells[1].querySelector("input");
+
+    const specificationInput =
+    row.cells[2].querySelector("input");
+
     const upperInput =
     row.querySelector(".upper");
 
@@ -1052,6 +1082,13 @@ function calculateRow(row){
 
     const resultCell =
     row.querySelector(".result-cell");
+
+
+    const characteristic =
+    characteristicInput.value.trim();
+
+    const specification =
+    specificationInput.value.trim();
 
 
     const upper =
@@ -1074,6 +1111,29 @@ function calculateRow(row){
     "result-cell";
 
 
+    /* REQUIRED TEXT FIELDS */
+
+    if(
+        characteristic === "" ||
+        specification === ""
+    ){
+
+        resultCell.textContent =
+        "Pending";
+
+        resultCell.classList.add(
+            "result-pending"
+        );
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    /* REQUIRED NUMERIC FIELDS */
+
     if(
         isNaN(upper) ||
         isNaN(lower) ||
@@ -1087,10 +1147,14 @@ function calculateRow(row){
             "result-pending"
         );
 
+        updateSummary();
+
         return;
 
     }
 
+
+    /* PASS / FAIL */
 
     if(
         lower <= actual &&
@@ -1136,7 +1200,7 @@ function attachCalculationEvents(){
 
             const inputs =
             row.querySelectorAll(
-                ".upper, .lower, .actual"
+                "input"
             );
 
 
@@ -1299,13 +1363,15 @@ function clearReport(){
         <td>
         <input
         type="text"
-        placeholder="Length">
+        placeholder="Length"
+        required>
         </td>
 
         <td>
         <input
         type="text"
-        placeholder="Drawing Ref.">
+        placeholder="Drawing Ref."
+        required>
         </td>
 
         <td>
@@ -1374,3 +1440,4 @@ updateSummary();
 </body>
 
 </html>
+```
