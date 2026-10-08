@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quality Tools - MechQTools</title>
+
+<meta name="description"
+content="Free quality engineering calculators including defect percentage, rejection percentage, PPM, FPY, rework percentage and scrap percentage.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+
+/* PAGE */
+
+.container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.page-title h1{
+    font-size:32px;
+    margin-bottom:8px;
+    color:#e53232;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+
+/* GRID */
+
+.tools-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+
+/* CARD */
+
+.tool-card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.04);
+}
+
+.tool-card h2{
+    margin-top:0;
+    margin-bottom:8px;
+    font-size:21px;
+}
+
+.description{
+    color:#666;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+
+/* INPUT */
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.input-group input{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.input-group input:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+
+/* BUTTON */
+
+.btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92727;
+}
+
+
+/* RESULT */
+
+.result{
+    margin-top:18px;
+    padding:15px;
+    background:#fafafa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+}
+
+.result-label{
+    color:#666;
+    font-size:13px;
+}
+
+.result-value{
+    color:#e53232;
+    font-size:25px;
+    font-weight:700;
+    margin:3px 0;
+}
+
+.formula{
+    font-size:13px;
+    color:#666;
+}
+
+
+/* CLEAR */
+
+.clear-section{
+    text-align:center;
+    margin-top:30px;
+}
+
+.btn-clear{
+    background:#eeeeee;
+    color:#333;
+    border:none;
+    padding:12px 25px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.btn-clear:hover{
+    background:#dddddd;
+}
+
+
+/* FOOTER */
+
+footer{
+    margin-top:60px;
+    background:#ffffff;
+    border-top:1px solid #e5e5e5;
+    padding:25px 20px;
+    text-align:center;
+    color:#666;
+    font-size:14px;
+}
+
+footer a{
+    color:#e53232;
+    text-decoration:none;
+}
+
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:12px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .tools-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+}
+
+
+/* PRINT */
+
+@media print{
+
+    header,
+    .clear-section,
+    button{
+        display:none;
+    }
+
+    body{
+        background:#fff;
+    }
+
+    .container{
+        max-width:none;
+    }
+
+    .tool-card{
+        box-shadow:none;
+        break-inside:avoid;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<nav class="nav-links">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="index.html#mechanical">
+Mechanical
+</a>
+
+<a href="index.html#quality">
+Quality
+</a>
+
+<a href="index.html#templates">
+Templates
+</a>
+
+<a href="index.html#guides">
+Guides
+</a>
+
+<a href="index.html#about">
+About
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+<div class="page-title">
+
+<h1>
+Quality Tools
+</h1>
+
+<p>
+Practical Quality Engineering Calculators
+</p>
+
+</div>
+
+
+
+<div class="tools-grid">
+
+
+
+<!-- DEFECT % -->
+
+<div class="tool-card">
+
+<h2>
+Defect Percentage
+</h2>
+
+<p class="description">
+Calculate the percentage of defective parts from total inspected parts.
+</p>
+
+<div class="input-group">
+
+<label>
+Total Inspected Parts
+</label>
+
+<input
+type="number"
+id="defectTotal"
+min="0"
+placeholder="Example: 1000">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Defective Parts
+</label>
+
+<input
+type="number"
+id="defectiveParts"
+min="0"
+placeholder="Example: 25">
+
+</div>
+
+
+<button
+class="btn btn-primary"
+onclick="calculateDefect()">
+Calculate
+</button>
+
+
+<div class="result">
+
+<div class="result-label">
+Defect Percentage
+</div>
+
+<div
+class="result-value"
+id="defectResult">
+0.000 %
+</div>
+
+<div class="formula">
+Formula: Defective Parts ÷ Total Inspected × 100
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- REJECTION % -->
+
+<div class="tool-card">
+
+<h2>
+Rejection Percentage
+</h2>
+
+<p class="description">
+Calculate the percentage of rejected parts from total production.
+</p>
+
+<div class="input-group">
+
+<label>
+Total Production
+</label>
+
+<input
+type="number"
+id="rejectionTotal"
+min="0"
+placeholder="Example: 5000">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Rejected Parts
+</label>
+
+<input
+type="number"
+id="rejectedParts"
+min="0"
+placeholder="Example: 50">
+
+</div>
+
+
+<button
+class="btn btn-primary"
+onclick="calculateRejection()">
+Calculate
+</button>
+
+
+<div class="result">
+
+<div class="result-label">
+Rejection Percentage
+</div>
+
+<div
+class="result-value"
+id="rejectionResult">
+0.000 %
+</div>
+
+<div class="formula">
+Formula: Rejected Parts ÷ Total Production × 100
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PPM -->
+
+<div class="tool-card">
+
+<h2>
+PPM Calculator
+</h2>
+
+<p class="description">
+Calculate defective parts per million.
+</p>
+
+<div class="input-group">
+
+<label>
+Total Parts
+</label>
+
+<input
+type="number"
+id="ppmTotal"
+min="0"
+placeholder="Example: 100000">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Defective Parts
+</label>
+
+<input
+type="number"
+id="ppmDefective"
+min="0"
+placeholder="Example: 250">
+
+</div>
+
+
+<button
+class="btn btn-primary"
+onclick="calculatePPM()">
+Calculate
+</button>
+
+
+<div class="result">
+
+<div class="result-label">
+PPM
+</div>
+
+<div
+class="result-value"
+id="ppmResult">
+0
+</div>
+
+<div class="formula">
+Formula: Defective Parts ÷ Total Parts × 1,000,000
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- FPY -->
+
+<div class="tool-card">
+
+<h2>
+First Pass Yield (FPY)
+</h2>
+
+<p class="description">
+Calculate the percentage of units that pass the process without rework.
+</p>
+
+<div class="input-group">
+
+<label>
+Total Units Processed
+</label>
+
+<input
+type="number"
+id="fpyTotal"
+min="0"
+placeholder="Example: 1000">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Units Passed First Time
+</label>
+
+<input
+type="number"
+id="fpyPassed"
+min="0"
+placeholder="Example: 950">
+
+</div>
+
+
+<button
+class="btn btn-primary"
+onclick="calculateFPY()">
+Calculate
+</button>
+
+
+<div class="result">
+
+<div class="result-label">
+First Pass Yield
+</div>
+
+<div
+class="result-value"
+id="fpyResult">
+0.000 %
+</div>
+
+<div class="formula">
+Formula: First Pass Units ÷ Total Units × 100
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- REWORK -->
+
+<div class="tool-card">
+
+<h2>
+Rework Percentage
+</h2>
+
+<p class="description">
+Calculate the percentage of parts requiring rework.
+</p>
+
+<div class="input-group">
+
+<label>
+Total Produced
+</label>
+
+<input
+type="number"
+id="reworkTotal"
+min="0"
+placeholder="Example: 2000">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Reworked Parts
+</label>
+
+<input
+type="number"
+id="reworkedParts"
+min="0"
+placeholder="Example: 40">
+
+</div>
+
+
+<button
+class="btn btn-primary"
+onclick="calculateRework()">
+Calculate
+</button>
+
+
+<div class="result">
+
+<div class="result-label">
+Rework Percentage
+</div>
+
+<div
+class="result-value"
+id="reworkResult">
+0.000 %
+</div>
+
+<div class="formula">
+Formula: Reworked Parts ÷ Total Produced × 100
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- SCRAP -->
+
+<div class="tool-card">
+
+<h2>
+Scrap Percentage
+</h2>
+
+<p class="description">
+Calculate the percentage of production parts that are scrapped.
+</p>
+
+<div class="input-group">
+
+<label>
+Total Produced
+</label>
+
+<input
+type="number"
+id="scrapTotal"
+min="0"
+placeholder="Example: 3000">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Scrapped Parts
+</label>
+
+<input
+type="number"
+id="scrappedParts"
+min="0"
+placeholder="Example: 30">
+
+</div>
+
+
+<button
+class="btn btn-primary"
+onclick="calculateScrap()">
+Calculate
+</button>
+
+
+<div class="result">
+
+<div class="result-label">
+Scrap Percentage
+</div>
+
+<div
+class="result-value"
+id="scrapResult">
+0.000 %
+</div>
+
+<div class="formula">
+Formula: Scrapped Parts ÷ Total Produced × 100
+</div>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+<!-- CLEAR -->
+
+<div class="clear-section">
+
+<button
+class="btn-clear"
+onclick="clearAll()">
+Clear All
+</button>
+
+</div>
+
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+<p>
+Engineering &amp; Quality Tools for Professionals.
+</p>
+
+<a href="index.html">
+Back to Home
+</a>
+
+</footer>
+
+
+
+<script>
+
+
+/* COMMON VALIDATION */
+
+function validNumbers(total, part){
+
+    if(
+        isNaN(total) ||
+        isNaN(part) ||
+        total <= 0 ||
+        part < 0
+    ){
+
+        alert(
+            "Please enter valid values."
+        );
+
+        return false;
+
+    }
+
+
+    if(part > total){
+
+        alert(
+            "Parts cannot be greater than total."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* DEFECT % */
+
+function calculateDefect(){
+
+    const total =
+    parseFloat(
+        document.getElementById(
+            "defectTotal"
+        ).value
+    );
+
+    const defective =
+    parseFloat(
+        document.getElementById(
+            "defectiveParts"
+        ).value
+    );
+
+
+    if(
+        !validNumbers(
+            total,
+            defective
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+    (defective / total) * 100;
+
+
+    document.getElementById(
+        "defectResult"
+    ).textContent =
+    result.toFixed(3) + " %";
+
+}
+
+
+/* REJECTION % */
+
+function calculateRejection(){
+
+    const total =
+    parseFloat(
+        document.getElementById(
+            "rejectionTotal"
+        ).value
+    );
+
+    const rejected =
+    parseFloat(
+        document.getElementById(
+            "rejectedParts"
+        ).value
+    );
+
+
+    if(
+        !validNumbers(
+            total,
+            rejected
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+    (rejected / total) * 100;
+
+
+    document.getElementById(
+        "rejectionResult"
+    ).textContent =
+    result.toFixed(3) + " %";
+
+}
+
+
+/* PPM */
+
+function calculatePPM(){
+
+    const total =
+    parseFloat(
+        document.getElementById(
+            "ppmTotal"
+        ).value
+    );
+
+    const defective =
+    parseFloat(
+        document.getElementById(
+            "ppmDefective"
+        ).value
+    );
+
+
+    if(
+        !validNumbers(
+            total,
+            defective
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+    (defective / total) * 1000000;
+
+
+    document.getElementById(
+        "ppmResult"
+    ).textContent =
+    result.toFixed(0);
+
+}
+
+
+/* FPY */
+
+function calculateFPY(){
+
+    const total =
+    parseFloat(
+        document.getElementById(
+            "fpyTotal"
+        ).value
+    );
+
+    const passed =
+    parseFloat(
+        document.getElementById(
+            "fpyPassed"
+        ).value
+    );
+
+
+    if(
+        !validNumbers(
+            total,
+            passed
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+    (passed / total) * 100;
+
+
+    document.getElementById(
+        "fpyResult"
+    ).textContent =
+    result.toFixed(3) + " %";
+
+}
+
+
+/* REWORK */
+
+function calculateRework(){
+
+    const total =
+    parseFloat(
+        document.getElementById(
+            "reworkTotal"
+        ).value
+    );
+
+    const reworked =
+    parseFloat(
+        document.getElementById(
+            "reworkedParts"
+        ).value
+    );
+
+
+    if(
+        !validNumbers(
+            total,
+            reworked
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+    (reworked / total) * 100;
+
+
+    document.getElementById(
+        "reworkResult"
+    ).textContent =
+    result.toFixed(3) + " %";
+
+}
+
+
+/* SCRAP */
+
+function calculateScrap(){
+
+    const total =
+    parseFloat(
+        document.getElementById(
+            "scrapTotal"
+        ).value
+    );
+
+    const scrapped =
+    parseFloat(
+        document.getElementById(
+            "scrappedParts"
+        ).value
+    );
+
+
+    if(
+        !validNumbers(
+            total,
+            scrapped
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+    (scrapped / total) * 100;
+
+
+    document.getElementById(
+        "scrapResult"
+    ).textContent =
+    result.toFixed(3) + " %";
+
+}
+
+
+/* CLEAR ALL */
+
+function clearAll(){
+
+    const inputs =
+    document.querySelectorAll(
+        "input"
+    );
+
+
+    inputs.forEach(function(input){
+
+        input.value = "";
+
+    });
+
+
+    document.getElementById(
+        "defectResult"
+    ).textContent =
+    "0.000 %";
+
+
+    document.getElementById(
+        "rejectionResult"
+    ).textContent =
+    "0.000 %";
+
+
+    document.getElementById(
+        "ppmResult"
+    ).textContent =
+    "0";
+
+
+    document.getElementById(
+        "fpyResult"
+    ).textContent =
+    "0.000 %";
+
+
+    document.getElementById(
+        "reworkResult"
+    ).textContent =
+    "0.000 %";
+
+
+    document.getElementById(
+        "scrapResult"
+    ).textContent =
+    "0.000 %";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
