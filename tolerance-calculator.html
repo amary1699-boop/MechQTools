@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tolerance Calculator - Free Engineering Tool | MechQTools</title>
+
+<meta name="description"
+content="Free Engineering Tolerance Calculator. Calculate upper limit, lower limit, total tolerance and deviation from basic size. Useful for mechanical engineering and quality inspection.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fa;
+    color:#222;
+}
+
+header{
+    background:#e53232;
+    color:white;
+    padding:18px 20px;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-size:15px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
+h1{
+    margin-top:0;
+    font-size:30px;
+}
+
+.subtitle{
+    color:#666;
+    line-height:1.6;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:25px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+    background:white;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    background:#e53232;
+    color:white;
+    border:none;
+    border-radius:7px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#c92525;
+}
+
+.result{
+    margin-top:25px;
+    background:#fff4f4;
+    border:1px solid #ffd1d1;
+    border-radius:8px;
+    padding:20px;
+}
+
+.result h2{
+    margin-top:0;
+    color:#e53232;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.result-item{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+}
+
+.result-label{
+    color:#666;
+    font-size:14px;
+}
+
+.result-value{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:6px;
+}
+
+.formula{
+    background:#f7f7f7;
+    padding:15px;
+    border-radius:7px;
+    margin-top:20px;
+    line-height:1.8;
+}
+
+.info{
+    margin-top:30px;
+    line-height:1.7;
+}
+
+.note{
+    background:#fff8e8;
+    border-left:4px solid #f0a000;
+    padding:15px;
+    margin-top:20px;
+    line-height:1.6;
+}
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#666;
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    nav a{
+        margin-left:0;
+        margin-right:15px;
+    }
+
+    .form-grid,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+MechQTools
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="index.html#mechanical">Mechanical Tools</a>
+<a href="index.html#quality">Quality Tools</a>
+</nav>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="card">
+
+<h1>Tolerance Calculator</h1>
+
+<p class="subtitle">
+Calculate upper limit, lower limit, total tolerance and deviations
+from the basic size for mechanical engineering and inspection.
+</p>
+
+
+<div class="form-grid">
+
+<div>
+
+<label for="basicSize">
+Basic Size — mm
+</label>
+
+<input
+type="number"
+id="basicSize"
+step="any"
+placeholder="Example: 50"
+>
+
+</div>
+
+
+<div>
+
+<label for="upperDeviation">
+Upper Deviation — mm
+</label>
+
+<input
+type="number"
+id="upperDeviation"
+step="any"
+placeholder="Example: 0.020"
+>
+
+</div>
+
+
+<div>
+
+<label for="lowerDeviation">
+Lower Deviation — mm
+</label>
+
+<input
+type="number"
+id="lowerDeviation"
+step="any"
+placeholder="Example: -0.010"
+>
+
+</div>
+
+</div>
+
+
+<button onclick="calculateTolerance()">
+Calculate Tolerance
+</button>
+
+
+<div class="result" id="result" style="display:none;">
+
+<h2>Calculation Result</h2>
+
+
+<div class="result-grid">
+
+<div class="result-item">
+
+<div class="result-label">
+Upper Limit
+</div>
+
+<div class="result-value" id="upperLimit">
+0.000 mm
+</div>
+
+</div>
+
+
+<div class="result-item">
+
+<div class="result-label">
+Lower Limit
+</div>
+
+<div class="result-value" id="lowerLimit">
+0.000 mm
+</div>
+
+</div>
+
+
+<div class="result-item">
+
+<div class="result-label">
+Total Tolerance
+</div>
+
+<div class="result-value" id="totalTolerance">
+0.000 mm
+</div>
+
+</div>
+
+
+<div class="result-item">
+
+<div class="result-label">
+Tolerance Zone
+</div>
+
+<div class="result-value" id="toleranceZone">
+0.000 mm
+</div>
+
+</div>
+
+</div>
+
+
+<div id="details" style="margin-top:20px;"></div>
+
+
+<div class="formula">
+
+<strong>Formulas:</strong>
+
+<br><br>
+
+Upper Limit = Basic Size + Upper Deviation
+
+<br>
+
+Lower Limit = Basic Size + Lower Deviation
+
+<br>
+
+Total Tolerance = Upper Limit − Lower Limit
+
+</div>
+
+</div>
+
+
+<div class="info">
+
+<h2>How to use</h2>
+
+<ol>
+
+<li>Enter the Basic Size.</li>
+
+<li>Enter the Upper Deviation.</li>
+
+<li>Enter the Lower Deviation.</li>
+
+<li>Click <strong>Calculate Tolerance</strong>.</li>
+
+</ol>
+
+
+<h3>Example</h3>
+
+<p>
+
+Basic Size = <strong>50 mm</strong><br>
+
+Upper Deviation = <strong>+0.020 mm</strong><br>
+
+Lower Deviation = <strong>-0.010 mm</strong>
+
+</p>
+
+<p>
+
+Upper Limit = <strong>50.020 mm</strong><br>
+
+Lower Limit = <strong>49.990 mm</strong><br>
+
+Total Tolerance = <strong>0.030 mm</strong>
+
+</p>
+
+
+<div class="note">
+
+<strong>Important:</strong><br>
+
+Enter deviations in millimetres. For example,
+enter <strong>0.020</strong> for +0.020 mm and
+<strong>-0.010</strong> for -0.010 mm.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+function calculateTolerance(){
+
+    const basicSize =
+        parseFloat(
+            document.getElementById("basicSize").value
+        );
+
+    const upperDeviation =
+        parseFloat(
+            document.getElementById("upperDeviation").value
+        );
+
+    const lowerDeviation =
+        parseFloat(
+            document.getElementById("lowerDeviation").value
+        );
+
+
+    if(
+        isNaN(basicSize) ||
+        isNaN(upperDeviation) ||
+        isNaN(lowerDeviation)
+    ){
+
+        alert("Please enter all values.");
+
+        return;
+    }
+
+
+    if(basicSize <= 0){
+
+        alert("Basic Size must be greater than 0.");
+
+        return;
+    }
+
+
+    if(upperDeviation < lowerDeviation){
+
+        alert(
+            "Upper Deviation must be greater than or equal to Lower Deviation."
+        );
+
+        return;
+    }
+
+
+    const upperLimit =
+        basicSize + upperDeviation;
+
+
+    const lowerLimit =
+        basicSize + lowerDeviation;
+
+
+    const totalTolerance =
+        upperLimit - lowerLimit;
+
+
+    document.getElementById("upperLimit")
+        .textContent =
+        upperLimit.toFixed(3) + " mm";
+
+
+    document.getElementById("lowerLimit")
+        .textContent =
+        lowerLimit.toFixed(3) + " mm";
+
+
+    document.getElementById("totalTolerance")
+        .textContent =
+        totalTolerance.toFixed(3) + " mm";
+
+
+    document.getElementById("toleranceZone")
+        .textContent =
+        totalTolerance.toFixed(3) + " mm";
+
+
+    document.getElementById("details")
+        .innerHTML =
+        `
+        <strong>Basic Size:</strong>
+        ${basicSize} mm
+        <br>
+
+        <strong>Upper Deviation:</strong>
+        ${upperDeviation >= 0 ? "+" : ""}
+        ${upperDeviation} mm
+
+        <br>
+
+        <strong>Lower Deviation:</strong>
+        ${lowerDeviation >= 0 ? "+" : ""}
+        ${lowerDeviation} mm
+        `;
+
+
+    document.getElementById("result")
+        .style.display = "block";
+
+}
+
+</script>
+
+</body>
+
+</html>
