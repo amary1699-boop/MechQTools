@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pareto Analysis Tool - MechQTools</title>
+
+<meta name="description"
+content="Free Pareto Analysis Tool for Quality Engineers. Analyze defects, calculate defect percentage and cumulative percentage, and identify major quality problems using the 80/20 principle.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+.container{
+    max-width:1100px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:32px;
+    margin-bottom:8px;
+    color:#e53232;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+.card{
+    background:#ffffff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.card h2{
+    margin-top:0;
+    color:#333;
+}
+
+.input-row{
+    display:grid;
+    grid-template-columns:1fr 180px auto;
+    gap:12px;
+    align-items:end;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#e53232;
+}
+
+.add-btn{
+    margin:0;
+    padding:12px 18px;
+    background:#e53232;
+    color:#fff;
+    border:none;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.add-btn:hover{
+    background:#c92525;
+}
+
+.defect-list{
+    margin-top:25px;
+}
+
+.defect-item{
+    display:grid;
+    grid-template-columns:1fr 120px auto;
+    gap:10px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.defect-item input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.delete-btn{
+    padding:9px 13px;
+    border:none;
+    border-radius:6px;
+    background:#333;
+    color:white;
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    background:#111;
+}
+
+.action-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+.calculate-btn,
+.clear-btn,
+.print-btn{
+    padding:12px 20px;
+    border:none;
+    border-radius:7px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+}
+
+.calculate-btn:hover{
+    background:#c92525;
+}
+
+.clear-btn{
+    background:#555;
+}
+
+.clear-btn:hover{
+    background:#333;
+}
+
+.print-btn{
+    background:#222;
+}
+
+.print-btn:hover{
+    background:#000;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.summary-box{
+    background:#f7f8fa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:18px;
+    text-align:center;
+}
+
+.summary-box span{
+    display:block;
+    color:#666;
+    font-size:14px;
+}
+
+.summary-box strong{
+    display:block;
+    font-size:23px;
+    margin-top:5px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:11px;
+    text-align:center;
+}
+
+th{
+    background:#f2f2f2;
+}
+
+.major-row{
+    background:#fff3f3;
+}
+
+.chart-container{
+    margin-top:25px;
+    overflow-x:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+    background:#fff;
+}
+
+canvas{
+    display:block;
+    margin:auto;
+    max-width:100%;
+}
+
+.status{
+    margin-top:20px;
+    padding:18px;
+    border-radius:8px;
+    text-align:center;
+    font-size:18px;
+    font-weight:700;
+    background:#f7f8fa;
+    border:1px solid #ddd;
+}
+
+.formula{
+    margin-top:25px;
+    padding:18px;
+    background:#fafafa;
+    border-left:4px solid #e53232;
+}
+
+.formula p{
+    margin:9px 0;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.info-box{
+    background:#fafafa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:18px;
+}
+
+.info-box h3{
+    margin-top:0;
+    color:#e53232;
+}
+
+.note{
+    margin-top:20px;
+    padding:16px;
+    background:#fff8f8;
+    border:1px solid #f0cccc;
+    border-radius:7px;
+    color:#555;
+}
+
+.example-list{
+    margin-bottom:0;
+}
+
+.home-btn{
+    display:inline-block;
+    margin-top:5px;
+    padding:11px 20px;
+    background:#333;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+}
+
+.home-btn:hover{
+    background:#111;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .input-row{
+        grid-template-columns:1fr;
+    }
+
+    .defect-item{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:26px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+}
+
+@media print{
+
+    header,
+    .input-card,
+    .action-buttons,
+    .home-btn{
+        display:none !important;
+    }
+
+    body{
+        background:#fff;
+    }
+
+    .container{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .card{
+        box-shadow:none;
+        border:1px solid #ddd;
+        page-break-inside:avoid;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="page-title">
+
+<h1>
+Pareto Analysis Tool
+</h1>
+
+<p>
+Analyze defects and identify the major problems using Pareto Analysis.
+</p>
+
+</div>
+
+
+<!-- INPUT -->
+
+<div class="card input-card">
+
+<h2>
+Add Defect Data
+</h2>
+
+<p>
+Enter the defect name and number of occurrences.
+You can add multiple defects.
+</p>
+
+
+<div class="input-row">
+
+<div class="form-group">
+
+<label for="defectName">
+Defect Name
+</label>
+
+<input
+type="text"
+id="defectName"
+placeholder="Example: Burr"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="defectCount">
+Defect Count
+</label>
+
+<input
+type="number"
+id="defectCount"
+min="0"
+step="1"
+placeholder="25"
+>
+
+</div>
+
+
+<button
+class="add-btn"
+onclick="addDefect()"
+>
+Add Defect
+</button>
+
+</div>
+
+
+<div
+class="defect-list"
+id="defectList"
+></div>
+
+
+<div class="action-buttons">
+
+<button
+class="calculate-btn"
+onclick="calculatePareto()"
+>
+Calculate Pareto
+</button>
+
+<button
+class="clear-btn"
+onclick="clearAll()"
+>
+Clear All
+</button>
+
+<button
+class="print-btn"
+onclick="window.print()"
+>
+Print Report
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SUMMARY -->
+
+<div class="card">
+
+<h2>
+Summary
+</h2>
+
+<div class="summary">
+
+
+<div class="summary-box">
+
+<span>
+Total Defects
+</span>
+
+<strong id="totalDefects">
+-
+</strong>
+
+</div>
+
+
+<div class="summary-box">
+
+<span>
+Number of Defect Types
+</span>
+
+<strong id="defectTypes">
+-
+</strong>
+
+</div>
+
+
+<div class="summary-box">
+
+<span>
+Major Defect
+</span>
+
+<strong id="majorDefect">
+-
+</strong>
+
+</div>
+
+</div>
+
+
+<div
+class="status"
+id="status"
+>
+Add defect data and calculate Pareto.
+</div>
+
+</div>
+
+
+<!-- TABLE -->
+
+<div class="card">
+
+<h2>
+Pareto Analysis Result
+</h2>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Rank
+</th>
+
+<th>
+Defect
+</th>
+
+<th>
+Count
+</th>
+
+<th>
+Defect %
+</th>
+
+<th>
+Cumulative %
+</th>
+
+<th>
+Action Priority
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="resultBody">
+
+<tr>
+
+<td colspan="6">
+No data available.
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- CHART -->
+
+<div class="card">
+
+<h2>
+Pareto Chart
+</h2>
+
+<p>
+The bars show defect counts. The line shows cumulative percentage.
+The 80% line helps identify the major contributing defects.
+</p>
+
+<div class="chart-container">
+
+<canvas
+id="paretoCanvas"
+width="950"
+height="480"
+></canvas>
+
+</div>
+
+</div>
+
+
+<!-- FORMULAS -->
+
+<div class="card">
+
+<h2>
+Pareto Analysis Formulas
+</h2>
+
+<div class="formula">
+
+<p>
+<strong>Total Defects</strong>
+=
+Sum of all defect counts
+</p>
+
+<p>
+<strong>Defect Percentage</strong>
+=
+(Individual Defect Count ÷ Total Defects) × 100
+</p>
+
+<p>
+<strong>Cumulative Percentage</strong>
+=
+Previous Cumulative % + Current Defect %
+</p>
+
+<p>
+<strong>Action Priority</strong>
+=
+Defects contributing to the main cumulative portion of the problem
+are considered higher priority.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- MEANING -->
+
+<div class="card">
+
+<h2>
+What is Pareto Analysis?
+</h2>
+
+<div class="info-grid">
+
+
+<div class="info-box">
+
+<h3>
+Pareto Analysis</h3>
+
+<p>
+Pareto Analysis is a quality improvement technique used
+to identify the most important problems from a list of
+different problems.
+</p>
+
+<p>
+It helps a Quality Engineer decide which problems should
+be addressed first.
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<h3>
+80/20 Principle</h3>
+
+<p>
+The Pareto Principle is commonly known as the
+<strong>80/20 Principle</strong>.
+</p>
+
+<p>
+In many situations, a relatively small number of causes
+can contribute to a large percentage of the total problem.
+</p>
+
+<p>
+The exact ratio does not always have to be exactly 80/20.
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<h3>
+Cumulative Percentage</h3>
+
+<p>
+Cumulative percentage shows the running total of defect
+contribution after each defect is added in descending order.
+</p>
+
+<p>
+Example: 40% + 25% = 65% cumulative.
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<h3>
+Action Priority</h3>
+
+<p>
+The biggest defects are normally investigated first because
+reducing major contributors can have a larger impact on
+overall quality.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- HOW TO USE -->
+
+<div class="card">
+
+<h2>
+How to Use Pareto Analysis
+</h2>
+
+<ol class="example-list">
+
+<li>
+Collect defect or problem data.
+</li>
+
+<li>
+Enter each defect name and its count.
+</li>
+
+<li>
+Click <strong>Calculate Pareto</strong>.
+</li>
+
+<li>
+The tool sorts defects from highest count to lowest count.
+</li>
+
+<li>
+Check the cumulative percentage.
+</li>
+
+<li>
+Focus improvement activity on the major contributors.
+</li>
+
+</ol>
+
+</div>
+
+
+<!-- EXAMPLE -->
+
+<div class="card">
+
+<h2>
+Example
+</h2>
+
+<p>
+Suppose inspection data shows:
+</p>
+
+<ul>
+
+<li>
+Burr = 40
+</li>
+
+<li>
+Dimension Out = 25
+</li>
+
+<li>
+Scratch = 20
+</li>
+
+<li>
+Dent = 10
+</li>
+
+<li>
+Rust = 5
+</li>
+
+</ul>
+
+<p>
+Total defects = <strong>100</strong>.
+</p>
+
+<p>
+Therefore:
+</p>
+
+<ul>
+
+<li>
+Burr = 40%
+</li>
+
+<li>
+Dimension Out = 25%
+</li>
+
+<li>
+Scratch = 20%
+</li>
+
+<li>
+Dent = 10%
+</li>
+
+<li>
+Rust = 5%
+</li>
+
+</ul>
+
+<p>
+Cumulative percentage becomes:
+</p>
+
+<p>
+<strong>
+40% → 65% → 85% → 95% → 100%
+</strong>
+</p>
+
+<p>
+This shows that the first three defect types contribute
+approximately <strong>85%</strong> of the total defects.
+They would therefore be strong candidates for initial
+improvement action.
+</p>
+
+</div>
+
+
+<!-- IMPORTANT -->
+
+<div class="card">
+
+<div class="note">
+
+<strong>Important:</strong>
+
+Pareto Analysis does not automatically prove the root cause
+of a problem. It identifies the major contributors that deserve
+attention.
+
+After identifying the major defects, use tools such as
+5 Why, Fishbone/Ishikawa, 8D, FMEA or process investigation
+to find and eliminate the root cause.
+
+The 80/20 principle is a practical guideline, not a rule that
+every process must exactly follow.
+
+</div>
+
+</div>
+
+
+<a href="index.html" class="home-btn">
+← Back to Home
+</a>
+
+
+</main>
+
+
+<script>
+
+let defects = [];
+
+
+/* ADD DEFECT */
+
+function addDefect(){
+
+    const nameInput =
+        document.getElementById("defectName");
+
+    const countInput =
+        document.getElementById("defectCount");
+
+
+    const name =
+        nameInput.value.trim();
+
+
+    const count =
+        parseFloat(
+            countInput.value
+        );
+
+
+    if(name === ""){
+
+        alert(
+            "Please enter a defect name."
+        );
+
+        return;
+    }
+
+
+    if(
+        isNaN(count) ||
+        count < 0
+    ){
+
+        alert(
+            "Please enter a valid defect count."
+        );
+
+        return;
+    }
+
+
+    defects.push({
+        name:name,
+        count:count
+    });
+
+
+    nameInput.value = "";
+    countInput.value = "";
+
+
+    renderDefectList();
+
+    nameInput.focus();
+
+}
+
+
+/* RENDER INPUT LIST */
+
+function renderDefectList(){
+
+    const list =
+        document.getElementById("defectList");
+
+
+    list.innerHTML = "";
+
+
+    if(defects.length === 0){
+
+        return;
+    }
+
+
+    defects.forEach(
+        function(item,index){
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "defect-item";
+
+
+            const nameInput =
+                document.createElement("input");
+
+            nameInput.type =
+                "text";
+
+            nameInput.value =
+                item.name;
+
+            nameInput.oninput =
+                function(){
+
+                    defects[index].name =
+                        this.value.trim();
+
+                };
+
+
+            const countInput =
+                document.createElement("input");
+
+            countInput.type =
+                "number";
+
+            countInput.min =
+                "0";
+
+            countInput.step =
+                "1";
+
+            countInput.value =
+                item.count;
+
+            countInput.oninput =
+                function(){
+
+                    defects[index].count =
+                        parseFloat(this.value) || 0;
+
+                };
+
+
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.className =
+                "delete-btn";
+
+            deleteButton.textContent =
+                "Delete";
+
+            deleteButton.onclick =
+                function(){
+
+                    defects.splice(
+                        index,
+                        1
+                    );
+
+                    renderDefectList();
+
+                };
+
+
+            row.appendChild(
+                nameInput
+            );
+
+            row.appendChild(
+                countInput
+            );
+
+            row.appendChild(
+                deleteButton
+            );
+
+
+            list.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* CALCULATE PARETO */
+
+function calculatePareto(){
+
+    if(defects.length === 0){
+
+        alert(
+            "Please add at least one defect."
+        );
+
+        return;
+    }
+
+
+    const validDefects =
+        defects.filter(
+            function(item){
+
+                return(
+                    item.name.trim() !== "" &&
+                    item.count >= 0
+                );
+
+            }
+        );
+
+
+    if(validDefects.length === 0){
+
+        alert(
+            "Please enter valid defect data."
+        );
+
+        return;
+    }
+
+
+    /*
+        Sort defects from highest
+        count to lowest count.
+    */
+
+    validDefects.sort(
+        function(a,b){
+
+            return b.count - a.count;
+
+        }
+    );
+
+
+    const total =
+        validDefects.reduce(
+            function(sum,item){
+
+                return sum + item.count;
+
+            },
+            0
+        );
+
+
+    if(total <= 0){
+
+        alert(
+            "Total defect count must be greater than 0."
+        );
+
+        return;
+    }
+
+
+    let cumulative = 0;
+
+
+    const resultBody =
+        document.getElementById(
+            "resultBody"
+        );
+
+
+    resultBody.innerHTML = "";
+
+
+    validDefects.forEach(
+        function(item,index){
+
+            const defectPercent =
+                (
+                    item.count /
+                    total
+                ) * 100;
+
+
+            cumulative +=
+                defectPercent;
+
+
+            const row =
+                document.createElement("tr");
+
+
+            /*
+                Defects that take the cumulative
+                result up to or beyond 80% are
+                highlighted as major contributors.
+            */
+
+            const isMajor =
+                cumulative <= 80 ||
+                (
+                    index > 0 &&
+                    (
+                        cumulative -
+                        defectPercent
+                    ) < 80
+                );
+
+
+            if(isMajor){
+
+                row.className =
+                    "major-row";
+
+            }
+
+
+            let priority;
+
+
+            if(isMajor){
+
+                priority =
+                    "High Priority";
+
+            }
+            else{
+
+                priority =
+                    "Lower Priority";
+
+            }
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.name)}
+                </td>
+
+                <td>
+                    ${formatNumber(item.count)}
+                </td>
+
+                <td>
+                    ${defectPercent.toFixed(2)}%
+                </td>
+
+                <td>
+                    ${cumulative.toFixed(2)}%
+                </td>
+
+                <td>
+                    ${priority}
+                </td>
+
+            `;
+
+
+            resultBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    const major =
+        validDefects[0].name;
+
+
+    document.getElementById(
+        "totalDefects"
+    ).textContent =
+        formatNumber(total);
+
+
+    document.getElementById(
+        "defectTypes"
+    ).textContent =
+        validDefects.length;
+
+
+    document.getElementById(
+        "majorDefect"
+    ).textContent =
+        major;
+
+
+    /*
+        Find the first point where
+        cumulative percentage reaches 80%.
+    */
+
+    let majorCount = 0;
+    let majorCumulative = 0;
+
+
+    for(
+        let i = 0;
+        i < validDefects.length;
+        i++
+    ){
+
+        majorCount++;
+
+        majorCumulative +=
+            (
+                validDefects[i].count /
+                total
+            ) * 100;
+
+
+        if(
+            majorCumulative >= 80
+        ){
+
+            break;
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        majorCount +
+        " major defect type(s) contribute approximately " +
+        majorCumulative.toFixed(2) +
+        "% of total defects. Start improvement analysis with these contributors.";
+
+
+    drawParetoChart(
+        validDefects,
+        total
+    );
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(value){
+
+    return value
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* NUMBER FORMAT */
+
+function formatNumber(value){
+
+    return Number(value)
+        .toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits:2
+            }
+        );
+
+}
+
+
+/* DRAW PARETO CHART */
+
+function drawParetoChart(
+    data,
+    total
+){
+
+    const canvas =
+        document.getElementById(
+            "paretoCanvas"
+        );
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const width =
+        canvas.width;
+
+    const height =
+        canvas.height;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    const left =
+        70;
+
+    const right =
+        70;
+
+    const top =
+        50;
+
+    const bottom =
+        90;
+
+
+    const chartWidth =
+        width -
+        left -
+        right;
+
+
+    const chartHeight =
+        height -
+        top -
+        bottom;
+
+
+    const maxCount =
+        Math.max(
+            ...data.map(
+                function(item){
+
+                    return item.count;
+
+                }
+            )
+        );
+
+
+    const countMax =
+        maxCount === 0
+        ? 1
+        : maxCount;
+
+
+    /* AXES */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        left,
+        top
+    );
+
+    ctx.lineTo(
+        left,
+        height - bottom
+    );
+
+    ctx.lineTo(
+        width - right,
+        height - bottom
+    );
+
+    ctx.stroke();
+
+
+    /* 80% LINE */
+
+    const y80 =
+        height -
+        bottom -
+        (
+            80 / 100
+        ) *
+        chartHeight;
+
+
+    ctx.setLineDash(
+        [6,6]
+    );
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        left,
+        y80
+    );
+
+    ctx.lineTo(
+        width - right,
+        y80
+    );
+
+    ctx.stroke();
+
+
+    ctx.setLineDash([]);
+
+
+    ctx.fillText(
+        "80%",
+        width - right + 8,
+        y80 + 4
+    );
+
+
+    /* BAR WIDTH */
+
+    const slotWidth =
+        chartWidth /
+        data.length;
+
+
+    const barWidth =
+        Math.min(
+            60,
+            slotWidth * 0.65
+        );
+
+
+    let cumulative = 0;
+
+
+    const points = [];
+
+
+    data.forEach(
+        function(item,index){
+
+            const x =
+                left +
+                slotWidth *
+                index +
+                slotWidth / 2;
+
+
+            const barHeight =
+                (
+                    item.count /
+                    countMax
+                ) *
+                chartHeight;
+
+
+            const barX =
+                x -
+                barWidth / 2;
+
+
+            const barY =
+                height -
+                bottom -
+                barHeight;
+
+
+            /*
+                BAR
+            */
+
+            ctx.fillRect(
+                barX,
+                barY,
+                barWidth,
+                barHeight
+            );
+
+
+            /*
+                COUNT LABEL
+            */
+
+            ctx.fillText(
+                formatNumber(item.count),
+                barX,
+                barY - 8
+            );
+
+
+            /*
+                DEFECT NAME
+            */
+
+            ctx.save();
+
+            ctx.translate(
+                x,
+                height - bottom + 15
+            );
+
+            ctx.rotate(
+                -Math.PI / 4
+            );
+
+
+            ctx.textAlign =
+                "right";
+
+
+            ctx.fillText(
+                item.name,
+                0,
+                0
+            );
+
+
+            ctx.restore();
+
+
+            /*
+                CUMULATIVE LINE
+            */
+
+            cumulative +=
+                (
+                    item.count /
+                    total
+                ) * 100;
+
+
+            const lineY =
+                height -
+                bottom -
+                (
+                    cumulative /
+                    100
+                ) *
+                chartHeight;
+
+
+            points.push({
+                x:x,
+                y:lineY
+            });
+
+        }
+    );
+
+
+    /*
+        CUMULATIVE LINE
+    */
+
+    if(points.length > 0){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            points[0].x,
+            points[0].y
+        );
+
+
+        for(
+            let i = 1;
+            i < points.length;
+            i++
+        ){
+
+            ctx.lineTo(
+                points[i].x,
+                points[i].y
+            );
+
+        }
+
+
+        ctx.stroke();
+
+
+        /*
+            LINE POINTS
+        */
+
+        points.forEach(
+            function(point){
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    point.x,
+                    point.y,
+                    4,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fill();
+
+            }
+        );
+
+    }
+
+
+    /*
+        Y-AXIS LABELS
+    */
+
+    ctx.textAlign =
+        "right";
+
+
+    ctx.fillText(
+        "0",
+        left - 10,
+        height - bottom + 5
+    );
+
+
+    ctx.fillText(
+        formatNumber(
+            countMax / 2
+        ),
+        left - 10,
+        height -
+        bottom -
+        chartHeight / 2 +
+        5
+    );
+
+
+    ctx.fillText(
+        formatNumber(countMax),
+        left - 10,
+        top + 5
+    );
+
+
+    /*
+        RIGHT SIDE PERCENT LABELS
+    */
+
+    ctx.textAlign =
+        "left";
+
+
+    ctx.fillText(
+        "0%",
+        width - right + 8,
+        height - bottom + 5
+    );
+
+
+    ctx.fillText(
+        "50%",
+        width - right + 8,
+        height -
+        bottom -
+        chartHeight / 2 +
+        5
+    );
+
+
+    ctx.fillText(
+        "100%",
+        width - right + 8,
+        top + 5
+    );
+
+
+    /*
+        CHART TITLES
+    */
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.font =
+        "bold 16px Arial";
+
+
+    ctx.fillText(
+        "Pareto Chart",
+        width / 2,
+        25
+    );
+
+
+    ctx.font =
+        "12px Arial";
+
+
+    ctx.fillText(
+        "Defect Count",
+        25,
+        top + chartHeight / 2
+    );
+
+
+    ctx.fillText(
+        "Cumulative %",
+        width - 25,
+        top + chartHeight / 2
+    );
+
+
+    ctx.font =
+        "14px Arial";
+
+}
+
+
+/* CLEAR ALL */
+
+function clearAll(){
+
+    defects = [];
+
+
+    document.getElementById(
+        "defectName"
+    ).value = "";
+
+
+    document.getElementById(
+        "defectCount"
+    ).value = "";
+
+
+    document.getElementById(
+        "defectList"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "totalDefects"
+    ).textContent = "-";
+
+
+    document.getElementById(
+        "defectTypes"
+    ).textContent = "-";
+
+
+    document.getElementById(
+        "majorDefect"
+    ).textContent = "-";
+
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        "Add defect data and calculate Pareto.";
+
+
+    document.getElementById(
+        "resultBody"
+    ).innerHTML = `
+
+        <tr>
+            <td colspan="6">
+                No data available.
+            </td>
+        </tr>
+
+    `;
+
+
+    const canvas =
+        document.getElementById(
+            "paretoCanvas"
+        );
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
