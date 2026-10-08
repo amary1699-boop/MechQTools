@@ -8,7 +8,7 @@
 <title>Surface Finish Calculator - MechQTools</title>
 
 <meta name="description"
-content="Free Surface Finish Calculator for approximate Ra and Rz conversion and common surface roughness reference values.">
+content="Free Surface Finish Calculator with Ra, Rz, surface roughness explanation, visual diagram and engineering reference table.">
 
 <style>
 
@@ -27,7 +27,7 @@ body{
 /* HEADER */
 
 header{
-    background:#ffffff;
+    background:#fff;
     border-bottom:1px solid #e5e5e5;
     position:sticky;
     top:0;
@@ -95,26 +95,34 @@ header{
 }
 
 
-/* CALCULATOR */
+/* COMMON CARD */
 
-.calculator{
-    background:#ffffff;
+.card{
+    background:#fff;
     border:1px solid #e5e5e5;
     border-radius:12px;
     padding:30px;
+    margin-bottom:30px;
     box-shadow:0 4px 15px rgba(0,0,0,0.05);
 }
 
 .section-heading{
-    font-size:21px;
+    font-size:23px;
     margin:0 0 20px;
     color:#222;
     border-bottom:1px solid #eee;
     padding-bottom:10px;
 }
 
+.sub-heading{
+    font-size:20px;
+    margin-top:25px;
+    margin-bottom:10px;
+    color:#e53232;
+}
 
-/* INPUT */
+
+/* CALCULATOR */
 
 .input-grid{
     display:grid;
@@ -230,12 +238,292 @@ header{
     border:1px solid #f0bcbc;
 }
 
+.details{
+    margin-top:25px;
+    background:#fafafa;
+    border-left:4px solid #e53232;
+    padding:18px 20px;
+    border-radius:5px;
+}
+
+.details h3{
+    margin-top:0;
+}
+
+.details p{
+    margin:7px 0;
+    color:#555;
+}
+
+.formula{
+    background:#fff;
+    border:1px solid #ddd;
+    padding:12px;
+    border-radius:6px;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+
+/* EDUCATIONAL INTRO */
+
+.intro-box{
+    background:#fff8f8;
+    border-left:5px solid #e53232;
+    padding:18px 20px;
+    border-radius:7px;
+}
+
+.intro-box strong{
+    color:#e53232;
+}
+
+
+/* VISUAL SURFACE DIAGRAM */
+
+.surface-diagram{
+    background:#fafafa;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:20px;
+    margin-top:20px;
+    overflow:hidden;
+}
+
+.diagram-title{
+    text-align:center;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.surface-line{
+    position:relative;
+    height:190px;
+    border-bottom:3px solid #333;
+    margin:20px 30px 45px;
+}
+
+.rough-line{
+    position:absolute;
+    left:0;
+    right:0;
+    top:82px;
+    height:4px;
+    background:#e53232;
+    transform:rotate(-1deg);
+    clip-path:polygon(
+        0% 50%,
+        3% 10%,
+        6% 75%,
+        9% 25%,
+        12% 90%,
+        15% 20%,
+        18% 70%,
+        21% 15%,
+        24% 80%,
+        27% 30%,
+        30% 85%,
+        33% 20%,
+        36% 75%,
+        39% 10%,
+        42% 85%,
+        45% 25%,
+        48% 70%,
+        51% 15%,
+        54% 90%,
+        57% 30%,
+        60% 80%,
+        63% 20%,
+        66% 75%,
+        69% 10%,
+        72% 85%,
+        75% 25%,
+        78% 70%,
+        81% 15%,
+        84% 90%,
+        87% 30%,
+        90% 80%,
+        93% 20%,
+        96% 75%,
+        100% 50%
+    );
+}
+
+.mean-line{
+    position:absolute;
+    left:0;
+    right:0;
+    top:84px;
+    border-top:2px dashed #555;
+}
+
+.peak-label{
+    position:absolute;
+    top:5px;
+    left:15%;
+    background:#fff;
+    border:1px solid #ccc;
+    padding:5px 9px;
+    border-radius:5px;
+    font-size:13px;
+}
+
+.valley-label{
+    position:absolute;
+    bottom:5px;
+    left:57%;
+    background:#fff;
+    border:1px solid #ccc;
+    padding:5px 9px;
+    border-radius:5px;
+    font-size:13px;
+}
+
+.mean-label{
+    position:absolute;
+    right:10px;
+    top:65px;
+    font-size:13px;
+    background:#fff;
+    padding:4px 8px;
+}
+
+.ra-arrow{
+    position:absolute;
+    left:45%;
+    top:25px;
+    height:60px;
+    border-left:2px solid #e53232;
+}
+
+.ra-arrow::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-5px;
+    width:8px;
+    height:8px;
+    border-top:2px solid #e53232;
+    border-left:2px solid #e53232;
+    transform:rotate(45deg);
+}
+
+.ra-text{
+    position:absolute;
+    left:40%;
+    top:-5px;
+    color:#e53232;
+    font-weight:700;
+}
+
+
+/* SMOOTH ROUGH COMPARISON */
+
+.comparison{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    margin-top:20px;
+}
+
+.surface-example{
+    border:1px solid #ddd;
+    border-radius:9px;
+    padding:18px;
+    background:#fff;
+}
+
+.surface-example h4{
+    margin:0 0 8px;
+}
+
+.smooth-visual,
+.rough-visual{
+    height:65px;
+    border:1px solid #ccc;
+    margin:12px 0;
+    position:relative;
+    overflow:hidden;
+}
+
+.smooth-visual::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:32px;
+    border-top:2px solid #555;
+}
+
+.rough-visual::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:30px;
+    height:8px;
+    background:#555;
+    clip-path:polygon(
+        0% 50%,
+        5% 5%,
+        10% 90%,
+        15% 10%,
+        20% 80%,
+        25% 5%,
+        30% 95%,
+        35% 15%,
+        40% 85%,
+        45% 5%,
+        50% 95%,
+        55% 10%,
+        60% 85%,
+        65% 5%,
+        70% 90%,
+        75% 10%,
+        80% 95%,
+        85% 5%,
+        90% 85%,
+        95% 10%,
+        100% 50%
+    );
+}
+
+
+/* INFO GRID */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    margin-top:20px;
+}
+
+.info-box{
+    border:1px solid #e2e2e2;
+    border-radius:9px;
+    padding:20px;
+    background:#fff;
+}
+
+.info-box h3{
+    margin-top:0;
+    color:#e53232;
+}
+
+.info-box p{
+    color:#555;
+}
+
+.example{
+    background:#f7f7f7;
+    padding:12px;
+    border-radius:6px;
+    margin-top:10px;
+}
+
 
 /* REFERENCE TABLE */
-
-.reference{
-    margin-top:35px;
-}
 
 .table-wrapper{
     overflow-x:auto;
@@ -268,45 +556,14 @@ tr:hover td{
 }
 
 
-/* DETAILS */
-
-.details{
-    margin-top:25px;
-    background:#fafafa;
-    border-left:4px solid #e53232;
-    padding:18px 20px;
-    border-radius:5px;
-}
-
-.details h3{
-    margin-top:0;
-    margin-bottom:10px;
-}
-
-.details p{
-    margin:7px 0;
-    color:#555;
-}
-
-.formula{
-    background:#fff;
-    border:1px solid #ddd;
-    padding:12px;
-    border-radius:6px;
-    font-family:monospace;
-    overflow-x:auto;
-    margin-top:10px;
-}
-
-
-/* NOTE */
+/* WARNING */
 
 .note{
-    margin-top:30px;
+    margin-top:25px;
     background:#fff8e8;
     border:1px solid #f0d99a;
     border-radius:8px;
-    padding:16px 18px;
+    padding:17px 18px;
     color:#66551d;
 }
 
@@ -336,13 +593,8 @@ footer{
     padding:25px 20px;
 }
 
-footer a{
-    color:#fff;
-    text-decoration:none;
-}
-
-footer a:hover{
-    color:#e53232;
+footer p{
+    margin:5px 0;
 }
 
 
@@ -365,20 +617,24 @@ footer a:hover{
         margin:30px auto;
     }
 
-    .calculator{
+    .card{
         padding:20px;
     }
 
-    .input-grid{
-        grid-template-columns:1fr;
-    }
-
-    .result-grid{
+    .input-grid,
+    .result-grid,
+    .comparison,
+    .info-grid{
         grid-template-columns:1fr;
     }
 
     .page-title h1{
         font-size:28px;
+    }
+
+    .surface-line{
+        margin-left:10px;
+        margin-right:10px;
     }
 
 }
@@ -443,18 +699,19 @@ Surface Finish Calculator
 </h1>
 
 <p>
-Calculate approximate Ra and Rz values and check common surface roughness references.
+Calculate and understand Ra, Rz and surface roughness values.
 </p>
 
 </div>
 
 
 
-<div class="calculator">
+<!-- CALCULATOR -->
 
+<div class="card">
 
 <h2 class="section-heading">
-Surface Finish Calculation
+Surface Finish Calculator
 </h2>
 
 
@@ -478,7 +735,7 @@ Rz → Ra
 </option>
 
 <option value="raReference">
-Ra Surface Finish Reference
+Ra Reference
 </option>
 
 </select>
@@ -501,11 +758,10 @@ min="0"
 >
 
 <small>
-Enter value in µm.
+Enter the value in µm.
 </small>
 
 </div>
-
 
 </div>
 
@@ -537,7 +793,6 @@ id="results"
 style="display:none;"
 >
 
-
 <h2 class="section-heading">
 Result
 </h2>
@@ -562,7 +817,7 @@ Result
 <div class="result-box">
 
 <span>
-Surface Finish Grade
+Surface Finish Category
 </span>
 
 <strong id="gradeResult">
@@ -590,21 +845,553 @@ Calculation details will appear here.
 class="formula"
 id="formulaText"
 >
-Approximate conversion:
-Rz ≈ 4 × Ra
+Approximate conversion: Rz ≈ 4 × Ra
+</div>
+
+</div>
+
 </div>
 
 </div>
 
 
-</div>
 
+<!-- BASIC INTRODUCTION -->
 
-
-<div class="reference">
+<div class="card">
 
 <h2 class="section-heading">
-Common Surface Roughness Reference
+What is Surface Finish?
+</h2>
+
+
+<div class="intro-box">
+
+<p>
+
+<strong>Surface Finish</strong> or
+<strong>Surface Roughness</strong> describes the small
+peaks and valleys present on a manufactured metal surface.
+
+</p>
+
+<p>
+
+A surface may look smooth to our eyes, but under magnification
+it contains very small irregularities.
+
+</p>
+
+<p>
+
+<strong>Lower Ra = smoother surface</strong><br>
+
+<strong>Higher Ra = rougher surface</strong>
+
+</p>
+
+</div>
+
+
+<!-- VISUAL DIAGRAM -->
+
+<div class="surface-diagram">
+
+<div class="diagram-title">
+Magnified Surface Roughness
+</div>
+
+
+<div class="surface-line">
+
+<div class="rough-line"></div>
+
+<div class="mean-line"></div>
+
+<div class="ra-arrow"></div>
+
+<div class="ra-text">
+Ra
+</div>
+
+<div class="peak-label">
+Peak
+</div>
+
+<div class="valley-label">
+Valley
+</div>
+
+<div class="mean-label">
+Mean Line
+</div>
+
+</div>
+
+
+<p style="text-align:center;color:#666;">
+
+The red irregular line represents the microscopic surface profile.
+Ra describes the average deviation of the surface profile from its mean line.
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- RA EXPLANATION -->
+
+<div class="card">
+
+<h2 class="section-heading">
+Ra क्या है?
+</h2>
+
+
+<div class="info-box">
+
+<h3>
+Ra = Roughness Average
+</h3>
+
+<p>
+
+<strong>Ra</strong> is the average surface roughness value
+measured from the microscopic peaks and valleys of a surface.
+
+</p>
+
+<p>
+
+It is one of the most commonly used surface roughness parameters
+on mechanical engineering drawings.
+
+</p>
+
+
+<div class="example">
+
+<strong>Example:</strong><br>
+
+If a drawing says:
+
+<br><br>
+
+<strong>Ra 3.2 µm</strong>
+
+<br><br>
+
+it means the specified surface roughness requirement is
+Ra = 3.2 micrometres.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- RZ EXPLANATION -->
+
+<div class="card">
+
+<h2 class="section-heading">
+Rz क्या है?
+</h2>
+
+
+<div class="info-box">
+
+<h3>
+Rz = Roughness Depth Parameter
+</h3>
+
+<p>
+
+<strong>Rz</strong> describes the height difference between
+surface peaks and valleys over specified sampling lengths.
+
+</p>
+
+<p>
+
+Simple way to remember:
+
+</p>
+
+<div class="example">
+
+<strong>Ra</strong> → Average roughness
+
+<br><br>
+
+<strong>Rz</strong> → Peak / valley height based roughness parameter
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- MICROMETER -->
+
+<div class="card">
+
+<h2 class="section-heading">
+µm क्या होता है?
+</h2>
+
+
+<div class="info-box">
+
+<h3>
+Micrometre (µm)
+</h3>
+
+<p>
+
+Surface roughness values are normally very small, so they are
+often expressed in <strong>micrometres (µm)</strong>.
+
+</p>
+
+<div class="example">
+
+<strong>1 mm = 1000 µm</strong>
+
+<br><br>
+
+Therefore:
+
+<br>
+
+<strong>3.2 µm = 0.0032 mm</strong>
+
+</div>
+
+<p>
+
+इसलिए जब drawing पर <strong>Ra 3.2 µm</strong> लिखा होता है,
+तो यह बहुत छोटी surface irregularity requirement को indicate करता है।
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- SMOOTH VS ROUGH -->
+
+<div class="card">
+
+<h2 class="section-heading">
+Smooth Surface vs Rough Surface
+</h2>
+
+
+<div class="comparison">
+
+
+<div class="surface-example">
+
+<h4>
+Lower Ra → Smoother
+</h4>
+
+<div class="smooth-visual"></div>
+
+<p>
+
+Example: <strong>Ra 0.8 µm</strong>
+
+</p>
+
+<p>
+
+Surface is comparatively smooth and may require
+fine finishing operations.
+
+</p>
+
+</div>
+
+
+
+<div class="surface-example">
+
+<h4>
+Higher Ra → Rougher
+</h4>
+
+<div class="rough-visual"></div>
+
+<p>
+
+Example: <strong>Ra 6.3 µm</strong>
+
+</p>
+
+<p>
+
+Surface has comparatively larger microscopic irregularities.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRACTICAL VALUES -->
+
+<div class="card">
+
+<h2 class="section-heading">
+Common Ra Values
+</h2>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Ra (µm)
+</th>
+
+<th>
+General Meaning
+</th>
+
+<th>
+Typical Use
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr>
+
+<td>
+0.4
+</td>
+
+<td>
+Fine / Very Smooth
+</td>
+
+<td>
+Fine finishing
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+0.8
+</td>
+
+<td>
+Smooth
+</td>
+
+<td>
+Fine machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+1.6
+</td>
+
+<td>
+Fine Finish
+</td>
+
+<td>
+Precision machining / finishing
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+3.2
+</td>
+
+<td>
+Medium
+</td>
+
+<td>
+General machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+6.3
+</td>
+
+<td>
+Rougher
+</td>
+
+<td>
+General / rough machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+12.5
+</td>
+
+<td>
+Rough
+</td>
+
+<td>
+Rough machining / fabrication
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<!-- ENGINEERING DRAWING -->
+
+<div class="card">
+
+<h2 class="section-heading">
+Drawing में Surface Finish कैसे पढ़ें?
+</h2>
+
+
+<div class="info-grid">
+
+
+<div class="info-box">
+
+<h3>
+Example 1
+</h3>
+
+<p>
+
+Drawing पर लिखा है:
+
+</p>
+
+<div class="example">
+
+<strong>Ra 1.6 µm</strong>
+
+</div>
+
+<p>
+
+मतलब उस specified surface की required roughness
+Ra 1.6 µm है।
+
+</p>
+
+</div>
+
+
+
+<div class="info-box">
+
+<h3>
+Example 2
+</h3>
+
+<p>
+
+Drawing पर लिखा है:
+
+</p>
+
+<div class="example">
+
+<strong>Ra 3.2 µm</strong>
+
+</div>
+
+<p>
+
+मतलब specified surface के लिए Ra requirement
+3.2 µm है।
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="note">
+
+<strong>Quality Inspection Tip:</strong>
+
+Drawing में जो surface-finish value दी गई है,
+inspection के समय उसी specified requirement को follow करें।
+Calculator का approximate Ra/Rz conversion acceptance criteria
+को replace नहीं करता।
+
+</div>
+
+</div>
+
+
+
+<!-- RA RZ REFERENCE -->
+
+<div class="card">
+
+<h2 class="section-heading">
+Approximate Ra ↔ Rz Reference
 </h2>
 
 
@@ -625,11 +1412,7 @@ Approx. Rz (µm)
 </th>
 
 <th>
-Common Reference
-</th>
-
-<th>
-Typical Application
+General Surface
 </th>
 
 </tr>
@@ -640,214 +1423,64 @@ Typical Application
 <tbody>
 
 <tr>
-
-<td>
-0.025
-</td>
-
-<td>
-0.10
-</td>
-
-<td>
-Very Fine
-</td>
-
-<td>
-Precision finishing
-</td>
-
+<td>0.025</td>
+<td>0.100</td>
+<td>Very Fine</td>
 </tr>
-
 
 <tr>
-
-<td>
-0.05
-</td>
-
-<td>
-0.20
-</td>
-
-<td>
-Very Fine
-</td>
-
-<td>
-Precision components
-</td>
-
+<td>0.05</td>
+<td>0.200</td>
+<td>Very Fine</td>
 </tr>
-
 
 <tr>
-
-<td>
-0.10
-</td>
-
-<td>
-0.40
-</td>
-
-<td>
-Fine
-</td>
-
-<td>
-Fine grinding / finishing
-</td>
-
+<td>0.10</td>
+<td>0.400</td>
+<td>Fine</td>
 </tr>
-
 
 <tr>
-
-<td>
-0.20
-</td>
-
-<td>
-0.80
-</td>
-
-<td>
-Fine
-</td>
-
-<td>
-Precision machining
-</td>
-
+<td>0.20</td>
+<td>0.800</td>
+<td>Fine</td>
 </tr>
-
 
 <tr>
-
-<td>
-0.40
-</td>
-
-<td>
-1.60
-</td>
-
-<td>
-Fine
-</td>
-
-<td>
-Finishing operations
-</td>
-
+<td>0.40</td>
+<td>1.600</td>
+<td>Fine</td>
 </tr>
-
 
 <tr>
-
-<td>
-0.80
-</td>
-
-<td>
-3.20
-</td>
-
-<td>
-Medium Fine
-</td>
-
-<td>
-Fine machining
-</td>
-
+<td>0.80</td>
+<td>3.200</td>
+<td>Medium Fine</td>
 </tr>
-
 
 <tr>
-
-<td>
-1.60
-</td>
-
-<td>
-6.40
-</td>
-
-<td>
-Medium
-</td>
-
-<td>
-General machining
-</td>
-
+<td>1.60</td>
+<td>6.400</td>
+<td>Medium</td>
 </tr>
-
 
 <tr>
-
-<td>
-3.20
-</td>
-
-<td>
-12.80
-</td>
-
-<td>
-Medium
-</td>
-
-<td>
-General machining
-</td>
-
+<td>3.20</td>
+<td>12.800</td>
+<td>Medium</td>
 </tr>
-
 
 <tr>
-
-<td>
-6.30
-</td>
-
-<td>
-25.20
-</td>
-
-<td>
-Rough
-</td>
-
-<td>
-Rough machining
-</td>
-
+<td>6.30</td>
+<td>25.200</td>
+<td>Rough</td>
 </tr>
-
 
 <tr>
-
-<td>
-12.50
-</td>
-
-<td>
-50.00
-</td>
-
-<td>
-Rough
-</td>
-
-<td>
-Rough machining / fabrication
-</td>
-
+<td>12.50</td>
+<td>50.000</td>
+<td>Rough</td>
 </tr>
-
 
 </tbody>
 
@@ -859,15 +1492,41 @@ Rough machining / fabrication
 
 
 
+<!-- IMPORTANT NOTE -->
+
+<div class="card">
+
 <div class="note">
 
-<strong>Important:</strong>
+<strong>Important Engineering Note:</strong>
 
-Ra and Rz are different surface roughness parameters.
-The conversion used here is only an approximate engineering reference.
-There is no single universal conversion factor between Ra and Rz for every
-surface or manufacturing process. Always follow the value specified on the
-engineering drawing or applicable standard.
+<br><br>
+
+Ra और Rz अलग-अलग surface roughness parameters हैं।
+
+<br><br>
+
+इस calculator में:
+
+<br>
+
+<strong>Rz ≈ 4 × Ra</strong>
+
+<br><br>
+
+को केवल approximate reference के रूप में use किया गया है।
+
+<br><br>
+
+Actual Ra और Rz relationship surface profile,
+machining process, material और measurement method पर depend कर सकता है।
+
+<br><br>
+
+इसलिए engineering drawing या applicable standard में दिया गया
+specified value हमेशा प्राथमिक requirement है।
+
+</div>
 
 </div>
 
@@ -880,8 +1539,6 @@ class="home-btn"
 ← Back to MechQTools Home
 </a>
 
-
-</div>
 
 </main>
 
@@ -943,7 +1600,6 @@ function calculateSurfaceFinish(){
     let formula = "";
 
 
-
     /* RA TO RZ */
 
     if(type === "raToRz"){
@@ -967,7 +1623,6 @@ function calculateSurfaceFinish(){
             "Rz ≈ 4 × Ra";
 
     }
-
 
 
     /* RZ TO RA */
@@ -995,7 +1650,6 @@ function calculateSurfaceFinish(){
     }
 
 
-
     /* RA REFERENCE */
 
     else if(type === "raReference"){
@@ -1011,13 +1665,12 @@ function calculateSurfaceFinish(){
             value.toFixed(3) +
             " µm<br><br>" +
 
-            "Use the reference table below to compare this value with common surface finish requirements.";
+            "Use the Surface Finish reference information below to understand the approximate finish level.";
 
         formula =
             "Surface roughness is expressed as Ra in µm.";
 
     }
-
 
 
     const grade =
@@ -1062,6 +1715,14 @@ function calculateSurfaceFinish(){
         "results"
     ).style.display =
         "block";
+
+
+    document.getElementById(
+        "results"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
 
 }
 
@@ -1111,13 +1772,19 @@ function getSurfaceGrade(
 
     if(raValue <= 1.6){
 
-        return "Medium Fine";
+        return "Fine / Finishing";
 
     }
 
     if(raValue <= 3.2){
 
         return "Medium";
+
+    }
+
+    if(raValue <= 6.3){
+
+        return "Rougher";
 
     }
 
