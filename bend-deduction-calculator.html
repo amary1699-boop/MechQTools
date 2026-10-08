@@ -5,10 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bend Deduction Calculator - All Angle Sheet Metal Tool | MechQTools</title>
+<title>Bend Deduction Calculator - MechQTools</title>
 
 <meta name="description"
-content="Free sheet metal Bend Deduction Calculator for any bend angle. Calculate bend deduction, setback and flat pattern length.">
+content="Free Bend Deduction Calculator for sheet metal. Calculate setback, bend deduction and flat pattern length for different bend angles.">
 
 <style>
 
@@ -18,129 +18,194 @@ content="Free sheet metal Bend Deduction Calculator for any bend angle. Calculat
 
 body{
     margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f5f7fa;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
     color:#222;
+    line-height:1.6;
 }
+
+
+/* ================= HEADER ================= */
 
 header{
-    background:#e53232;
-    color:white;
-    padding:18px 20px;
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
-.header-inner{
-    max-width:1100px;
+.navbar{
+    max-width:1200px;
     margin:auto;
+    padding:15px 20px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:20px;
+    justify-content:space-between;
 }
 
 .logo{
-    font-size:24px;
-    font-weight:bold;
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
 }
 
-nav a{
-    color:white;
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
     text-decoration:none;
-    margin-left:20px;
+    color:#333;
     font-size:15px;
 }
 
-.container{
-    max-width:950px;
-    margin:40px auto;
-    padding:0 20px;
+.nav-links a:hover{
+    color:#e53232;
 }
 
-.card{
-    background:white;
-    border-radius:12px;
-    padding:30px;
-    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+
+/* ================= MAIN ================= */
+
+main{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 20px;
 }
 
-h1{
-    margin-top:0;
-    font-size:30px;
+.section-title{
+    text-align:center;
+    font-size:32px;
+    margin:0 0 10px;
+}
+
+.section-title span{
+    color:#e53232;
 }
 
 .subtitle{
+    text-align:center;
     color:#666;
-    line-height:1.6;
+    max-width:750px;
+    margin:0 auto 35px;
+}
+
+
+/* ================= CALCULATOR ================= */
+
+.calculator-card{
+    max-width:850px;
+    margin:auto;
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:30px;
 }
 
 .form-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-top:25px;
+    gap:20px;
 }
 
-label{
-    display:block;
-    font-weight:bold;
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
     margin-bottom:7px;
 }
 
-input{
+.form-group input{
     width:100%;
     padding:12px;
     border:1px solid #ccc;
-    border-radius:7px;
+    border-radius:6px;
     font-size:16px;
+    background:#fff;
 }
 
-input:focus{
+.form-group input:focus{
     outline:none;
     border-color:#e53232;
+    box-shadow:0 0 0 2px rgba(229,50,50,0.08);
+}
+
+
+/* ================= BUTTONS ================= */
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
 }
 
 button{
-    width:100%;
-    margin-top:25px;
-    padding:14px;
-    background:#e53232;
-    color:white;
+    flex:1;
+    padding:13px 20px;
     border:none;
-    border-radius:7px;
-    font-size:17px;
-    font-weight:bold;
+    border-radius:6px;
+    font-size:16px;
+    font-weight:600;
     cursor:pointer;
 }
 
-button:hover{
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
     background:#c92525;
 }
 
-.result{
-    margin-top:25px;
+.clear-btn{
+    background:#fff;
+    color:#e53232;
+    border:1px solid #e53232;
+}
+
+.clear-btn:hover{
     background:#fff4f4;
-    border:1px solid #ffd1d1;
+}
+
+
+/* ================= RESULT ================= */
+
+.result{
+    display:none;
+    margin-top:30px;
+    padding:22px;
+    background:#fff5f5;
+    border:1px solid #f0caca;
     border-radius:8px;
-    padding:20px;
 }
 
 .result h2{
     margin-top:0;
     color:#e53232;
+    font-size:22px;
 }
 
 .result-box{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(3,1fr);
     gap:15px;
-    margin-top:15px;
+    margin-top:20px;
 }
 
 .result-item{
-    background:white;
-    border:1px solid #ddd;
+    background:#ffffff;
+    border:1px solid #e5e5e5;
     border-radius:8px;
-    padding:15px;
+    padding:18px;
 }
 
 .result-label{
@@ -149,48 +214,139 @@ button:hover{
 }
 
 .result-value{
-    font-size:24px;
-    font-weight:bold;
-    margin-top:6px;
+    margin-top:5px;
+    font-size:23px;
+    font-weight:700;
+    color:#222;
+}
+
+.details{
+    margin-top:20px;
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:15px;
 }
 
 .formula{
-    background:#f7f7f7;
-    padding:15px;
-    border-radius:7px;
     margin-top:20px;
-    line-height:1.8;
+    padding:18px;
+    background:#f7f8fa;
+    border-left:4px solid #e53232;
+    border-radius:6px;
+    line-height:1.9;
 }
 
-.info{
-    margin-top:30px;
-    line-height:1.7;
+
+/* ================= INFO CARDS ================= */
+
+.info-grid{
+    max-width:850px;
+    margin:30px auto 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:22px;
+}
+
+.info-card h2,
+.info-card h3{
+    margin-top:0;
+}
+
+.info-card h2{
+    font-size:21px;
+}
+
+.info-card h3{
+    font-size:18px;
 }
 
 .warning{
     margin-top:20px;
-    padding:15px;
+    padding:18px;
     background:#fff8e8;
     border-left:4px solid #f0a000;
-    line-height:1.6;
+    border-radius:6px;
 }
 
+
+/* ================= FOOTER ================= */
+
 footer{
-    text-align:center;
-    padding:30px 20px;
-    color:#666;
+    background:#151515;
+    color:#fff;
+    margin-top:30px;
 }
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-container h3{
+    margin-top:0;
+}
+
+.footer-container p{
+    color:#ccc;
+}
+
+.footer-container a{
+    color:#ccc;
+    text-decoration:none;
+    display:block;
+    margin:7px 0;
+}
+
+.footer-container a:hover{
+    color:#fff;
+}
+
+.footer-bottom{
+    text-align:center;
+    border-top:1px solid #333;
+    padding:18px 20px;
+    color:#aaa;
+    font-size:14px;
+}
+
+
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
 
-    .header-inner{
+    .navbar{
         flex-direction:column;
         align-items:flex-start;
+        gap:12px;
     }
 
-    nav a{
-        margin-left:0;
-        margin-right:15px;
+    .nav-links{
+        flex-wrap:wrap;
+        gap:15px;
+    }
+
+    main{
+        padding:35px 15px;
+    }
+
+    .section-title{
+        font-size:27px;
+    }
+
+    .calculator-card{
+        padding:20px;
     }
 
     .form-grid{
@@ -201,8 +357,17 @@ footer{
         grid-template-columns:1fr;
     }
 
-    h1{
-        font-size:25px;
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .button-row{
+        flex-direction:column;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
+        gap:25px;
     }
 
 }
@@ -211,42 +376,73 @@ footer{
 
 </head>
 
+
 <body>
+
+
+<!-- ================= HEADER ================= -->
 
 <header>
 
-<div class="header-inner">
+<div class="navbar">
 
-<div class="logo">
+<a href="index.html" class="logo">
 MechQTools
-</div>
+</a>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="index.html#mechanical">Mechanical Tools</a>
-<a href="index.html#quality">Quality Tools</a>
-</nav>
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical">Mechanical</a>
+</li>
+
+<li>
+<a href="index.html#quality">Quality</a>
+</li>
+
+<li>
+<a href="index.html#templates">Templates</a>
+</li>
+
+<li>
+<a href="index.html#guides">Guides</a>
+</li>
+
+<li>
+<a href="index.html#about">About</a>
+</li>
+
+</ul>
 
 </div>
 
 </header>
 
 
-<div class="container">
+<!-- ================= MAIN ================= -->
 
-<div class="card">
+<main>
 
-<h1>Bend Deduction Calculator</h1>
+
+<h1 class="section-title">
+Bend Deduction <span>Calculator</span>
+</h1>
 
 <p class="subtitle">
-Calculate bend deduction and flat pattern length for sheet metal
-using any bend angle from 1° to 179.9°.
+Calculate setback, bend deduction and flat pattern length
+for sheet metal parts using different bend angles.
 </p>
+
+
+<!-- ================= CALCULATOR ================= -->
+
+<div class="calculator-card">
 
 
 <div class="form-grid">
 
-<div>
+
+<div class="form-group">
 
 <label for="dimensionA">
 Outside Dimension A — mm
@@ -263,7 +459,7 @@ placeholder="Example: 100"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="dimensionB">
 Outside Dimension B — mm
@@ -280,7 +476,7 @@ placeholder="Example: 100"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="thickness">
 Material Thickness (T) — mm
@@ -297,7 +493,7 @@ placeholder="Example: 2"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="radius">
 Inside Bend Radius (R) — mm
@@ -314,7 +510,7 @@ placeholder="Example: 3"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="angle">
 Bend Angle (°)
@@ -332,7 +528,7 @@ placeholder="Example: 90"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="ba">
 Bend Allowance (BA) — mm
@@ -343,7 +539,7 @@ type="number"
 id="ba"
 step="any"
 min="0"
-placeholder="Example: 5.75"
+placeholder="Example: 5.749"
 >
 
 </div>
@@ -351,16 +547,34 @@ placeholder="Example: 5.75"
 </div>
 
 
-<button onclick="calculateBD()">
-Calculate Bend Deduction
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateBD()"
+>
+Calculate
 </button>
 
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
 
-<div class="result" id="result" style="display:none;">
+</div>
+
+
+<!-- ================= RESULT ================= -->
+
+<div class="result" id="result">
 
 <h2>Calculation Result</h2>
 
+
 <div class="result-box">
+
 
 <div class="result-item">
 
@@ -368,7 +582,10 @@ Calculate Bend Deduction
 Setback
 </div>
 
-<div class="result-value" id="setbackResult">
+<div
+class="result-value"
+id="setbackResult"
+>
 0.000 mm
 </div>
 
@@ -381,7 +598,10 @@ Setback
 Bend Deduction
 </div>
 
-<div class="result-value" id="bdResult">
+<div
+class="result-value"
+id="bdResult"
+>
 0.000 mm
 </div>
 
@@ -394,53 +614,60 @@ Bend Deduction
 Flat Pattern Length
 </div>
 
-<div class="result-value" id="flatResult">
+<div
+class="result-value"
+id="flatResult"
+>
 0.000 mm
 </div>
 
 </div>
 
+
 </div>
 
 
-<div id="details" style="margin-top:20px;"></div>
+<div
+class="details"
+id="details"
+>
+</div>
 
 
 <div class="formula">
 
-<strong>Formulas:</strong><br><br>
-
-Setback = tan(Bend Angle / 2) × (R + T)
+<strong>Formulas:</strong>
 
 <br><br>
 
-Bend Deduction = 2 × Setback − Bend Allowance
+Setback =
+tan(Bend Angle / 2) × (R + T)
 
 <br><br>
 
-Flat Pattern Length = A + B − Bend Deduction
+Bend Deduction =
+2 × Setback − Bend Allowance
+
+<br><br>
+
+Flat Pattern Length =
+A + B − Bend Deduction
 
 </div>
 
 </div>
 
-
-<div class="warning">
-
-<strong>Important:</strong><br>
-
-This calculator assumes that A and B are
-<strong>outside dimensions</strong> measured to the theoretical
-sharp corner. The calculation is intended for standard sheet-metal
-bend calculations and should be verified with your actual machine,
-tooling, material and shop-floor bend data before production use.
-
 </div>
 
 
-<div class="info">
+<!-- ================= INFORMATION ================= -->
 
-<h2>How to use</h2>
+<div class="info-grid">
+
+
+<div class="info-card">
+
+<h2>How to Use</h2>
 
 <ol>
 
@@ -454,13 +681,18 @@ tooling, material and shop-floor bend data before production use.
 
 <li>Enter Bend Angle.</li>
 
-<li>Enter the Bend Allowance for the same material and bend condition.</li>
+<li>Enter Bend Allowance.</li>
 
-<li>Click <strong>Calculate Bend Deduction</strong>.</li>
+<li>Click <strong>Calculate</strong>.</li>
 
 </ol>
 
-<h3>Example</h3>
+</div>
+
+
+<div class="info-card">
+
+<h2>Example</h2>
 
 <p>
 
@@ -474,53 +706,162 @@ BA = 5.75 mm
 </p>
 
 <p>
-For this example, the Bend Deduction is approximately
-<strong>4.250 mm</strong> and the flat pattern length is
-approximately <strong>195.750 mm</strong>.
+
+Bend Deduction ≈
+<strong>4.250 mm</strong>
+
+<br>
+
+Flat Pattern Length ≈
+<strong>195.750 mm</strong>
+
 </p>
 
 </div>
 
+
+</div>
+
+
+<div class="info-grid">
+
+
+<div class="info-card" style="grid-column:1 / -1;">
+
+<div class="warning">
+
+<strong>Important:</strong><br><br>
+
+This calculator assumes that A and B are
+<strong>outside dimensions</strong> measured to the
+theoretical sharp corner.
+
+The calculation is intended for standard sheet-metal
+bend calculations and should be verified with your actual
+machine, tooling, material and shop-floor bend data before
+production use.
+
+</div>
+
 </div>
 
 </div>
 
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
+<div class="footer-container">
+
+
+<div>
+
+<h3>MechQTools</h3>
+
+<p>
+Engineering & Quality Tools for Professionals.
+</p>
+
+<p>
+Free practical calculators and tools for
+Mechanical and Quality Engineers.
+</p>
+
+</div>
+
+
+<div>
+
+<h3>Mechanical</h3>
+
+<a href="bend-allowance-calculator.html">
+Bend Allowance
+</a>
+
+<a href="bend-deduction-calculator.html">
+Bend Deduction
+</a>
+
+<a href="material-weight-calculator.html">
+Material Weight
+</a>
+
+<a href="tolerance-calculator.html">
+Tolerance Calculator
+</a>
+
+</div>
+
+
+<div>
+
+<h3>Quality</h3>
+
+<a href="gdt-calculator.html">
+GD&T Calculator
+</a>
+
+<a href="index.html#quality">
+Quality Tools
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="footer-bottom">
+
 © 2026 MechQTools. All Rights Reserved.
+
+</div>
 
 </footer>
 
+
+<!-- ================= JAVASCRIPT ================= -->
 
 <script>
 
 function calculateBD(){
 
-    const A = parseFloat(
-        document.getElementById("dimensionA").value
-    );
+    const A =
+        parseFloat(
+            document.getElementById("dimensionA").value
+        );
 
-    const B = parseFloat(
-        document.getElementById("dimensionB").value
-    );
+    const B =
+        parseFloat(
+            document.getElementById("dimensionB").value
+        );
 
-    const T = parseFloat(
-        document.getElementById("thickness").value
-    );
+    const T =
+        parseFloat(
+            document.getElementById("thickness").value
+        );
 
-    const R = parseFloat(
-        document.getElementById("radius").value
-    );
+    const R =
+        parseFloat(
+            document.getElementById("radius").value
+        );
 
-    const angle = parseFloat(
-        document.getElementById("angle").value
-    );
+    const angle =
+        parseFloat(
+            document.getElementById("angle").value
+        );
 
-    const BA = parseFloat(
-        document.getElementById("ba").value
-    );
+    const BA =
+        parseFloat(
+            document.getElementById("ba").value
+        );
 
+
+    /* Check empty values */
 
     if(
         isNaN(A) ||
@@ -534,53 +875,78 @@ function calculateBD(){
         alert("Please enter all values.");
 
         return;
+
     }
 
+
+    /* Dimension validation */
 
     if(A <= 0 || B <= 0){
 
-        alert("Outside dimensions must be greater than 0.");
+        alert(
+            "Outside dimensions must be greater than 0."
+        );
 
         return;
+
     }
 
+
+    /* Thickness validation */
 
     if(T <= 0){
 
-        alert("Material Thickness must be greater than 0.");
+        alert(
+            "Material Thickness must be greater than 0."
+        );
 
         return;
+
     }
 
+
+    /* Radius validation */
 
     if(R < 0){
 
-        alert("Inside Bend Radius cannot be negative.");
+        alert(
+            "Inside Bend Radius cannot be negative."
+        );
 
         return;
+
     }
 
+
+    /* Angle validation */
 
     if(angle <= 0 || angle >= 180){
 
-        alert("Bend Angle must be between 1° and 179.9°.");
+        alert(
+            "Bend Angle must be between 1° and 179.9°."
+        );
 
         return;
+
     }
 
 
+    /* Bend allowance validation */
+
     if(BA < 0){
 
-        alert("Bend Allowance cannot be negative.");
+        alert(
+            "Bend Allowance cannot be negative."
+        );
 
         return;
+
     }
 
 
     /*
-       Convert degrees to radians
-       because JavaScript Math.tan()
-       uses radians.
+    JavaScript Math.tan()
+    uses radians.
     */
 
     const angleRadians =
@@ -588,15 +954,16 @@ function calculateBD(){
 
 
     /*
-       Outside-dimension setback
+    Setback calculation
     */
 
     const setback =
-        Math.tan(angleRadians / 2) * (R + T);
+        Math.tan(angleRadians / 2)
+        * (R + T);
 
 
     /*
-       Bend Deduction
+    Bend Deduction calculation
     */
 
     const bendDeduction =
@@ -604,43 +971,94 @@ function calculateBD(){
 
 
     /*
-       Flat pattern length
+    Flat Pattern Length
     */
 
     const flatLength =
         A + B - bendDeduction;
 
 
-    document.getElementById("setbackResult").textContent =
+    /* Display results */
+
+    document.getElementById(
+        "setbackResult"
+    ).textContent =
         setback.toFixed(3) + " mm";
 
 
-    document.getElementById("bdResult").textContent =
+    document.getElementById(
+        "bdResult"
+    ).textContent =
         bendDeduction.toFixed(3) + " mm";
 
 
-    document.getElementById("flatResult").textContent =
+    document.getElementById(
+        "flatResult"
+    ).textContent =
         flatLength.toFixed(3) + " mm";
 
 
-    document.getElementById("details").innerHTML =
+    /* Display input details */
 
-        `
-        <strong>Dimension A:</strong> ${A} mm<br>
-        <strong>Dimension B:</strong> ${B} mm<br>
-        <strong>Thickness:</strong> ${T} mm<br>
-        <strong>Inside Radius:</strong> ${R} mm<br>
-        <strong>Bend Angle:</strong> ${angle}°<br>
-        <strong>Bend Allowance:</strong> ${BA} mm
-        `;
+    document.getElementById(
+        "details"
+    ).innerHTML =
+
+    `
+    <strong>Dimension A:</strong> ${A} mm<br>
+    <strong>Dimension B:</strong> ${B} mm<br>
+    <strong>Thickness:</strong> ${T} mm<br>
+    <strong>Inside Radius:</strong> ${R} mm<br>
+    <strong>Bend Angle:</strong> ${angle}°<br>
+    <strong>Bend Allowance:</strong> ${BA} mm
+    `;
 
 
-    document.getElementById("result").style.display =
-        "block";
+    /* Show result */
+
+    document.getElementById(
+        "result"
+    ).style.display = "block";
+
+}
+
+
+/* ================= CLEAR ================= */
+
+function clearCalculator(){
+
+    document.getElementById(
+        "dimensionA"
+    ).value = "";
+
+    document.getElementById(
+        "dimensionB"
+    ).value = "";
+
+    document.getElementById(
+        "thickness"
+    ).value = "";
+
+    document.getElementById(
+        "radius"
+    ).value = "";
+
+    document.getElementById(
+        "angle"
+    ).value = "";
+
+    document.getElementById(
+        "ba"
+    ).value = "";
+
+    document.getElementById(
+        "result"
+    ).style.display = "none";
 
 }
 
 </script>
+
 
 </body>
 </html>
