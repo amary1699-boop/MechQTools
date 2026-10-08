@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Engineering Unit Converter - MechQTools</title>
+
+<meta name="description"
+content="Free engineering unit converter for length, mass, pressure, force and temperature conversions.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.container{
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    margin:0 0 8px;
+    font-size:32px;
+    color:#e53232;
+}
+
+.page-title p{
+    margin:0;
+    color:#666;
+    font-size:16px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e2e2e2;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+    margin-bottom:25px;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:600;
+    font-size:14px;
+}
+
+select,
+input{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    background:#fff;
+}
+
+select:focus,
+input:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+/* CONVERTER GRID */
+
+.converter-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.unit-box{
+    background:#f9f9f9;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:18px;
+}
+
+.unit-box h3{
+    margin:0 0 15px;
+    font-size:18px;
+}
+
+/* RESULT */
+
+.result-box{
+    margin-top:25px;
+    padding:20px;
+    background:#fff5f5;
+    border:1px solid #f0cccc;
+    border-radius:10px;
+}
+
+.result-box h3{
+    margin:0 0 12px;
+    color:#e53232;
+}
+
+.result-main{
+    font-size:24px;
+    font-weight:700;
+    color:#222;
+    word-break:break-word;
+}
+
+.formula{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
+}
+
+/* QUICK CONVERSION */
+
+.quick-title{
+    margin-top:0;
+    color:#e53232;
+}
+
+.quick-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.quick-table th,
+.quick-table td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+.quick-table th{
+    background:#f3f3f3;
+}
+
+/* BUTTONS */
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:15px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.convert-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.convert-btn:hover{
+    background:#c92525;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+.home-btn{
+    display:inline-block;
+    margin-top:5px;
+    padding:11px 18px;
+    background:#e53232;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-btn:hover{
+    background:#c92525;
+}
+
+/* INFO */
+
+.info-box{
+    background:#ffffff;
+    border:1px solid #e2e2e2;
+    border-radius:12px;
+    padding:22px;
+}
+
+.info-box h2{
+    margin-top:0;
+    color:#e53232;
+}
+
+.info-box ul{
+    padding-left:20px;
+}
+
+.note{
+    background:#fff8e6;
+    border-left:4px solid #e0a800;
+    padding:12px 15px;
+    margin-top:18px;
+    border-radius:5px;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#ffffff;
+    border-top:1px solid #e5e5e5;
+    text-align:center;
+    padding:25px 15px;
+    color:#666;
+    font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .converter-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="page-title">
+
+<h1>
+Engineering Unit Converter
+</h1>
+
+<p>
+Convert common engineering units quickly and easily.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="form-group">
+
+<label for="category">
+Select Category
+</label>
+
+<select id="category">
+
+<option value="length">
+Length
+</option>
+
+<option value="mass">
+Weight / Mass
+</option>
+
+<option value="pressure">
+Pressure
+</option>
+
+<option value="force">
+Force
+</option>
+
+<option value="temperature">
+Temperature
+</option>
+
+</select>
+
+</div>
+
+
+<div class="converter-grid">
+
+<div class="unit-box">
+
+<h3>
+From
+</h3>
+
+<div class="form-group">
+
+<label for="fromUnit">
+From Unit
+</label>
+
+<select id="fromUnit"></select>
+
+</div>
+
+<div class="form-group">
+
+<label for="inputValue">
+Value
+</label>
+
+<input
+type="number"
+id="inputValue"
+placeholder="Enter value"
+step="any"
+value="1"
+>
+
+</div>
+
+</div>
+
+
+<div class="unit-box">
+
+<h3>
+To
+</h3>
+
+<div class="form-group">
+
+<label for="toUnit">
+To Unit
+</label>
+
+<select id="toUnit"></select>
+
+</div>
+
+<div class="form-group">
+
+<label for="result">
+Converted Value
+</label>
+
+<input
+type="text"
+id="result"
+readonly
+placeholder="Result"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="convert-btn"
+onclick="convertUnit()"
+>
+Convert
+</button>
+
+<button
+class="clear-btn"
+onclick="clearConverter()"
+>
+Clear
+</button>
+
+</div>
+
+
+<div class="result-box">
+
+<h3>
+Conversion Result
+</h3>
+
+<div
+class="result-main"
+id="resultText"
+>
+1 mm = 0.001 m
+</div>
+
+<div
+class="formula"
+id="formulaText"
+>
+Formula will appear here.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 class="quick-title">
+Common Engineering Conversions
+</h2>
+
+<table class="quick-table">
+
+<thead>
+
+<tr>
+<th>
+Conversion
+</th>
+
+<th>
+Value
+</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>
+1 inch
+</td>
+
+<td>
+25.4 mm
+</td>
+</tr>
+
+<tr>
+<td>
+1 foot
+</td>
+
+<td>
+304.8 mm
+</td>
+</tr>
+
+<tr>
+<td>
+1 meter
+</td>
+
+<td>
+1000 mm
+</td>
+</tr>
+
+<tr>
+<td>
+1 kgf
+</td>
+
+<td>
+9.80665 N
+</td>
+</tr>
+
+<tr>
+<td>
+1 bar
+</td>
+
+<td>
+0.1 MPa
+</td>
+</tr>
+
+<tr>
+<td>
+1 MPa
+</td>
+
+<td>
+10 bar
+</td>
+</tr>
+
+<tr>
+<td>
+1 psi
+</td>
+
+<td>
+0.006895 MPa
+</td>
+</tr>
+
+<tr>
+<td>
+0 °C
+</td>
+
+<td>
+32 °F
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="info-box">
+
+<h2>
+About This Engineering Unit Converter
+</h2>
+
+<p>
+This tool is designed for common Mechanical and Quality Engineering calculations.
+</p>
+
+<ul>
+
+<li>
+Length conversion between mm, cm, m, inch and ft.
+</li>
+
+<li>
+Weight / mass conversion between g, kg, ton and lb.
+</li>
+
+<li>
+Pressure conversion between Pa, kPa, MPa, bar and psi.
+</li>
+
+<li>
+Force conversion between N, kN and kgf.
+</li>
+
+<li>
+Temperature conversion between Celsius, Fahrenheit and Kelvin.
+</li>
+
+</ul>
+
+<div class="note">
+
+<strong>Important:</strong>
+For production, inspection and design work, always use the unit and conversion requirements specified by the applicable drawing, standard or manufacturer.
+
+</div>
+
+</div>
+
+
+<a
+href="index.html"
+class="home-btn"
+>
+← Back to Home
+</a>
+
+</main>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+/* UNIT DATA */
+
+const unitData = {
+
+    length: {
+
+        mm: {
+            name:"Millimeter (mm)",
+            factor:1
+        },
+
+        cm: {
+            name:"Centimeter (cm)",
+            factor:10
+        },
+
+        m: {
+            name:"Meter (m)",
+            factor:1000
+        },
+
+        inch: {
+            name:"Inch (in)",
+            factor:25.4
+        },
+
+        ft: {
+            name:"Foot (ft)",
+            factor:304.8
+        }
+
+    },
+
+
+    mass: {
+
+        g: {
+            name:"Gram (g)",
+            factor:0.001
+        },
+
+        kg: {
+            name:"Kilogram (kg)",
+            factor:1
+        },
+
+        ton: {
+            name:"Metric Ton (ton)",
+            factor:1000
+        },
+
+        lb: {
+            name:"Pound (lb)",
+            factor:0.45359237
+        }
+
+    },
+
+
+    pressure: {
+
+        Pa: {
+            name:"Pascal (Pa)",
+            factor:0.000001
+        },
+
+        kPa: {
+            name:"Kilopascal (kPa)",
+            factor:0.001
+        },
+
+        MPa: {
+            name:"Megapascal (MPa)",
+            factor:1
+        },
+
+        bar: {
+            name:"Bar",
+            factor:0.1
+        },
+
+        psi: {
+            name:"PSI",
+            factor:0.006894757
+        }
+
+    },
+
+
+    force: {
+
+        N: {
+            name:"Newton (N)",
+            factor:1
+        },
+
+        kN: {
+            name:"Kilonewton (kN)",
+            factor:1000
+        },
+
+        kgf: {
+            name:"Kilogram-force (kgf)",
+            factor:9.80665
+        }
+
+    },
+
+
+    temperature: {
+
+        C: {
+            name:"Celsius (°C)"
+        },
+
+        F: {
+            name:"Fahrenheit (°F)"
+        },
+
+        K: {
+            name:"Kelvin (K)"
+        }
+
+    }
+
+};
+
+
+/* ELEMENTS */
+
+const category =
+document.getElementById("category");
+
+const fromUnit =
+document.getElementById("fromUnit");
+
+const toUnit =
+document.getElementById("toUnit");
+
+const inputValue =
+document.getElementById("inputValue");
+
+const result =
+document.getElementById("result");
+
+const resultText =
+document.getElementById("resultText");
+
+const formulaText =
+document.getElementById("formulaText");
+
+
+/* LOAD UNITS */
+
+function loadUnits(){
+
+    const selectedCategory =
+    category.value;
+
+    fromUnit.innerHTML = "";
+    toUnit.innerHTML = "";
+
+    const units =
+    unitData[selectedCategory];
+
+    Object.keys(units).forEach(unit => {
+
+        const option1 =
+        document.createElement("option");
+
+        option1.value = unit;
+        option1.textContent =
+        units[unit].name;
+
+        fromUnit.appendChild(option1);
+
+
+        const option2 =
+        document.createElement("option");
+
+        option2.value = unit;
+        option2.textContent =
+        units[unit].name;
+
+        toUnit.appendChild(option2);
+
+    });
+
+
+    /* DEFAULT TARGET */
+
+    if(selectedCategory === "length"){
+
+        fromUnit.value = "mm";
+        toUnit.value = "m";
+
+    }
+
+    else if(selectedCategory === "mass"){
+
+        fromUnit.value = "kg";
+        toUnit.value = "g";
+
+    }
+
+    else if(selectedCategory === "pressure"){
+
+        fromUnit.value = "MPa";
+        toUnit.value = "bar";
+
+    }
+
+    else if(selectedCategory === "force"){
+
+        fromUnit.value = "N";
+        toUnit.value = "kN";
+
+    }
+
+    else if(selectedCategory === "temperature"){
+
+        fromUnit.value = "C";
+        toUnit.value = "F";
+
+    }
+
+    convertUnit();
+
+}
+
+
+/* CONVERT */
+
+function convertUnit(){
+
+    const categoryValue =
+    category.value;
+
+    const from =
+    fromUnit.value;
+
+    const to =
+    toUnit.value;
+
+    const value =
+    parseFloat(inputValue.value);
+
+
+    if(isNaN(value)){
+
+        result.value = "";
+
+        resultText.textContent =
+        "Please enter a valid value.";
+
+        formulaText.textContent =
+        "Enter a number to perform the conversion.";
+
+        return;
+
+    }
+
+
+    let converted;
+
+
+    /* TEMPERATURE */
+
+    if(categoryValue === "temperature"){
+
+        converted =
+        convertTemperature(
+            value,
+            from,
+            to
+        );
+
+    }
+
+
+    /* OTHER UNITS */
+
+    else{
+
+        const units =
+        unitData[categoryValue];
+
+        const baseValue =
+        value * units[from].factor;
+
+        converted =
+        baseValue / units[to].factor;
+
+    }
+
+
+    const rounded =
+    formatNumber(converted);
+
+
+    result.value =
+    rounded;
+
+
+    const fromName =
+    unitData[categoryValue][from].name;
+
+    const toName =
+    unitData[categoryValue][to].name;
+
+
+    resultText.textContent =
+    value + " " +
+    shortUnit(fromName) +
+    " = " +
+    rounded + " " +
+    shortUnit(toName);
+
+
+    formulaText.textContent =
+    "Converted from " +
+    fromName +
+    " to " +
+    toName + ".";
+
+}
+
+
+/* TEMPERATURE CONVERSION */
+
+function convertTemperature(
+    value,
+    from,
+    to
+){
+
+    let celsius;
+
+
+    if(from === "C"){
+
+        celsius = value;
+
+    }
+
+    else if(from === "F"){
+
+        celsius =
+        (value - 32) * 5 / 9;
+
+    }
+
+    else if(from === "K"){
+
+        celsius =
+        value - 273.15;
+
+    }
+
+
+    if(to === "C"){
+
+        return celsius;
+
+    }
+
+    if(to === "F"){
+
+        return (
+            celsius * 9 / 5
+        ) + 32;
+
+    }
+
+    if(to === "K"){
+
+        return (
+            celsius + 273.15
+        );
+
+    }
+
+}
+
+
+/* FORMAT NUMBER */
+
+function formatNumber(value){
+
+    if(!isFinite(value)){
+        return "0";
+    }
+
+    return Number(
+        value.toFixed(8)
+    ).toString();
+
+}
+
+
+/* SHORT UNIT */
+
+function shortUnit(name){
+
+    if(name.includes("(mm)"))
+        return "mm";
+
+    if(name.includes("(cm)"))
+        return "cm";
+
+    if(name.includes("(m)"))
+        return "m";
+
+    if(name.includes("(in)"))
+        return "in";
+
+    if(name.includes("(ft)"))
+        return "ft";
+
+    if(name.includes("(g)"))
+        return "g";
+
+    if(name.includes("(kg)"))
+        return "kg";
+
+    if(name.includes("(ton)"))
+        return "ton";
+
+    if(name.includes("(lb)"))
+        return "lb";
+
+    if(name.includes("(Pa)"))
+        return "Pa";
+
+    if(name.includes("(kPa)"))
+        return "kPa";
+
+    if(name.includes("(MPa)"))
+        return "MPa";
+
+    if(name.includes("Bar"))
+        return "bar";
+
+    if(name.includes("PSI"))
+        return "psi";
+
+    if(name.includes("(N)"))
+        return "N";
+
+    if(name.includes("(kN)"))
+        return "kN";
+
+    if(name.includes("(kgf)"))
+        return "kgf";
+
+    if(name.includes("Celsius"))
+        return "°C";
+
+    if(name.includes("Fahrenheit"))
+        return "°F";
+
+    if(name.includes("Kelvin"))
+        return "K";
+
+    return name;
+
+}
+
+
+/* CLEAR */
+
+function clearConverter(){
+
+    inputValue.value = "";
+
+    result.value = "";
+
+    resultText.textContent =
+    "Enter a value and click Convert.";
+
+    formulaText.textContent =
+    "Formula will appear here.";
+
+}
+
+
+/* EVENTS */
+
+category.addEventListener(
+    "change",
+    loadUnits
+);
+
+fromUnit.addEventListener(
+    "change",
+    convertUnit
+);
+
+toUnit.addEventListener(
+    "change",
+    convertUnit
+);
+
+inputValue.addEventListener(
+    "input",
+    convertUnit
+);
+
+
+/* INITIAL LOAD */
+
+loadUnits();
+
+</script>
+
+</body>
+</html>
