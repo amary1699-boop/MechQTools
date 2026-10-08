@@ -1,339 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sheet Metal Bend Allowance Calculator - Free Online Tool</title>
+<title>Bend Allowance Calculator - All Angle Sheet Metal Tool | MechQTools</title>
 
 <meta name="description"
-content="Free sheet metal bend allowance calculator. Calculate bend allowance using material thickness, inside bend radius, K-factor and bend angle.">
-
-<meta name="keywords"
-content="bend allowance calculator, sheet metal bend allowance calculator, bend allowance formula, K factor calculator, sheet metal calculator">
+content="Free sheet metal Bend Allowance Calculator for any bend angle. Calculate bend allowance using material thickness, inside radius, K-factor and bend angle.">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#f7f8fa;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fa;
     color:#222;
-    line-height:1.6;
 }
-
-/* HEADER */
 
 header{
-    background:#fff;
-    border-bottom:1px solid #e5e5e5;
-    position:sticky;
-    top:0;
-    z-index:1000;
+    background:#e53232;
+    color:white;
+    padding:18px 20px;
 }
 
-.navbar{
-    max-width:1200px;
+.header-inner{
+    max-width:1100px;
     margin:auto;
-    padding:15px 20px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
+    gap:20px;
 }
 
 .logo{
-    color:#e53232;
-    text-decoration:none;
-    font-size:25px;
+    font-size:24px;
     font-weight:bold;
 }
 
-.nav-links{
-    display:flex;
-    gap:25px;
-    list-style:none;
-}
-
-.nav-links a{
-    color:#333;
+nav a{
+    color:white;
     text-decoration:none;
+    margin-left:20px;
     font-size:15px;
 }
 
-.nav-links a:hover{
-    color:#e53232;
-}
-
-/* MAIN */
-
 .container{
-    max-width:1000px;
-    margin:auto;
-    padding:45px 20px;
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
 }
 
-/* TITLE */
-
-.page-title{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.page-title h1{
-    font-size:38px;
-    margin-bottom:10px;
-}
-
-.page-title p{
-    color:#666;
-    font-size:17px;
-}
-
-/* CALCULATOR */
-
-.calculator{
-    background:#fff;
-    border:1px solid #e2e2e2;
+.card{
+    background:white;
     border-radius:12px;
     padding:30px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.06);
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
+h1{
+    margin-top:0;
+    font-size:30px;
+}
+
+.subtitle{
+    color:#666;
+    line-height:1.6;
 }
 
 .form-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:20px;
+    gap:18px;
+    margin-top:25px;
 }
 
-.form-group label{
+label{
     display:block;
-    margin-bottom:7px;
     font-weight:bold;
+    margin-bottom:7px;
 }
 
-.form-group input{
+input{
     width:100%;
     padding:12px;
     border:1px solid #ccc;
-    border-radius:6px;
+    border-radius:7px;
     font-size:16px;
 }
 
-.form-group input:focus{
+input:focus{
     outline:none;
     border-color:#e53232;
 }
 
-/* BUTTONS */
-
-.buttons{
-    display:flex;
-    gap:12px;
-    margin-top:25px;
-    flex-wrap:wrap;
-}
-
 button{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    background:#e53232;
+    color:white;
     border:none;
-    padding:12px 22px;
-    border-radius:6px;
-    font-size:15px;
+    border-radius:7px;
+    font-size:17px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.calculate{
-    background:#e53232;
-    color:#fff;
+button:hover{
+    background:#c92525;
 }
-
-.calculate:hover{
-    background:#c92727;
-}
-
-.reset{
-    background:#eee;
-    color:#333;
-}
-
-/* RESULT */
 
 .result{
     margin-top:25px;
     background:#fff4f4;
-    border:1px solid #f0bcbc;
-    border-radius:8px;
-    padding:22px;
-    display:none;
-}
-
-.result h2{
-    font-size:22px;
-    margin-bottom:10px;
-}
-
-.result-value{
-    font-size:32px;
-    font-weight:bold;
-    color:#e53232;
-}
-
-.formula{
-    margin-top:12px;
-    color:#555;
-    font-size:14px;
-}
-
-/* CONTENT */
-
-.content{
-    background:#fff;
-    margin-top:30px;
-    padding:30px;
-    border:1px solid #e5e5e5;
-    border-radius:10px;
-}
-
-.content h2{
-    margin-top:25px;
-    margin-bottom:10px;
-    font-size:25px;
-}
-
-.content h2:first-child{
-    margin-top:0;
-}
-
-.content p{
-    margin-bottom:12px;
-    color:#555;
-}
-
-.content ul{
-    padding-left:25px;
-    color:#555;
-}
-
-.example{
-    background:#f7f7f7;
-    border-left:4px solid #e53232;
-    padding:18px;
-    margin-top:15px;
-}
-
-/* RELATED */
-
-.related{
-    margin-top:30px;
-}
-
-.related-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    margin-top:15px;
-}
-
-.related-card{
-    background:#fff;
-    border:1px solid #ddd;
+    border:1px solid #ffd1d1;
     border-radius:8px;
     padding:20px;
 }
 
-.related-card h3{
-    margin-bottom:7px;
-}
-
-.related-card p{
-    color:#666;
-    font-size:14px;
-}
-
-.related-card a{
-    display:inline-block;
-    margin-top:10px;
+.result h2{
+    margin-top:0;
     color:#e53232;
-    text-decoration:none;
-    font-weight:bold;
 }
 
-/* FOOTER */
+.result-value{
+    font-size:30px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.formula{
+    background:#f7f7f7;
+    padding:15px;
+    border-radius:7px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.info{
+    margin-top:30px;
+    line-height:1.7;
+}
 
 footer{
-    background:#151515;
-    color:#fff;
-    margin-top:50px;
-}
-
-.footer{
-    max-width:1200px;
-    margin:auto;
-    padding:35px 20px;
     text-align:center;
+    padding:30px 20px;
+    color:#666;
 }
-
-.footer-logo{
-    color:#e53232;
-    font-size:23px;
-    font-weight:bold;
-}
-
-.footer p{
-    color:#aaa;
-    margin-top:8px;
-    font-size:14px;
-}
-
-.copyright{
-    border-top:1px solid #333;
-    margin-top:20px;
-    padding-top:15px;
-    color:#888;
-    font-size:13px;
-}
-
-/* MOBILE */
 
 @media(max-width:700px){
 
-    .navbar{
+    .header-inner{
         flex-direction:column;
-        gap:12px;
+        align-items:flex-start;
     }
 
-    .nav-links{
-        gap:15px;
-        flex-wrap:wrap;
-        justify-content:center;
-    }
-
-    .page-title h1{
-        font-size:30px;
+    nav a{
+        margin-left:0;
+        margin-right:15px;
     }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    .calculator{
-        padding:20px;
-    }
-
-    .content{
-        padding:20px;
-    }
-
-    .related-grid{
-        grid-template-columns:1fr;
+    h1{
+        font-size:25px;
     }
 
 }
@@ -344,126 +182,92 @@ footer{
 
 <body>
 
-
-<!-- HEADER -->
-
 <header>
 
-<div class="navbar">
+<div class="header-inner">
 
-<a href="index.html" class="logo">
+<div class="logo">
 MechQTools
-</a>
+</div>
 
-<ul class="nav-links">
-
-<li>
+<nav>
 <a href="index.html">Home</a>
-</li>
-
-<li>
-<a href="index.html#mechanical-tools">Mechanical Tools</a>
-</li>
-
-<li>
-<a href="index.html#quality-tools">Quality Tools</a>
-</li>
-
-<li>
-<a href="index.html#templates">Templates</a>
-</li>
-
-</ul>
+<a href="index.html#mechanical">Mechanical Tools</a>
+<a href="index.html#quality">Quality Tools</a>
+</nav>
 
 </div>
 
 </header>
 
 
-<!-- MAIN -->
-
-<main>
-
 <div class="container">
 
+<div class="card">
 
-<!-- TITLE -->
+<h1>Bend Allowance Calculator</h1>
 
-<div class="page-title">
-
-<h1>
-Sheet Metal Bend Allowance Calculator
-</h1>
-
-<p>
-Calculate bend allowance quickly using thickness, inside radius,
-K-factor and bend angle.
+<p class="subtitle">
+Calculate sheet metal bend allowance for any bend angle using material
+thickness, inside bend radius and K-factor.
 </p>
 
-</div>
-
-
-<!-- CALCULATOR -->
-
-<div class="calculator">
 
 <div class="form-grid">
 
-
-<div class="form-group">
+<div>
 
 <label for="thickness">
-Material Thickness (T)
+Material Thickness (T) — mm
 </label>
 
 <input
 type="number"
 id="thickness"
-placeholder="Example: 2"
 step="any"
 min="0"
+placeholder="Example: 2"
 >
 
 </div>
 
 
-<div class="form-group">
+<div>
 
 <label for="radius">
-Inside Bend Radius (R)
+Inside Bend Radius (R) — mm
 </label>
 
 <input
 type="number"
 id="radius"
-placeholder="Example: 3"
 step="any"
 min="0"
+placeholder="Example: 3"
 >
 
 </div>
 
 
-<div class="form-group">
+<div>
 
 <label for="kfactor">
-K-Factor (K)
+K-Factor
 </label>
 
 <input
 type="number"
 id="kfactor"
-placeholder="Example: 0.33"
 step="any"
 min="0"
 max="1"
-value="0.33"
+placeholder="Example: 0.33"
 >
 
 </div>
 
 
-<div class="form-group">
+<div>
 
 <label for="angle">
 Bend Angle (°)
@@ -472,11 +276,10 @@ Bend Angle (°)
 <input
 type="number"
 id="angle"
-placeholder="Example: 90"
 step="any"
-min="0"
-max="360"
-value="90"
+min="1"
+max="179.9"
+placeholder="Example: 90"
 >
 
 </div>
@@ -484,268 +287,66 @@ value="90"
 </div>
 
 
-<div class="buttons">
-
-<button
-class="calculate"
-onclick="calculateBA()">
+<button onclick="calculateBA()">
 Calculate Bend Allowance
 </button>
 
-<button
-class="reset"
-onclick="resetCalculator()">
-Reset
-</button>
 
+<div class="result" id="result" style="display:none;">
+
+<h2>Result</h2>
+
+<div class="result-value" id="baResult">
+0.000 mm
 </div>
 
+<div id="details"></div>
 
-<!-- RESULT -->
+<div class="formula">
 
-<div class="result" id="result">
+<strong>Formula:</strong><br>
 
-<h2>
-Bend Allowance
-</h2>
-
-<div class="result-value" id="resultValue">
-0
-</div>
-
-<div id="resultUnit">
-</div>
-
-<div class="formula" id="formula">
-</div>
+BA = (π / 180) × Bend Angle ×
+(R + K × T)
 
 </div>
 
 </div>
 
 
-<!-- INFORMATION -->
+<div class="info">
 
-<div class="content">
+<h2>How to use</h2>
 
-<h2>
-What is Bend Allowance?
-</h2>
+<ol>
+
+<li>Enter material thickness.</li>
+
+<li>Enter inside bend radius.</li>
+
+<li>Enter K-Factor.</li>
+
+<li>Enter any bend angle from 1° to 179.9°.</li>
+
+<li>Click <strong>Calculate Bend Allowance</strong>.</li>
+
+</ol>
 
 <p>
-Bend allowance is the amount of material required in the neutral
-axis of a sheet metal part during bending. It is used when calculating
-the flat pattern or developed length of a bent sheet metal component.
-</p>
-
-
-<h2>
-Bend Allowance Formula
-</h2>
-
-<p>
-The basic bend allowance formula used by this calculator is:
-</p>
-
-<div class="example">
-
-<strong>
-BA = (π / 180) × A × (R + K × T)
-</strong>
-
-<br><br>
-
-Where:
-
-<br>
-BA = Bend Allowance
-
-<br>
-A = Bend Angle in degrees
-
-<br>
-R = Inside Bend Radius
-
-<br>
-K = K-Factor
-
-<br>
-T = Material Thickness
-
-</div>
-
-
-<h2>
-Example Calculation
-</h2>
-
-<p>
-Suppose the sheet metal parameters are:
-</p>
-
-<ul>
-
-<li>Material thickness = 2 mm</li>
-
-<li>Inside bend radius = 3 mm</li>
-
-<li>K-factor = 0.33</li>
-
-<li>Bend angle = 90°</li>
-
-</ul>
-
-<div class="example">
-
-BA = (π / 180) × 90 × (3 + 0.33 × 2)
-
-<br><br>
-
-BA ≈ <strong>5.75 mm</strong>
-
-</div>
-
-
-<h2>
-Why is K-Factor Important?
-</h2>
-
-<p>
-The K-factor represents the position of the neutral axis within
-the sheet thickness during bending. Different materials, tooling,
-bend radii and manufacturing processes can result in different
-K-factor values.
-</p>
-
-
-<h2>
-Where is Bend Allowance Used?
-</h2>
-
-<ul>
-
-<li>Sheet metal flat pattern development</li>
-
-<li>Press brake bending</li>
-
-<li>Fabrication drawings</li>
-
-<li>Manufacturing calculations</li>
-
-<li>CAD sheet metal development</li>
-
-<li>Laser cutting and bending jobs</li>
-
-</ul>
-
-
-<h2>
-Important Note
-</h2>
-
-<p>
-The actual bend allowance can vary depending on material,
-tooling, bending method, grain direction and manufacturing
-conditions. Always verify the calculated value with your
-manufacturing process or shop-floor bend test when accuracy
-is critical.
+Example: T = 2 mm, R = 3 mm, K = 0.33 and angle = 90°
+gives approximately <strong>5.75 mm</strong>.
 </p>
 
 </div>
 
-
-<!-- RELATED TOOLS -->
-
-<div class="related">
-
-<h2>
-Related Engineering Tools
-</h2>
-
-<div class="related-grid">
-
-
-<div class="related-card">
-
-<h3>
-Bend Deduction Calculator
-</h3>
-
-<p>
-Calculate bend deduction for sheet metal development.
-</p>
-
-<a href="#">
-Coming Soon →
-</a>
-
-</div>
-
-
-<div class="related-card">
-
-<h3>
-Material Weight Calculator
-</h3>
-
-<p>
-Calculate approximate weight of common engineering materials.
-</p>
-
-<a href="#">
-Coming Soon →
-</a>
-
-</div>
-
-
-<div class="related-card">
-
-<h3>
-K-Factor Calculator
-</h3>
-
-<p>
-Learn and calculate sheet metal K-factor.
-</p>
-
-<a href="#">
-Coming Soon →
-</a>
-
 </div>
 
 </div>
 
-</div>
-
-
-</div>
-
-</main>
-
-
-<!-- FOOTER -->
 
 <footer>
 
-<div class="footer">
-
-<div class="footer-logo">
-MechQTools
-</div>
-
-<p>
-Engineering & Quality Tools for Professionals.
-</p>
-
-<div class="copyright">
-
 © 2026 MechQTools. All Rights Reserved.
-
-</div>
-
-</div>
 
 </footer>
 
@@ -754,22 +355,10 @@ Engineering & Quality Tools for Professionals.
 
 function calculateBA(){
 
-    const T = parseFloat(
-        document.getElementById("thickness").value
-    );
-
-    const R = parseFloat(
-        document.getElementById("radius").value
-    );
-
-    const K = parseFloat(
-        document.getElementById("kfactor").value
-    );
-
-    const A = parseFloat(
-        document.getElementById("angle").value
-    );
-
+    const T = parseFloat(document.getElementById("thickness").value);
+    const R = parseFloat(document.getElementById("radius").value);
+    const K = parseFloat(document.getElementById("kfactor").value);
+    const A = parseFloat(document.getElementById("angle").value);
 
     if(
         isNaN(T) ||
@@ -777,104 +366,50 @@ function calculateBA(){
         isNaN(K) ||
         isNaN(A)
     ){
-
         alert("Please enter all values.");
-
         return;
-
     }
-
 
     if(T <= 0){
-
-        alert("Material thickness must be greater than 0.");
-
+        alert("Material Thickness must be greater than 0.");
         return;
-
     }
-
 
     if(R < 0){
-
-        alert("Inside bend radius cannot be negative.");
-
+        alert("Inside Bend Radius cannot be negative.");
         return;
-
     }
-
 
     if(K < 0 || K > 1){
-
-        alert("K-Factor should normally be between 0 and 1.");
-
+        alert("K-Factor must be between 0 and 1.");
         return;
-
     }
 
-
-    if(A <= 0 || A > 360){
-
-        alert("Please enter a bend angle between 0 and 360 degrees.");
-
+    if(A <= 0 || A >= 180){
+        alert("Bend Angle must be between 1° and 179.9°.");
         return;
-
     }
-
 
     const BA =
         (Math.PI / 180) *
         A *
-        (R + (K * T));
+        (R + K * T);
 
+    document.getElementById("baResult").textContent =
+        BA.toFixed(3) + " mm";
 
-    const roundedBA =
-        BA.toFixed(3);
+    document.getElementById("details").innerHTML =
+        `
+        <strong>Thickness:</strong> ${T} mm<br>
+        <strong>Inside Radius:</strong> ${R} mm<br>
+        <strong>K-Factor:</strong> ${K}<br>
+        <strong>Bend Angle:</strong> ${A}°
+        `;
 
-
-    document.getElementById("resultValue")
-        .textContent =
-        roundedBA + " mm";
-
-
-    document.getElementById("formula")
-        .textContent =
-        "BA = (π / 180) × " +
-        A +
-        " × (" +
-        R +
-        " + " +
-        K +
-        " × " +
-        T +
-        ")";
-
-
-    document.getElementById("result")
-        .style.display =
-        "block";
-
-}
-
-
-function resetCalculator(){
-
-    document.getElementById("thickness").value = "";
-
-    document.getElementById("radius").value = "";
-
-    document.getElementById("kfactor").value = "0.33";
-
-    document.getElementById("angle").value = "90";
-
-    document.getElementById("result")
-        .style.display =
-        "none";
-
+    document.getElementById("result").style.display = "block";
 }
 
 </script>
 
-
 </body>
-
 </html>
