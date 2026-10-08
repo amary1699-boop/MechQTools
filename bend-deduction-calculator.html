@@ -420,6 +420,7 @@ About
 
 </header>
 
+
 <!-- ================= MAIN ================= -->
 
 <main>
@@ -572,7 +573,6 @@ Clear
 <div class="result" id="result">
 
 <h2>Calculation Result</h2>
-
 
 <div class="result-box">
 
@@ -1057,6 +1057,71 @@ function clearCalculator(){
     ).style.display = "none";
 
 }
+
+
+/* ================= LOAD BEND ALLOWANCE DATA ================= */
+
+function loadBendAllowanceData(){
+
+    const BA =
+        localStorage.getItem(
+            "mechqtools_bendAllowance"
+        );
+
+    const T =
+        localStorage.getItem(
+            "mechqtools_thickness"
+        );
+
+    const R =
+        localStorage.getItem(
+            "mechqtools_radius"
+        );
+
+    const angle =
+        localStorage.getItem(
+            "mechqtools_angle"
+        );
+
+
+    if(BA !== null){
+
+        document.getElementById("ba").value =
+            BA;
+
+    }
+
+
+    if(T !== null){
+
+        document.getElementById("thickness").value =
+            T;
+
+    }
+
+
+    if(R !== null){
+
+        document.getElementById("radius").value =
+            R;
+
+    }
+
+
+    if(angle !== null){
+
+        document.getElementById("angle").value =
+            angle;
+
+    }
+
+}
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    loadBendAllowanceData
+);
 
 </script>
 
