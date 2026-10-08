@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Surface Finish Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free Surface Finish Calculator for approximate Ra and Rz conversion and common surface roughness reference values.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+
+/* PAGE */
+
+.page{
+    max-width:1100px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:34px;
+    margin:0 0 8px;
+    color:#e53232;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+
+/* CALCULATOR */
+
+.calculator{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.section-heading{
+    font-size:21px;
+    margin:0 0 20px;
+    color:#222;
+    border-bottom:1px solid #eee;
+    padding-bottom:10px;
+}
+
+
+/* INPUT */
+
+.input-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#e53232;
+    box-shadow:0 0 0 2px rgba(229,50,50,0.08);
+}
+
+.form-group small{
+    color:#777;
+    margin-top:5px;
+    font-size:12px;
+}
+
+
+/* BUTTONS */
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:7px;
+    padding:12px 22px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92828;
+}
+
+.btn-secondary{
+    background:#eeeeee;
+    color:#333;
+}
+
+.btn-secondary:hover{
+    background:#dddddd;
+}
+
+
+/* RESULTS */
+
+.results{
+    margin-top:35px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.result-box{
+    background:#f8f8f8;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:17px;
+}
+
+.result-box span{
+    display:block;
+    font-size:13px;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.result-box strong{
+    font-size:22px;
+    color:#e53232;
+}
+
+.highlight{
+    background:#fff4f4;
+    border:1px solid #f0bcbc;
+}
+
+
+/* REFERENCE TABLE */
+
+.reference{
+    margin-top:35px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:11px 10px;
+    text-align:center;
+}
+
+th{
+    background:#f3f3f3;
+    font-size:14px;
+}
+
+td{
+    font-size:14px;
+}
+
+tr:hover td{
+    background:#fafafa;
+}
+
+
+/* DETAILS */
+
+.details{
+    margin-top:25px;
+    background:#fafafa;
+    border-left:4px solid #e53232;
+    padding:18px 20px;
+    border-radius:5px;
+}
+
+.details h3{
+    margin-top:0;
+    margin-bottom:10px;
+}
+
+.details p{
+    margin:7px 0;
+    color:#555;
+}
+
+.formula{
+    background:#fff;
+    border:1px solid #ddd;
+    padding:12px;
+    border-radius:6px;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+
+/* NOTE */
+
+.note{
+    margin-top:30px;
+    background:#fff8e8;
+    border:1px solid #f0d99a;
+    border-radius:8px;
+    padding:16px 18px;
+    color:#66551d;
+}
+
+.note strong{
+    color:#4d3d08;
+}
+
+
+/* HOME */
+
+.home-btn{
+    display:inline-block;
+    margin-top:20px;
+    text-decoration:none;
+    color:#e53232;
+    font-weight:600;
+}
+
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#222;
+    color:#ddd;
+    text-align:center;
+    padding:25px 20px;
+}
+
+footer a{
+    color:#fff;
+    text-decoration:none;
+}
+
+footer a:hover{
+    color:#e53232;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .page{
+        margin:30px auto;
+    }
+
+    .calculator{
+        padding:20px;
+    }
+
+    .input-grid{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:28px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+
+<main class="page">
+
+
+<div class="page-title">
+
+<h1>
+Surface Finish Calculator
+</h1>
+
+<p>
+Calculate approximate Ra and Rz values and check common surface roughness references.
+</p>
+
+</div>
+
+
+
+<div class="calculator">
+
+
+<h2 class="section-heading">
+Surface Finish Calculation
+</h2>
+
+
+<div class="input-grid">
+
+
+<div class="form-group">
+
+<label for="calculationType">
+Calculation Type
+</label>
+
+<select id="calculationType">
+
+<option value="raToRz">
+Ra → Rz
+</option>
+
+<option value="rzToRa">
+Rz → Ra
+</option>
+
+<option value="raReference">
+Ra Surface Finish Reference
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="roughnessValue">
+Roughness Value
+</label>
+
+<input
+type="number"
+id="roughnessValue"
+placeholder="Example: 1.6"
+step="any"
+min="0"
+>
+
+<small>
+Enter value in µm.
+</small>
+
+</div>
+
+
+</div>
+
+
+
+<div class="button-row">
+
+<button
+class="btn btn-primary"
+onclick="calculateSurfaceFinish()"
+>
+Calculate
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="resetCalculator()"
+>
+Reset
+</button>
+
+</div>
+
+
+
+<div
+class="results"
+id="results"
+style="display:none;"
+>
+
+
+<h2 class="section-heading">
+Result
+</h2>
+
+
+<div class="result-grid">
+
+
+<div class="result-box highlight">
+
+<span id="resultLabel">
+Result
+</span>
+
+<strong id="mainResult">
+0.000 µm
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Surface Finish Grade
+</span>
+
+<strong id="gradeResult">
+-
+</strong>
+
+</div>
+
+
+</div>
+
+
+
+<div class="details">
+
+<h3>
+Calculation Details
+</h3>
+
+<p id="detailsText">
+Calculation details will appear here.
+</p>
+
+<div
+class="formula"
+id="formulaText"
+>
+Approximate conversion:
+Rz ≈ 4 × Ra
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="reference">
+
+<h2 class="section-heading">
+Common Surface Roughness Reference
+</h2>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Ra (µm)
+</th>
+
+<th>
+Approx. Rz (µm)
+</th>
+
+<th>
+Common Reference
+</th>
+
+<th>
+Typical Application
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr>
+
+<td>
+0.025
+</td>
+
+<td>
+0.10
+</td>
+
+<td>
+Very Fine
+</td>
+
+<td>
+Precision finishing
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+0.05
+</td>
+
+<td>
+0.20
+</td>
+
+<td>
+Very Fine
+</td>
+
+<td>
+Precision components
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+0.10
+</td>
+
+<td>
+0.40
+</td>
+
+<td>
+Fine
+</td>
+
+<td>
+Fine grinding / finishing
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+0.20
+</td>
+
+<td>
+0.80
+</td>
+
+<td>
+Fine
+</td>
+
+<td>
+Precision machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+0.40
+</td>
+
+<td>
+1.60
+</td>
+
+<td>
+Fine
+</td>
+
+<td>
+Finishing operations
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+0.80
+</td>
+
+<td>
+3.20
+</td>
+
+<td>
+Medium Fine
+</td>
+
+<td>
+Fine machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+1.60
+</td>
+
+<td>
+6.40
+</td>
+
+<td>
+Medium
+</td>
+
+<td>
+General machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+3.20
+</td>
+
+<td>
+12.80
+</td>
+
+<td>
+Medium
+</td>
+
+<td>
+General machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+6.30
+</td>
+
+<td>
+25.20
+</td>
+
+<td>
+Rough
+</td>
+
+<td>
+Rough machining
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+12.50
+</td>
+
+<td>
+50.00
+</td>
+
+<td>
+Rough
+</td>
+
+<td>
+Rough machining / fabrication
+</td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<div class="note">
+
+<strong>Important:</strong>
+
+Ra and Rz are different surface roughness parameters.
+The conversion used here is only an approximate engineering reference.
+There is no single universal conversion factor between Ra and Rz for every
+surface or manufacturing process. Always follow the value specified on the
+engineering drawing or applicable standard.
+
+</div>
+
+
+
+<a
+href="index.html"
+class="home-btn"
+>
+← Back to MechQTools Home
+</a>
+
+
+</div>
+
+</main>
+
+
+
+<footer>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+<p>
+Engineering & Quality Tools for Professionals.
+</p>
+
+</footer>
+
+
+
+<script>
+
+
+function calculateSurfaceFinish(){
+
+    const type =
+        document.getElementById(
+            "calculationType"
+        ).value;
+
+
+    const value =
+        parseFloat(
+            document.getElementById(
+                "roughnessValue"
+            ).value
+        );
+
+
+    if(
+        isNaN(value) ||
+        value <= 0
+    ){
+
+        alert(
+            "Please enter a valid roughness value."
+        );
+
+        return;
+
+    }
+
+
+    let result = 0;
+
+    let resultLabel = "";
+
+    let details = "";
+
+    let formula = "";
+
+
+
+    /* RA TO RZ */
+
+    if(type === "raToRz"){
+
+        result =
+            value * 4;
+
+        resultLabel =
+            "Approximate Rz";
+
+        details =
+            "Entered Ra = " +
+            value.toFixed(3) +
+            " µm<br><br>" +
+
+            "Approximate Rz = " +
+            result.toFixed(3) +
+            " µm";
+
+        formula =
+            "Rz ≈ 4 × Ra";
+
+    }
+
+
+
+    /* RZ TO RA */
+
+    else if(type === "rzToRa"){
+
+        result =
+            value / 4;
+
+        resultLabel =
+            "Approximate Ra";
+
+        details =
+            "Entered Rz = " +
+            value.toFixed(3) +
+            " µm<br><br>" +
+
+            "Approximate Ra = " +
+            result.toFixed(3) +
+            " µm";
+
+        formula =
+            "Ra ≈ Rz ÷ 4";
+
+    }
+
+
+
+    /* RA REFERENCE */
+
+    else if(type === "raReference"){
+
+        result =
+            value;
+
+        resultLabel =
+            "Ra Value";
+
+        details =
+            "Entered Ra = " +
+            value.toFixed(3) +
+            " µm<br><br>" +
+
+            "Use the reference table below to compare this value with common surface finish requirements.";
+
+        formula =
+            "Surface roughness is expressed as Ra in µm.";
+
+    }
+
+
+
+    const grade =
+        getSurfaceGrade(
+            value,
+            type
+        );
+
+
+    document.getElementById(
+        "resultLabel"
+    ).textContent =
+        resultLabel;
+
+
+    document.getElementById(
+        "mainResult"
+    ).textContent =
+        result.toFixed(3) +
+        " µm";
+
+
+    document.getElementById(
+        "gradeResult"
+    ).textContent =
+        grade;
+
+
+    document.getElementById(
+        "detailsText"
+    ).innerHTML =
+        details;
+
+
+    document.getElementById(
+        "formulaText"
+    ).textContent =
+        formula;
+
+
+    document.getElementById(
+        "results"
+    ).style.display =
+        "block";
+
+}
+
+
+
+function getSurfaceGrade(
+    value,
+    type
+){
+
+    let raValue;
+
+
+    if(type === "raToRz"){
+
+        raValue =
+            value;
+
+    }
+
+    else if(type === "rzToRa"){
+
+        raValue =
+            value / 4;
+
+    }
+
+    else{
+
+        raValue =
+            value;
+
+    }
+
+
+    if(raValue <= 0.1){
+
+        return "Very Fine";
+
+    }
+
+    if(raValue <= 0.4){
+
+        return "Fine";
+
+    }
+
+    if(raValue <= 1.6){
+
+        return "Medium Fine";
+
+    }
+
+    if(raValue <= 3.2){
+
+        return "Medium";
+
+    }
+
+    if(raValue <= 12.5){
+
+        return "Rough";
+
+    }
+
+    return "Very Rough";
+
+}
+
+
+
+function resetCalculator(){
+
+    document.getElementById(
+        "calculationType"
+    ).value =
+        "raToRz";
+
+
+    document.getElementById(
+        "roughnessValue"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "results"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+
+</body>
+</html>
