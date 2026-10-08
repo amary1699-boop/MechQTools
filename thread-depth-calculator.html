@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Thread Depth Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free thread depth calculator for machining and tapping. Calculate required thread depth, tap depth and blind hole depth.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    color:#e53232;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+.card{
+    background:#ffffff;
+    border:1px solid #e3e3e3;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+
+.card h2{
+    margin-top:0;
+    font-size:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+.help-text{
+    font-size:13px;
+    color:#777;
+    margin-top:5px;
+}
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92727;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+.result-box{
+    display:none;
+    margin-top:25px;
+    padding:20px;
+    background:#fff5f5;
+    border:1px solid #f0caca;
+    border-radius:10px;
+}
+
+.result-box h3{
+    margin-top:0;
+    color:#e53232;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.result-item{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:12px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.result-item strong{
+    font-size:18px;
+}
+
+.main-result{
+    margin-top:18px;
+    padding:18px;
+    background:#ffffff;
+    border:2px solid #e53232;
+    border-radius:9px;
+    text-align:center;
+}
+
+.main-result span{
+    display:block;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.main-result strong{
+    color:#e53232;
+    font-size:30px;
+}
+
+.formula{
+    margin-top:20px;
+    padding:15px;
+    background:#f7f7f7;
+    border-left:4px solid #e53232;
+    border-radius:5px;
+}
+
+.formula strong{
+    color:#333;
+}
+
+.note{
+    background:#fff9e6;
+    border:1px solid #ead58a;
+    padding:15px;
+    border-radius:8px;
+    color:#5f5000;
+}
+
+.home-button{
+    display:inline-block;
+    margin-top:5px;
+    padding:11px 18px;
+    background:#e53232;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-button:hover{
+    background:#c92727;
+}
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#777;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .form-grid,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="page-title">
+
+<h1>
+Thread Depth Calculator
+</h1>
+
+<p>
+Calculate required thread depth, tap depth and blind hole depth.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Thread Depth Calculation
+</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="threadSize">
+Thread Size
+</label>
+
+<select id="threadSize">
+
+<option value="3">M3</option>
+<option value="4">M4</option>
+<option value="5">M5</option>
+<option value="6" selected>M6</option>
+<option value="8">M8</option>
+<option value="10">M10</option>
+<option value="12">M12</option>
+<option value="14">M14</option>
+<option value="16">M16</option>
+<option value="18">M18</option>
+<option value="20">M20</option>
+<option value="22">M22</option>
+<option value="24">M24</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="pitch">
+Thread Pitch (mm)
+</label>
+
+<input
+type="number"
+id="pitch"
+value="1.00"
+min="0.01"
+step="0.01"
+>
+
+<div class="help-text">
+Example: M6 × 1.0 = 1.00 mm pitch
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="engagement">
+Required Thread Engagement (× Diameter)
+</label>
+
+<input
+type="number"
+id="engagement"
+value="1.5"
+min="0.1"
+step="0.1"
+>
+
+<div class="help-text">
+Typical starting value: 1.0–1.5 × diameter
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="safety">
+Extra Safety Allowance (mm)
+</label>
+
+<input
+type="number"
+id="safety"
+value="2"
+min="0"
+step="0.1"
+>
+
+<div class="help-text">
+Extra depth beyond required engagement.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateDepth()"
+>
+Calculate Depth
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+</div>
+
+
+<div class="result-box" id="resultBox">
+
+<h3>
+Calculation Result
+</h3>
+
+
+<div class="result-grid">
+
+<div class="result-item">
+
+<span>
+Thread Size
+</span>
+
+<strong id="resultThread">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Thread Pitch
+</span>
+
+<strong id="resultPitch">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Thread Diameter
+</span>
+
+<strong id="resultDiameter">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Thread Engagement
+</span>
+
+<strong id="resultEngagement">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Safety Allowance
+</span>
+
+<strong id="resultSafety">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Recommended Tap Depth
+</span>
+
+<strong id="resultTapDepth">
+-
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="main-result">
+
+<span>
+Recommended Blind Hole Depth
+</span>
+
+<strong id="resultTotalDepth">
+-
+</strong>
+
+</div>
+
+
+<div class="formula">
+
+<strong>
+Formula:
+</strong>
+
+<br><br>
+
+Required Thread Engagement
+
+<br>
+
+= Thread Diameter × Engagement Factor
+
+<br><br>
+
+Recommended Blind Hole Depth
+
+<br>
+
+= Thread Engagement + Safety Allowance
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Example Calculation
+</h2>
+
+<p>
+
+For an <strong>M6 × 1.0</strong> thread with
+<strong>1.5 × diameter</strong> thread engagement:
+
+</p>
+
+<p>
+
+Thread engagement:
+
+<br>
+
+6 × 1.5 = <strong>9 mm</strong>
+
+</p>
+
+<p>
+
+With 2 mm additional safety allowance:
+
+<br>
+
+9 + 2 = <strong>11 mm</strong>
+
+</p>
+
+<p>
+
+So the approximate recommended blind-hole depth is
+<strong>11 mm</strong>.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Important Note
+</h2>
+
+<div class="note">
+
+Thread depth depends on bolt diameter,
+material strength, thread class, load,
+tapping method and application.
+
+The value calculated here is a
+<strong>general engineering estimate</strong>.
+
+For critical components, always follow the
+drawing, engineering specification,
+thread standard or manufacturer recommendation.
+
+Also remember that the required
+<strong>drill depth</strong> can be greater than
+the final thread depth because of the
+tap chamfer and chip clearance.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<a
+href="index.html"
+class="home-button"
+>
+← Back to Home
+</a>
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+/*
+Common metric thread pitches.
+When the user changes thread size,
+the pitch is automatically updated.
+*/
+
+const threadPitches = {
+
+    "3": 0.50,
+    "4": 0.70,
+    "5": 0.80,
+    "6": 1.00,
+    "8": 1.25,
+    "10": 1.50,
+    "12": 1.75,
+    "14": 2.00,
+    "16": 2.00,
+    "18": 2.50,
+    "20": 2.50,
+    "22": 2.50,
+    "24": 3.00
+
+};
+
+
+document.getElementById(
+    "threadSize"
+).addEventListener(
+    "change",
+    function(){
+
+        const diameter =
+            this.value;
+
+        document.getElementById(
+            "pitch"
+        ).value =
+            threadPitches[diameter];
+
+    }
+);
+
+
+function calculateDepth(){
+
+    const diameter =
+        parseFloat(
+            document.getElementById(
+                "threadSize"
+            ).value
+        );
+
+    const pitch =
+        parseFloat(
+            document.getElementById(
+                "pitch"
+            ).value
+        );
+
+    const engagementFactor =
+        parseFloat(
+            document.getElementById(
+                "engagement"
+            ).value
+        );
+
+    const safety =
+        parseFloat(
+            document.getElementById(
+                "safety"
+            ).value
+        );
+
+
+    if(
+        isNaN(pitch) ||
+        pitch <= 0
+    ){
+
+        alert(
+            "Please enter a valid thread pitch."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(engagementFactor) ||
+        engagementFactor <= 0
+    ){
+
+        alert(
+            "Please enter a valid engagement factor."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(safety) ||
+        safety < 0
+    ){
+
+        alert(
+            "Please enter a valid safety allowance."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Required thread engagement
+    */
+
+    const threadEngagement =
+        diameter *
+        engagementFactor;
+
+
+    /*
+       Recommended tap depth.
+
+       Extra allowance is added for
+       tap chamfer / thread runout.
+    */
+
+    const tapDepth =
+        threadEngagement +
+        pitch;
+
+
+    /*
+       Recommended blind hole depth
+    */
+
+    const totalDepth =
+        threadEngagement +
+        safety;
+
+
+    document.getElementById(
+        "resultThread"
+    ).textContent =
+        "M" +
+        diameter;
+
+
+    document.getElementById(
+        "resultPitch"
+    ).textContent =
+        pitch.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultDiameter"
+    ).textContent =
+        diameter.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultEngagement"
+    ).textContent =
+        threadEngagement.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultSafety"
+    ).textContent =
+        safety.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultTapDepth"
+    ).textContent =
+        tapDepth.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultTotalDepth"
+    ).textContent =
+        totalDepth.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "block";
+
+}
+
+
+function clearCalculator(){
+
+    document.getElementById(
+        "threadSize"
+    ).value =
+        "6";
+
+
+    document.getElementById(
+        "pitch"
+    ).value =
+        "1.00";
+
+
+    document.getElementById(
+        "engagement"
+    ).value =
+        "1.5";
+
+
+    document.getElementById(
+        "safety"
+    ).value =
+        "2";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
