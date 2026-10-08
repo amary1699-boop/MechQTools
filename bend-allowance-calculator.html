@@ -3,175 +3,436 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bend Allowance Calculator - All Angle Sheet Metal Tool | MechQTools</title>
+<title>Bend Allowance Calculator - MechQTools</title>
 
 <meta name="description"
 content="Free sheet metal Bend Allowance Calculator for any bend angle. Calculate bend allowance using material thickness, inside radius, K-factor and bend angle.">
 
+<meta name="keywords"
+content="bend allowance calculator, sheet metal bend allowance, K factor calculator, mechanical engineering calculator">
+
 <style>
 
+/* =========================
+   GLOBAL
+========================= */
+
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f5f7fa;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
     color:#222;
+    line-height:1.6;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
-    background:#e53232;
-    color:white;
-    padding:18px 20px;
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
-.header-inner{
-    max-width:1100px;
+.navbar{
+    max-width:1200px;
     margin:auto;
+    padding:15px 20px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:20px;
+    justify-content:space-between;
 }
 
 .logo{
-    font-size:24px;
-    font-weight:bold;
-}
-
-nav a{
-    color:white;
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
     text-decoration:none;
-    margin-left:20px;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
     font-size:15px;
+    font-weight:500;
 }
 
-.container{
-    max-width:900px;
-    margin:40px auto;
-    padding:0 20px;
+.nav-links a:hover{
+    color:#e53232;
 }
 
-.card{
-    background:white;
-    border-radius:12px;
+
+/* =========================
+   MAIN SECTION
+========================= */
+
+.section{
+    max-width:850px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.section-title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.section-title span{
+    color:#e53232;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#777;
+    max-width:700px;
+    margin:0 auto 35px;
+}
+
+
+/* =========================
+   CALCULATOR CARD
+========================= */
+
+.calculator{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
     padding:30px;
-    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
 }
 
-h1{
-    margin-top:0;
-    font-size:30px;
-}
 
-.subtitle{
-    color:#666;
-    line-height:1.6;
-}
+/* =========================
+   FORM
+========================= */
 
 .form-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-top:25px;
+    gap:20px;
 }
 
-label{
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
     display:block;
-    font-weight:bold;
+    font-weight:600;
     margin-bottom:7px;
 }
 
-input{
+.form-group input{
     width:100%;
-    padding:12px;
+    padding:12px 13px;
     border:1px solid #ccc;
-    border-radius:7px;
-    font-size:16px;
+    border-radius:6px;
+    font-size:15px;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#fff;
 }
 
-input:focus{
+.form-group input:focus{
     outline:none;
     border-color:#e53232;
 }
 
-button{
-    width:100%;
-    margin-top:25px;
-    padding:14px;
-    background:#e53232;
-    color:white;
-    border:none;
-    border-radius:7px;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
+.help-text{
+    color:#777;
+    font-size:13px;
+    margin-top:5px;
 }
 
-button:hover{
-    background:#c92525;
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:10px;
 }
+
+.btn{
+    padding:13px 25px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#ffffff;
+}
+
+.btn-primary:hover{
+    background:#c92727;
+}
+
+.btn-secondary{
+    background:#ffffff;
+    color:#e53232;
+    border:1px solid #e53232;
+}
+
+.btn-secondary:hover{
+    background:#fff4f4;
+}
+
+
+/* =========================
+   RESULT
+========================= */
 
 .result{
-    margin-top:25px;
-    background:#fff4f4;
-    border:1px solid #ffd1d1;
+    display:none;
+    margin-top:30px;
+    background:#f9f9f9;
+    border:1px solid #e5e5e5;
     border-radius:8px;
-    padding:20px;
+    padding:22px;
 }
 
 .result h2{
-    margin-top:0;
-    color:#e53232;
+    font-size:21px;
+    margin-bottom:15px;
+    color:#222;
 }
 
 .result-value{
     font-size:30px;
     font-weight:bold;
-    margin:10px 0;
+    color:#e53232;
+    margin-bottom:18px;
 }
+
+.result-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:10px 0;
+    border-bottom:1px solid #e5e5e5;
+}
+
+.result-row:last-child{
+    border-bottom:none;
+}
+
+.result-label{
+    font-weight:600;
+}
+
+.result-value-small{
+    font-weight:bold;
+    text-align:right;
+}
+
+
+/* =========================
+   FORMULA
+========================= */
 
 .formula{
-    background:#f7f7f7;
-    padding:15px;
+    background:#ffffff;
+    border:1px solid #e5e5e5;
     border-radius:7px;
-    margin-top:15px;
-    line-height:1.7;
+    padding:15px;
+    margin-top:18px;
+    line-height:1.8;
 }
 
-.info{
-    margin-top:30px;
-    line-height:1.7;
+.formula strong{
+    color:#e53232;
 }
+
+
+/* =========================
+   INFO
+========================= */
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+}
+
+.info-card h3{
+    margin-bottom:12px;
+    font-size:20px;
+}
+
+.info-card p{
+    color:#666;
+    font-size:15px;
+}
+
+.info-card ol{
+    padding-left:20px;
+    color:#666;
+    font-size:15px;
+}
+
+.info-card li{
+    margin-bottom:7px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-    text-align:center;
-    padding:30px 20px;
-    color:#666;
+    background:#151515;
+    color:#ffffff;
+    margin-top:30px;
 }
 
-@media(max-width:700px){
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
 
-    .header-inner{
-        flex-direction:column;
-        align-items:flex-start;
+.footer-logo{
+    color:#e53232;
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-text{
+    color:#aaa;
+    font-size:14px;
+    max-width:450px;
+}
+
+.footer-column h4{
+    margin-bottom:12px;
+}
+
+.footer-column a{
+    display:block;
+    color:#aaa;
+    text-decoration:none;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.footer-column a:hover{
+    color:#ffffff;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    text-align:center;
+    padding:18px;
+    color:#888;
+    font-size:13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .info-grid{
+        grid-template-columns:1fr;
     }
 
-    nav a{
-        margin-left:0;
-        margin-right:15px;
+    .footer-container{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .section{
+        padding:45px 18px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .calculator{
+        padding:20px;
     }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    h1{
-        font-size:25px;
+    .buttons{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .result-row{
+        flex-direction:column;
+        gap:3px;
+    }
+
+    .result-value-small{
+        text-align:left;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
     }
 
 }
@@ -182,40 +443,84 @@ footer{
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
-<div class="header-inner">
+<div class="navbar">
 
-<div class="logo">
+<a href="index.html" class="logo">
 MechQTools
-</div>
+</a>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="index.html#mechanical">Mechanical Tools</a>
-<a href="index.html#quality">Quality Tools</a>
-</nav>
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
 
 </div>
 
 </header>
 
 
-<div class="container">
+<!-- =========================
+     MAIN
+========================= -->
 
-<div class="card">
+<section class="section">
 
-<h1>Bend Allowance Calculator</h1>
 
-<p class="subtitle">
+<h1 class="section-title">
+Bend Allowance <span>Calculator</span>
+</h1>
+
+<p class="section-subtitle">
 Calculate sheet metal bend allowance for any bend angle using material
 thickness, inside bend radius and K-factor.
 </p>
 
 
+<!-- CALCULATOR -->
+
+<div class="calculator">
+
+
 <div class="form-grid">
 
-<div>
+
+<div class="form-group">
 
 <label for="thickness">
 Material Thickness (T) — mm
@@ -232,7 +537,7 @@ placeholder="Example: 2"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="radius">
 Inside Bend Radius (R) — mm
@@ -249,7 +554,7 @@ placeholder="Example: 3"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="kfactor">
 K-Factor
@@ -267,7 +572,7 @@ placeholder="Example: 0.33"
 </div>
 
 
-<div>
+<div class="form-group">
 
 <label for="angle">
 Bend Angle (°)
@@ -284,69 +589,256 @@ placeholder="Example: 90"
 
 </div>
 
+
 </div>
 
 
-<button onclick="calculateBA()">
+<div class="buttons">
+
+<button
+class="btn btn-primary"
+onclick="calculateBA()"
+>
 Calculate Bend Allowance
 </button>
 
+<button
+class="btn btn-secondary"
+onclick="clearCalculator()"
+>
+Clear
+</button>
 
-<div class="result" id="result" style="display:none;">
+</div>
 
-<h2>Result</h2>
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+
+<h2>
+Result
+</h2>
 
 <div class="result-value" id="baResult">
 0.000 mm
 </div>
 
-<div id="details"></div>
+
+<div class="result-row">
+
+<span class="result-label">
+Material Thickness
+</span>
+
+<span class="result-value-small" id="resultThickness">
+-
+</span>
+
+</div>
+
+
+<div class="result-row">
+
+<span class="result-label">
+Inside Bend Radius
+</span>
+
+<span class="result-value-small" id="resultRadius">
+-
+</span>
+
+</div>
+
+
+<div class="result-row">
+
+<span class="result-label">
+K-Factor
+</span>
+
+<span class="result-value-small" id="resultK">
+-
+</span>
+
+</div>
+
+
+<div class="result-row">
+
+<span class="result-label">
+Bend Angle
+</span>
+
+<span class="result-value-small" id="resultAngle">
+-
+</span>
+
+</div>
+
 
 <div class="formula">
 
-<strong>Formula:</strong><br>
+<strong>Formula</strong><br>
 
-BA = (π / 180) × Bend Angle ×
-(R + K × T)
+BA = (π / 180) × Bend Angle × (R + K × T)
+
+</div>
 
 </div>
 
 </div>
 
 
-<div class="info">
+<!-- INFORMATION -->
 
-<h2>How to use</h2>
+<div class="info-grid">
+
+
+<div class="info-card">
+
+<h3>
+How to Use
+</h3>
 
 <ol>
 
-<li>Enter material thickness.</li>
+<li>
+Enter material thickness.
+</li>
 
-<li>Enter inside bend radius.</li>
+<li>
+Enter inside bend radius.
+</li>
 
-<li>Enter K-Factor.</li>
+<li>
+Enter K-Factor.
+</li>
 
-<li>Enter any bend angle from 1° to 179.9°.</li>
+<li>
+Enter bend angle from 1° to 179.9°.
+</li>
 
-<li>Click <strong>Calculate Bend Allowance</strong>.</li>
+<li>
+Click Calculate Bend Allowance.
+</li>
 
 </ol>
 
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Example
+</h3>
+
 <p>
-Example: T = 2 mm, R = 3 mm, K = 0.33 and angle = 90°
-gives approximately <strong>5.75 mm</strong>.
+Thickness = <strong>2 mm</strong>
+</p>
+
+<p>
+Inside Radius = <strong>3 mm</strong>
+</p>
+
+<p>
+K-Factor = <strong>0.33</strong>
+</p>
+
+<p>
+Bend Angle = <strong>90°</strong>
+</p>
+
+<p>
+Bend Allowance ≈ <strong>5.75 mm</strong>
 </p>
 
 </div>
 
 </div>
 
-</div>
 
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
+<div class="footer-container">
+
+
+<div>
+
+<div class="footer-logo">
+MechQTools
+</div>
+
+<p class="footer-text">
+Engineering & Quality Tools for Professionals.
+Free calculators, practical engineering resources and professional templates.
+</p>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+Quick Links
+</h4>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="index.html#mechanical-tools">
+Mechanical Tools
+</a>
+
+<a href="index.html#quality-tools">
+Quality Tools
+</a>
+
+<a href="index.html#templates">
+Templates
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+Resources
+</h4>
+
+<a href="index.html#guides-section">
+Engineering Guides
+</a>
+
+<a href="index.html#about">
+About
+</a>
+
+<a href="#">
+Contact
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="copyright">
+
 © 2026 MechQTools. All Rights Reserved.
+
+</div>
 
 </footer>
 
@@ -355,10 +847,26 @@ gives approximately <strong>5.75 mm</strong>.
 
 function calculateBA(){
 
-    const T = parseFloat(document.getElementById("thickness").value);
-    const R = parseFloat(document.getElementById("radius").value);
-    const K = parseFloat(document.getElementById("kfactor").value);
-    const A = parseFloat(document.getElementById("angle").value);
+    const T =
+        parseFloat(
+            document.getElementById("thickness").value
+        );
+
+    const R =
+        parseFloat(
+            document.getElementById("radius").value
+        );
+
+    const K =
+        parseFloat(
+            document.getElementById("kfactor").value
+        );
+
+    const A =
+        parseFloat(
+            document.getElementById("angle").value
+        );
+
 
     if(
         isNaN(T) ||
@@ -366,50 +874,102 @@ function calculateBA(){
         isNaN(K) ||
         isNaN(A)
     ){
+
         alert("Please enter all values.");
+
         return;
     }
+
 
     if(T <= 0){
-        alert("Material Thickness must be greater than 0.");
+
+        alert(
+            "Material Thickness must be greater than 0."
+        );
+
         return;
     }
+
 
     if(R < 0){
-        alert("Inside Bend Radius cannot be negative.");
+
+        alert(
+            "Inside Bend Radius cannot be negative."
+        );
+
         return;
     }
+
 
     if(K < 0 || K > 1){
-        alert("K-Factor must be between 0 and 1.");
+
+        alert(
+            "K-Factor must be between 0 and 1."
+        );
+
         return;
     }
 
+
     if(A <= 0 || A >= 180){
-        alert("Bend Angle must be between 1° and 179.9°.");
+
+        alert(
+            "Bend Angle must be between 1° and 179.9°."
+        );
+
         return;
     }
+
 
     const BA =
         (Math.PI / 180) *
         A *
         (R + K * T);
 
+
     document.getElementById("baResult").textContent =
         BA.toFixed(3) + " mm";
 
-    document.getElementById("details").innerHTML =
-        `
-        <strong>Thickness:</strong> ${T} mm<br>
-        <strong>Inside Radius:</strong> ${R} mm<br>
-        <strong>K-Factor:</strong> ${K}<br>
-        <strong>Bend Angle:</strong> ${A}°
-        `;
 
-    document.getElementById("result").style.display = "block";
+    document.getElementById("resultThickness").textContent =
+        T + " mm";
+
+
+    document.getElementById("resultRadius").textContent =
+        R + " mm";
+
+
+    document.getElementById("resultK").textContent =
+        K;
+
+
+    document.getElementById("resultAngle").textContent =
+        A + "°";
+
+
+    document.getElementById("result").style.display =
+        "block";
+
+}
+
+
+function clearCalculator(){
+
+    document.getElementById("thickness").value = "";
+
+    document.getElementById("radius").value = "";
+
+    document.getElementById("kfactor").value = "";
+
+    document.getElementById("angle").value = "";
+
+    document.getElementById("result").style.display =
+        "none";
+
 }
 
 </script>
+
 
 </body>
 </html>
