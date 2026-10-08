@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fishbone Analysis Tool - Free Ishikawa Diagram Tool | MechQTools</title>
+
+<meta name="description"
+content="Free Fishbone Analysis Tool for identifying root causes using Man, Machine, Method, Material, Measurement and Environment categories.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.section{
+    max-width:1100px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.section-title span{
+    color:#e53232;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#777;
+    max-width:750px;
+    margin:0 auto 35px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:30px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+.card h2{
+    color:#e53232;
+    margin-bottom:20px;
+    font-size:22px;
+}
+
+.card h3{
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d8d8d8;
+    border-radius:6px;
+    font-size:15px;
+    font-family:Arial, Helvetica, sans-serif;
+    outline:none;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#e53232;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+}
+
+.btn{
+    padding:13px 25px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92727;
+}
+
+.btn-secondary{
+    background:#fff;
+    color:#e53232;
+    border:1px solid #e53232;
+}
+
+.btn-secondary:hover{
+    background:#fff4f4;
+}
+
+.btn-danger{
+    background:#fff;
+    color:#d00000;
+    border:1px solid #d00000;
+}
+
+.btn-small{
+    padding:8px 12px;
+    font-size:13px;
+}
+
+/* 6M GRID */
+
+.sixm-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.category-card{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:22px;
+}
+
+.category-card h3{
+    color:#e53232;
+    margin-bottom:5px;
+}
+
+.category-card .meaning{
+    color:#777;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.category-card textarea{
+    width:100%;
+    min-height:120px;
+    padding:12px;
+    border:1px solid #d8d8d8;
+    border-radius:6px;
+    resize:vertical;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+}
+
+/* CAUSE TABLE */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    background:#fff;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    vertical-align:top;
+}
+
+th{
+    background:#f5f5f5;
+    font-weight:600;
+}
+
+td input,
+td textarea{
+    width:100%;
+    border:1px solid #ddd;
+    padding:8px;
+    border-radius:4px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+td textarea{
+    min-height:55px;
+    resize:vertical;
+}
+
+/* RESULT */
+
+.result-box{
+    background:#f7f8fa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.result-item{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:15px;
+}
+
+.result-item strong{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.result-item span{
+    font-size:20px;
+    font-weight:700;
+    color:#e53232;
+}
+
+/* INFO */
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-card{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+}
+
+.info-card h3{
+    color:#e53232;
+    margin-bottom:10px;
+}
+
+.info-card ul{
+    padding-left:20px;
+}
+
+.info-card li{
+    margin-bottom:7px;
+}
+
+/* REPORT */
+
+.report-preview{
+    display:none;
+}
+
+/* FOOTER */
+
+footer{
+    background:#151515;
+    color:#fff;
+    margin-top:30px;
+}
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-logo{
+    color:#e53232;
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-text{
+    color:#aaa;
+    font-size:14px;
+    max-width:450px;
+}
+
+.footer-column a{
+    display:block;
+    color:#aaa;
+    text-decoration:none;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.footer-column a:hover{
+    color:#fff;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    text-align:center;
+    padding:18px;
+    color:#888;
+    font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .section{
+        padding:40px 15px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .form-grid,
+    .sixm-grid,
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+}
+
+/* =========================
+   PRINT REPORT
+========================= */
+
+@media print{
+
+    @page{
+        size:A4 landscape;
+        margin:8mm;
+    }
+
+    body{
+        background:#fff;
+        color:#000;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:10px;
+    }
+
+    header,
+    footer,
+    .no-print,
+    .section-title,
+    .section-subtitle,
+    .card:not(.print-card){
+        display:none !important;
+    }
+
+    .section{
+        max-width:none;
+        padding:0;
+        margin:0;
+    }
+
+    .print-report{
+        display:block !important;
+        width:100%;
+    }
+
+    .print-title{
+        text-align:center;
+        font-size:20px;
+        margin-bottom:12px;
+        font-weight:700;
+    }
+
+    .print-basic-table{
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:15px;
+    }
+
+    .print-basic-table th,
+    .print-basic-table td{
+        border:1px solid #000;
+        padding:6px;
+        vertical-align:top;
+    }
+
+    .print-basic-table th{
+        font-weight:700;
+        background:#f2f2f2;
+        width:15%;
+    }
+
+    .print-main-table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        font-size:8px;
+    }
+
+    .print-main-table th,
+    .print-main-table td{
+        border:1px solid #000;
+        padding:4px;
+        vertical-align:top;
+        word-wrap:break-word;
+        overflow-wrap:break-word;
+    }
+
+    .print-main-table th{
+        background:#eeeeee;
+        text-align:center;
+        font-weight:700;
+    }
+
+    .print-main-table th:nth-child(1){
+        width:4%;
+    }
+
+    .print-main-table th:nth-child(2){
+        width:12%;
+    }
+
+    .print-main-table th:nth-child(3){
+        width:14%;
+    }
+
+    .print-main-table th:nth-child(4){
+        width:14%;
+    }
+
+    .print-main-table th:nth-child(5),
+    .print-main-table th:nth-child(6),
+    .print-main-table th:nth-child(7),
+    .print-main-table th:nth-child(8),
+    .print-main-table th:nth-child(9),
+    .print-main-table th:nth-child(10){
+        width:8%;
+    }
+
+    .print-summary{
+        margin-top:15px;
+    }
+
+    .print-summary table{
+        width:100%;
+        border-collapse:collapse;
+    }
+
+    .print-summary th,
+    .print-summary td{
+        border:1px solid #000;
+        padding:6px;
+    }
+
+    .print-summary th{
+        background:#eee;
+    }
+
+    .print-section-title{
+        font-size:13px;
+        font-weight:700;
+        margin:12px 0 6px;
+    }
+
+    .print-notes{
+        border:1px solid #000;
+        padding:8px;
+        margin-top:10px;
+        white-space:pre-wrap;
+    }
+
+    thead{
+        display:table-header-group;
+    }
+
+    tr{
+        page-break-inside:avoid;
+    }
+
+    .page-break{
+        page-break-before:auto;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+    <div class="navbar">
+
+        <a href="index.html" class="logo">
+            MechQTools
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#mechanical">Mechanical</a></li>
+            <li><a href="index.html#quality">Quality</a></li>
+            <li><a href="index.html#templates">Templates</a></li>
+            <li><a href="index.html#guides">Guides</a></li>
+            <li><a href="index.html#about">About</a></li>
+        </ul>
+
+    </div>
+</header>
+
+
+<!-- MAIN -->
+
+<section class="section">
+
+    <h1 class="section-title">
+        Fishbone <span>Analysis Tool</span>
+    </h1>
+
+    <p class="section-subtitle">
+        Identify possible root causes of a problem using the Fishbone
+        (Ishikawa / Cause-and-Effect) Analysis method.
+    </p>
+
+
+    <!-- BASIC INFORMATION -->
+
+    <div class="card no-print">
+
+        <h2>Basic Problem Information</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Analysis Title</label>
+                <input type="text" id="analysisTitle"
+                placeholder="Example: Sheet Metal Rejection Analysis">
+            </div>
+
+            <div class="form-group">
+                <label>Analysis No.</label>
+                <input type="text" id="analysisNo"
+                placeholder="Example: FA-001">
+            </div>
+
+            <div class="form-group">
+                <label>Part / Process No.</label>
+                <input type="text" id="partNo"
+                placeholder="Enter part or process number">
+            </div>
+
+            <div class="form-group">
+                <label>Prepared By</label>
+                <input type="text" id="preparedBy"
+                placeholder="Enter name">
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="analysisDate">
+            </div>
+
+            <div class="form-group full">
+                <label>Problem Statement</label>
+                <textarea id="problemStatement"
+                placeholder="Clearly define the problem..."></textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 6M ANALYSIS -->
+
+    <div class="card no-print">
+
+        <h2>6M Fishbone Analysis</h2>
+
+        <p style="margin-bottom:20px;color:#666;">
+            Enter possible causes under each category. These categories
+            help the team systematically investigate the problem.
+        </p>
+
+        <div class="sixm-grid">
+
+            <div class="category-card">
+
+                <h3>1. Man (People)</h3>
+
+                <div class="meaning">
+                    Human-related causes such as skill, training,
+                    experience, fatigue or operator error.
+                </div>
+
+                <textarea id="man"
+                placeholder="Example:
+- Operator not trained
+- Operator fatigue
+- Wrong setting entered"></textarea>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <h3>2. Machine</h3>
+
+                <div class="meaning">
+                    Machine, equipment, tool, fixture or maintenance-related causes.
+                </div>
+
+                <textarea id="machine"
+                placeholder="Example:
+- Machine setting incorrect
+- Tool wear
+- Machine vibration"></textarea>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <h3>3. Method</h3>
+
+                <div class="meaning">
+                    Process method, work instruction, sequence,
+                    standard or procedure-related causes.
+                </div>
+
+                <textarea id="method"
+                placeholder="Example:
+- Work instruction unclear
+- Wrong process sequence
+- Standard not followed"></textarea>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <h3>4. Material</h3>
+
+                <div class="meaning">
+                    Raw material, component, specification,
+                    supplier or material condition-related causes.
+                </div>
+
+                <textarea id="material"
+                placeholder="Example:
+- Material thickness variation
+- Wrong material grade
+- Material defect"></textarea>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <h3>5. Measurement</h3>
+
+                <div class="meaning">
+                    Measuring instrument, calibration, measurement method,
+                    inspection frequency or measurement error.
+                </div>
+
+                <textarea id="measurement"
+                placeholder="Example:
+- Gauge not calibrated
+- Wrong measurement method
+- Inspection frequency insufficient"></textarea>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <h3>6. Environment / Mother Nature</h3>
+
+                <div class="meaning">
+                    Workplace and environmental conditions such as
+                    temperature, humidity, lighting, dust or layout.
+                </div>
+
+                <textarea id="environment"
+                placeholder="Example:
+- Poor lighting
+- High temperature
+- Dust contamination"></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ROOT CAUSE -->
+
+    <div class="card no-print">
+
+        <h2>Root Cause & Action Plan</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+
+                <label>Most Probable Root Cause</label>
+
+                <textarea id="rootCause"
+                placeholder="Enter the verified root cause..."></textarea>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Root Cause Evidence / Verification</label>
+
+                <textarea id="rootEvidence"
+                placeholder="Explain how the root cause was verified..."></textarea>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Corrective Action</label>
+
+                <textarea id="correctiveAction"
+                placeholder="Action taken to eliminate the root cause..."></textarea>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Preventive Action</label>
+
+                <textarea id="preventiveAction"
+                placeholder="Action taken to prevent recurrence in similar processes..."></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Responsible Person / Department</label>
+
+                <input type="text" id="responsible"
+                placeholder="Example: Quality / Production">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Target Date</label>
+
+                <input type="date" id="targetDate">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CAUSE LIST -->
+
+    <div class="card no-print">
+
+        <h2>Detailed Cause List</h2>
+
+        <p style="color:#666;margin-bottom:15px;">
+            Add specific causes identified during the analysis.
+        </p>
+
+        <div class="table-wrap">
+
+            <table id="causeTable">
+
+                <thead>
+
+                    <tr>
+                        <th style="width:6%;">Sr.</th>
+                        <th style="width:18%;">Category</th>
+                        <th>Possible Cause</th>
+                        <th style="width:20%;">Verification / Evidence</th>
+                        <th style="width:10%;">Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="causeBody"></tbody>
+
+            </table>
+
+        </div>
+
+        <div class="buttons">
+
+            <button class="btn btn-secondary"
+            onclick="addCause()">
+                + Add Cause
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="card no-print">
+
+        <div class="buttons">
+
+            <button class="btn btn-primary"
+            onclick="analyzeFishbone()">
+                Analyze
+            </button>
+
+            <button class="btn btn-secondary"
+            onclick="loadExample()">
+                Load Example
+            </button>
+
+            <button class="btn btn-secondary"
+            onclick="printReport()">
+                Print Report
+            </button>
+
+            <button class="btn btn-danger"
+            onclick="clearAll()">
+                Clear All
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div class="card no-print">
+
+        <h2>Analysis Summary</h2>
+
+        <div class="result-grid">
+
+            <div class="result-item">
+                <strong>Total Cause Entries</strong>
+                <span id="totalCauses">0</span>
+            </div>
+
+            <div class="result-item">
+                <strong>Categories Used</strong>
+                <span id="categoriesUsed">0</span>
+            </div>
+
+            <div class="result-item">
+                <strong>Root Cause Status</strong>
+                <span id="rootStatus">Not Entered</span>
+            </div>
+
+        </div>
+
+        <div class="result-box">
+
+            <strong>Analysis Result:</strong>
+
+            <p id="analysisResult"
+            style="margin-top:8px;color:#555;">
+                Enter causes and analyze the problem.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPLANATION -->
+
+    <div class="card no-print">
+
+        <h2>What is Fishbone Analysis?</h2>
+
+        <p>
+            Fishbone Analysis is a structured root-cause analysis technique
+            used to identify and organize possible causes of a problem.
+            It is also known as the <strong>Ishikawa Diagram</strong> or
+            <strong>Cause-and-Effect Diagram</strong>.
+        </p>
+
+        <h3>Why is it called Fishbone?</h3>
+
+        <p>
+            The traditional diagram looks similar to the skeleton of a fish.
+            The problem is written at the head of the fish and possible
+            causes are arranged along the bones.
+        </p>
+
+        <h3>What are the 6M categories?</h3>
+
+        <ul style="padding-left:20px;">
+
+            <li>
+                <strong>Man:</strong>
+                People, skill, training and human-related causes.
+            </li>
+
+            <li>
+                <strong>Machine:</strong>
+                Equipment, machine, tool, fixture and maintenance causes.
+            </li>
+
+            <li>
+                <strong>Method:</strong>
+                Process, procedure, work instruction and sequence causes.
+            </li>
+
+            <li>
+                <strong>Material:</strong>
+                Raw material, component, specification and supplier causes.
+            </li>
+
+            <li>
+                <strong>Measurement:</strong>
+                Gauge, calibration, measurement method and inspection causes.
+            </li>
+
+            <li>
+                <strong>Environment:</strong>
+                Temperature, humidity, lighting, dust and workplace conditions.
+            </li>
+
+        </ul>
+
+        <h3>How to use Fishbone Analysis?</h3>
+
+        <ol style="padding-left:20px;">
+
+            <li>Clearly define the problem.</li>
+
+            <li>Write the problem statement.</li>
+
+            <li>Identify possible causes under each 6M category.</li>
+
+            <li>Discuss the causes with the concerned team.</li>
+
+            <li>Collect evidence for the suspected causes.</li>
+
+            <li>Verify the actual root cause.</li>
+
+            <li>Implement corrective action.</li>
+
+            <li>Take preventive action to avoid recurrence.</li>
+
+        </ol>
+
+    </div>
+
+
+    <!-- EXAMPLE -->
+
+    <div class="card no-print">
+
+        <h2>Fishbone Analysis Example</h2>
+
+        <h3>Problem</h3>
+
+        <p>
+            Sheet metal component bend angle is out of specification.
+        </p>
+
+        <h3>Possible Causes</h3>
+
+        <ul style="padding-left:20px;">
+
+            <li>
+                <strong>Man:</strong>
+                Operator not properly trained.
+            </li>
+
+            <li>
+                <strong>Machine:</strong>
+                Press brake setting incorrect.
+            </li>
+
+            <li>
+                <strong>Method:</strong>
+                Work instruction does not define setup verification.
+            </li>
+
+            <li>
+                <strong>Material:</strong>
+                Material thickness variation.
+            </li>
+
+            <li>
+                <strong>Measurement:</strong>
+                Angle measurement method not standardized.
+            </li>
+
+            <li>
+                <strong>Environment:</strong>
+                Poor lighting at inspection area.
+            </li>
+
+        </ul>
+
+        <h3>Verified Root Cause</h3>
+
+        <p>
+            Machine setup parameters were not verified during first-piece
+            inspection.
+        </p>
+
+        <h3>Corrective Action</h3>
+
+        <p>
+            Implement first-piece setup verification and operator confirmation.
+        </p>
+
+        <h3>Preventive Action</h3>
+
+        <p>
+            Update work instruction and train all concerned operators.
+        </p>
+
+    </div>
+
+
+    <!-- IMPORTANT POINTS -->
+
+    <div class="card no-print">
+
+        <h2>Important Points</h2>
+
+        <ul style="padding-left:20px;">
+
+            <li>
+                Fishbone analysis identifies <strong>possible causes</strong>;
+                it does not automatically prove the root cause.
+            </li>
+
+            <li>
+                Root cause should be verified using actual data or evidence.
+            </li>
+
+            <li>
+                Avoid blaming people without investigating the process.
+            </li>
+
+            <li>
+                Use <strong>5 Why</strong>, data analysis, inspection records
+                and process trials to verify important causes.
+            </li>
+
+            <li>
+                Corrective action should eliminate the verified root cause.
+            </li>
+
+            <li>
+                Preventive action should reduce the possibility of recurrence.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- =========================
+         PRINT ONLY REPORT
+    ========================== -->
+
+    <div class="print-report" id="printReport">
+
+        <div class="print-title">
+            FISHBONE ANALYSIS REPORT
+        </div>
+
+        <table class="print-basic-table">
+
+            <tr>
+                <th>Analysis Title</th>
+                <td id="pTitle"></td>
+
+                <th>Analysis No.</th>
+                <td id="pNo"></td>
+            </tr>
+
+            <tr>
+                <th>Part / Process No.</th>
+                <td id="pPartNo"></td>
+
+                <th>Prepared By</th>
+                <td id="pPreparedBy"></td>
+            </tr>
+
+            <tr>
+                <th>Date</th>
+                <td id="pDate"></td>
+
+                <th>Target Date</th>
+                <td id="pTargetDate"></td>
+            </tr>
+
+            <tr>
+                <th>Problem Statement</th>
+                <td colspan="3" id="pProblem"></td>
+            </tr>
+
+        </table>
+
+
+        <div class="print-section-title">
+            6M FISHBONE ANALYSIS
+        </div>
+
+        <table class="print-main-table">
+
+            <thead>
+
+                <tr>
+                    <th>Sr.</th>
+                    <th>Category</th>
+                    <th>Possible Causes</th>
+                    <th>Verification / Evidence</th>
+                    <th>Root Cause</th>
+                    <th>Corrective Action</th>
+                    <th>Preventive Action</th>
+                    <th>Responsible</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="printCauseBody"></tbody>
+
+        </table>
+
+
+        <div class="print-summary">
+
+            <div class="print-section-title">
+                ROOT CAUSE & ACTION PLAN
+            </div>
+
+            <table>
+
+                <tr>
+                    <th style="width:20%;">Most Probable Root Cause</th>
+                    <td id="pRootCause"></td>
+                </tr>
+
+                <tr>
+                    <th>Root Cause Evidence / Verification</th>
+                    <td id="pRootEvidence"></td>
+                </tr>
+
+                <tr>
+                    <th>Corrective Action</th>
+                    <td id="pCorrective"></td>
+                </tr>
+
+                <tr>
+                    <th>Preventive Action</th>
+                    <td id="pPreventive"></td>
+                </tr>
+
+                <tr>
+                    <th>Responsible Person / Department</th>
+                    <td id="pResponsible"></td>
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <div class="print-summary">
+
+            <div class="print-section-title">
+                6M CATEGORY SUMMARY
+            </div>
+
+            <table>
+
+                <tr>
+                    <th>Man</th>
+                    <td id="pMan"></td>
+
+                    <th>Machine</th>
+                    <td id="pMachine"></td>
+                </tr>
+
+                <tr>
+                    <th>Method</th>
+                    <td id="pMethod"></td>
+
+                    <th>Material</th>
+                    <td id="pMaterial"></td>
+                </tr>
+
+                <tr>
+                    <th>Measurement</th>
+                    <td id="pMeasurement"></td>
+
+                    <th>Environment</th>
+                    <td id="pEnvironment"></td>
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <div class="print-notes">
+
+            <strong>Important Note:</strong>
+
+            Fishbone Analysis identifies possible causes.
+            The actual root cause should be verified using objective
+            evidence, data and appropriate investigation methods.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div>
+
+            <div class="footer-logo">
+                MechQTools
+            </div>
+
+            <p class="footer-text">
+                Engineering & Quality Tools for Professionals.
+                Free practical tools for Mechanical Engineering,
+                Quality Engineering and Manufacturing professionals.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Quick Links</h4>
+
+            <a href="index.html#mechanical-tools">
+                Mechanical Tools
+            </a>
+
+            <a href="index.html#quality-tools">
+                Quality Tools
+            </a>
+
+            <a href="index.html#templates">
+                Templates
+            </a>
+
+            <a href="index.html#guides-section">
+                Guides
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Tools</h4>
+
+            <a href="inspection-calculator.html">
+                Inspection Calculator
+            </a>
+
+            <a href="cp-cpk-calculator.html">
+                Cp & Cpk Calculator
+            </a>
+
+            <a href="8d-problem-solving-tool.html">
+                8D Problem Solving
+            </a>
+
+            <a href="fmea-tool.html">
+                PFMEA Tool
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+        © 2026 MechQTools. All Rights Reserved.
+    </div>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   CAUSE MANAGEMENT
+========================= */
+
+let causeCounter = 0;
+
+
+/* ADD CAUSE */
+
+function addCause(
+    category = "",
+    cause = "",
+    evidence = ""
+){
+
+    causeCounter++;
+
+    const tbody = document.getElementById("causeBody");
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+
+        <td class="sr-cell">
+            ${causeCounter}
+        </td>
+
+        <td>
+
+            <select class="cause-category">
+
+                <option value="">Select Category</option>
+                <option value="Man">Man</option>
+                <option value="Machine">Machine</option>
+                <option value="Method">Method</option>
+                <option value="Material">Material</option>
+                <option value="Measurement">Measurement</option>
+                <option value="Environment">Environment</option>
+
+            </select>
+
+        </td>
+
+        <td>
+
+            <textarea
+            class="cause-input"
+            placeholder="Enter possible cause...">${escapeHtml(cause)}</textarea>
+
+        </td>
+
+        <td>
+
+            <textarea
+            class="evidence-input"
+            placeholder="Enter evidence / verification...">${escapeHtml(evidence)}</textarea>
+
+        </td>
+
+        <td>
+
+            <button
+            class="btn btn-danger btn-small"
+            onclick="deleteCause(this)">
+                Delete
+            </button>
+
+        </td>
+
+    `;
+
+    tbody.appendChild(row);
+
+    if(category){
+
+        row.querySelector(".cause-category").value = category;
+
+    }
+
+    updateSerialNumbers();
+}
+
+
+/* DELETE CAUSE */
+
+function deleteCause(button){
+
+    const row = button.closest("tr");
+
+    row.remove();
+
+    updateSerialNumbers();
+
+}
+
+
+/* SERIAL NUMBERS */
+
+function updateSerialNumbers(){
+
+    const rows =
+        document.querySelectorAll("#causeBody tr");
+
+    rows.forEach((row,index)=>{
+
+        row.querySelector(".sr-cell").textContent =
+            index + 1;
+
+    });
+
+    causeCounter = rows.length;
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   ANALYSIS
+========================= */
+
+function analyzeFishbone(){
+
+    const categories = [
+
+        "man",
+        "machine",
+        "method",
+        "material",
+        "measurement",
+        "environment"
+
+    ];
+
+    let usedCategories = 0;
+
+    categories.forEach(id=>{
+
+        const value =
+            document.getElementById(id).value.trim();
+
+        if(value !== ""){
+            usedCategories++;
+        }
+
+    });
+
+
+    const rows =
+        document.querySelectorAll("#causeBody tr");
+
+    let detailedCauses = 0;
+
+    rows.forEach(row=>{
+
+        const cause =
+            row.querySelector(".cause-input").value.trim();
+
+        if(cause !== ""){
+            detailedCauses++;
+        }
+
+    });
+
+
+    const rootCause =
+        document.getElementById("rootCause").value.trim();
+
+
+    document.getElementById("totalCauses").textContent =
+        detailedCauses;
+
+    document.getElementById("categoriesUsed").textContent =
+        usedCategories;
+
+
+    if(rootCause !== ""){
+
+        document.getElementById("rootStatus").textContent =
+            "Entered";
+
+    }else{
+
+        document.getElementById("rootStatus").textContent =
+            "Not Entered";
+
+    }
+
+
+    let message = "";
+
+    if(detailedCauses === 0 && usedCategories === 0){
+
+        message =
+            "Please enter possible causes under the 6M categories or add causes in the detailed cause list.";
+
+    }
+    else if(rootCause === ""){
+
+        message =
+            "Possible causes have been identified. Now verify the causes using evidence and identify the actual root cause.";
+
+    }
+    else{
+
+        message =
+            "Root cause has been entered. Review the evidence and ensure that the corrective and preventive actions address the verified root cause.";
+
+    }
+
+
+    document.getElementById("analysisResult").textContent =
+        message;
+
+}
+
+
+/* =========================
+   EXAMPLE
+========================= */
+
+function loadExample(){
+
+    document.getElementById("analysisTitle").value =
+        "Sheet Metal Bend Angle Rejection Analysis";
+
+    document.getElementById("analysisNo").value =
+        "FA-001";
+
+    document.getElementById("partNo").value =
+        "SM-1001";
+
+    document.getElementById("preparedBy").value =
+        "Quality Engineer";
+
+    document.getElementById("analysisDate").value =
+        new Date().toISOString().split("T")[0];
+
+    document.getElementById("problemStatement").value =
+        "Sheet metal component bend angle is out of specification.";
+
+    document.getElementById("man").value =
+        "Operator not properly trained.\nOperator did not verify setup.";
+
+    document.getElementById("machine").value =
+        "Press brake setting incorrect.\nTool setup variation.";
+
+    document.getElementById("method").value =
+        "Work instruction does not define setup verification.\nFirst-piece verification not clearly defined.";
+
+    document.getElementById("material").value =
+        "Material thickness variation.";
+
+    document.getElementById("measurement").value =
+        "Angle measurement method not standardized.";
+
+    document.getElementById("environment").value =
+        "Poor lighting at inspection area.";
+
+    document.getElementById("rootCause").value =
+        "Machine setup parameters were not verified during first-piece inspection.";
+
+    document.getElementById("rootEvidence").value =
+        "First-piece inspection record showed that setup verification was not completed.";
+
+    document.getElementById("correctiveAction").value =
+        "Implement first-piece setup verification and operator confirmation.";
+
+    document.getElementById("preventiveAction").value =
+        "Update work instruction and train all concerned operators.";
+
+    document.getElementById("responsible").value =
+        "Quality / Production";
+
+    document.getElementById("targetDate").value =
+        new Date().toISOString().split("T")[0];
+
+
+    document.getElementById("causeBody").innerHTML = "";
+
+    causeCounter = 0;
+
+
+    addCause(
+        "Man",
+        "Operator not properly trained",
+        "Training record checked."
+    );
+
+    addCause(
+        "Machine",
+        "Press brake setup parameter incorrect",
+        "Machine setup parameter found incorrect."
+    );
+
+    addCause(
+        "Method",
+        "First-piece verification not clearly defined",
+        "Work instruction reviewed."
+    );
+
+    addCause(
+        "Material",
+        "Material thickness variation",
+        "Material thickness checked."
+    );
+
+    addCause(
+        "Measurement",
+        "Angle measurement method not standardized",
+        "Measurement method reviewed."
+    );
+
+    addCause(
+        "Environment",
+        "Poor lighting at inspection area",
+        "Lighting condition checked."
+    );
+
+
+    analyzeFishbone();
+
+}
+
+
+/* =========================
+   PRINT REPORT
+========================= */
+
+function buildPrintReport(){
+
+    document.getElementById("pTitle").textContent =
+        document.getElementById("analysisTitle").value || "-";
+
+    document.getElementById("pNo").textContent =
+        document.getElementById("analysisNo").value || "-";
+
+    document.getElementById("pPartNo").textContent =
+        document.getElementById("partNo").value || "-";
+
+    document.getElementById("pPreparedBy").textContent =
+        document.getElementById("preparedBy").value || "-";
+
+    document.getElementById("pDate").textContent =
+        document.getElementById("analysisDate").value || "-";
+
+    document.getElementById("pTargetDate").textContent =
+        document.getElementById("targetDate").value || "-";
+
+    document.getElementById("pProblem").textContent =
+        document.getElementById("problemStatement").value || "-";
+
+
+    /* ROOT CAUSE */
+
+    document.getElementById("pRootCause").textContent =
+        document.getElementById("rootCause").value || "-";
+
+    document.getElementById("pRootEvidence").textContent =
+        document.getElementById("rootEvidence").value || "-";
+
+    document.getElementById("pCorrective").textContent =
+        document.getElementById("correctiveAction").value || "-";
+
+    document.getElementById("pPreventive").textContent =
+        document.getElementById("preventiveAction").value || "-";
+
+    document.getElementById("pResponsible").textContent =
+        document.getElementById("responsible").value || "-";
+
+
+    /* 6M */
+
+    const categories = [
+        "man",
+        "machine",
+        "method",
+        "material",
+        "measurement",
+        "environment"
+    ];
+
+    categories.forEach(id=>{
+
+        const printId =
+            "p" + id.charAt(0).toUpperCase() + id.slice(1);
+
+        document.getElementById(printId).textContent =
+            document.getElementById(id).value || "-";
+
+    });
+
+
+    /* CAUSE TABLE */
+
+    const printBody =
+        document.getElementById("printCauseBody");
+
+    printBody.innerHTML = "";
+
+
+    const rows =
+        document.querySelectorAll("#causeBody tr");
+
+
+    if(rows.length === 0){
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>1</td>
+            <td>-</td>
+            <td>No detailed cause entered.</td>
+            <td>-</td>
+            <td>${document.getElementById("rootCause").value || "-"}</td>
+            <td>${document.getElementById("correctiveAction").value || "-"}</td>
+            <td>${document.getElementById("preventiveAction").value || "-"}</td>
+            <td>${document.getElementById("responsible").value || "-"}</td>
+            <td>Review</td>
+        `;
+
+        printBody.appendChild(tr);
+
+    }
+    else{
+
+        rows.forEach((row,index)=>{
+
+            const category =
+                row.querySelector(".cause-category").value || "-";
+
+            const cause =
+                row.querySelector(".cause-input").value || "-";
+
+            const evidence =
+                row.querySelector(".evidence-input").value || "-";
+
+
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+
+                <td>${index + 1}</td>
+
+                <td>${escapeHtml(category)}</td>
+
+                <td>${escapeHtml(cause)}</td>
+
+                <td>${escapeHtml(evidence)}</td>
+
+                <td>${escapeHtml(
+                    document.getElementById("rootCause").value || "-"
+                )}</td>
+
+                <td>${escapeHtml(
+                    document.getElementById("correctiveAction").value || "-"
+                )}</td>
+
+                <td>${escapeHtml(
+                    document.getElementById("preventiveAction").value || "-"
+                )}</td>
+
+                <td>${escapeHtml(
+                    document.getElementById("responsible").value || "-"
+                )}</td>
+
+                <td>Review</td>
+
+            `;
+
+            printBody.appendChild(tr);
+
+        });
+
+    }
+
+}
+
+
+/* PRINT */
+
+function printReport(){
+
+    buildPrintReport();
+
+    window.print();
+
+}
+
+
+/* =========================
+   CLEAR ALL
+========================= */
+
+function clearAll(){
+
+    if(!confirm(
+        "Are you sure you want to clear all data?"
+    )){
+        return;
+    }
+
+
+    document.querySelectorAll(
+        "input, textarea, select"
+    ).forEach(element=>{
+
+        element.value = "";
+
+    });
+
+
+    document.getElementById("causeBody").innerHTML = "";
+
+    causeCounter = 0;
+
+
+    document.getElementById("totalCauses").textContent =
+        "0";
+
+    document.getElementById("categoriesUsed").textContent =
+        "0";
+
+    document.getElementById("rootStatus").textContent =
+        "Not Entered";
+
+    document.getElementById("analysisResult").textContent =
+        "Enter causes and analyze the problem.";
+
+}
+
+
+/* =========================
+   INITIAL CAUSE ROW
+========================= */
+
+addCause();
+
+</script>
+
+</body>
+</html>
