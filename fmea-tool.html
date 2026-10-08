@@ -8,7 +8,7 @@
 <title>FMEA Tool - Failure Mode and Effects Analysis | MechQTools</title>
 
 <meta name="description"
-content="Free online FMEA tool to identify failure modes, calculate RPN, analyze risks and plan corrective actions.">
+content="Free online PFMEA tool to identify failure modes, calculate RPN, analyze risks and plan corrective actions.">
 
 <style>
 
@@ -188,7 +188,7 @@ header{
     background:#fff4f4;
 }
 
-/* FMEA TABLE */
+/* TABLE */
 
 .table-wrapper{
     overflow-x:auto;
@@ -198,7 +198,7 @@ header{
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:1500px;
+    min-width:1600px;
 }
 
 th{
@@ -208,6 +208,7 @@ th{
     border:1px solid #d32d2d;
     font-size:13px;
     text-align:center;
+    vertical-align:middle;
 }
 
 td{
@@ -266,7 +267,7 @@ td textarea:focus{
     background:#fff4f4;
 }
 
-/* RESULT */
+/* SUMMARY */
 
 .summary-grid{
     margin-top:25px;
@@ -344,6 +345,12 @@ td textarea:focus{
     font-weight:600;
 }
 
+/* PRINT REPORT */
+
+.print-report{
+    display:none;
+}
+
 /* FOOTER */
 
 footer{
@@ -398,57 +405,6 @@ footer{
     font-size:13px;
 }
 
-/* PRINT */
-
-@media print{
-
-    header,
-    footer,
-    .button-row,
-    .info-grid,
-    .section-subtitle,
-    .calculator:first-of-type{
-        display:none !important;
-    }
-
-    body{
-        background:#fff;
-    }
-
-    .section{
-        max-width:100%;
-        padding:10px;
-    }
-
-    .calculator{
-        box-shadow:none;
-        border:none;
-        padding:0;
-    }
-
-    table{
-        min-width:100%;
-        font-size:9px;
-    }
-
-    th,
-    td{
-        padding:5px;
-    }
-
-    td input,
-    td select,
-    td textarea{
-        border:none;
-        padding:2px;
-        font-size:9px;
-    }
-
-    .section-title{
-        font-size:24px;
-    }
-}
-
 /* MOBILE */
 
 @media(max-width:768px){
@@ -496,6 +452,256 @@ footer{
 
 }
 
+/* ============================= */
+/* PROFESSIONAL PRINT REPORT */
+/* ============================= */
+
+@media print{
+
+    @page{
+        size:A4 landscape;
+        margin:8mm;
+    }
+
+    html,
+    body{
+        width:100%;
+        background:#fff !important;
+        color:#000 !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    body{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:9px;
+        line-height:1.35;
+    }
+
+    header,
+    footer,
+    .section-subtitle,
+    .calculator:first-of-type,
+    .button-row,
+    .info-grid,
+    #message{
+        display:none !important;
+    }
+
+    .section{
+        display:none !important;
+    }
+
+    .print-report{
+        display:block !important;
+        width:100% !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .print-report-title{
+        display:block !important;
+        text-align:center;
+        font-size:20px;
+        font-weight:bold;
+        margin:0 0 8px 0;
+        color:#000 !important;
+        letter-spacing:0.5px;
+    }
+
+    .print-basic-info{
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:10px;
+        table-layout:fixed;
+    }
+
+    .print-basic-info td{
+        border:1px solid #000;
+        padding:5px;
+        vertical-align:top;
+        font-size:9px;
+        background:#fff !important;
+        word-break:break-word;
+    }
+
+    .print-basic-info .label{
+        font-weight:bold;
+        width:18%;
+    }
+
+    .print-section-title{
+        font-size:12px;
+        font-weight:bold;
+        margin:7px 0 4px 0;
+        color:#000 !important;
+    }
+
+    .print-fmea-table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        font-size:7px;
+        margin-bottom:10px;
+    }
+
+    .print-fmea-table th{
+        background:#e53232 !important;
+        color:#fff !important;
+        border:1px solid #000;
+        padding:4px 2px;
+        text-align:center;
+        vertical-align:middle;
+        font-size:7px;
+        font-weight:bold;
+        word-break:break-word;
+    }
+
+    .print-fmea-table td{
+        border:1px solid #000;
+        padding:4px 2px;
+        vertical-align:top;
+        background:#fff !important;
+        color:#000 !important;
+        word-break:break-word;
+        overflow-wrap:anywhere;
+        white-space:normal;
+    }
+
+    .print-fmea-table tr{
+        page-break-inside:avoid;
+        break-inside:avoid;
+    }
+
+    .print-fmea-table thead{
+        display:table-header-group;
+    }
+
+    .print-fmea-table tbody{
+        display:table-row-group;
+    }
+
+    .print-summary{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:8px;
+    }
+
+    .print-summary td{
+        border:1px solid #000;
+        padding:5px;
+        text-align:center;
+        background:#fff !important;
+        color:#000 !important;
+    }
+
+    .print-summary .summary-label{
+        font-weight:bold;
+    }
+
+    .print-footer-note{
+        margin-top:8px;
+        font-size:7px;
+        color:#000 !important;
+    }
+
+}
+
+/* PRINT TABLE COLUMN WIDTHS */
+
+@media print{
+
+    .print-fmea-table th:nth-child(1),
+    .print-fmea-table td:nth-child(1){
+        width:3%;
+    }
+
+    .print-fmea-table th:nth-child(2),
+    .print-fmea-table td:nth-child(2){
+        width:6%;
+    }
+
+    .print-fmea-table th:nth-child(3),
+    .print-fmea-table td:nth-child(3){
+        width:8%;
+    }
+
+    .print-fmea-table th:nth-child(4),
+    .print-fmea-table td:nth-child(4){
+        width:8%;
+    }
+
+    .print-fmea-table th:nth-child(5),
+    .print-fmea-table td:nth-child(5){
+        width:4%;
+    }
+
+    .print-fmea-table th:nth-child(6),
+    .print-fmea-table td:nth-child(6){
+        width:8%;
+    }
+
+    .print-fmea-table th:nth-child(7),
+    .print-fmea-table td:nth-child(7){
+        width:4%;
+    }
+
+    .print-fmea-table th:nth-child(8),
+    .print-fmea-table td:nth-child(8){
+        width:8%;
+    }
+
+    .print-fmea-table th:nth-child(9),
+    .print-fmea-table td:nth-child(9){
+        width:4%;
+    }
+
+    .print-fmea-table th:nth-child(10),
+    .print-fmea-table td:nth-child(10){
+        width:5%;
+    }
+
+    .print-fmea-table th:nth-child(11),
+    .print-fmea-table td:nth-child(11){
+        width:7%;
+    }
+
+    .print-fmea-table th:nth-child(12),
+    .print-fmea-table td:nth-child(12){
+        width:9%;
+    }
+
+    .print-fmea-table th:nth-child(13),
+    .print-fmea-table td:nth-child(13){
+        width:6%;
+    }
+
+    .print-fmea-table th:nth-child(14),
+    .print-fmea-table td:nth-child(14){
+        width:6%;
+    }
+
+    .print-fmea-table th:nth-child(15),
+    .print-fmea-table td:nth-child(15){
+        width:8%;
+    }
+
+    .print-fmea-table th:nth-child(16),
+    .print-fmea-table td:nth-child(16){
+        display:none !important;
+    }
+
+}
+
+/* ============================= */
+/* PRINT VALUE CLASSES */
+/* ============================= */
+
+.print-value{
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
 </style>
 
 </head>
@@ -513,12 +719,31 @@ MechQTools
 </a>
 
 <ul class="nav-links">
-<li><a href="index.html">Home</a></li>
-<li><a href="index.html#mechanical-tools">Mechanical</a></li>
-<li><a href="index.html#quality-tools">Quality</a></li>
-<li><a href="index.html#templates">Templates</a></li>
-<li><a href="index.html#guides-section">Guides</a></li>
-<li><a href="index.html#about">About</a></li>
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="index.html#mechanical-tools">Mechanical</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">Quality</a>
+</li>
+
+<li>
+<a href="index.html#templates">Templates</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">Guides</a>
+</li>
+
+<li>
+<a href="index.html#about">About</a>
+</li>
+
 </ul>
 
 </div>
@@ -550,26 +775,57 @@ and plan corrective actions.
 <div class="form-grid">
 
 <div class="form-group">
-<label>FMEA Title / Process</label>
-<input type="text" id="fmeaTitle"
+
+<label>
+FMEA Title / Process
+</label>
+
+<input
+type="text"
+id="fmeaTitle"
 placeholder="Example: Sheet Metal Bending Process">
+
 </div>
 
+
 <div class="form-group">
-<label>Part / Process Number</label>
-<input type="text" id="partNumber"
+
+<label>
+Part / Process Number
+</label>
+
+<input
+type="text"
+id="partNumber"
 placeholder="Example: SM-001">
+
 </div>
 
+
 <div class="form-group">
-<label>Prepared By</label>
-<input type="text" id="preparedBy"
+
+<label>
+Prepared By
+</label>
+
+<input
+type="text"
+id="preparedBy"
 placeholder="Name / Department">
+
 </div>
 
+
 <div class="form-group">
-<label>Date</label>
-<input type="date" id="fmeaDate">
+
+<label>
+Date
+</label>
+
+<input
+type="date"
+id="fmeaDate">
+
 </div>
 
 </div>
@@ -584,10 +840,12 @@ placeholder="Name / Department">
 <h2>FMEA Analysis</h2>
 
 <p>
-Enter each potential failure mode and rate <strong>Severity (S)</strong>,
-<strong>Occurrence (O)</strong> and <strong>Detection (D)</strong> from
-1 to 10.
+Enter each potential failure mode and rate
+<strong>Severity (S)</strong>,
+<strong>Occurrence (O)</strong> and
+<strong>Detection (D)</strong> from 1 to 10.
 </p>
+
 
 <div class="table-wrapper">
 
@@ -644,23 +902,33 @@ Enter each potential failure mode and rate <strong>Severity (S)</strong>,
 
 <div class="button-row">
 
-<button class="btn btn-primary" onclick="addRow()">
+<button
+class="btn btn-primary"
+onclick="addRow()">
 + Add FMEA Row
 </button>
 
-<button class="btn btn-secondary" onclick="calculateFMEA()">
+<button
+class="btn btn-secondary"
+onclick="calculateFMEA()">
 Calculate RPN
 </button>
 
-<button class="btn btn-secondary" onclick="loadExample()">
+<button
+class="btn btn-secondary"
+onclick="loadExample()">
 Load Example
 </button>
 
-<button class="btn btn-secondary" onclick="printReport()">
+<button
+class="btn btn-secondary"
+onclick="printReport()">
 Print Report
 </button>
 
-<button class="btn btn-secondary" onclick="clearAll()">
+<button
+class="btn btn-secondary"
+onclick="clearAll()">
 Clear All
 </button>
 
@@ -680,23 +948,46 @@ Clear All
 <div class="summary-grid">
 
 <div class="summary-card">
+
 <h3>Total Failure Modes</h3>
-<strong id="totalModes">0</strong>
+
+<strong id="totalModes">
+0
+</strong>
+
 </div>
 
+
 <div class="summary-card">
+
 <h3>High Risk</h3>
-<strong id="highRisk">0</strong>
+
+<strong id="highRisk">
+0
+</strong>
+
 </div>
 
+
 <div class="summary-card">
+
 <h3>Medium Risk</h3>
-<strong id="mediumRisk">0</strong>
+
+<strong id="mediumRisk">
+0
+</strong>
+
 </div>
 
+
 <div class="summary-card">
+
 <h3>Highest RPN</h3>
-<strong id="highestRPN">0</strong>
+
+<strong id="highestRPN">
+0
+</strong>
+
 </div>
 
 </div>
@@ -707,6 +998,7 @@ Clear All
 <!-- INFORMATION -->
 
 <div class="info-grid">
+
 
 <div class="info-card">
 
@@ -720,9 +1012,9 @@ product, process or system before they create serious problems.
 </p>
 
 <p>
-FMEA helps the Quality, Production, Design and Engineering teams
-prioritize risks and decide where corrective or preventive action is
-required.
+FMEA helps Quality, Production, Design and Engineering teams
+prioritize risks and decide where corrective or preventive action
+is required.
 </p>
 
 </div>
@@ -730,15 +1022,34 @@ required.
 
 <div class="info-card">
 
-<h3>What is Failure Mode?</h3>
+<h3>What is PFMEA?</h3>
 
 <p>
-A <strong>Failure Mode</strong> is the way in which a product or process
-could fail to meet the required specification or expectation.
+<strong>PFMEA</strong> means
+<strong>Process Failure Mode and Effects Analysis</strong>.
+It focuses specifically on potential failures within a manufacturing
+or business process.
 </p>
 
 <p>
-Example:
+Example processes include cutting, bending, welding, machining,
+assembly and inspection.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Failure Mode</h3>
+
+<p>
+A <strong>Failure Mode</strong> is the way in which a product or
+process could fail to meet the required specification or expectation.
+</p>
+
+<p>
+Examples:
 <strong>Hole diameter out of specification</strong>,
 <strong>wrong bending angle</strong>,
 <strong>surface scratch</strong>.
@@ -757,10 +1068,15 @@ The rating normally ranges from <strong>1 to 10</strong>.
 </p>
 
 <ul>
+
 <li>1 = Very low effect</li>
+
 <li>5 = Moderate effect</li>
+
 <li>8 = Serious effect</li>
+
 <li>10 = Very severe / critical effect</li>
+
 </ul>
 
 </div>
@@ -777,10 +1093,15 @@ The rating normally ranges from <strong>1 to 10</strong>.
 </p>
 
 <ul>
+
 <li>1 = Very unlikely</li>
+
 <li>5 = Occasional</li>
+
 <li>8 = Frequent</li>
+
 <li>10 = Very frequent</li>
+
 </ul>
 
 </div>
@@ -791,20 +1112,26 @@ The rating normally ranges from <strong>1 to 10</strong>.
 <h3>Detection (D)</h3>
 
 <p>
-Detection indicates how likely the current controls are to detect the
-failure or its cause before the product reaches the customer.
+Detection indicates how likely the current controls are to detect
+the failure or its cause before the product reaches the customer.
 </p>
 
 <ul>
+
 <li>1 = Very easy to detect</li>
+
 <li>5 = Moderate detection</li>
+
 <li>8 = Difficult to detect</li>
+
 <li>10 = Almost impossible to detect</li>
+
 </ul>
 
 <p>
-<strong>Important:</strong> In the traditional FMEA scale,
-a higher Detection number means poorer detection capability.
+<strong>Important:</strong>
+In the traditional FMEA scale, a higher Detection number means
+poorer detection capability.
 </p>
 
 </div>
@@ -840,16 +1167,29 @@ RPN = 8 × 5 × 4 = 160
 <h3>Risk Level Used in This Tool</h3>
 
 <ul>
-<li><strong>RPN 1–49:</strong> Low Risk</li>
-<li><strong>RPN 50–99:</strong> Medium Risk</li>
-<li><strong>RPN 100–199:</strong> High Risk</li>
-<li><strong>RPN 200–1000:</strong> Very High Risk</li>
+
+<li>
+<strong>RPN 1–49:</strong> Low Risk
+</li>
+
+<li>
+<strong>RPN 50–99:</strong> Medium Risk
+</li>
+
+<li>
+<strong>RPN 100–199:</strong> High Risk
+</li>
+
+<li>
+<strong>RPN 200–1000:</strong> Very High Risk
+</li>
+
 </ul>
 
 <p>
-These ranges are a practical screening guide. Your company's
-FMEA procedure or customer-specific requirements may use different
-risk criteria.
+These ranges are a practical screening guide.
+Your company's FMEA procedure or customer-specific requirements
+may use different risk criteria.
 </p>
 
 </div>
@@ -857,7 +1197,7 @@ risk criteria.
 
 <div class="info-card">
 
-<h3>How to Use This FMEA Tool</h3>
+<h3>How to Use This Tool</h3>
 
 <ul>
 
@@ -892,29 +1232,51 @@ risk criteria.
 
 <div class="info-card">
 
-<h3>Example FMEA</h3>
-
-<p><strong>Process:</strong> Sheet Metal Bending</p>
-
-<p><strong>Failure Mode:</strong> Bend angle out of specification</p>
-
-<p><strong>Effect:</strong> Part does not fit during assembly</p>
-
-<p><strong>Severity:</strong> 8</p>
-
-<p><strong>Cause:</strong> Incorrect machine setting</p>
-
-<p><strong>Occurrence:</strong> 5</p>
-
-<p><strong>Current Control:</strong> First-piece inspection</p>
-
-<p><strong>Detection:</strong> 4</p>
-
-<p><strong>RPN:</strong> 8 × 5 × 4 = <strong>160</strong></p>
+<h3>Example PFMEA</h3>
 
 <p>
-This would be classified as <strong>High Risk</strong> in this tool,
-so corrective action should be considered.
+<strong>Process:</strong>
+Sheet Metal Bending
+</p>
+
+<p>
+<strong>Failure Mode:</strong>
+Bend angle out of specification
+</p>
+
+<p>
+<strong>Effect:</strong>
+Part does not fit during assembly
+</p>
+
+<p>
+<strong>Severity:</strong>
+8
+</p>
+
+<p>
+<strong>Cause:</strong>
+Incorrect machine setting
+</p>
+
+<p>
+<strong>Occurrence:</strong>
+5
+</p>
+
+<p>
+<strong>Current Control:</strong>
+First-piece inspection
+</p>
+
+<p>
+<strong>Detection:</strong>
+4
+</p>
+
+<p>
+<strong>RPN:</strong>
+8 × 5 × 4 = <strong>160</strong>
 </p>
 
 </div>
@@ -926,29 +1288,212 @@ so corrective action should be considered.
 
 <ul>
 
-<li>FMEA is a preventive risk analysis method.</li>
+<li>
+FMEA is a preventive risk analysis method.
+</li>
 
-<li>Do not select ratings randomly.</li>
+<li>
+Do not select ratings randomly.
+</li>
 
-<li>Use actual inspection and process data whenever available.</li>
+<li>
+Use actual inspection and process data whenever available.
+</li>
 
-<li>High RPN items should receive priority.</li>
+<li>
+High-risk items should receive priority.
+</li>
 
-<li>A low RPN does not automatically mean zero risk.</li>
+<li>
+A low RPN does not automatically mean zero risk.
+</li>
 
-<li>After corrective action, review the ratings again.</li>
+<li>
+After corrective action, review the ratings again.
+</li>
 
-<li>Customer-specific FMEA requirements should always be followed.</li>
+<li>
+Customer-specific FMEA requirements should always be followed.
+</li>
 
-<li>FMEA helps prioritize risk but does not replace engineering judgement.</li>
+<li>
+FMEA helps prioritize risk but does not replace engineering judgement.
+</li>
 
 </ul>
 
 </div>
 
+
 </div>
 
 </section>
+
+
+<!-- PRINT REPORT -->
+
+<div class="print-report" id="printReportArea">
+
+<div class="print-report-title">
+PFMEA REPORT
+</div>
+
+
+<table class="print-basic-info">
+
+<tr>
+
+<td class="label">
+FMEA Title / Process
+</td>
+
+<td id="printTitle">
+-
+</td>
+
+<td class="label">
+Part / Process Number
+</td>
+
+<td id="printPartNumber">
+-
+</td>
+
+</tr>
+
+
+<tr>
+
+<td class="label">
+Prepared By
+</td>
+
+<td id="printPreparedBy">
+-
+</td>
+
+<td class="label">
+Date
+</td>
+
+<td id="printDate">
+-
+</td>
+
+</tr>
+
+</table>
+
+
+<div class="print-section-title">
+PFMEA ANALYSIS
+</div>
+
+
+<table class="print-fmea-table">
+
+<thead>
+
+<tr>
+
+<th>Sr.</th>
+
+<th>Process / Operation</th>
+
+<th>Potential Failure Mode</th>
+
+<th>Potential Effect of Failure</th>
+
+<th>Severity<br>(S)</th>
+
+<th>Potential Cause</th>
+
+<th>Occurrence<br>(O)</th>
+
+<th>Current Controls</th>
+
+<th>Detection<br>(D)</th>
+
+<th>RPN<br>S×O×D</th>
+
+<th>Risk Level</th>
+
+<th>Recommended Action</th>
+
+<th>Responsible</th>
+
+<th>Target Date</th>
+
+<th>Action Result</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="printFmeaBody">
+
+</tbody>
+
+</table>
+
+
+<div class="print-section-title">
+PFMEA SUMMARY
+</div>
+
+
+<table class="print-summary">
+
+<tr>
+
+<td class="summary-label">
+Total Failure Modes
+</td>
+
+<td id="printTotalModes">
+0
+</td>
+
+<td class="summary-label">
+High Risk
+</td>
+
+<td id="printHighRisk">
+0
+</td>
+
+<td class="summary-label">
+Medium Risk
+</td>
+
+<td id="printMediumRisk">
+0
+</td>
+
+<td class="summary-label">
+Highest RPN
+</td>
+
+<td id="printHighestRPN">
+0
+</td>
+
+</tr>
+
+</table>
+
+
+<div class="print-footer-note">
+
+RPN = Severity × Occurrence × Detection.
+Risk ranges shown in this report are the practical criteria used by
+this tool and may differ from company/customer-specific FMEA requirements.
+
+</div>
+
+</div>
 
 
 <!-- FOOTER -->
@@ -957,14 +1502,19 @@ so corrective action should be considered.
 
 <div class="footer-container">
 
+
 <div>
-<div class="footer-logo">MechQTools</div>
+
+<div class="footer-logo">
+MechQTools
+</div>
 
 <p class="footer-text">
 Engineering & Quality Tools for Professionals.
 Free practical calculators, templates and analysis tools
 for Mechanical and Quality Engineers.
 </p>
+
 </div>
 
 
@@ -972,10 +1522,21 @@ for Mechanical and Quality Engineers.
 
 <h4>Tools</h4>
 
-<a href="index.html#mechanical-tools">Mechanical Tools</a>
-<a href="index.html#quality-tools">Quality Tools</a>
-<a href="index.html#templates">Templates</a>
-<a href="index.html#guides-section">Guides</a>
+<a href="index.html#mechanical-tools">
+Mechanical Tools
+</a>
+
+<a href="index.html#quality-tools">
+Quality Tools
+</a>
+
+<a href="index.html#templates">
+Templates
+</a>
+
+<a href="index.html#guides-section">
+Guides
+</a>
 
 </div>
 
@@ -984,11 +1545,25 @@ for Mechanical and Quality Engineers.
 
 <h4>Quality</h4>
 
-<a href="cp-cpk-calculator.html">Cp & Cpk</a>
-<a href="pp-ppk-calculator.html">Pp & Ppk</a>
-<a href="pareto-analysis-tool.html">Pareto Analysis</a>
-<a href="5-why-analysis-tool.html">5 Why Analysis</a>
-<a href="8d-problem-solving-tool.html">8D Problem Solving</a>
+<a href="cp-cpk-calculator.html">
+Cp & Cpk
+</a>
+
+<a href="pp-ppk-calculator.html">
+Pp & Ppk
+</a>
+
+<a href="pareto-analysis-tool.html">
+Pareto Analysis
+</a>
+
+<a href="5-why-analysis-tool.html">
+5 Why Analysis
+</a>
+
+<a href="8d-problem-solving-tool.html">
+8D Problem Solving
+</a>
 
 </div>
 
@@ -996,7 +1571,9 @@ for Mechanical and Quality Engineers.
 
 
 <div class="copyright">
+
 © 2026 MechQTools. All Rights Reserved.
+
 </div>
 
 </footer>
@@ -1007,7 +1584,9 @@ for Mechanical and Quality Engineers.
 let rowCounter = 0;
 
 
-/* ADD ROW */
+/* ========================= */
+/* ADD FMEA ROW */
+/* ========================= */
 
 function addRow(data = {}){
 
@@ -1019,23 +1598,28 @@ function addRow(data = {}){
 
     tr.innerHTML = `
 
-        <td class="sr">${rowCounter}</td>
-
-        <td>
-            <input type="text"
-                   class="operation"
-                   value="${escapeValue(data.operation || "")}"
-                   placeholder="Bending">
+        <td class="sr">
+            ${rowCounter}
         </td>
 
         <td>
-            <textarea class="failure"
-                      placeholder="Potential failure mode">${escapeValue(data.failure || "")}</textarea>
+            <input
+            type="text"
+            class="operation"
+            value="${escapeValue(data.operation || "")}"
+            placeholder="Bending">
         </td>
 
         <td>
-            <textarea class="effect"
-                      placeholder="Effect of failure">${escapeValue(data.effect || "")}</textarea>
+            <textarea
+            class="failure"
+            placeholder="Potential failure mode">${escapeValue(data.failure || "")}</textarea>
+        </td>
+
+        <td>
+            <textarea
+            class="effect"
+            placeholder="Effect of failure">${escapeValue(data.effect || "")}</textarea>
         </td>
 
         <td>
@@ -1045,8 +1629,9 @@ function addRow(data = {}){
         </td>
 
         <td>
-            <textarea class="cause"
-                      placeholder="Potential cause">${escapeValue(data.cause || "")}</textarea>
+            <textarea
+            class="cause"
+            placeholder="Potential cause">${escapeValue(data.cause || "")}</textarea>
         </td>
 
         <td>
@@ -1056,8 +1641,9 @@ function addRow(data = {}){
         </td>
 
         <td>
-            <textarea class="control"
-                      placeholder="Current controls">${escapeValue(data.control || "")}</textarea>
+            <textarea
+            class="control"
+            placeholder="Current controls">${escapeValue(data.control || "")}</textarea>
         </td>
 
         <td>
@@ -1066,36 +1652,46 @@ function addRow(data = {}){
             </select>
         </td>
 
-        <td class="rpn-cell">0</td>
+        <td class="rpn-cell">
+            0
+        </td>
 
-        <td class="risk-cell">-</td>
-
-        <td>
-            <textarea class="recommended"
-                      placeholder="Recommended action">${escapeValue(data.recommended || "")}</textarea>
+        <td class="risk-cell">
+            -
         </td>
 
         <td>
-            <input type="text"
-                   class="responsible"
-                   value="${escapeValue(data.responsible || "")}"
-                   placeholder="QE">
+            <textarea
+            class="recommended"
+            placeholder="Recommended action">${escapeValue(data.recommended || "")}</textarea>
         </td>
 
         <td>
-            <input type="date"
-                   class="targetDate"
-                   value="${escapeValue(data.targetDate || "")}">
+            <input
+            type="text"
+            class="responsible"
+            value="${escapeValue(data.responsible || "")}"
+            placeholder="QE">
         </td>
 
         <td>
-            <textarea class="result"
-                      placeholder="Result / verification">${escapeValue(data.result || "")}</textarea>
+            <input
+            type="date"
+            class="targetDate"
+            value="${escapeValue(data.targetDate || "")}">
         </td>
 
         <td>
-            <button class="delete-btn" onclick="deleteRow(this)">
-                Delete
+            <textarea
+            class="result"
+            placeholder="Result / verification">${escapeValue(data.result || "")}</textarea>
+        </td>
+
+        <td>
+            <button
+            class="delete-btn"
+            onclick="deleteRow(this)">
+            Delete
             </button>
         </td>
 
@@ -1108,27 +1704,35 @@ function addRow(data = {}){
 }
 
 
+/* ========================= */
 /* RATING OPTIONS */
+/* ========================= */
 
 function ratingOptions(selected){
 
-    let html = '<option value="">Select</option>';
+    let html =
+        '<option value="">Select</option>';
 
     for(let i = 1; i <= 10; i++){
 
         html += `
-            <option value="${i}" ${String(selected) === String(i) ? "selected" : ""}>
-                ${i}
+            <option
+            value="${i}"
+            ${String(selected) === String(i) ? "selected" : ""}>
+            ${i}
             </option>
         `;
 
     }
 
     return html;
+
 }
 
 
-/* ESCAPE */
+/* ========================= */
+/* ESCAPE VALUES */
+/* ========================= */
 
 function escapeValue(value){
 
@@ -1141,7 +1745,9 @@ function escapeValue(value){
 }
 
 
+/* ========================= */
 /* DELETE ROW */
+/* ========================= */
 
 function deleteRow(button){
 
@@ -1156,96 +1762,142 @@ function deleteRow(button){
 }
 
 
+/* ========================= */
 /* SERIAL NUMBERS */
+/* ========================= */
 
 function updateSerialNumbers(){
 
-    const rows = document.querySelectorAll("#fmeaBody tr");
+    const rows =
+        document.querySelectorAll("#fmeaBody tr");
 
     rows.forEach((row,index)=>{
 
-        row.querySelector(".sr").textContent = index + 1;
+        row.querySelector(".sr").textContent =
+            index + 1;
 
     });
 
 }
 
 
+/* ========================= */
 /* CALCULATE FMEA */
+/* ========================= */
 
 function calculateFMEA(){
 
-    const rows = document.querySelectorAll("#fmeaBody tr");
+    const rows =
+        document.querySelectorAll("#fmeaBody tr");
 
     let high = 0;
+
     let medium = 0;
+
     let highest = 0;
+
 
     rows.forEach(row => {
 
-        const s = Number(row.querySelector(".severity").value) || 0;
-        const o = Number(row.querySelector(".occurrence").value) || 0;
-        const d = Number(row.querySelector(".detection").value) || 0;
+        const s =
+            Number(row.querySelector(".severity").value) || 0;
 
-        const rpnCell = row.querySelector(".rpn-cell");
-        const riskCell = row.querySelector(".risk-cell");
+        const o =
+            Number(row.querySelector(".occurrence").value) || 0;
+
+        const d =
+            Number(row.querySelector(".detection").value) || 0;
+
+
+        const rpnCell =
+            row.querySelector(".rpn-cell");
+
+        const riskCell =
+            row.querySelector(".risk-cell");
+
 
         if(s && o && d){
 
-            const rpn = s * o * d;
+            const rpn =
+                s * o * d;
 
-            rpnCell.textContent = rpn;
+
+            rpnCell.textContent =
+                rpn;
+
 
             if(rpn >= 200){
 
-                riskCell.textContent = "Very High Risk";
+                riskCell.textContent =
+                    "Very High Risk";
 
             }
+
             else if(rpn >= 100){
 
-                riskCell.textContent = "High Risk";
+                riskCell.textContent =
+                    "High Risk";
+
                 high++;
 
             }
+
             else if(rpn >= 50){
 
-                riskCell.textContent = "Medium Risk";
+                riskCell.textContent =
+                    "Medium Risk";
+
                 medium++;
 
             }
+
             else{
 
-                riskCell.textContent = "Low Risk";
+                riskCell.textContent =
+                    "Low Risk";
 
             }
 
+
             if(rpn > highest){
+
                 highest = rpn;
+
             }
 
         }
+
         else{
 
-            rpnCell.textContent = "0";
-            riskCell.textContent = "-";
+            rpnCell.textContent =
+                "0";
+
+            riskCell.textContent =
+                "-";
 
         }
 
     });
 
 
-    document.getElementById("totalModes").textContent = rows.length;
+    document.getElementById("totalModes").textContent =
+        rows.length;
 
-    document.getElementById("highRisk").textContent = high;
+    document.getElementById("highRisk").textContent =
+        high;
 
-    document.getElementById("mediumRisk").textContent = medium;
+    document.getElementById("mediumRisk").textContent =
+        medium;
 
-    document.getElementById("highestRPN").textContent = highest;
+    document.getElementById("highestRPN").textContent =
+        highest;
 
 }
 
 
-/* EXAMPLE */
+/* ========================= */
+/* LOAD EXAMPLE */
+/* ========================= */
 
 function loadExample(){
 
@@ -1262,7 +1914,8 @@ function loadExample(){
         new Date().toISOString().split("T")[0];
 
 
-    document.getElementById("fmeaBody").innerHTML = "";
+    document.getElementById("fmeaBody").innerHTML =
+        "";
 
     rowCounter = 0;
 
@@ -1285,7 +1938,8 @@ function loadExample(){
 
         detection:4,
 
-        recommended:"Verify machine setting and strengthen first-piece inspection",
+        recommended:
+        "Verify machine setting and strengthen first-piece inspection",
 
         responsible:"Quality",
 
@@ -1314,7 +1968,8 @@ function loadExample(){
 
         detection:3,
 
-        recommended:"Verify CNC program before production",
+        recommended:
+        "Verify CNC program before production",
 
         responsible:"Production",
 
@@ -1343,7 +1998,8 @@ function loadExample(){
 
         detection:5,
 
-        recommended:"Add standard deburring instruction and inspection",
+        recommended:
+        "Add standard deburring instruction and inspection",
 
         responsible:"Production",
 
@@ -1359,60 +2015,327 @@ function loadExample(){
 }
 
 
+/* ========================= */
 /* CLEAR ALL */
+/* ========================= */
 
 function clearAll(){
 
-    if(!confirm("Are you sure you want to clear all FMEA data?")){
+    if(!confirm(
+        "Are you sure you want to clear all FMEA data?"
+    )){
         return;
     }
 
-    document.getElementById("fmeaTitle").value = "";
-    document.getElementById("partNumber").value = "";
-    document.getElementById("preparedBy").value = "";
-    document.getElementById("fmeaDate").value = "";
 
-    document.getElementById("fmeaBody").innerHTML = "";
+    document.getElementById("fmeaTitle").value =
+        "";
+
+    document.getElementById("partNumber").value =
+        "";
+
+    document.getElementById("preparedBy").value =
+        "";
+
+    document.getElementById("fmeaDate").value =
+        "";
+
+
+    document.getElementById("fmeaBody").innerHTML =
+        "";
 
     rowCounter = 0;
 
-    document.getElementById("totalModes").textContent = "0";
-    document.getElementById("highRisk").textContent = "0";
-    document.getElementById("mediumRisk").textContent = "0";
-    document.getElementById("highestRPN").textContent = "0";
+
+    document.getElementById("totalModes").textContent =
+        "0";
+
+    document.getElementById("highRisk").textContent =
+        "0";
+
+    document.getElementById("mediumRisk").textContent =
+        "0";
+
+    document.getElementById("highestRPN").textContent =
+        "0";
 
 }
 
 
-/* PRINT */
+/* ========================= */
+/* GET INPUT VALUE */
+/* ========================= */
 
-function printReport(){
+function getValue(row, selector){
+
+    const element =
+        row.querySelector(selector);
+
+    if(!element){
+        return "";
+    }
+
+    return element.value || "";
+
+}
+
+
+/* ========================= */
+/* CREATE PRINT VALUE */
+/* ========================= */
+
+function createPrintCell(value){
+
+    const td =
+        document.createElement("td");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "print-value";
+
+    div.textContent =
+        value || "-";
+
+    td.appendChild(div);
+
+    return td;
+
+}
+
+
+/* ========================= */
+/* BUILD PRINT REPORT */
+/* ========================= */
+
+function buildPrintReport(){
 
     calculateFMEA();
 
-    window.print();
+
+    /* BASIC INFORMATION */
+
+    document.getElementById("printTitle").textContent =
+        document.getElementById("fmeaTitle").value || "-";
+
+    document.getElementById("printPartNumber").textContent =
+        document.getElementById("partNumber").value || "-";
+
+    document.getElementById("printPreparedBy").textContent =
+        document.getElementById("preparedBy").value || "-";
+
+    document.getElementById("printDate").textContent =
+        document.getElementById("fmeaDate").value || "-";
+
+
+    /* CLEAR OLD PRINT ROWS */
+
+    const printBody =
+        document.getElementById("printFmeaBody");
+
+    printBody.innerHTML =
+        "";
+
+
+    /* GET ALL CURRENT ROWS */
+
+    const rows =
+        document.querySelectorAll("#fmeaBody tr");
+
+
+    rows.forEach((row,index)=>{
+
+        const tr =
+            document.createElement("tr");
+
+
+        /* SR */
+
+        tr.appendChild(
+            createPrintCell(index + 1)
+        );
+
+
+        /* OPERATION */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".operation")
+            )
+        );
+
+
+        /* FAILURE */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".failure")
+            )
+        );
+
+
+        /* EFFECT */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".effect")
+            )
+        );
+
+
+        /* SEVERITY */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".severity")
+            )
+        );
+
+
+        /* CAUSE */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".cause")
+            )
+        );
+
+
+        /* OCCURRENCE */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".occurrence")
+            )
+        );
+
+
+        /* CURRENT CONTROL */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".control")
+            )
+        );
+
+
+        /* DETECTION */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".detection")
+            )
+        );
+
+
+        /* RPN */
+
+        tr.appendChild(
+            createPrintCell(
+                row.querySelector(".rpn-cell").textContent
+            )
+        );
+
+
+        /* RISK */
+
+        tr.appendChild(
+            createPrintCell(
+                row.querySelector(".risk-cell").textContent
+            )
+        );
+
+
+        /* RECOMMENDED ACTION */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".recommended")
+            )
+        );
+
+
+        /* RESPONSIBLE */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".responsible")
+            )
+        );
+
+
+        /* TARGET DATE */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".targetDate")
+            )
+        );
+
+
+        /* RESULT */
+
+        tr.appendChild(
+            createPrintCell(
+                getValue(row,".result")
+            )
+        );
+
+
+        /* LAST ACTION COLUMN */
+
+        const emptyAction =
+            document.createElement("td");
+
+        emptyAction.textContent =
+            "";
+
+        tr.appendChild(emptyAction);
+
+
+        printBody.appendChild(tr);
+
+    });
+
+
+    /* SUMMARY */
+
+    document.getElementById("printTotalModes").textContent =
+        document.getElementById("totalModes").textContent;
+
+    document.getElementById("printHighRisk").textContent =
+        document.getElementById("highRisk").textContent;
+
+    document.getElementById("printMediumRisk").textContent =
+        document.getElementById("mediumRisk").textContent;
+
+    document.getElementById("printHighestRPN").textContent =
+        document.getElementById("highestRPN").textContent;
 
 }
 
 
-/* MESSAGE */
+/* ========================= */
+/* PRINT REPORT */
+/* ========================= */
 
-function showMessage(text){
+function printReport(){
 
-    const message = document.getElementById("message");
+    buildPrintReport();
 
-    message.textContent = text;
+    setTimeout(function(){
 
-    message.style.display = "block";
+        window.print();
 
-    setTimeout(()=>{
-        message.style.display = "none";
-    },3000);
+    },100);
 
 }
 
 
+/* ========================= */
 /* INITIAL ROW */
+/* ========================= */
 
 addRow();
 
