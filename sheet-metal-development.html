@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sheet Metal Development Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free Sheet Metal Development Calculator for calculating bend allowance, total bend allowance and approximate developed length.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* PAGE */
+
+.page{
+    max-width:1100px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:34px;
+    margin:0 0 8px;
+    color:#e53232;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+/* CALCULATOR */
+
+.calculator{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.section-heading{
+    font-size:21px;
+    margin:0 0 20px;
+    color:#222;
+    border-bottom:1px solid #eee;
+    padding-bottom:10px;
+}
+
+.input-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.form-group input{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#e53232;
+    box-shadow:0 0 0 2px rgba(229,50,50,0.08);
+}
+
+.form-group small{
+    color:#777;
+    margin-top:5px;
+    font-size:12px;
+}
+
+/* BUTTONS */
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:7px;
+    padding:12px 22px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92828;
+}
+
+.btn-secondary{
+    background:#eeeeee;
+    color:#333;
+}
+
+.btn-secondary:hover{
+    background:#dddddd;
+}
+
+.home-btn{
+    display:inline-block;
+    margin-top:20px;
+    text-decoration:none;
+    color:#e53232;
+    font-weight:600;
+}
+
+/* RESULTS */
+
+.results{
+    margin-top:35px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.result-box{
+    background:#f8f8f8;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:17px;
+}
+
+.result-box span{
+    display:block;
+    font-size:13px;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.result-box strong{
+    font-size:22px;
+    color:#e53232;
+}
+
+.highlight{
+    background:#fff4f4;
+    border:1px solid #f0bcbc;
+}
+
+/* DETAILS */
+
+.details{
+    margin-top:25px;
+    background:#fafafa;
+    border-left:4px solid #e53232;
+    padding:18px 20px;
+    border-radius:5px;
+}
+
+.details h3{
+    margin-top:0;
+    margin-bottom:10px;
+}
+
+.details p{
+    margin:7px 0;
+    color:#555;
+}
+
+.formula{
+    background:#fff;
+    border:1px solid #ddd;
+    padding:12px;
+    border-radius:6px;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+/* NOTE */
+
+.note{
+    margin-top:30px;
+    background:#fff8e8;
+    border:1px solid #f0d99a;
+    border-radius:8px;
+    padding:16px 18px;
+    color:#66551d;
+}
+
+.note strong{
+    color:#4d3d08;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#222;
+    color:#ddd;
+    text-align:center;
+    padding:25px 20px;
+}
+
+footer a{
+    color:#fff;
+    text-decoration:none;
+}
+
+footer a:hover{
+    color:#e53232;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .page{
+        margin:30px auto;
+    }
+
+    .calculator{
+        padding:20px;
+    }
+
+    .input-grid{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:28px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+
+<h1>
+Sheet Metal Development Calculator
+</h1>
+
+<p>
+Calculate bend allowance, total bend allowance and approximate developed length.
+</p>
+
+</div>
+
+
+<div class="calculator">
+
+<h2 class="section-heading">
+Sheet Metal Input
+</h2>
+
+
+<div class="input-grid">
+
+<div class="form-group">
+
+<label for="sheetLength">
+Finished Length (mm)
+</label>
+
+<input
+type="number"
+id="sheetLength"
+placeholder="Example: 200"
+step="any"
+min="0"
+>
+
+<small>
+Finished straight length of the part.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="sheetWidth">
+Sheet Width (mm)
+</label>
+
+<input
+type="number"
+id="sheetWidth"
+placeholder="Example: 100"
+step="any"
+min="0"
+>
+
+<small>
+Used for reference only.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="thickness">
+Sheet Thickness (mm)
+</label>
+
+<input
+type="number"
+id="thickness"
+placeholder="Example: 2"
+step="any"
+min="0.01"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="radius">
+Inside Bend Radius (mm)
+</label>
+
+<input
+type="number"
+id="radius"
+placeholder="Example: 3"
+step="any"
+min="0"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="angle">
+Bend Angle (°)
+</label>
+
+<input
+type="number"
+id="angle"
+placeholder="Example: 90"
+step="any"
+min="0.1"
+max="179.9"
+>
+
+<small>
+Enter the included bend angle.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="numberOfBends">
+Number of Bends
+</label>
+
+<input
+type="number"
+id="numberOfBends"
+placeholder="Example: 2"
+step="1"
+min="1"
+value="1"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="kFactor">
+K-Factor
+</label>
+
+<input
+type="number"
+id="kFactor"
+placeholder="Example: 0.33"
+step="0.01"
+min="0"
+max="1"
+value="0.33"
+>
+
+<small>
+Typical value: 0.30 - 0.50
+</small>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="btn btn-primary"
+onclick="calculateDevelopment()"
+>
+Calculate Development
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="resetCalculator()"
+>
+Reset
+</button>
+
+</div>
+
+
+<div class="results" id="results" style="display:none;">
+
+<h2 class="section-heading">
+Calculation Results
+</h2>
+
+
+<div class="result-grid">
+
+<div class="result-box">
+
+<span>
+Bend Allowance / Bend
+</span>
+
+<strong id="bendAllowanceResult">
+0.000 mm
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Total Bend Allowance
+</span>
+
+<strong id="totalBendAllowanceResult">
+0.000 mm
+</strong>
+
+</div>
+
+
+<div class="result-box highlight">
+
+<span>
+Approx. Developed Length
+</span>
+
+<strong id="developedLengthResult">
+0.000 mm
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Total Bend Angle
+</span>
+
+<strong id="totalAngleResult">
+0°
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="details">
+
+<h3>
+Calculation Details
+</h3>
+
+<p id="detailsText">
+Calculation details will appear here.
+</p>
+
+<div class="formula">
+
+Bend Allowance = (π / 180) × Angle × (Radius + K × Thickness)
+
+</div>
+
+<div class="formula">
+
+Total Bend Allowance = Bend Allowance × Number of Bends
+
+</div>
+
+<div class="formula">
+
+Approx. Developed Length = Finished Length + Total Bend Allowance
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="note">
+
+<strong>Important:</strong>
+
+This calculator provides an approximate development length using the entered
+K-Factor. Actual sheet-metal development can vary depending on material,
+forming method, tooling, inside radius, springback and machine setup.
+
+</div>
+
+
+<a
+href="index.html"
+class="home-btn"
+>
+← Back to MechQTools Home
+</a>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+<p>
+Engineering & Quality Tools for Professionals.
+</p>
+
+</footer>
+
+
+<script>
+
+function calculateDevelopment(){
+
+    const sheetLength =
+        parseFloat(
+            document.getElementById("sheetLength").value
+        );
+
+    const sheetWidth =
+        parseFloat(
+            document.getElementById("sheetWidth").value
+        );
+
+    const thickness =
+        parseFloat(
+            document.getElementById("thickness").value
+        );
+
+    const radius =
+        parseFloat(
+            document.getElementById("radius").value
+        );
+
+    const angle =
+        parseFloat(
+            document.getElementById("angle").value
+        );
+
+    const numberOfBends =
+        parseInt(
+            document.getElementById("numberOfBends").value
+        );
+
+    const kFactor =
+        parseFloat(
+            document.getElementById("kFactor").value
+        );
+
+
+    /* VALIDATION */
+
+    if(
+        isNaN(sheetLength) ||
+        sheetLength <= 0
+    ){
+        alert("Please enter a valid Finished Length.");
+        return;
+    }
+
+
+    if(
+        isNaN(sheetWidth) ||
+        sheetWidth <= 0
+    ){
+        alert("Please enter a valid Sheet Width.");
+        return;
+    }
+
+
+    if(
+        isNaN(thickness) ||
+        thickness <= 0
+    ){
+        alert("Please enter a valid Sheet Thickness.");
+        return;
+    }
+
+
+    if(
+        isNaN(radius) ||
+        radius < 0
+    ){
+        alert("Please enter a valid Inside Bend Radius.");
+        return;
+    }
+
+
+    if(
+        isNaN(angle) ||
+        angle <= 0 ||
+        angle >= 180
+    ){
+        alert("Bend Angle must be between 0 and 180 degrees.");
+        return;
+    }
+
+
+    if(
+        isNaN(numberOfBends) ||
+        numberOfBends < 1
+    ){
+        alert("Number of Bends must be at least 1.");
+        return;
+    }
+
+
+    if(
+        isNaN(kFactor) ||
+        kFactor < 0 ||
+        kFactor > 1
+    ){
+        alert("K-Factor must be between 0 and 1.");
+        return;
+    }
+
+
+    /* BEND ALLOWANCE */
+
+    const bendAllowance =
+        (Math.PI / 180) *
+        angle *
+        (
+            radius +
+            kFactor * thickness
+        );
+
+
+    /* TOTAL BA */
+
+    const totalBendAllowance =
+        bendAllowance *
+        numberOfBends;
+
+
+    /* DEVELOPED LENGTH */
+
+    const developedLength =
+        sheetLength +
+        totalBendAllowance;
+
+
+    /* TOTAL ANGLE */
+
+    const totalAngle =
+        angle *
+        numberOfBends;
+
+
+    /* DISPLAY */
+
+    document.getElementById(
+        "bendAllowanceResult"
+    ).textContent =
+        bendAllowance.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "totalBendAllowanceResult"
+    ).textContent =
+        totalBendAllowance.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "developedLengthResult"
+    ).textContent =
+        developedLength.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "totalAngleResult"
+    ).textContent =
+        totalAngle.toFixed(1) + "°";
+
+
+    document.getElementById(
+        "detailsText"
+    ).innerHTML =
+        "Finished Length = " +
+        sheetLength.toFixed(3) +
+        " mm<br>" +
+
+        "Sheet Width = " +
+        sheetWidth.toFixed(3) +
+        " mm<br>" +
+
+        "Thickness = " +
+        thickness.toFixed(3) +
+        " mm<br>" +
+
+        "Inside Radius = " +
+        radius.toFixed(3) +
+        " mm<br>" +
+
+        "Bend Angle = " +
+        angle.toFixed(1) +
+        "°<br>" +
+
+        "Number of Bends = " +
+        numberOfBends +
+        "<br>" +
+
+        "K-Factor = " +
+        kFactor.toFixed(2) +
+        "<br><br>" +
+
+        "Bend Allowance per Bend = " +
+        bendAllowance.toFixed(3) +
+        " mm<br>" +
+
+        "Total Bend Allowance = " +
+        totalBendAllowance.toFixed(3) +
+        " mm<br>" +
+
+        "Approx. Developed Length = " +
+        developedLength.toFixed(3) +
+        " mm";
+
+
+    document.getElementById(
+        "results"
+    ).style.display =
+        "block";
+
+}
+
+
+function resetCalculator(){
+
+    document.getElementById(
+        "sheetLength"
+    ).value = "";
+
+
+    document.getElementById(
+        "sheetWidth"
+    ).value = "";
+
+
+    document.getElementById(
+        "thickness"
+    ).value = "";
+
+
+    document.getElementById(
+        "radius"
+    ).value = "";
+
+
+    document.getElementById(
+        "angle"
+    ).value = "";
+
+
+    document.getElementById(
+        "numberOfBends"
+    ).value = "1";
+
+
+    document.getElementById(
+        "kFactor"
+    ).value = "0.33";
+
+
+    document.getElementById(
+        "results"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
