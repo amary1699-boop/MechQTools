@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cp Cpk Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free Cp and Cpk calculator for process capability analysis. Calculate Cp, Cpk and process capability status.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.container{
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    margin:0 0 8px;
+    font-size:32px;
+    color:#e53232;
+}
+
+.page-title p{
+    margin:0;
+    color:#666;
+    font-size:16px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e2e2e2;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:5px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:600;
+    font-size:14px;
+}
+
+input{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+.form-group small{
+    display:block;
+    margin-top:5px;
+    color:#777;
+    font-size:12px;
+}
+
+/* BUTTONS */
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92525;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+/* RESULTS */
+
+.result-box{
+    margin-top:25px;
+    background:#fff5f5;
+    border:1px solid #efcccc;
+    border-radius:10px;
+    padding:20px;
+}
+
+.result-box h2{
+    margin:0 0 15px;
+    color:#e53232;
+    font-size:21px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.result-item{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:15px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.result-item strong{
+    font-size:22px;
+}
+
+.capability-box{
+    margin-top:18px;
+    padding:18px;
+    background:#fff;
+    border:2px solid #e53232;
+    border-radius:9px;
+    text-align:center;
+}
+
+.capability-box span{
+    display:block;
+    color:#666;
+    font-size:14px;
+}
+
+.capability-box strong{
+    display:block;
+    margin-top:5px;
+    font-size:22px;
+    color:#e53232;
+}
+
+/* STATUS */
+
+.status{
+    margin-top:15px;
+    padding:12px;
+    border-radius:7px;
+    text-align:center;
+    font-weight:700;
+}
+
+.status-pass{
+    background:#e9f7ef;
+    color:#16733a;
+    border:1px solid #b8e1c8;
+}
+
+.status-warning{
+    background:#fff8e6;
+    color:#946200;
+    border:1px solid #ead28a;
+}
+
+.status-fail{
+    background:#fdecec;
+    color:#b42323;
+    border:1px solid #efb5b5;
+}
+
+/* INFO */
+
+.info-box{
+    background:#ffffff;
+    border:1px solid #e2e2e2;
+    border-radius:12px;
+    padding:22px;
+    margin-bottom:25px;
+}
+
+.info-box h2{
+    margin-top:0;
+    color:#e53232;
+}
+
+.info-box h3{
+    margin-bottom:6px;
+}
+
+.info-box ul{
+    padding-left:20px;
+}
+
+.formula-box{
+    background:#f7f7f7;
+    border-left:4px solid #e53232;
+    padding:15px;
+    margin:15px 0;
+    font-weight:600;
+    overflow-x:auto;
+}
+
+.note{
+    background:#fff8e6;
+    border-left:4px solid #e0a800;
+    padding:13px 15px;
+    border-radius:5px;
+}
+
+/* TABLE */
+
+.example-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.example-table th,
+.example-table td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+.example-table th{
+    background:#f3f3f3;
+}
+
+/* HOME */
+
+.home-btn{
+    display:inline-block;
+    padding:11px 18px;
+    background:#e53232;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-btn:hover{
+    background:#c92525;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#ffffff;
+    border-top:1px solid #e5e5e5;
+    text-align:center;
+    padding:25px 15px;
+    color:#666;
+    font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .form-grid,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card,
+    .info-box{
+        padding:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="page-title">
+
+<h1>
+Cp & Cpk Calculator
+</h1>
+
+<p>
+Calculate process capability using specification limits, process mean and standard deviation.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label for="usl">
+Upper Specification Limit (USL)
+</label>
+
+<input
+type="number"
+id="usl"
+value="10.05"
+step="any"
+placeholder="Example: 10.05"
+>
+
+<small>
+Maximum acceptable specification value.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="lsl">
+Lower Specification Limit (LSL)
+</label>
+
+<input
+type="number"
+id="lsl"
+value="9.95"
+step="any"
+placeholder="Example: 9.95"
+>
+
+<small>
+Minimum acceptable specification value.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="mean">
+Process Mean
+</label>
+
+<input
+type="number"
+id="mean"
+value="10.00"
+step="any"
+placeholder="Example: 10.00"
+>
+
+<small>
+Average process measurement.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="stdDev">
+Standard Deviation (σ)
+</label>
+
+<input
+type="number"
+id="stdDev"
+value="0.01"
+step="any"
+min="0"
+placeholder="Example: 0.01"
+>
+
+<small>
+Process standard deviation.
+</small>
+
+</div>
+
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateCpk()"
+>
+Calculate Cp & Cpk
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+</div>
+
+
+<div class="result-box">
+
+<h2>
+Calculation Result
+</h2>
+
+
+<div class="result-grid">
+
+
+<div class="result-item">
+
+<span>
+USL
+</span>
+
+<strong id="resultUSL">
+10.05
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+LSL
+</span>
+
+<strong id="resultLSL">
+9.95
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Process Mean
+</span>
+
+<strong id="resultMean">
+10.00
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Standard Deviation
+</span>
+
+<strong id="resultStdDev">
+0.010
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Cp
+</span>
+
+<strong id="resultCp">
+1.667
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Cpk
+</span>
+
+<strong id="resultCpk">
+1.667
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="capability-box">
+
+<span>
+Process Capability
+</span>
+
+<strong id="capabilityText">
+Capable
+</strong>
+
+</div>
+
+
+<div
+id="statusBox"
+class="status status-pass"
+>
+Cpk ≥ 1.33 — Process is generally considered capable.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<h2>
+Cp and Cpk Formula
+</h2>
+
+
+<div class="formula-box">
+
+Cp = (USL − LSL) ÷ (6 × σ)
+
+<br><br>
+
+Cpu = (USL − Mean) ÷ (3 × σ)
+
+<br><br>
+
+Cpl = (Mean − LSL) ÷ (3 × σ)
+
+<br><br>
+
+Cpk = Minimum(Cpu, Cpl)
+
+</div>
+
+
+<h3>
+What is Cp?
+</h3>
+
+<p>
+Cp compares the specification width with the natural process spread. It tells how capable the process could be if it were perfectly centered.
+</p>
+
+
+<h3>
+What is Cpk?
+</h3>
+
+<p>
+Cpk considers both process variation and how close the process mean is to the specification limits.
+</p>
+
+
+<div class="note">
+
+<strong>Important:</strong>
+Cp and Cpk are meaningful when the process is reasonably stable and the standard deviation represents the process variation being evaluated. Always follow your organization's quality standard and customer requirements.
+
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<h2>
+Typical Cpk Interpretation
+</h2>
+
+<table class="example-table">
+
+<thead>
+
+<tr>
+
+<th>
+Cpk Value
+</th>
+
+<th>
+General Interpretation
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+Cpk &lt; 1.00
+</td>
+
+<td>
+Process is generally not capable.
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+1.00 ≤ Cpk &lt; 1.33
+</td>
+
+<td>
+Marginal / needs improvement.
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+1.33 ≤ Cpk &lt; 1.67
+</td>
+
+<td>
+Generally capable.
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+1.67 ≤ Cpk &lt; 2.00
+</td>
+
+<td>
+Very capable.
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Cpk ≥ 2.00
+</td>
+
+<td>
+Highly capable.
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="info-box">
+
+<h2>
+Example</h2>
+
+<p>
+Suppose a dimension has:
+</p>
+
+<ul>
+
+<li>
+USL = <strong>10.05 mm</strong>
+</li>
+
+<li>
+LSL = <strong>9.95 mm</strong>
+</li>
+
+<li>
+Mean = <strong>10.00 mm</strong>
+</li>
+
+<li>
+Standard Deviation = <strong>0.01 mm</strong>
+</li>
+
+</ul>
+
+<p>
+Then:
+</p>
+
+<ul>
+
+<li>
+Cp = <strong>1.667</strong>
+</li>
+
+<li>
+Cpu = <strong>1.667</strong>
+</li>
+
+<li>
+Cpl = <strong>1.667</strong>
+</li>
+
+<li>
+Cpk = <strong>1.667</strong>
+</li>
+
+</ul>
+
+<p>
+The process is generally considered <strong>capable</strong> at this level.
+</p>
+
+</div>
+
+
+<a
+href="index.html"
+class="home-btn"
+>
+← Back to Home
+</a>
+
+
+</main>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+/* ELEMENTS */
+
+const usl =
+document.getElementById("usl");
+
+const lsl =
+document.getElementById("lsl");
+
+const mean =
+document.getElementById("mean");
+
+const stdDev =
+document.getElementById("stdDev");
+
+
+/* RESULT ELEMENTS */
+
+const resultUSL =
+document.getElementById("resultUSL");
+
+const resultLSL =
+document.getElementById("resultLSL");
+
+const resultMean =
+document.getElementById("resultMean");
+
+const resultStdDev =
+document.getElementById("resultStdDev");
+
+const resultCp =
+document.getElementById("resultCp");
+
+const resultCpk =
+document.getElementById("resultCpk");
+
+const capabilityText =
+document.getElementById("capabilityText");
+
+const statusBox =
+document.getElementById("statusBox");
+
+
+/* FORMAT */
+
+function formatNumber(value){
+
+    return Number(
+        value.toFixed(3)
+    ).toString();
+
+}
+
+
+/* CALCULATE */
+
+function calculateCpk(){
+
+    const USL =
+    parseFloat(usl.value);
+
+    const LSL =
+    parseFloat(lsl.value);
+
+    const Mean =
+    parseFloat(mean.value);
+
+    const SD =
+    parseFloat(stdDev.value);
+
+
+    /* VALIDATION */
+
+    if(
+        isNaN(USL) ||
+        isNaN(LSL) ||
+        isNaN(Mean) ||
+        isNaN(SD)
+    ){
+
+        alert(
+            "Please enter all values."
+        );
+
+        return;
+    }
+
+
+    if(
+        USL <= LSL
+    ){
+
+        alert(
+            "USL must be greater than LSL."
+        );
+
+        return;
+    }
+
+
+    if(
+        SD <= 0
+    ){
+
+        alert(
+            "Standard Deviation must be greater than 0."
+        );
+
+        return;
+    }
+
+
+    if(
+        Mean < LSL ||
+        Mean > USL
+    ){
+
+        alert(
+            "Process Mean should normally be between LSL and USL for this calculation."
+        );
+
+        return;
+    }
+
+
+    /* CALCULATIONS */
+
+    const Cp =
+    (USL - LSL) /
+    (6 * SD);
+
+
+    const Cpu =
+    (USL - Mean) /
+    (3 * SD);
+
+
+    const Cpl =
+    (Mean - LSL) /
+    (3 * SD);
+
+
+    const Cpk =
+    Math.min(
+        Cpu,
+        Cpl
+    );
+
+
+    /* DISPLAY */
+
+    resultUSL.textContent =
+    formatNumber(USL);
+
+
+    resultLSL.textContent =
+    formatNumber(LSL);
+
+
+    resultMean.textContent =
+    formatNumber(Mean);
+
+
+    resultStdDev.textContent =
+    formatNumber(SD);
+
+
+    resultCp.textContent =
+    formatNumber(Cp);
+
+
+    resultCpk.textContent =
+    formatNumber(Cpk);
+
+
+    /* STATUS */
+
+    statusBox.className =
+    "status";
+
+
+    if(Cpk >= 2){
+
+        capabilityText.textContent =
+        "Highly Capable";
+
+        statusBox.classList.add(
+            "status-pass"
+        );
+
+        statusBox.textContent =
+        "Cpk ≥ 2.00 — Process is highly capable.";
+
+    }
+
+    else if(Cpk >= 1.67){
+
+        capabilityText.textContent =
+        "Very Capable";
+
+        statusBox.classList.add(
+            "status-pass"
+        );
+
+        statusBox.textContent =
+        "Cpk ≥ 1.67 — Process is very capable.";
+
+    }
+
+    else if(Cpk >= 1.33){
+
+        capabilityText.textContent =
+        "Capable";
+
+        statusBox.classList.add(
+            "status-pass"
+        );
+
+        statusBox.textContent =
+        "Cpk ≥ 1.33 — Process is generally considered capable.";
+
+    }
+
+    else if(Cpk >= 1){
+
+        capabilityText.textContent =
+        "Marginal / Needs Improvement";
+
+        statusBox.classList.add(
+            "status-warning"
+        );
+
+        statusBox.textContent =
+        "1.00 ≤ Cpk < 1.33 — Process may need improvement.";
+
+    }
+
+    else{
+
+        capabilityText.textContent =
+        "Not Capable";
+
+        statusBox.classList.add(
+            "status-fail"
+        );
+
+        statusBox.textContent =
+        "Cpk < 1.00 — Process is generally not capable.";
+
+    }
+
+}
+
+
+/* CLEAR */
+
+function clearCalculator(){
+
+    usl.value = "";
+    lsl.value = "";
+    mean.value = "";
+    stdDev.value = "";
+
+
+    resultUSL.textContent =
+    "-";
+
+    resultLSL.textContent =
+    "-";
+
+    resultMean.textContent =
+    "-";
+
+    resultStdDev.textContent =
+    "-";
+
+    resultCp.textContent =
+    "-";
+
+    resultCpk.textContent =
+    "-";
+
+    capabilityText.textContent =
+    "-";
+
+
+    statusBox.className =
+    "status";
+
+    statusBox.textContent =
+    "Enter values and calculate Cp & Cpk.";
+
+}
+
+
+/* AUTO CALCULATE */
+
+document.querySelectorAll(
+    "input"
+).forEach(function(input){
+
+    input.addEventListener(
+        "input",
+        calculateCpk
+    );
+
+});
+
+
+/* INITIAL */
+
+calculateCpk();
+
+</script>
+
+</body>
+</html>
