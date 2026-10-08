@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Inspection Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free inspection calculator for checking measured dimensions, deviation, tolerance limits and PASS or FAIL results.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.container{
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.page-title h1{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.page-title p{
+    color:#666;
+    font-size:15px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    padding:30px;
+    margin-top:30px;
+    border-radius:12px;
+    box-shadow:0 3px 15px rgba(0,0,0,0.08);
+}
+
+.card h2{
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#e53232;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+button{
+    border:none;
+    padding:12px 22px;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92828;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+/* RESULT */
+
+.result{
+    margin-top:25px;
+    display:none;
+}
+
+.result h3{
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.result-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.result-table th,
+.result-table td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:left;
+}
+
+.result-table th{
+    background:#f5f5f5;
+}
+
+.status{
+    margin-top:20px;
+    padding:15px;
+    border-radius:8px;
+    font-size:18px;
+    font-weight:700;
+    text-align:center;
+}
+
+.pass{
+    background:#e8f7ed;
+    color:#16803c;
+}
+
+.fail{
+    background:#fdeaea;
+    color:#d62828;
+}
+
+/* INFO */
+
+.info{
+    background:#fff;
+    margin-top:25px;
+    padding:22px;
+    border-radius:10px;
+    border-left:4px solid #e53232;
+}
+
+.info h3{
+    margin-bottom:10px;
+}
+
+.info p{
+    color:#555;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:25px 20px;
+}
+
+footer p{
+    font-size:14px;
+    color:#ccc;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    .page-title h1{
+        font-size:26px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+    .result-table{
+        font-size:14px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<nav>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#mechanical">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+<div class="page-title">
+
+<h1>Inspection Calculator</h1>
+
+<p>
+Check measured dimensions, deviation, tolerance limits and inspection result.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Dimension Inspection</h2>
+
+
+<div class="form-group">
+
+<label for="nominal">
+Nominal / Basic Size (mm)
+</label>
+
+<input
+type="number"
+id="nominal"
+step="0.001"
+placeholder="Example: 50"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="upper">
+Upper Limit (mm)
+</label>
+
+<input
+type="number"
+id="upper"
+step="0.001"
+placeholder="Example: 50.020"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="lower">
+Lower Limit (mm)
+</label>
+
+<input
+type="number"
+id="lower"
+step="0.001"
+placeholder="Example: 49.990"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="measured">
+Measured Size (mm)
+</label>
+
+<input
+type="number"
+id="measured"
+step="0.001"
+placeholder="Example: 50.010"
+>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+class="calculate-btn"
+onclick="calculateInspection()"
+>
+Calculate
+</button>
+
+<button
+class="clear-btn"
+onclick="clearInspection()"
+>
+Clear
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+
+<h3>Inspection Result</h3>
+
+<table class="result-table">
+
+<tr>
+<th>Parameter</th>
+<th>Result</th>
+</tr>
+
+<tr>
+<td>Nominal / Basic Size</td>
+<td id="rNominal">-</td>
+</tr>
+
+<tr>
+<td>Measured Size</td>
+<td id="rMeasured">-</td>
+</tr>
+
+<tr>
+<td>Upper Limit</td>
+<td id="rUpper">-</td>
+</tr>
+
+<tr>
+<td>Lower Limit</td>
+<td id="rLower">-</td>
+</tr>
+
+<tr>
+<td>Deviation from Nominal</td>
+<td id="rDeviation">-</td>
+</tr>
+
+<tr>
+<td>Difference from Upper Limit</td>
+<td id="rUpperDiff">-</td>
+</tr>
+
+<tr>
+<td>Difference from Lower Limit</td>
+<td id="rLowerDiff">-</td>
+</tr>
+
+</table>
+
+
+<div
+class="status"
+id="status"
+>
+-
+</div>
+
+</div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<div class="info">
+
+<h3>How Inspection Calculator Works</h3>
+
+<p>
+<strong>Deviation = Measured Size − Nominal Size</strong>
+</p>
+
+<p>
+If the measured size is between the Upper Limit and Lower Limit, the component is <strong>PASS</strong>.
+</p>
+
+<p>
+If the measured size is outside the specified limits, the component is <strong>FAIL</strong>.
+</p>
+
+<p>
+Example: Nominal = 50.000 mm, Upper Limit = 50.020 mm, Lower Limit = 49.990 mm and Measured = 50.010 mm → PASS.
+</p>
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+function calculateInspection(){
+
+    const nominal = parseFloat(
+        document.getElementById("nominal").value
+    );
+
+    const upper = parseFloat(
+        document.getElementById("upper").value
+    );
+
+    const lower = parseFloat(
+        document.getElementById("lower").value
+    );
+
+    const measured = parseFloat(
+        document.getElementById("measured").value
+    );
+
+
+    if(
+        isNaN(nominal) ||
+        isNaN(upper) ||
+        isNaN(lower) ||
+        isNaN(measured)
+    ){
+
+        alert("Please enter all values.");
+
+        return;
+    }
+
+
+    if(lower > upper){
+
+        alert("Lower Limit cannot be greater than Upper Limit.");
+
+        return;
+    }
+
+
+    const deviation = measured - nominal;
+
+    const upperDifference = upper - measured;
+
+    const lowerDifference = measured - lower;
+
+
+    document.getElementById("rNominal").textContent =
+        nominal.toFixed(3) + " mm";
+
+    document.getElementById("rMeasured").textContent =
+        measured.toFixed(3) + " mm";
+
+    document.getElementById("rUpper").textContent =
+        upper.toFixed(3) + " mm";
+
+    document.getElementById("rLower").textContent =
+        lower.toFixed(3) + " mm";
+
+    document.getElementById("rDeviation").textContent =
+        (deviation >= 0 ? "+" : "") +
+        deviation.toFixed(3) +
+        " mm";
+
+    document.getElementById("rUpperDiff").textContent =
+        upperDifference.toFixed(3) +
+        " mm";
+
+    document.getElementById("rLowerDiff").textContent =
+        lowerDifference.toFixed(3) +
+        " mm";
+
+
+    const status = document.getElementById("status");
+
+    if(
+        measured >= lower &&
+        measured <= upper
+    ){
+
+        status.textContent = "PASS ✓";
+
+        status.className = "status pass";
+
+    }else{
+
+        status.textContent = "FAIL ✕";
+
+        status.className = "status fail";
+
+    }
+
+
+    document.getElementById("result").style.display =
+        "block";
+}
+
+
+function clearInspection(){
+
+    document.getElementById("nominal").value = "";
+
+    document.getElementById("upper").value = "";
+
+    document.getElementById("lower").value = "";
+
+    document.getElementById("measured").value = "";
+
+    document.getElementById("result").style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
