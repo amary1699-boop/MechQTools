@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cutting Force Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free cutting force calculator for turning and milling operations. Calculate approximate cutting force and cutting power.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    color:#e53232;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+.card{
+    background:#ffffff;
+    border:1px solid #e3e3e3;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+
+.card h2{
+    margin-top:0;
+    font-size:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+.help-text{
+    font-size:13px;
+    color:#777;
+    margin-top:5px;
+}
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92727;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+.result-box{
+    display:none;
+    margin-top:25px;
+    padding:20px;
+    background:#fff5f5;
+    border:1px solid #f0caca;
+    border-radius:10px;
+}
+
+.result-box h3{
+    margin-top:0;
+    color:#e53232;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.result-item{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:12px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.result-item strong{
+    font-size:18px;
+}
+
+.main-result{
+    margin-top:18px;
+    padding:18px;
+    background:#ffffff;
+    border:2px solid #e53232;
+    border-radius:9px;
+    text-align:center;
+}
+
+.main-result span{
+    display:block;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.main-result strong{
+    color:#e53232;
+    font-size:30px;
+}
+
+.secondary-result{
+    margin-top:12px;
+    padding:15px;
+    background:#ffffff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    text-align:center;
+}
+
+.secondary-result span{
+    display:block;
+    color:#666;
+    font-size:14px;
+}
+
+.secondary-result strong{
+    font-size:22px;
+}
+
+.formula{
+    margin-top:20px;
+    padding:15px;
+    background:#f7f7f7;
+    border-left:4px solid #e53232;
+    border-radius:5px;
+}
+
+.note{
+    background:#fff9e6;
+    border:1px solid #ead58a;
+    padding:15px;
+    border-radius:8px;
+    color:#5f5000;
+}
+
+.home-button{
+    display:inline-block;
+    margin-top:5px;
+    padding:11px 18px;
+    background:#e53232;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-button:hover{
+    background:#c92727;
+}
+
+.hidden{
+    display:none;
+}
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#777;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .form-grid,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="page-title">
+
+<h1>
+Cutting Force Calculator
+</h1>
+
+<p>
+Calculate approximate cutting force for turning and milling operations.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Cutting Force Calculation
+</h2>
+
+
+<div class="form-group">
+
+<label for="operation">
+Machining Operation
+</label>
+
+<select id="operation">
+
+<option value="turning">
+Turning
+</option>
+
+<option value="milling">
+Milling
+</option>
+
+</select>
+
+</div>
+
+
+<br>
+
+
+<!-- TURNING -->
+
+<div id="turningFields">
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="kcTurning">
+Specific Cutting Force (kc) N/mm²
+</label>
+
+<input
+type="number"
+id="kcTurning"
+value="1800"
+min="1"
+step="1"
+>
+
+<div class="help-text">
+Material-dependent approximate value.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="depthCut">
+Depth of Cut (ap) mm
+</label>
+
+<input
+type="number"
+id="depthCut"
+value="2"
+min="0.01"
+step="0.01"
+>
+
+<div class="help-text">
+Radial depth of cut.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="feed">
+Feed (f) mm/rev
+</label>
+
+<input
+type="number"
+id="feed"
+value="0.20"
+min="0.001"
+step="0.001"
+>
+
+<div class="help-text">
+Feed per revolution.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MILLING -->
+
+<div id="millingFields" class="hidden">
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="kcMilling">
+Specific Cutting Force (kc) N/mm²
+</label>
+
+<input
+type="number"
+id="kcMilling"
+value="1800"
+min="1"
+step="1"
+>
+
+<div class="help-text">
+Material-dependent approximate value.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="millingWidth">
+Width of Cut (ae) mm
+</label>
+
+<input
+type="number"
+id="millingWidth"
+value="10"
+min="0.01"
+step="0.01"
+>
+
+<div class="help-text">
+Width of material engagement.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="millingDepth">
+Depth of Cut (ap) mm
+</label>
+
+<input
+type="number"
+id="millingDepth"
+value="2"
+min="0.01"
+step="0.01"
+>
+
+<div class="help-text">
+Axial depth of cut.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateForce()"
+>
+Calculate Cutting Force
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+</div>
+
+
+<div class="result-box" id="resultBox">
+
+<h3>
+Calculation Result
+</h3>
+
+
+<div class="result-grid">
+
+<div class="result-item">
+
+<span>
+Operation
+</span>
+
+<strong id="resultOperation">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Specific Cutting Force
+</span>
+
+<strong id="resultKc">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Cutting Area
+</span>
+
+<strong id="resultArea">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Calculation
+</span>
+
+<strong id="resultFormula">
+-
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="main-result">
+
+<span>
+Approximate Cutting Force
+</span>
+
+<strong id="resultForce">
+-
+</strong>
+
+</div>
+
+
+<div class="secondary-result">
+
+<span>
+Approximate Force in Ton-Force</span>
+
+<strong id="resultTon">
+-
+</strong>
+
+</div>
+
+
+<div class="formula">
+
+<strong>
+Formula:
+</strong>
+
+<br><br>
+
+Cutting Force:
+
+<br>
+
+<strong>
+Fc = kc × A
+</strong>
+
+<br><br>
+
+Where:
+
+<br>
+
+Fc = Cutting force in N
+
+<br>
+
+kc = Specific cutting force in N/mm²
+
+<br>
+
+A = Effective cutting area in mm²
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Example Calculation
+</h2>
+
+<p>
+For turning:
+</p>
+
+<ul>
+
+<li>
+Specific cutting force = <strong>1800 N/mm²</strong>
+</li>
+
+<li>
+Depth of cut = <strong>2 mm</strong>
+</li>
+
+<li>
+Feed = <strong>0.20 mm/rev</strong>
+</li>
+
+</ul>
+
+<p>
+
+Cutting area:
+
+<br>
+
+2 × 0.20 =
+<strong>0.40 mm²</strong>
+
+</p>
+
+<p>
+
+Cutting force:
+
+<br>
+
+1800 × 0.40 =
+<strong>720 N</strong>
+
+</p>
+
+<p>
+
+Therefore:
+
+<br>
+
+Approximate cutting force =
+<strong>0.72 kN</strong>
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Important Note
+</h2>
+
+<div class="note">
+
+This calculator provides an
+<strong>approximate cutting-force estimate</strong>.
+
+Actual cutting force depends on:
+
+<ul>
+
+<li>
+Workpiece material
+</li>
+
+<li>
+Tool material and geometry
+</li>
+
+<li>
+Rake angle
+</li>
+
+<li>
+Cutting speed
+</li>
+
+<li>
+Feed
+</li>
+
+<li>
+Depth of cut
+</li>
+
+<li>
+Tool wear
+</li>
+
+<li>
+Coolant and cutting condition
+</li>
+
+</ul>
+
+The specific cutting force
+<strong>kc</strong> should ideally be taken
+from the material/tool manufacturer's
+machining data.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<a
+href="index.html"
+class="home-button"
+>
+← Back to Home
+</a>
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+const operationSelect =
+    document.getElementById(
+        "operation"
+    );
+
+
+operationSelect.addEventListener(
+    "change",
+    function(){
+
+        const operation =
+            this.value;
+
+
+        if(operation === "turning"){
+
+            document.getElementById(
+                "turningFields"
+            ).classList.remove(
+                "hidden"
+            );
+
+            document.getElementById(
+                "millingFields"
+            ).classList.add(
+                "hidden"
+            );
+
+        }
+        else{
+
+            document.getElementById(
+                "turningFields"
+            ).classList.add(
+                "hidden"
+            );
+
+            document.getElementById(
+                "millingFields"
+            ).classList.remove(
+                "hidden"
+            );
+
+        }
+
+    }
+);
+
+
+function calculateForce(){
+
+    const operation =
+        document.getElementById(
+            "operation"
+        ).value;
+
+
+    let kc;
+    let cuttingArea;
+    let formulaText;
+
+
+    if(operation === "turning"){
+
+        kc =
+            parseFloat(
+                document.getElementById(
+                    "kcTurning"
+                ).value
+            );
+
+
+        const depth =
+            parseFloat(
+                document.getElementById(
+                    "depthCut"
+                ).value
+            );
+
+
+        const feed =
+            parseFloat(
+                document.getElementById(
+                    "feed"
+                ).value
+            );
+
+
+        if(
+            isNaN(kc) ||
+            kc <= 0
+        ){
+
+            alert(
+                "Please enter a valid specific cutting force."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            isNaN(depth) ||
+            depth <= 0
+        ){
+
+            alert(
+                "Please enter a valid depth of cut."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            isNaN(feed) ||
+            feed <= 0
+        ){
+
+            alert(
+                "Please enter a valid feed."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Simplified turning model:
+
+           A = ap × f
+
+           Fc = kc × A
+        */
+
+        cuttingArea =
+            depth *
+            feed;
+
+
+        formulaText =
+            "ap × f";
+
+    }
+    else{
+
+        kc =
+            parseFloat(
+                document.getElementById(
+                    "kcMilling"
+                ).value
+            );
+
+
+        const width =
+            parseFloat(
+                document.getElementById(
+                    "millingWidth"
+                ).value
+            );
+
+
+        const depth =
+            parseFloat(
+                document.getElementById(
+                    "millingDepth"
+                ).value
+            );
+
+
+        if(
+            isNaN(kc) ||
+            kc <= 0
+        ){
+
+            alert(
+                "Please enter a valid specific cutting force."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            isNaN(width) ||
+            width <= 0
+        ){
+
+            alert(
+                "Please enter a valid width of cut."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            isNaN(depth) ||
+            depth <= 0
+        ){
+
+            alert(
+                "Please enter a valid depth of cut."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Simplified milling model:
+
+           A = ae × ap
+
+           Fc = kc × A
+
+           This is a simplified
+           engineering estimate.
+        */
+
+        cuttingArea =
+            width *
+            depth;
+
+
+        formulaText =
+            "ae × ap";
+
+    }
+
+
+    const force =
+        kc *
+        cuttingArea;
+
+
+    const forceKN =
+        force / 1000;
+
+
+    const forceTon =
+        force / 9806.65;
+
+
+    const operationName =
+        operation === "turning"
+        ? "Turning"
+        : "Milling";
+
+
+    document.getElementById(
+        "resultOperation"
+    ).textContent =
+        operationName;
+
+
+    document.getElementById(
+        "resultKc"
+    ).textContent =
+        kc.toFixed(0) +
+        " N/mm²";
+
+
+    document.getElementById(
+        "resultArea"
+    ).textContent =
+        cuttingArea.toFixed(3) +
+        " mm²";
+
+
+    document.getElementById(
+        "resultFormula"
+    ).textContent =
+        formulaText;
+
+
+    document.getElementById(
+        "resultForce"
+    ).textContent =
+        forceKN.toFixed(3) +
+        " kN";
+
+
+    document.getElementById(
+        "resultTon"
+    ).textContent =
+        forceTon.toFixed(3) +
+        " ton-force";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "block";
+
+}
+
+
+function clearCalculator(){
+
+    document.getElementById(
+        "operation"
+    ).value =
+        "turning";
+
+
+    document.getElementById(
+        "kcTurning"
+    ).value =
+        "1800";
+
+
+    document.getElementById(
+        "depthCut"
+    ).value =
+        "2";
+
+
+    document.getElementById(
+        "feed"
+    ).value =
+        "0.20";
+
+
+    document.getElementById(
+        "kcMilling"
+    ).value =
+        "1800";
+
+
+    document.getElementById(
+        "millingWidth"
+    ).value =
+        "10";
+
+
+    document.getElementById(
+        "millingDepth"
+    ).value =
+        "2";
+
+
+    document.getElementById(
+        "turningFields"
+    ).classList.remove(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "millingFields"
+    ).classList.add(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
