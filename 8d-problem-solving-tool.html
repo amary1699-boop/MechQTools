@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>8D Problem Solving Tool - Free 8D Report</title>
+<title>8D Problem Solving Tool - MechQTools</title>
 
 <meta name="description"
-content="Free 8D Problem Solving Tool for Quality Engineers. Create a complete 8D report with D1 to D8, root cause analysis, corrective action and preventive action.">
+content="Free 8D Problem Solving Tool for Quality Engineers. Create and print a complete 8D problem solving report.">
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -23,28 +24,27 @@ body{
 
 header{
     background:#e53232;
-    color:#fff;
+    color:white;
     padding:18px 20px;
 }
 
 .header-inner{
-    max-width:1150px;
+    max-width:1100px;
     margin:auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:20px;
 }
 
 .logo{
-    color:#fff;
+    color:white;
     text-decoration:none;
     font-size:25px;
     font-weight:bold;
 }
 
 .home-btn{
-    color:#fff;
+    color:white;
     text-decoration:none;
     border:1px solid rgba(255,255,255,.8);
     padding:9px 15px;
@@ -53,18 +53,18 @@ header{
 }
 
 .home-btn:hover{
-    background:#fff;
+    background:white;
     color:#e53232;
 }
 
 .container{
-    max-width:1150px;
+    max-width:1100px;
     margin:25px auto;
     padding:0 15px;
 }
 
 .hero{
-    background:#fff;
+    background:white;
     padding:25px;
     border-radius:10px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
@@ -77,11 +77,11 @@ header{
 }
 
 .hero p{
-    line-height:1.7;
+    line-height:1.6;
 }
 
 .section{
-    background:#fff;
+    background:white;
     padding:22px;
     border-radius:10px;
     box-shadow:0 2px 10px rgba(0,0,0,.08);
@@ -95,38 +95,62 @@ header{
     padding-bottom:10px;
 }
 
-.section h3{
-    color:#444;
+.d-box{
+    border:1px solid #ddd;
+    border-left:5px solid #e53232;
+    border-radius:7px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.d-title{
+    color:#e53232;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:12px;
 }
 
 .meaning{
     background:#f8f8f8;
-    border-left:5px solid #e53232;
-    padding:15px;
-    margin:15px 0 20px;
-    line-height:1.65;
+    border:1px solid #ddd;
+    border-radius:6px;
+    padding:14px;
+    margin-bottom:18px;
+    line-height:1.6;
 }
 
 .meaning strong{
     color:#e53232;
 }
 
-.tip{
+.example{
     background:#eef7ff;
-    border-left:5px solid #0d6efd;
-    padding:15px;
-    border-radius:5px;
-    line-height:1.65;
+    border-left:4px solid #0d6efd;
+    padding:13px;
     margin-top:15px;
+    line-height:1.6;
 }
 
-.example{
-    background:#f7f7f7;
-    border:1px solid #ddd;
-    padding:15px;
-    border-radius:7px;
-    line-height:1.65;
+.warning{
+    background:#fff3cd;
+    border-left:4px solid #f0ad00;
+    padding:13px;
     margin-top:15px;
+    line-height:1.6;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.full{
+    grid-column:1 / -1;
 }
 
 label{
@@ -143,8 +167,7 @@ select{
     border:1px solid #ccc;
     border-radius:6px;
     font-size:15px;
-    font-family:inherit;
-    outline:none;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 textarea{
@@ -155,55 +178,19 @@ textarea{
 input:focus,
 textarea:focus,
 select:focus{
+    outline:none;
     border-color:#e53232;
 }
 
-.form-group{
-    margin-bottom:18px;
-}
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-}
-
-.full{
-    grid-column:1 / -1;
-}
-
-.d-box{
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:18px;
-    margin-top:18px;
-    background:#fff;
-}
-
-.d-number{
-    display:inline-block;
-    background:#e53232;
-    color:white;
-    padding:6px 12px;
-    border-radius:5px;
-    font-weight:bold;
-    margin-bottom:10px;
-}
-
-.d-box h3{
-    margin-top:5px;
-}
-
-.action-row{
+.button-row{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
-    margin-top:20px;
 }
 
 button{
     border:none;
-    padding:11px 18px;
+    padding:11px 17px;
     border-radius:6px;
     cursor:pointer;
     font-size:14px;
@@ -214,29 +201,24 @@ button:hover{
     opacity:.88;
 }
 
-.primary{
+.btn-primary{
     background:#e53232;
-    color:#fff;
+    color:white;
 }
 
-.success{
+.btn-success{
     background:#198754;
-    color:#fff;
+    color:white;
 }
 
-.warning{
+.btn-warning{
     background:#f0ad00;
-    color:#fff;
+    color:white;
 }
 
-.danger{
+.btn-danger{
     background:#dc3545;
-    color:#fff;
-}
-
-.secondary{
-    background:#444;
-    color:#fff;
+    color:white;
 }
 
 .report{
@@ -251,49 +233,31 @@ button:hover{
 }
 
 .report-header h2{
-    margin:0;
     color:#e53232;
+    margin:0 0 5px;
 }
 
 .report-table{
     width:100%;
     border-collapse:collapse;
-    margin:15px 0 25px;
+    margin-bottom:20px;
 }
 
 .report-table th,
 .report-table td{
     border:1px solid #ccc;
     padding:10px;
-    text-align:left;
     vertical-align:top;
+    text-align:left;
 }
 
 .report-table th{
-    background:#f1f1f1;
+    background:#f5f5f5;
     width:25%;
 }
 
 .status{
-    display:inline-block;
-    padding:7px 12px;
-    border-radius:5px;
     font-weight:bold;
-    background:#e8f5e9;
-    color:#198754;
-}
-
-.warning-note{
-    background:#fff3cd;
-    border-left:5px solid #f0ad00;
-    padding:15px;
-    border-radius:5px;
-    line-height:1.65;
-}
-
-ul,
-ol{
-    line-height:1.7;
 }
 
 footer{
@@ -303,11 +267,12 @@ footer{
     font-size:14px;
 }
 
-@media(max-width:750px){
+@media(max-width:700px){
 
     .header-inner{
         flex-direction:column;
         align-items:flex-start;
+        gap:12px;
     }
 
     .form-grid{
@@ -318,24 +283,25 @@ footer{
         grid-column:auto;
     }
 
-    .action-row{
+    .button-row{
         flex-direction:column;
     }
 
     button{
         width:100%;
     }
+
 }
 
 @media print{
 
     body{
-        background:#fff;
+        background:white;
     }
 
     header,
     .hero,
-    .input-area,
+    .input-section,
     .explanation-section,
     footer{
         display:none !important;
@@ -356,16 +322,15 @@ footer{
         display:block !important;
     }
 
-    .report-table{
-        page-break-inside:avoid;
-    }
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
     <div class="header-inner">
 
         <a href="index.html" class="logo">
@@ -377,27 +342,29 @@ footer{
         </a>
 
     </div>
+
 </header>
 
 
 <div class="container">
 
-<!-- HERO -->
 
-<div class="hero input-area">
+<!-- TITLE -->
+
+<div class="hero">
 
     <h1>8D Problem Solving Tool</h1>
 
     <p>
-        Create a complete <strong>8D Problem Solving Report</strong>
-        for quality problems, customer complaints, production issues
-        and recurring defects.
+        Create a complete 8D Problem Solving Report for quality
+        problems, customer complaints and recurring defects.
     </p>
 
     <p>
-        8D means <strong>Eight Disciplines</strong>. It is a structured
-        problem-solving method used to contain a problem, identify the
-        root cause, implement corrective action and prevent recurrence.
+        <strong>8D</strong> means <strong>Eight Disciplines</strong>.
+        It is a structured method used to contain a problem,
+        identify the root cause, implement corrective action and
+        prevent recurrence.
     </p>
 
 </div>
@@ -405,21 +372,20 @@ footer{
 
 <!-- BASIC INFORMATION -->
 
-<div class="section input-area">
+<div class="section input-section">
 
     <h2>Problem Information</h2>
 
     <div class="meaning">
 
         <strong>Meaning:</strong>
-        Enter the basic information about the problem, customer,
-        part and report.
+        Enter the basic information of the problem.
 
         <br><br>
 
         <strong>Purpose:</strong>
-        This information helps identify the exact issue and provides
-        traceability for the 8D report.
+        This information provides identification and traceability
+        for the 8D report.
 
     </div>
 
@@ -432,6 +398,7 @@ footer{
 
             <input
                 id="reportNo"
+                type="text"
                 placeholder="Example: 8D-2026-001"
             >
 
@@ -456,6 +423,7 @@ footer{
 
             <input
                 id="customer"
+                type="text"
                 placeholder="Example: ABC Motors"
             >
 
@@ -468,7 +436,8 @@ footer{
 
             <input
                 id="partName"
-                placeholder="Example: Bracket Assembly"
+                type="text"
+                placeholder="Example: Sheet Metal Bracket"
             >
 
         </div>
@@ -480,6 +449,7 @@ footer{
 
             <input
                 id="partNumber"
+                type="text"
                 placeholder="Example: BRK-1001"
             >
 
@@ -492,6 +462,7 @@ footer{
 
             <input
                 id="preparedBy"
+                type="text"
                 placeholder="Example: Quality Engineer"
             >
 
@@ -508,27 +479,27 @@ footer{
 
     <div class="d-box">
 
-        <span class="d-number">D1</span>
+        <div class="d-title">
+            D1 - Team Formation
+        </div>
 
-        <h2>Team Formation</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D1 means forming a team with the right people who have
-            knowledge and responsibility related to the problem.
+            D1 means forming a team of people who have the knowledge,
+            authority or responsibility needed to solve the problem.
 
             <br><br>
 
             <strong>Purpose:</strong>
             A cross-functional team helps investigate the problem
-            from different areas such as Quality, Production,
-            Engineering, Maintenance and Purchase.
+            from different areas.
 
             <br><br>
 
             <strong>What to write:</strong>
-            Enter team members and their departments/roles.
+            Write team members, departments and responsibilities.
 
         </div>
 
@@ -540,11 +511,10 @@ footer{
             <textarea
                 id="d1"
                 placeholder="Example:
-Quality Engineer - Investigation
+Quality Engineer - Problem Investigation
 Production Engineer - Process
 Maintenance Engineer - Machine
-Supervisor - Production
-Purchase Engineer - Supplier"
+Supervisor - Production"
             ></textarea>
 
         </div>
@@ -552,10 +522,8 @@ Purchase Engineer - Supplier"
 
         <div class="example">
 
-            <strong>Practical Example:</strong><br>
-
-            Quality Engineer + Production Engineer +
-            Maintenance Engineer + Supplier Quality Engineer.
+            <strong>Example:</strong>
+            Quality + Production + Maintenance + Engineering team.
 
         </div>
 
@@ -570,26 +538,27 @@ Purchase Engineer - Supplier"
 
     <div class="d-box">
 
-        <span class="d-number">D2</span>
+        <div class="d-title">
+            D2 - Problem Description
+        </div>
 
-        <h2>Problem Description</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D2 is the detailed description of the problem.
+            D2 means clearly defining the problem using facts and data.
 
             <br><br>
 
             <strong>Purpose:</strong>
-            Clearly define what happened, where it happened,
+            Clearly explain what happened, where it happened,
             when it happened and how many parts were affected.
 
             <br><br>
 
             <strong>What to include:</strong>
             Part number, defect, specification, actual measurement,
-            quantity, date, process and location.
+            quantity, process and location.
 
         </div>
 
@@ -601,9 +570,9 @@ Purchase Engineer - Supplier"
             <textarea
                 id="d2"
                 placeholder="Example:
-Bracket hole diameter specification is Ø10.00 ±0.10 mm.
-Actual measured diameter is Ø10.35 mm.
-50 parts were produced and 12 parts were found out of specification."
+Hole diameter specification is Ø10.00 ±0.10 mm.
+Actual measurement is Ø10.35 mm.
+12 out of 50 parts are rejected."
             ></textarea>
 
         </div>
@@ -611,11 +580,9 @@ Actual measured diameter is Ø10.35 mm.
 
         <div class="example">
 
-            <strong>Good Problem Statement:</strong><br>
-
-            "12 out of 50 brackets were found with hole diameter
-            Ø10.35 mm against specification Ø10.00 ±0.10 mm
-            during final inspection."
+            <strong>Example:</strong>
+            12 out of 50 brackets were found with hole diameter
+            Ø10.35 mm against specification Ø10.00 ±0.10 mm.
 
         </div>
 
@@ -630,28 +597,28 @@ Actual measured diameter is Ø10.35 mm.
 
     <div class="d-box">
 
-        <span class="d-number">D3</span>
+        <div class="d-title">
+            D3 - Interim Containment Action
+        </div>
 
-        <h2>Interim Containment Action</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D3 means taking immediate temporary action to protect
-            the customer and prevent further defective parts from
-            moving forward.
+            D3 means immediate temporary action taken to protect
+            the customer and prevent further defective parts.
 
             <br><br>
 
             <strong>Purpose:</strong>
-            Containment controls the problem while the root cause
-            investigation is still in progress.
+            Control the problem while root cause investigation
+            is still in progress.
 
             <br><br>
 
             <strong>Examples:</strong>
-            Stop production, quarantine stock, 100% inspection,
-            sorting, customer notification or temporary process control.
+            Production stop, stock quarantine, 100% inspection,
+            sorting or temporary process control.
 
         </div>
 
@@ -664,19 +631,19 @@ Actual measured diameter is Ø10.35 mm.
                 id="d3"
                 placeholder="Example:
 Production stopped.
-All finished stock quarantined.
-100% hole diameter inspection started.
-Customer stock checked for affected parts."
+Finished stock quarantined.
+100% inspection started.
+Customer stock checked."
             ></textarea>
 
         </div>
 
 
-        <div class="example">
+        <div class="warning">
 
             <strong>Important:</strong>
-            Containment is a temporary action. It does not replace
-            permanent corrective action.
+            Containment action is temporary.
+            It does not replace permanent corrective action.
 
         </div>
 
@@ -691,9 +658,10 @@ Customer stock checked for affected parts."
 
     <div class="d-box">
 
-        <span class="d-number">D4</span>
+        <div class="d-title">
+            D4 - Root Cause Analysis
+        </div>
 
-        <h2>Root Cause Analysis</h2>
 
         <div class="meaning">
 
@@ -703,14 +671,14 @@ Customer stock checked for affected parts."
             <br><br>
 
             <strong>Purpose:</strong>
-            Find out why the problem happened and why the existing
-            control system did not detect or prevent it.
+            Find why the problem happened and why the existing
+            control system did not prevent or detect it.
 
             <br><br>
 
-            <strong>Recommended tools:</strong>
-            5 Why, Fishbone/Ishikawa, Pareto, Process Analysis,
-            FMEA and data analysis.
+            <strong>Useful tools:</strong>
+            5 Why, Fishbone/Ishikawa, Pareto, Process Analysis
+            and FMEA.
 
         </div>
 
@@ -771,7 +739,7 @@ Customer stock checked for affected parts."
 
                 <textarea
                     id="why5"
-                    placeholder="Identify the underlying root cause."
+                    placeholder="Write the underlying root cause."
                 ></textarea>
 
             </div>
@@ -779,11 +747,11 @@ Customer stock checked for affected parts."
 
             <div class="form-group full">
 
-                <label>Root Cause Confirmation / Evidence</label>
+                <label>Root Cause Evidence</label>
 
                 <textarea
                     id="rootEvidence"
-                    placeholder="Example: Machine setting record and first-piece inspection record confirmed that the required setting verification was not performed."
+                    placeholder="Write the evidence used to confirm the root cause."
                 ></textarea>
 
             </div>
@@ -791,12 +759,12 @@ Customer stock checked for affected parts."
         </div>
 
 
-        <div class="tip">
+        <div class="warning">
 
             <strong>Important:</strong>
             Do not simply write "Operator Error".
-            Find out why the operator made the error and why
-            the system did not prevent or detect it.
+            Find out why the error happened and why the system
+            did not prevent or detect it.
 
         </div>
 
@@ -811,28 +779,28 @@ Customer stock checked for affected parts."
 
     <div class="d-box">
 
-        <span class="d-number">D5</span>
+        <div class="d-title">
+            D5 - Permanent Corrective Action
+        </div>
 
-        <h2>Permanent Corrective Action</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D5 defines the permanent corrective action that will
-            eliminate the root cause.
+            D5 defines the permanent action that eliminates
+            the identified root cause.
 
             <br><br>
 
             <strong>Purpose:</strong>
-            The action should solve the actual root cause rather than
-            only treating the symptom.
+            Solve the actual cause instead of only fixing the
+            defective product.
 
             <br><br>
 
             <strong>Examples:</strong>
             Process modification, tooling correction, poka-yoke,
-            parameter control, drawing clarification, inspection
-            improvement or software/control change.
+            parameter control or inspection improvement.
 
         </div>
 
@@ -844,8 +812,8 @@ Customer stock checked for affected parts."
             <textarea
                 id="d5"
                 placeholder="Example:
-Introduce a mandatory machine setting verification before first-piece production.
-Add parameter verification to the standard operating procedure."
+Introduce mandatory machine setting verification before
+first-piece production and update the work instruction."
             ></textarea>
 
         </div>
@@ -859,6 +827,7 @@ Add parameter verification to the standard operating procedure."
 
                 <input
                     id="d5Responsible"
+                    type="text"
                     placeholder="Example: Production Engineer"
                 >
 
@@ -889,28 +858,29 @@ Add parameter verification to the standard operating procedure."
 
     <div class="d-box">
 
-        <span class="d-number">D6</span>
+        <div class="d-title">
+            D6 - Implement & Validate Corrective Action
+        </div>
 
-        <h2>Implement & Validate Corrective Action</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D6 means implementing the corrective action and verifying
-            that it actually works.
+            D6 means implementing the corrective action and
+            verifying that it is effective.
 
             <br><br>
 
             <strong>Purpose:</strong>
-            A corrective action is not complete simply because it was
-            implemented. Its effectiveness must be verified using data
-            or inspection results.
+            An action is not considered effective only because
+            it was implemented. Its result must be verified
+            using data or inspection.
 
             <br><br>
 
-            <strong>What to verify:</strong>
-            Trial results, inspection data, rejection rate, capability,
-            customer feedback or repeated production results.
+            <strong>Examples:</strong>
+            Trial results, inspection results, rejection data,
+            capability study or customer feedback.
 
         </div>
 
@@ -922,9 +892,9 @@ Add parameter verification to the standard operating procedure."
             <textarea
                 id="d6"
                 placeholder="Example:
-Corrective action implemented on 08-Oct-2026.
+Corrective action implemented.
 100 consecutive parts inspected.
-All hole diameters were within specification.
+All parts were within specification.
 No recurrence observed."
             ></textarea>
 
@@ -937,7 +907,8 @@ No recurrence observed."
 
             <textarea
                 id="d6Evidence"
-                placeholder="Example: Inspection report, capability study, trial report or production data."
+                placeholder="Example:
+Inspection report, trial report or production data."
             ></textarea>
 
         </div>
@@ -953,27 +924,28 @@ No recurrence observed."
 
     <div class="d-box">
 
-        <span class="d-number">D7</span>
+        <div class="d-title">
+            D7 - Prevent Recurrence
+        </div>
 
-        <h2>Prevent Recurrence</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D7 prevents the same or similar problem from happening
-            again in the future.
+            D7 prevents the same or similar problem from
+            happening again.
 
             <br><br>
 
             <strong>Purpose:</strong>
-            Improve the system so the lesson from this problem becomes
-            part of the normal process.
+            Improve the system so the learning from the problem
+            becomes part of the normal process.
 
             <br><br>
 
             <strong>Examples:</strong>
             Update SOP, Control Plan, PFMEA, Work Instruction,
-            inspection standard, training, poka-yoke or audit plan.
+            training, poka-yoke or audit plan.
 
         </div>
 
@@ -986,9 +958,9 @@ No recurrence observed."
                 id="d7"
                 placeholder="Example:
 Update PFMEA and Control Plan.
-Add first-piece verification to work instruction.
+Update work instruction.
 Train operators.
-Add periodic audit of machine parameters."
+Add periodic process audit."
             ></textarea>
 
         </div>
@@ -1002,6 +974,7 @@ Add periodic audit of machine parameters."
 
                 <input
                     id="d7Responsible"
+                    type="text"
                     placeholder="Example: Quality + Production"
                 >
 
@@ -1032,21 +1005,21 @@ Add periodic audit of machine parameters."
 
     <div class="d-box">
 
-        <span class="d-number">D8</span>
+        <div class="d-title">
+            D8 - Team Recognition & Closure
+        </div>
 
-        <h2>Team Recognition & 8D Closure</h2>
 
         <div class="meaning">
 
             <strong>Meaning:</strong>
-            D8 formally closes the 8D after the problem has been
-            permanently corrected and the team has completed the work.
+            D8 is the final step of the 8D process.
 
             <br><br>
 
             <strong>Purpose:</strong>
-            Recognize team contribution and confirm that all required
-            actions are completed and effective.
+            Confirm that actions are completed and effective,
+            formally close the 8D and recognize the team.
 
         </div>
 
@@ -1058,8 +1031,8 @@ Add periodic audit of machine parameters."
             <textarea
                 id="d8"
                 placeholder="Example:
-8D actions completed and effectiveness verified.
-Thanks to Quality, Production and Maintenance teams for successful problem resolution."
+All actions completed and effectiveness verified.
+Thanks to Quality, Production and Maintenance teams."
             ></textarea>
 
         </div>
@@ -1071,9 +1044,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
             <select id="closureStatus">
 
-                <option value="Open">
-                    Open
-                </option>
+                <option value="Open">Open</option>
 
                 <option value="Under Investigation">
                     Under Investigation
@@ -1098,14 +1069,14 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
 <!-- BUTTONS -->
 
-<div class="section input-area">
+<div class="section input-section">
 
-    <h2>Generate 8D Report</h2>
+    <h2>Generate Report</h2>
 
-    <div class="action-row">
+    <div class="button-row">
 
         <button
-            class="primary"
+            class="btn-primary"
             onclick="generateReport()"
         >
             Generate 8D Report
@@ -1113,7 +1084,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
 
         <button
-            class="success"
+            class="btn-success"
             onclick="loadExample()"
         >
             Load Example
@@ -1121,15 +1092,15 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
 
         <button
-            class="warning"
+            class="btn-warning"
             onclick="window.print()"
         >
-            Print 8D Report
+            Print Report
         </button>
 
 
         <button
-            class="danger"
+            class="btn-danger"
             onclick="clearAll()"
         >
             Clear All
@@ -1148,9 +1119,9 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
         <h2>8D PROBLEM SOLVING REPORT</h2>
 
-        <p>
+        <div>
             MechQTools
-        </p>
+        </div>
 
     </div>
 
@@ -1165,6 +1136,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
             <td id="rReportDate">-</td>
         </tr>
 
+
         <tr>
             <th>Customer</th>
             <td id="rCustomer">-</td>
@@ -1172,6 +1144,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
             <th>Part Name</th>
             <td id="rPartName">-</td>
         </tr>
+
 
         <tr>
             <th>Part Number</th>
@@ -1184,6 +1157,8 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
     </table>
 
 
+    <h3>D1 to D8 Summary</h3>
+
     <table class="report-table">
 
         <tr>
@@ -1191,38 +1166,45 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
             <td id="rD1">-</td>
         </tr>
 
+
         <tr>
             <th>D2 - Problem Description</th>
             <td id="rD2">-</td>
         </tr>
 
+
         <tr>
-            <th>D3 - Interim Containment Action</th>
+            <th>D3 - Interim Containment</th>
             <td id="rD3">-</td>
         </tr>
+
 
         <tr>
             <th>D4 - Root Cause Analysis</th>
             <td id="rD4">-</td>
         </tr>
 
+
         <tr>
-            <th>D5 - Permanent Corrective Action</th>
+            <th>D5 - Corrective Action</th>
             <td id="rD5">-</td>
         </tr>
+
 
         <tr>
             <th>D6 - Implementation & Validation</th>
             <td id="rD6">-</td>
         </tr>
 
+
         <tr>
             <th>D7 - Prevent Recurrence</th>
             <td id="rD7">-</td>
         </tr>
 
+
         <tr>
-            <th>D8 - Team Recognition & Closure</th>
+            <th>D8 - Closure</th>
             <td id="rD8">-</td>
         </tr>
 
@@ -1238,25 +1220,30 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
             <td id="rWhy1">-</td>
         </tr>
 
+
         <tr>
             <th>Why 2</th>
             <td id="rWhy2">-</td>
         </tr>
+
 
         <tr>
             <th>Why 3</th>
             <td id="rWhy3">-</td>
         </tr>
 
+
         <tr>
             <th>Why 4</th>
             <td id="rWhy4">-</td>
         </tr>
 
+
         <tr>
             <th>Why 5 / Root Cause</th>
             <td id="rWhy5">-</td>
         </tr>
+
 
         <tr>
             <th>Root Cause Evidence</th>
@@ -1278,6 +1265,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
             <td id="rD5Date">-</td>
         </tr>
 
+
         <tr>
             <th>D6 Evidence</th>
             <td id="rD6Evidence">-</td>
@@ -1285,6 +1273,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
             <th>D7 Responsible</th>
             <td id="rD7Responsible">-</td>
         </tr>
+
 
         <tr>
             <th>D7 Target Date</th>
@@ -1295,16 +1284,6 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
         </tr>
 
     </table>
-
-
-    <div class="warning-note">
-
-        <strong>8D Closure Note:</strong><br>
-
-        The 8D should be closed only after corrective actions have
-        been implemented and their effectiveness has been verified.
-
-    </div>
 
 </div>
 
@@ -1317,15 +1296,14 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
     <p>
         <strong>8D</strong> stands for <strong>Eight Disciplines</strong>.
-        It is a structured problem-solving methodology commonly used
-        to investigate quality problems, customer complaints and
-        recurring process defects.
+        It is a structured problem-solving method used for quality
+        problems, customer complaints and recurring defects.
     </p>
 
     <p>
-        The objective is not only to correct the defective part but
-        also to identify the root cause, prevent recurrence and verify
-        the effectiveness of the solution.
+        The objective is to contain the problem, identify the root
+        cause, implement corrective action, prevent recurrence and
+        verify effectiveness.
     </p>
 
 </div>
@@ -1339,66 +1317,42 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
         <tr>
             <th>D1</th>
-            <td>
-                <strong>Team Formation:</strong>
-                Create a cross-functional team with the right knowledge.
-            </td>
+            <td>Team Formation - Create the right problem-solving team.</td>
         </tr>
 
         <tr>
             <th>D2</th>
-            <td>
-                <strong>Problem Description:</strong>
-                Clearly define the problem using facts and data.
-            </td>
+            <td>Problem Description - Define the problem using facts and data.</td>
         </tr>
 
         <tr>
             <th>D3</th>
-            <td>
-                <strong>Interim Containment:</strong>
-                Immediately protect the customer and control the problem.
-            </td>
+            <td>Interim Containment - Immediately control and contain the problem.</td>
         </tr>
 
         <tr>
             <th>D4</th>
-            <td>
-                <strong>Root Cause:</strong>
-                Find and verify the actual cause of the problem.
-            </td>
+            <td>Root Cause - Identify and verify the actual cause.</td>
         </tr>
 
         <tr>
             <th>D5</th>
-            <td>
-                <strong>Permanent Corrective Action:</strong>
-                Select a permanent solution that eliminates the root cause.
-            </td>
+            <td>Permanent Corrective Action - Eliminate the root cause.</td>
         </tr>
 
         <tr>
             <th>D6</th>
-            <td>
-                <strong>Implement & Validate:</strong>
-                Implement the solution and verify its effectiveness.
-            </td>
+            <td>Implement & Validate - Implement and verify effectiveness.</td>
         </tr>
 
         <tr>
             <th>D7</th>
-            <td>
-                <strong>Prevent Recurrence:</strong>
-                Improve the system so the same problem does not return.
-            </td>
+            <td>Prevent Recurrence - Improve the system to prevent repeat problems.</td>
         </tr>
 
         <tr>
             <th>D8</th>
-            <td>
-                <strong>Recognition & Closure:</strong>
-                Recognize the team and formally close the 8D.
-            </td>
+            <td>Recognition & Closure - Complete and formally close the 8D.</td>
         </tr>
 
     </table>
@@ -1408,12 +1362,12 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
 <div class="section explanation-section">
 
-    <h2>Important Difference: Correction vs Corrective Action</h2>
+    <h2>Correction vs Corrective Action</h2>
 
     <div class="meaning">
 
         <strong>Correction:</strong>
-        Fix the current defective product or immediate problem.
+        Fix the existing defective product or immediate problem.
 
         <br><br>
 
@@ -1424,7 +1378,7 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
         <strong>Example:</strong><br>
 
-        Correction → Sort and replace defective parts.<br>
+        Correction → Sort defective parts.<br>
 
         Corrective Action → Correct the process condition that caused
         the defect and introduce a control to prevent recurrence.
@@ -1438,38 +1392,23 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
     <h2>Important 8D Rules</h2>
 
-    <div class="warning-note">
+    <div class="warning">
 
         <ul>
 
-            <li>
-                Use facts and data instead of assumptions.
-            </li>
+            <li>Use facts and data instead of assumptions.</li>
 
-            <li>
-                Containment action and corrective action are different.
-            </li>
+            <li>Containment and corrective action are different.</li>
 
-            <li>
-                "Operator Error" alone is normally not enough as a root cause.
-            </li>
+            <li>"Operator Error" alone is normally not enough as a root cause.</li>
 
-            <li>
-                Verify the root cause before selecting permanent action.
-            </li>
+            <li>Verify the root cause before selecting permanent action.</li>
 
-            <li>
-                Verify effectiveness after implementing corrective action.
-            </li>
+            <li>Verify effectiveness after implementing corrective action.</li>
 
-            <li>
-                Update PFMEA, Control Plan, SOP or Work Instruction
-                when required.
-            </li>
+            <li>Update PFMEA, Control Plan, SOP or Work Instruction when required.</li>
 
-            <li>
-                Close the 8D only after effectiveness is confirmed.
-            </li>
+            <li>Close the 8D only after effectiveness is confirmed.</li>
 
         </ul>
 
@@ -1482,20 +1421,22 @@ Thanks to Quality, Production and Maintenance teams for successful problem resol
 
 
 <footer>
+
     © 2026 MechQTools — Engineering & Quality Tools for Professionals.
+
 </footer>
 
 
 <script>
 
-function value(id){
+function getValue(id){
 
     return document.getElementById(id).value.trim();
 
 }
 
 
-function safeText(text){
+function escapeHTML(text){
 
     if(!text){
 
@@ -1536,98 +1477,104 @@ function formatDate(date){
 function generateReport(){
 
     document.getElementById("rReportNo").innerHTML =
-        safeText(value("reportNo"));
+        escapeHTML(getValue("reportNo"));
 
     document.getElementById("rReportDate").innerHTML =
-        safeText(formatDate(value("reportDate")));
+        escapeHTML(formatDate(getValue("reportDate")));
 
     document.getElementById("rCustomer").innerHTML =
-        safeText(value("customer"));
+        escapeHTML(getValue("customer"));
 
     document.getElementById("rPartName").innerHTML =
-        safeText(value("partName"));
+        escapeHTML(getValue("partName"));
 
     document.getElementById("rPartNumber").innerHTML =
-        safeText(value("partNumber"));
+        escapeHTML(getValue("partNumber"));
 
     document.getElementById("rPreparedBy").innerHTML =
-        safeText(value("preparedBy"));
+        escapeHTML(getValue("preparedBy"));
 
 
     document.getElementById("rD1").innerHTML =
-        safeText(value("d1"));
+        escapeHTML(getValue("d1"));
 
     document.getElementById("rD2").innerHTML =
-        safeText(value("d2"));
+        escapeHTML(getValue("d2"));
 
     document.getElementById("rD3").innerHTML =
-        safeText(value("d3"));
+        escapeHTML(getValue("d3"));
 
-
-    const rootCauseText =
-        value("why5") ||
-        "Root cause not entered.";
 
     document.getElementById("rD4").innerHTML =
-        safeText(
-            "Why 1: " + (value("why1") || "-") +
-            "\nWhy 2: " + (value("why2") || "-") +
-            "\nWhy 3: " + (value("why3") || "-") +
-            "\nWhy 4: " + (value("why4") || "-") +
-            "\nWhy 5 / Root Cause: " + rootCauseText +
-            "\nEvidence: " + (value("rootEvidence") || "-")
-        );
+        "Why 1: " + escapeHTML(getValue("why1")) +
+        "<br><br>" +
+
+        "Why 2: " + escapeHTML(getValue("why2")) +
+        "<br><br>" +
+
+        "Why 3: " + escapeHTML(getValue("why3")) +
+        "<br><br>" +
+
+        "Why 4: " + escapeHTML(getValue("why4")) +
+        "<br><br>" +
+
+        "Why 5 / Root Cause: " +
+        escapeHTML(getValue("why5")) +
+        "<br><br>" +
+
+        "Evidence: " +
+        escapeHTML(getValue("rootEvidence"));
 
 
     document.getElementById("rD5").innerHTML =
-        safeText(value("d5"));
+        escapeHTML(getValue("d5"));
 
     document.getElementById("rD6").innerHTML =
-        safeText(value("d6"));
+        escapeHTML(getValue("d6"));
 
     document.getElementById("rD7").innerHTML =
-        safeText(value("d7"));
+        escapeHTML(getValue("d7"));
 
     document.getElementById("rD8").innerHTML =
-        safeText(value("d8"));
+        escapeHTML(getValue("d8"));
 
 
     document.getElementById("rWhy1").innerHTML =
-        safeText(value("why1"));
+        escapeHTML(getValue("why1"));
 
     document.getElementById("rWhy2").innerHTML =
-        safeText(value("why2"));
+        escapeHTML(getValue("why2"));
 
     document.getElementById("rWhy3").innerHTML =
-        safeText(value("why3"));
+        escapeHTML(getValue("why3"));
 
     document.getElementById("rWhy4").innerHTML =
-        safeText(value("why4"));
+        escapeHTML(getValue("why4"));
 
     document.getElementById("rWhy5").innerHTML =
-        safeText(value("why5"));
+        escapeHTML(getValue("why5"));
 
     document.getElementById("rRootEvidence").innerHTML =
-        safeText(value("rootEvidence"));
+        escapeHTML(getValue("rootEvidence"));
 
 
     document.getElementById("rD5Responsible").innerHTML =
-        safeText(value("d5Responsible"));
+        escapeHTML(getValue("d5Responsible"));
 
     document.getElementById("rD5Date").innerHTML =
-        safeText(formatDate(value("d5Date")));
+        escapeHTML(formatDate(getValue("d5Date")));
 
     document.getElementById("rD6Evidence").innerHTML =
-        safeText(value("d6Evidence"));
+        escapeHTML(getValue("d6Evidence"));
 
     document.getElementById("rD7Responsible").innerHTML =
-        safeText(value("d7Responsible"));
+        escapeHTML(getValue("d7Responsible"));
 
     document.getElementById("rD7Date").innerHTML =
-        safeText(formatDate(value("d7Date")));
+        escapeHTML(formatDate(getValue("d7Date")));
 
     document.getElementById("rClosureStatus").innerHTML =
-        safeText(value("closureStatus"));
+        escapeHTML(getValue("closureStatus"));
 
 
     document.getElementById("reportSection").style.display =
@@ -1664,21 +1611,21 @@ function loadExample(){
 
 
     document.getElementById("d1").value =
-        "Quality Engineer - Investigation\n" +
+        "Quality Engineer - Problem Investigation\n" +
         "Production Engineer - Process\n" +
         "Maintenance Engineer - Machine\n" +
-        "Production Supervisor - Implementation";
+        "Production Supervisor - Production";
 
 
     document.getElementById("d2").value =
         "Bracket hole diameter specification is Ø10.00 ±0.10 mm. " +
-        "Actual measured diameter was Ø10.35 mm. " +
+        "Actual measured diameter is Ø10.35 mm. " +
         "12 out of 50 parts were found out of specification during final inspection.";
 
 
     document.getElementById("d3").value =
-        "Production stopped. All finished stock quarantined. " +
-        "100% inspection initiated. Customer stock checked for affected parts.";
+        "Production stopped. Finished stock quarantined. " +
+        "100% inspection started. Customer stock checked for affected parts.";
 
 
     document.getElementById("why1").value =
@@ -1686,7 +1633,7 @@ function loadExample(){
 
 
     document.getElementById("why2").value =
-        "Punch/tool condition and process setting were not controlled properly.";
+        "Tool condition and process setting were not properly controlled.";
 
 
     document.getElementById("why3").value =
@@ -1702,11 +1649,11 @@ function loadExample(){
 
 
     document.getElementById("rootEvidence").value =
-        "Review of the process checklist and production records confirmed that tool condition verification was not defined or recorded at the required frequency.";
+        "Process checklist and production records confirmed that tool condition verification was not defined or recorded at the required frequency.";
 
 
     document.getElementById("d5").value =
-        "Define tool condition verification frequency, add the check to the standard inspection checklist and establish replacement criteria.";
+        "Define tool condition verification frequency, update the inspection checklist and establish tool replacement criteria.";
 
 
     document.getElementById("d5Responsible").value =
@@ -1738,8 +1685,7 @@ function loadExample(){
 
 
     document.getElementById("d8").value =
-        "All 8D actions completed and effectiveness verified. " +
-        "Thanks to Quality, Production and Maintenance teams for successful problem resolution.";
+        "All 8D actions completed and effectiveness verified. Thanks to Quality, Production and Maintenance teams for successful problem resolution.";
 
 
     document.getElementById("closureStatus").value =
