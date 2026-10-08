@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sheet Metal Blank Size Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free sheet metal blank size calculator. Calculate approximate flat blank length using finished dimensions, bend allowance and bend count.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.container{
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    margin:0 0 8px;
+    font-size:32px;
+    color:#e53232;
+}
+
+.page-title p{
+    margin:0;
+    color:#666;
+    font-size:16px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e2e2e2;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:5px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:600;
+    font-size:14px;
+}
+
+.form-group small{
+    display:block;
+    margin-top:5px;
+    color:#777;
+    font-size:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    background:#fff;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+/* BUTTON */
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92525;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+/* RESULT */
+
+.result-box{
+    margin-top:25px;
+    background:#fff5f5;
+    border:1px solid #efcccc;
+    border-radius:10px;
+    padding:20px;
+}
+
+.result-box h2{
+    margin:0 0 15px;
+    color:#e53232;
+    font-size:21px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.result-item{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:13px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.result-item strong{
+    font-size:18px;
+}
+
+.main-result{
+    margin-top:15px;
+    background:#ffffff;
+    border:2px solid #e53232;
+    border-radius:9px;
+    padding:18px;
+    text-align:center;
+}
+
+.main-result span{
+    display:block;
+    color:#666;
+    font-size:14px;
+}
+
+.main-result strong{
+    display:block;
+    margin-top:5px;
+    font-size:30px;
+    color:#e53232;
+}
+
+/* INFO */
+
+.info-box{
+    background:#ffffff;
+    border:1px solid #e2e2e2;
+    border-radius:12px;
+    padding:22px;
+    margin-bottom:25px;
+}
+
+.info-box h2{
+    margin-top:0;
+    color:#e53232;
+}
+
+.info-box h3{
+    margin-bottom:6px;
+}
+
+.info-box ul{
+    padding-left:20px;
+}
+
+.formula-box{
+    background:#f7f7f7;
+    border-left:4px solid #e53232;
+    padding:14px 16px;
+    margin:15px 0;
+    font-weight:600;
+}
+
+.note{
+    background:#fff8e6;
+    border-left:4px solid #e0a800;
+    padding:13px 15px;
+    border-radius:5px;
+}
+
+/* TABLE */
+
+.example-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.example-table th,
+.example-table td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+.example-table th{
+    background:#f3f3f3;
+}
+
+/* HOME */
+
+.home-btn{
+    display:inline-block;
+    padding:11px 18px;
+    background:#e53232;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-btn:hover{
+    background:#c92525;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#ffffff;
+    border-top:1px solid #e5e5e5;
+    text-align:center;
+    padding:25px 15px;
+    color:#666;
+    font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .form-grid,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card,
+    .info-box{
+        padding:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="page-title">
+
+<h1>
+Sheet Metal Blank Size Calculator
+</h1>
+
+<p>
+Calculate approximate flat blank length for sheet metal parts.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label for="finishedLength">
+Finished Length / Straight Length (mm)
+</label>
+
+<input
+type="number"
+id="finishedLength"
+value="200"
+min="0"
+step="any"
+placeholder="Example: 200"
+>
+
+<small>
+Enter the total finished straight length of the part.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="finishedWidth">
+Finished Width (mm)
+</label>
+
+<input
+type="number"
+id="finishedWidth"
+value="100"
+min="0"
+step="any"
+placeholder="Example: 100"
+>
+
+<small>
+Used as the blank width reference.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="thickness">
+Sheet Thickness (mm)
+</label>
+
+<input
+type="number"
+id="thickness"
+value="2"
+min="0.01"
+step="any"
+placeholder="Example: 2"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="insideRadius">
+Inside Bend Radius (mm)
+</label>
+
+<input
+type="number"
+id="insideRadius"
+value="3"
+min="0"
+step="any"
+placeholder="Example: 3"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="bendAngle">
+Bend Angle (°)
+</label>
+
+<input
+type="number"
+id="bendAngle"
+value="90"
+min="0.1"
+max="179.9"
+step="any"
+placeholder="Example: 90"
+>
+
+<small>
+Common value: 90°
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="numberOfBends">
+Number of Bends
+</label>
+
+<input
+type="number"
+id="numberOfBends"
+value="2"
+min="0"
+step="1"
+placeholder="Example: 2"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="kFactor">
+K-Factor
+</label>
+
+<input
+type="number"
+id="kFactor"
+value="0.33"
+min="0"
+max="1"
+step="0.01"
+placeholder="Example: 0.33"
+>
+
+<small>
+Typical starting value: 0.30–0.50
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="extraAllowance">
+Extra Allowance (mm)
+</label>
+
+<input
+type="number"
+id="extraAllowance"
+value="0"
+min="0"
+step="any"
+placeholder="Example: 0"
+>
+
+<small>
+Optional allowance for trimming or process adjustment.
+</small>
+
+</div>
+
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateBlank()"
+>
+Calculate Blank Size
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+</div>
+
+
+<div class="result-box">
+
+<h2>
+Calculation Result
+</h2>
+
+
+<div class="result-grid">
+
+
+<div class="result-item">
+
+<span>
+Finished Length
+</span>
+
+<strong id="resultFinishedLength">
+200.000 mm
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Finished Width
+</span>
+
+<strong id="resultFinishedWidth">
+100.000 mm
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Bend Allowance / Bend
+</span>
+
+<strong id="resultBA">
+5.749 mm
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Total Bend Allowance
+</span>
+
+<strong id="resultTotalBA">
+11.498 mm
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Extra Allowance
+</span>
+
+<strong id="resultExtra">
+0.000 mm
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Bend Count
+</span>
+
+<strong id="resultBends">
+2
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="main-result">
+
+<span>
+Approximate Blank Length
+</span>
+
+<strong id="blankLength">
+211.498 mm
+</strong>
+
+</div>
+
+
+<div class="main-result">
+
+<span>
+Approximate Blank Size
+</span>
+
+<strong id="blankSize">
+211.498 × 100.000 mm
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<h2>
+How the Calculation Works
+</h2>
+
+<p>
+The calculator estimates the flat blank length by adding the total bend allowance to the finished straight length.
+</p>
+
+
+<div class="formula-box">
+
+Bend Allowance = (π / 180) × Bend Angle × (Inside Radius + K × Thickness)
+
+<br><br>
+
+Total Bend Allowance = Bend Allowance × Number of Bends
+
+<br><br>
+
+Blank Length = Finished Length + Total Bend Allowance + Extra Allowance
+
+</div>
+
+
+<p>
+The finished width is used as the reference blank width. Therefore:
+</p>
+
+<div class="formula-box">
+
+Approximate Blank Size = Blank Length × Finished Width
+
+</div>
+
+
+<div class="note">
+
+<strong>Important:</strong>
+This is an approximate calculation. For actual production, the drawing, material properties, machine tooling, bend deduction, bend allowance tables and shop trial results should be used.
+
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<h2>
+Example Calculation
+</h2>
+
+<table class="example-table">
+
+<thead>
+
+<tr>
+
+<th>
+Input
+</th>
+
+<th>
+Value
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+Finished Length
+</td>
+
+<td>
+200 mm
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Finished Width
+</td>
+
+<td>
+100 mm
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Thickness
+</td>
+
+<td>
+2 mm
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Inside Radius
+</td>
+
+<td>
+3 mm
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Bend Angle
+</td>
+
+<td>
+90°
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Number of Bends
+</td>
+
+<td>
+2
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+K-Factor
+</td>
+
+<td>
+0.33
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+<p>
+For these values:
+</p>
+
+<ul>
+
+<li>
+Bend Allowance ≈ <strong>5.749 mm</strong> per bend
+</li>
+
+<li>
+Total Bend Allowance ≈ <strong>11.498 mm</strong>
+</li>
+
+<li>
+Blank Length ≈ <strong>211.498 mm</strong>
+</li>
+
+<li>
+Blank Size ≈ <strong>211.498 × 100 mm</strong>
+</li>
+
+</ul>
+
+</div>
+
+
+<a
+href="index.html"
+class="home-btn"
+>
+← Back to Home
+</a>
+
+
+</main>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+/* ELEMENTS */
+
+const finishedLength =
+document.getElementById("finishedLength");
+
+const finishedWidth =
+document.getElementById("finishedWidth");
+
+const thickness =
+document.getElementById("thickness");
+
+const insideRadius =
+document.getElementById("insideRadius");
+
+const bendAngle =
+document.getElementById("bendAngle");
+
+const numberOfBends =
+document.getElementById("numberOfBends");
+
+const kFactor =
+document.getElementById("kFactor");
+
+const extraAllowance =
+document.getElementById("extraAllowance");
+
+
+/* RESULT ELEMENTS */
+
+const resultFinishedLength =
+document.getElementById("resultFinishedLength");
+
+const resultFinishedWidth =
+document.getElementById("resultFinishedWidth");
+
+const resultBA =
+document.getElementById("resultBA");
+
+const resultTotalBA =
+document.getElementById("resultTotalBA");
+
+const resultExtra =
+document.getElementById("resultExtra");
+
+const resultBends =
+document.getElementById("resultBends");
+
+const blankLength =
+document.getElementById("blankLength");
+
+const blankSize =
+document.getElementById("blankSize");
+
+
+/* FORMAT */
+
+function formatNumber(value){
+
+    return Number(
+        value.toFixed(3)
+    ).toString();
+
+}
+
+
+/* CALCULATE */
+
+function calculateBlank(){
+
+    const L =
+    parseFloat(
+        finishedLength.value
+    );
+
+    const W =
+    parseFloat(
+        finishedWidth.value
+    );
+
+    const T =
+    parseFloat(
+        thickness.value
+    );
+
+    const R =
+    parseFloat(
+        insideRadius.value
+    );
+
+    const A =
+    parseFloat(
+        bendAngle.value
+    );
+
+    const bends =
+    parseInt(
+        numberOfBends.value
+    );
+
+    const K =
+    parseFloat(
+        kFactor.value
+    );
+
+    const extra =
+    parseFloat(
+        extraAllowance.value
+    );
+
+
+    /* VALIDATION */
+
+    if(
+        isNaN(L) ||
+        L <= 0
+    ){
+
+        alert(
+            "Please enter a valid Finished Length."
+        );
+
+        finishedLength.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(W) ||
+        W <= 0
+    ){
+
+        alert(
+            "Please enter a valid Finished Width."
+        );
+
+        finishedWidth.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(T) ||
+        T <= 0
+    ){
+
+        alert(
+            "Please enter a valid Sheet Thickness."
+        );
+
+        thickness.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(R) ||
+        R < 0
+    ){
+
+        alert(
+            "Please enter a valid Inside Bend Radius."
+        );
+
+        insideRadius.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(A) ||
+        A <= 0 ||
+        A >= 180
+    ){
+
+        alert(
+            "Bend Angle must be greater than 0° and less than 180°."
+        );
+
+        bendAngle.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(bends) ||
+        bends < 0
+    ){
+
+        alert(
+            "Please enter a valid Number of Bends."
+        );
+
+        numberOfBends.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(K) ||
+        K < 0 ||
+        K > 1
+    ){
+
+        alert(
+            "K-Factor must be between 0 and 1."
+        );
+
+        kFactor.focus();
+
+        return;
+    }
+
+
+    if(
+        isNaN(extra) ||
+        extra < 0
+    ){
+
+        alert(
+            "Extra Allowance cannot be negative."
+        );
+
+        extraAllowance.focus();
+
+        return;
+    }
+
+
+    /* BEND ALLOWANCE */
+
+    const angleRadians =
+    A * Math.PI / 180;
+
+
+    const bendAllowance =
+    angleRadians *
+    (
+        R +
+        K * T
+    );
+
+
+    /* TOTAL BEND ALLOWANCE */
+
+    const totalBA =
+    bendAllowance *
+    bends;
+
+
+    /* BLANK LENGTH */
+
+    const developedLength =
+    L +
+    totalBA +
+    extra;
+
+
+    /* RESULTS */
+
+    resultFinishedLength.textContent =
+    formatNumber(L) +
+    " mm";
+
+
+    resultFinishedWidth.textContent =
+    formatNumber(W) +
+    " mm";
+
+
+    resultBA.textContent =
+    formatNumber(bendAllowance) +
+    " mm";
+
+
+    resultTotalBA.textContent =
+    formatNumber(totalBA) +
+    " mm";
+
+
+    resultExtra.textContent =
+    formatNumber(extra) +
+    " mm";
+
+
+    resultBends.textContent =
+    bends;
+
+
+    blankLength.textContent =
+    formatNumber(developedLength) +
+    " mm";
+
+
+    blankSize.textContent =
+    formatNumber(developedLength) +
+    " × " +
+    formatNumber(W) +
+    " mm";
+
+}
+
+
+/* CLEAR */
+
+function clearCalculator(){
+
+    finishedLength.value = "";
+    finishedWidth.value = "";
+    thickness.value = "";
+    insideRadius.value = "";
+    bendAngle.value = "";
+    numberOfBends.value = "";
+    kFactor.value = "";
+    extraAllowance.value = "";
+
+
+    resultFinishedLength.textContent =
+    "-";
+
+
+    resultFinishedWidth.textContent =
+    "-";
+
+
+    resultBA.textContent =
+    "-";
+
+
+    resultTotalBA.textContent =
+    "-";
+
+
+    resultExtra.textContent =
+    "-";
+
+
+    resultBends.textContent =
+    "-";
+
+
+    blankLength.textContent =
+    "-";
+
+
+    blankSize.textContent =
+    "-";
+
+}
+
+
+/* AUTO CALCULATE */
+
+document.querySelectorAll(
+    "input"
+).forEach(function(input){
+
+    input.addEventListener(
+        "input",
+        calculateBlank
+    );
+
+});
+
+
+/* INITIAL CALCULATION */
+
+calculateBlank();
+
+</script>
+
+</body>
+</html>
