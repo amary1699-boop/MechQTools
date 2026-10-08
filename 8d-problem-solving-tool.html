@@ -1,1587 +1,2493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>8D Problem Solving Tool - MechQTools</title>
 
 <meta name="description"
-content="Free 8D Problem Solving Tool for Quality Engineers. Create and print a complete 8D problem solving report.">
+content="Free 8D Problem Solving Tool for Quality Engineers. Create, analyze and print a complete 8D problem solving report.">
+
+<meta name="keywords"
+content="8D problem solving tool, 8D report, quality 8D, corrective action, root cause analysis, quality engineering">
 
 <style>
 
+/* =========================
+   GLOBAL
+========================= */
+
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f5f6f8;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
     color:#222;
+    line-height:1.6;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
-    background:#e53232;
-    color:white;
-    padding:18px 20px;
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
-.header-inner{
-    max-width:1100px;
+.navbar{
+    max-width:1200px;
     margin:auto;
+    padding:15px 20px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 }
 
 .logo{
-    color:white;
-    text-decoration:none;
     font-size:25px;
-    font-weight:bold;
-}
-
-.home-btn{
-    color:white;
+    font-weight:700;
+    color:#e53232;
     text-decoration:none;
-    border:1px solid rgba(255,255,255,.8);
-    padding:9px 15px;
-    border-radius:6px;
-    font-size:14px;
 }
 
-.home-btn:hover{
-    background:white;
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
     color:#e53232;
 }
 
-.container{
-    max-width:1100px;
-    margin:25px auto;
-    padding:0 15px;
-}
 
-.hero{
-    background:white;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-    margin-bottom:20px;
-}
-
-.hero h1{
-    margin-top:0;
-    color:#e53232;
-}
-
-.hero p{
-    line-height:1.6;
-}
+/* =========================
+   MAIN SECTION
+========================= */
 
 .section{
-    background:white;
-    padding:22px;
+    max-width:1000px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.section-title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.section-title span{
+    color:#e53232;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#777;
+    max-width:750px;
+    margin:0 auto 35px;
+}
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.tool-card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
     border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+
+/* =========================
+   8D SECTION
+========================= */
+
+.d-section{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+.d-section h2{
+    color:#e53232;
+    font-size:23px;
+    margin-bottom:5px;
+}
+
+.d-subtitle{
+    color:#777;
+    font-size:14px;
     margin-bottom:20px;
 }
 
-.section h2{
-    margin-top:0;
-    color:#e53232;
-    border-bottom:1px solid #eee;
-    padding-bottom:10px;
-}
-
-.d-box{
-    border:1px solid #ddd;
-    border-left:5px solid #e53232;
-    border-radius:7px;
-    padding:18px;
-    margin-bottom:20px;
-}
-
-.d-title{
-    color:#e53232;
-    font-size:21px;
-    font-weight:bold;
-    margin-bottom:12px;
-}
-
-.meaning{
-    background:#f8f8f8;
-    border:1px solid #ddd;
+.meaning-box{
+    background:#f9f9f9;
+    border:1px solid #e5e5e5;
+    border-left:4px solid #e53232;
     border-radius:6px;
-    padding:14px;
-    margin-bottom:18px;
-    line-height:1.6;
+    padding:15px;
+    margin-bottom:20px;
 }
 
-.meaning strong{
+.meaning-box strong{
     color:#e53232;
 }
 
-.example{
-    background:#eef7ff;
-    border-left:4px solid #0d6efd;
-    padding:13px;
-    margin-top:15px;
-    line-height:1.6;
+.meaning-box p{
+    color:#666;
+    font-size:14px;
+    margin-bottom:5px;
 }
 
-.warning{
-    background:#fff3cd;
-    border-left:4px solid #f0ad00;
-    padding:13px;
-    margin-top:15px;
-    line-height:1.6;
+.meaning-box p:last-child{
+    margin-bottom:0;
 }
+
+
+/* =========================
+   FORM
+========================= */
 
 .form-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:18px;
+    gap:20px;
 }
 
 .form-group{
-    margin-bottom:16px;
+    margin-bottom:20px;
 }
 
-.full{
+.form-group.full{
     grid-column:1 / -1;
 }
 
-label{
+.form-group label{
     display:block;
-    font-weight:bold;
+    font-weight:600;
     margin-bottom:7px;
 }
 
-input,
-textarea,
-select{
+.form-group input,
+.form-group textarea,
+.form-group select{
     width:100%;
-    padding:11px;
+    padding:12px 13px;
     border:1px solid #ccc;
     border-radius:6px;
     font-size:15px;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#fff;
 }
 
-textarea{
-    min-height:90px;
+.form-group textarea{
+    min-height:110px;
     resize:vertical;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
     outline:none;
     border-color:#e53232;
 }
 
-.button-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
+.help-text{
+    color:#777;
+    font-size:13px;
+    margin-top:5px;
 }
 
-button{
-    border:none;
-    padding:11px 17px;
-    border-radius:6px;
-    cursor:pointer;
+
+/* =========================
+   WHY TABLE
+========================= */
+
+.why-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+.why-table th,
+.why-table td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    vertical-align:top;
+}
+
+.why-table th{
+    background:#f7f7f7;
+    font-weight:600;
+}
+
+.why-table th:first-child{
+    width:100px;
+}
+
+.why-table textarea{
+    width:100%;
+    min-height:65px;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    resize:vertical;
+    font-family:Arial, Helvetica, sans-serif;
     font-size:14px;
-    font-weight:bold;
 }
 
-button:hover{
-    opacity:.88;
+.why-table textarea:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:13px 25px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
 }
 
 .btn-primary{
     background:#e53232;
-    color:white;
+    color:#ffffff;
 }
 
-.btn-success{
-    background:#198754;
-    color:white;
+.btn-primary:hover{
+    background:#c92727;
 }
 
-.btn-warning{
-    background:#f0ad00;
-    color:white;
+.btn-secondary{
+    background:#ffffff;
+    color:#e53232;
+    border:1px solid #e53232;
 }
 
-.btn-danger{
-    background:#dc3545;
-    color:white;
+.btn-secondary:hover{
+    background:#fff4f4;
 }
+
+
+/* =========================
+   REPORT
+========================= */
 
 .report{
     display:none;
+    margin-top:30px;
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:30px;
 }
 
-.report-header{
-    text-align:center;
-    border-bottom:2px solid #e53232;
-    padding-bottom:15px;
+.report h2{
+    color:#e53232;
     margin-bottom:20px;
 }
 
-.report-header h2{
+.report-section{
+    margin-bottom:25px;
+}
+
+.report-section h3{
     color:#e53232;
-    margin:0 0 5px;
+    font-size:19px;
+    margin-bottom:10px;
+    border-bottom:1px solid #e5e5e5;
+    padding-bottom:7px;
+}
+
+.report-row{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    border-bottom:1px solid #eee;
+}
+
+.report-label{
+    font-weight:600;
+    padding:9px;
+    background:#f9f9f9;
+}
+
+.report-value{
+    padding:9px;
+    white-space:pre-wrap;
 }
 
 .report-table{
     width:100%;
     border-collapse:collapse;
-    margin-bottom:20px;
 }
 
 .report-table th,
 .report-table td{
-    border:1px solid #ccc;
-    padding:10px;
-    vertical-align:top;
+    border:1px solid #ddd;
+    padding:9px;
     text-align:left;
+    vertical-align:top;
 }
 
 .report-table th{
-    background:#f5f5f5;
-    width:25%;
+    background:#f7f7f7;
 }
 
-.status{
-    font-weight:bold;
+
+/* =========================
+   INFO
+========================= */
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
 }
+
+.info-card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+}
+
+.info-card h3{
+    margin-bottom:12px;
+    font-size:20px;
+}
+
+.info-card p{
+    color:#666;
+    font-size:15px;
+}
+
+.info-card ol,
+.info-card ul{
+    padding-left:20px;
+    color:#666;
+    font-size:15px;
+}
+
+.info-card li{
+    margin-bottom:7px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-    text-align:center;
-    padding:25px;
-    color:#666;
+    background:#151515;
+    color:#ffffff;
+    margin-top:30px;
+}
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-logo{
+    color:#e53232;
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-text{
+    color:#aaa;
+    font-size:14px;
+    max-width:450px;
+}
+
+.footer-column h4{
+    margin-bottom:12px;
+}
+
+.footer-column a{
+    display:block;
+    color:#aaa;
+    text-decoration:none;
+    margin-bottom:7px;
     font-size:14px;
 }
 
-@media(max-width:700px){
+.footer-column a:hover{
+    color:#ffffff;
+}
 
-    .header-inner{
+.copyright{
+    border-top:1px solid #333;
+    text-align:center;
+    padding:18px;
+    color:#888;
+    font-size:13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .navbar{
         flex-direction:column;
-        align-items:flex-start;
         gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .section{
+        padding:45px 18px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .tool-card,
+    .d-section,
+    .report{
+        padding:20px;
     }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    .full{
+    .form-group.full{
         grid-column:auto;
     }
 
-    .button-row{
+    .buttons{
         flex-direction:column;
     }
 
-    button{
+    .btn{
         width:100%;
+    }
+
+    .report-row{
+        grid-template-columns:1fr;
+    }
+
+    .why-table{
+        font-size:13px;
+    }
+
+    .why-table th,
+    .why-table td{
+        padding:7px;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
     }
 
 }
 
 @media print{
 
-    body{
-        background:white;
-    }
-
     header,
-    .hero,
-    .input-section,
-    .explanation-section,
-    footer{
+    footer,
+    .buttons,
+    .info-grid,
+    .tool-card > .d-section,
+    .section-title,
+    .section-subtitle{
         display:none !important;
     }
 
-    .container{
-        max-width:100%;
-        margin:0;
-        padding:0;
+    body{
+        background:#ffffff;
     }
 
     .section{
-        box-shadow:none;
-        border:1px solid #ddd;
+        max-width:none;
+        padding:0;
     }
 
     .report{
         display:block !important;
+        border:none;
+        box-shadow:none;
+        padding:0;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
-    <div class="header-inner">
+<div class="navbar">
 
-        <a href="index.html" class="logo">
-            MechQTools
-        </a>
+<a href="index.html" class="logo">
+MechQTools
+</a>
 
-        <a href="index.html" class="home-btn">
-            ← Back to Home
-        </a>
+<nav class="nav-links">
 
-    </div>
+<a href="index.html">Home</a>
+
+<a href="index.html#mechanical">
+Mechanical
+</a>
+
+<a href="index.html#quality">
+Quality
+</a>
+
+<a href="index.html#templates">
+Templates
+</a>
+
+<a href="index.html#guides">
+Guides
+</a>
+
+<a href="index.html#about">
+About
+</a>
+
+</nav>
+
+</div>
 
 </header>
 
 
-<div class="container">
+<!-- =========================
+     MAIN
+========================= -->
+
+<section class="section">
 
 
-<!-- TITLE -->
+<h1 class="section-title">
+8D Problem Solving <span>Tool</span>
+</h1>
 
-<div class="hero">
-
-    <h1>8D Problem Solving Tool</h1>
-
-    <p>
-        Create a complete 8D Problem Solving Report for quality
-        problems, customer complaints and recurring defects.
-    </p>
-
-    <p>
-        <strong>8D</strong> means <strong>Eight Disciplines</strong>.
-        It is a structured method used to contain a problem,
-        identify the root cause, implement corrective action and
-        prevent recurrence.
-    </p>
-
-</div>
+<p class="section-subtitle">
+Create a complete 8D problem solving report for quality problems,
+root cause analysis, corrective action and prevention of recurrence.
+</p>
 
 
-<!-- BASIC INFORMATION -->
-
-<div class="section input-section">
-
-    <h2>Problem Information</h2>
-
-    <div class="meaning">
-
-        <strong>Meaning:</strong>
-        Enter the basic information of the problem.
-
-        <br><br>
-
-        <strong>Purpose:</strong>
-        This information provides identification and traceability
-        for the 8D report.
-
-    </div>
+<div class="tool-card">
 
 
-    <div class="form-grid">
+<!-- =========================
+     BASIC INFORMATION
+========================= -->
 
-        <div class="form-group">
+<div class="d-section">
 
-            <label>8D Report Number</label>
+<h2>Basic Problem Information</h2>
 
-            <input
-                id="reportNo"
-                type="text"
-                placeholder="Example: 8D-2026-001"
-            >
+<p class="d-subtitle">
+Enter the basic information of the quality problem.
+</p>
 
-        </div>
+<div class="meaning-box">
 
+<p>
+<strong>Purpose:</strong>
+This information identifies the customer, part, problem and report.
+</p>
 
-        <div class="form-group">
-
-            <label>Report Date</label>
-
-            <input
-                id="reportDate"
-                type="date"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Customer Name</label>
-
-            <input
-                id="customer"
-                type="text"
-                placeholder="Example: ABC Motors"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Part Name</label>
-
-            <input
-                id="partName"
-                type="text"
-                placeholder="Example: Sheet Metal Bracket"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Part Number</label>
-
-            <input
-                id="partNumber"
-                type="text"
-                placeholder="Example: BRK-1001"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Prepared By</label>
-
-            <input
-                id="preparedBy"
-                type="text"
-                placeholder="Example: Quality Engineer"
-            >
-
-        </div>
-
-    </div>
+<p>
+<strong>What to write:</strong>
+Use clear and specific information about the actual problem.
+</p>
 
 </div>
 
 
-<!-- D1 -->
-
-<div class="section">
-
-    <div class="d-box">
-
-        <div class="d-title">
-            D1 - Team Formation
-        </div>
+<div class="form-grid">
 
 
-        <div class="meaning">
+<div class="form-group">
 
-            <strong>Meaning:</strong>
-            D1 means forming a team of people who have the knowledge,
-            authority or responsibility needed to solve the problem.
+<label for="reportNo">
+Report / 8D No.
+</label>
 
-            <br><br>
+<input
+type="text"
+id="reportNo"
+placeholder="Example: 8D-2026-001"
+>
 
-            <strong>Purpose:</strong>
-            A cross-functional team helps investigate the problem
-            from different areas.
-
-            <br><br>
-
-            <strong>What to write:</strong>
-            Write team members, departments and responsibilities.
-
-        </div>
+</div>
 
 
-        <div class="form-group">
+<div class="form-group">
 
-            <label>Team Members</label>
+<label for="date">
+Report Date
+</label>
 
-            <textarea
-                id="d1"
-                placeholder="Example:
-Quality Engineer - Problem Investigation
+<input
+type="date"
+id="date"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="customer">
+Customer
+</label>
+
+<input
+type="text"
+id="customer"
+placeholder="Example: Customer Name"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="partNo">
+Part No.
+</label>
+
+<input
+type="text"
+id="partNo"
+placeholder="Example: ABC-1001"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="partName">
+Part Name
+</label>
+
+<input
+type="text"
+id="partName"
+placeholder="Example: Sheet Metal Bracket"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="problemDate">
+Problem Date
+</label>
+
+<input
+type="date"
+id="problemDate"
+>
+
+</div>
+
+
+<div class="form-group full">
+
+<label for="problemSummary">
+Problem Summary
+</label>
+
+<textarea
+id="problemSummary"
+placeholder="Briefly describe the problem."
+></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     D1
+========================= -->
+
+<div class="d-section">
+
+<h2>D1 — Team Formation</h2>
+
+<p class="d-subtitle">
+Form a team with the required technical knowledge and authority.
+</p>
+
+<div class="meaning-box">
+
+<p>
+<strong>Meaning:</strong>
+D1 means forming a cross-functional team to solve the problem.
+</p>
+
+<p>
+<strong>Purpose:</strong>
+Different departments provide different technical knowledge and help solve the problem effectively.
+</p>
+
+<p>
+<strong>What to write:</strong>
+Enter team members, departments and their responsibilities.
+</p>
+
+<p>
+<strong>Example:</strong>
+Quality Engineer, Production Engineer, Maintenance Engineer and Supervisor.
+</p>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="teamMembers">
+Team Members / Departments
+</label>
+
+<textarea
+id="teamMembers"
+placeholder="Example:
+Quality Engineer - Investigation
 Production Engineer - Process
 Maintenance Engineer - Machine
-Supervisor - Production"
-            ></textarea>
+Production Supervisor - Implementation"
+></textarea>
 
-        </div>
-
-
-        <div class="example">
-
-            <strong>Example:</strong>
-            Quality + Production + Maintenance + Engineering team.
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
-<!-- D2 -->
+<!-- =========================
+     D2
+========================= -->
 
-<div class="section">
+<div class="d-section">
 
-    <div class="d-box">
+<h2>D2 — Problem Description</h2>
 
-        <div class="d-title">
-            D2 - Problem Description
-        </div>
+<p class="d-subtitle">
+Clearly describe the problem using measurable facts.
+</p>
 
+<div class="meaning-box">
 
-        <div class="meaning">
+<p>
+<strong>Meaning:</strong>
+D2 is the detailed description of the problem.
+</p>
 
-            <strong>Meaning:</strong>
-            D2 means clearly defining the problem using facts and data.
+<p>
+<strong>Purpose:</strong>
+Define what, where, when, how much and how often the problem occurs.
+</p>
 
-            <br><br>
+<p>
+<strong>What to write:</strong>
+Use facts and data instead of assumptions.
+</p>
 
-            <strong>Purpose:</strong>
-            Clearly explain what happened, where it happened,
-            when it happened and how many parts were affected.
-
-            <br><br>
-
-            <strong>What to include:</strong>
-            Part number, defect, specification, actual measurement,
-            quantity, process and location.
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Detailed Problem Description</label>
-
-            <textarea
-                id="d2"
-                placeholder="Example:
-Hole diameter specification is Ø10.00 ±0.10 mm.
-Actual measurement is Ø10.35 mm.
-12 out of 50 parts are rejected."
-            ></textarea>
-
-        </div>
-
-
-        <div class="example">
-
-            <strong>Example:</strong>
-            12 out of 50 brackets were found with hole diameter
-            Ø10.35 mm against specification Ø10.00 ±0.10 mm.
-
-        </div>
-
-    </div>
+<p>
+<strong>Example:</strong>
+Part drawing dimension required 100 ± 0.20 mm, but actual dimension was 100.65 mm.
+</p>
 
 </div>
 
 
-<!-- D3 -->
+<div class="form-grid">
 
-<div class="section">
+<div class="form-group">
 
-    <div class="d-box">
+<label for="whatProblem">
+What is the Problem?
+</label>
 
-        <div class="d-title">
-            D3 - Interim Containment Action
-        </div>
-
-
-        <div class="meaning">
-
-            <strong>Meaning:</strong>
-            D3 means immediate temporary action taken to protect
-            the customer and prevent further defective parts.
-
-            <br><br>
-
-            <strong>Purpose:</strong>
-            Control the problem while root cause investigation
-            is still in progress.
-
-            <br><br>
-
-            <strong>Examples:</strong>
-            Production stop, stock quarantine, 100% inspection,
-            sorting or temporary process control.
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Interim Containment Action</label>
-
-            <textarea
-                id="d3"
-                placeholder="Example:
-Production stopped.
-Finished stock quarantined.
-100% inspection started.
-Customer stock checked."
-            ></textarea>
-
-        </div>
-
-
-        <div class="warning">
-
-            <strong>Important:</strong>
-            Containment action is temporary.
-            It does not replace permanent corrective action.
-
-        </div>
-
-    </div>
+<textarea
+id="whatProblem"
+placeholder="Describe the defect."
+></textarea>
 
 </div>
 
 
-<!-- D4 -->
+<div class="form-group">
 
-<div class="section">
+<label for="whereProblem">
+Where was it Found?
+</label>
 
-    <div class="d-box">
-
-        <div class="d-title">
-            D4 - Root Cause Analysis
-        </div>
-
-
-        <div class="meaning">
-
-            <strong>Meaning:</strong>
-            D4 identifies the actual root cause of the problem.
-
-            <br><br>
-
-            <strong>Purpose:</strong>
-            Find why the problem happened and why the existing
-            control system did not prevent or detect it.
-
-            <br><br>
-
-            <strong>Useful tools:</strong>
-            5 Why, Fishbone/Ishikawa, Pareto, Process Analysis
-            and FMEA.
-
-        </div>
-
-
-        <div class="form-grid">
-
-            <div class="form-group">
-
-                <label>Why 1</label>
-
-                <textarea
-                    id="why1"
-                    placeholder="Why did the problem happen?"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Why 2</label>
-
-                <textarea
-                    id="why2"
-                    placeholder="Why did this cause happen?"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Why 3</label>
-
-                <textarea
-                    id="why3"
-                    placeholder="Why did this happen?"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Why 4</label>
-
-                <textarea
-                    id="why4"
-                    placeholder="Why did this happen?"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group full">
-
-                <label>Why 5 / Root Cause</label>
-
-                <textarea
-                    id="why5"
-                    placeholder="Write the underlying root cause."
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group full">
-
-                <label>Root Cause Evidence</label>
-
-                <textarea
-                    id="rootEvidence"
-                    placeholder="Write the evidence used to confirm the root cause."
-                ></textarea>
-
-            </div>
-
-        </div>
-
-
-        <div class="warning">
-
-            <strong>Important:</strong>
-            Do not simply write "Operator Error".
-            Find out why the error happened and why the system
-            did not prevent or detect it.
-
-        </div>
-
-    </div>
+<textarea
+id="whereProblem"
+placeholder="Example: Final inspection / Customer end"
+></textarea>
 
 </div>
 
 
-<!-- D5 -->
+<div class="form-group">
 
-<div class="section">
+<label for="whenProblem">
+When did it Occur?
+</label>
 
-    <div class="d-box">
-
-        <div class="d-title">
-            D5 - Permanent Corrective Action
-        </div>
-
-
-        <div class="meaning">
-
-            <strong>Meaning:</strong>
-            D5 defines the permanent action that eliminates
-            the identified root cause.
-
-            <br><br>
-
-            <strong>Purpose:</strong>
-            Solve the actual cause instead of only fixing the
-            defective product.
-
-            <br><br>
-
-            <strong>Examples:</strong>
-            Process modification, tooling correction, poka-yoke,
-            parameter control or inspection improvement.
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Permanent Corrective Action</label>
-
-            <textarea
-                id="d5"
-                placeholder="Example:
-Introduce mandatory machine setting verification before
-first-piece production and update the work instruction."
-            ></textarea>
-
-        </div>
-
-
-        <div class="form-grid">
-
-            <div class="form-group">
-
-                <label>Responsible Person</label>
-
-                <input
-                    id="d5Responsible"
-                    type="text"
-                    placeholder="Example: Production Engineer"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Target Date</label>
-
-                <input
-                    id="d5Date"
-                    type="date"
-                >
-
-            </div>
-
-        </div>
-
-    </div>
+<textarea
+id="whenProblem"
+placeholder="Enter date, shift, batch or time."
+></textarea>
 
 </div>
 
 
-<!-- D6 -->
+<div class="form-group">
 
-<div class="section">
+<label for="howMuch">
+How Much / Quantity?
+</label>
 
-    <div class="d-box">
+<textarea
+id="howMuch"
+placeholder="Example: 25 rejected parts out of 500"
+></textarea>
 
-        <div class="d-title">
-            D6 - Implement & Validate Corrective Action
-        </div>
+</div>
 
-
-        <div class="meaning">
-
-            <strong>Meaning:</strong>
-            D6 means implementing the corrective action and
-            verifying that it is effective.
-
-            <br><br>
-
-            <strong>Purpose:</strong>
-            An action is not considered effective only because
-            it was implemented. Its result must be verified
-            using data or inspection.
-
-            <br><br>
-
-            <strong>Examples:</strong>
-            Trial results, inspection results, rejection data,
-            capability study or customer feedback.
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Implementation & Validation Result</label>
-
-            <textarea
-                id="d6"
-                placeholder="Example:
-Corrective action implemented.
-100 consecutive parts inspected.
-All parts were within specification.
-No recurrence observed."
-            ></textarea>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Effectiveness Evidence</label>
-
-            <textarea
-                id="d6Evidence"
-                placeholder="Example:
-Inspection report, trial report or production data."
-            ></textarea>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
-<!-- D7 -->
+<!-- =========================
+     D3
+========================= -->
 
-<div class="section">
+<div class="d-section">
 
-    <div class="d-box">
+<h2>D3 — Interim Containment Action</h2>
 
-        <div class="d-title">
-            D7 - Prevent Recurrence
-        </div>
+<p class="d-subtitle">
+Protect the customer and process until the permanent corrective action is implemented.
+</p>
 
+<div class="meaning-box">
 
-        <div class="meaning">
+<p>
+<strong>Meaning:</strong>
+D3 means immediate temporary action to control the problem.
+</p>
 
-            <strong>Meaning:</strong>
-            D7 prevents the same or similar problem from
-            happening again.
+<p>
+<strong>Purpose:</strong>
+Prevent defective products from reaching the customer.
+</p>
 
-            <br><br>
+<p>
+<strong>What to write:</strong>
+Mention sorting, inspection, quarantine, rework or other temporary actions.
+</p>
 
-            <strong>Purpose:</strong>
-            Improve the system so the learning from the problem
-            becomes part of the normal process.
-
-            <br><br>
-
-            <strong>Examples:</strong>
-            Update SOP, Control Plan, PFMEA, Work Instruction,
-            training, poka-yoke or audit plan.
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Prevent Recurrence Action</label>
-
-            <textarea
-                id="d7"
-                placeholder="Example:
-Update PFMEA and Control Plan.
-Update work instruction.
-Train operators.
-Add periodic process audit."
-            ></textarea>
-
-        </div>
-
-
-        <div class="form-grid">
-
-            <div class="form-group">
-
-                <label>Responsible Person / Department</label>
-
-                <input
-                    id="d7Responsible"
-                    type="text"
-                    placeholder="Example: Quality + Production"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Target Date</label>
-
-                <input
-                    id="d7Date"
-                    type="date"
-                >
-
-            </div>
-
-        </div>
-
-    </div>
+<p>
+<strong>Example:</strong>
+100% inspection started for the affected batch and suspected parts were quarantined.
+</p>
 
 </div>
 
 
-<!-- D8 -->
+<div class="form-grid">
 
-<div class="section">
+<div class="form-group">
 
-    <div class="d-box">
+<label for="containmentAction">
+Containment Action
+</label>
 
-        <div class="d-title">
-            D8 - Team Recognition & Closure
-        </div>
-
-
-        <div class="meaning">
-
-            <strong>Meaning:</strong>
-            D8 is the final step of the 8D process.
-
-            <br><br>
-
-            <strong>Purpose:</strong>
-            Confirm that actions are completed and effective,
-            formally close the 8D and recognize the team.
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Team Recognition / Closure Remarks</label>
-
-            <textarea
-                id="d8"
-                placeholder="Example:
-All actions completed and effectiveness verified.
-Thanks to Quality, Production and Maintenance teams."
-            ></textarea>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Closure Status</label>
-
-            <select id="closureStatus">
-
-                <option value="Open">Open</option>
-
-                <option value="Under Investigation">
-                    Under Investigation
-                </option>
-
-                <option value="Action Implemented">
-                    Action Implemented
-                </option>
-
-                <option value="Closed">
-                    Closed
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
+<textarea
+id="containmentAction"
+placeholder="Describe immediate containment action."
+></textarea>
 
 </div>
 
 
-<!-- BUTTONS -->
+<div class="form-group">
 
-<div class="section input-section">
+<label for="containmentDate">
+Containment Date
+</label>
 
-    <h2>Generate Report</h2>
-
-    <div class="button-row">
-
-        <button
-            class="btn-primary"
-            onclick="generateReport()"
-        >
-            Generate 8D Report
-        </button>
-
-
-        <button
-            class="btn-success"
-            onclick="loadExample()"
-        >
-            Load Example
-        </button>
-
-
-        <button
-            class="btn-warning"
-            onclick="window.print()"
-        >
-            Print Report
-        </button>
-
-
-        <button
-            class="btn-danger"
-            onclick="clearAll()"
-        >
-            Clear All
-        </button>
-
-    </div>
+<input
+type="date"
+id="containmentDate"
+>
 
 </div>
 
 
-<!-- REPORT -->
+<div class="form-group full">
 
-<div class="section report" id="reportSection">
+<label for="containmentResult">
+Containment Result
+</label>
 
-    <div class="report-header">
+<textarea
+id="containmentResult"
+placeholder="Describe the result of containment."
+></textarea>
 
-        <h2>8D PROBLEM SOLVING REPORT</h2>
+</div>
 
-        <div>
-            MechQTools
-        </div>
-
-    </div>
-
-
-    <table class="report-table">
-
-        <tr>
-            <th>Report Number</th>
-            <td id="rReportNo">-</td>
-
-            <th>Report Date</th>
-            <td id="rReportDate">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Customer</th>
-            <td id="rCustomer">-</td>
-
-            <th>Part Name</th>
-            <td id="rPartName">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Part Number</th>
-            <td id="rPartNumber">-</td>
-
-            <th>Prepared By</th>
-            <td id="rPreparedBy">-</td>
-        </tr>
-
-    </table>
-
-
-    <h3>D1 to D8 Summary</h3>
-
-    <table class="report-table">
-
-        <tr>
-            <th>D1 - Team Formation</th>
-            <td id="rD1">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D2 - Problem Description</th>
-            <td id="rD2">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D3 - Interim Containment</th>
-            <td id="rD3">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D4 - Root Cause Analysis</th>
-            <td id="rD4">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D5 - Corrective Action</th>
-            <td id="rD5">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D6 - Implementation & Validation</th>
-            <td id="rD6">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D7 - Prevent Recurrence</th>
-            <td id="rD7">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D8 - Closure</th>
-            <td id="rD8">-</td>
-        </tr>
-
-    </table>
-
-
-    <h3>5 Why Analysis</h3>
-
-    <table class="report-table">
-
-        <tr>
-            <th>Why 1</th>
-            <td id="rWhy1">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Why 2</th>
-            <td id="rWhy2">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Why 3</th>
-            <td id="rWhy3">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Why 4</th>
-            <td id="rWhy4">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Why 5 / Root Cause</th>
-            <td id="rWhy5">-</td>
-        </tr>
-
-
-        <tr>
-            <th>Root Cause Evidence</th>
-            <td id="rRootEvidence">-</td>
-        </tr>
-
-    </table>
-
-
-    <h3>Action Details</h3>
-
-    <table class="report-table">
-
-        <tr>
-            <th>D5 Responsible</th>
-            <td id="rD5Responsible">-</td>
-
-            <th>D5 Target Date</th>
-            <td id="rD5Date">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D6 Evidence</th>
-            <td id="rD6Evidence">-</td>
-
-            <th>D7 Responsible</th>
-            <td id="rD7Responsible">-</td>
-        </tr>
-
-
-        <tr>
-            <th>D7 Target Date</th>
-            <td id="rD7Date">-</td>
-
-            <th>Closure Status</th>
-            <td id="rClosureStatus">-</td>
-        </tr>
-
-    </table>
+</div>
 
 </div>
 
 
-<!-- EXPLANATION -->
+<!-- =========================
+     D4
+========================= -->
 
-<div class="section explanation-section">
+<div class="d-section">
 
-    <h2>What is 8D Problem Solving?</h2>
+<h2>D4 — Root Cause Analysis</h2>
 
-    <p>
-        <strong>8D</strong> stands for <strong>Eight Disciplines</strong>.
-        It is a structured problem-solving method used for quality
-        problems, customer complaints and recurring defects.
-    </p>
+<p class="d-subtitle">
+Identify and verify the true root cause of the problem.
+</p>
 
-    <p>
-        The objective is to contain the problem, identify the root
-        cause, implement corrective action, prevent recurrence and
-        verify effectiveness.
-    </p>
+<div class="meaning-box">
 
-</div>
+<p>
+<strong>Meaning:</strong>
+D4 identifies the root cause that allowed the problem to occur.
+</p>
 
+<p>
+<strong>Purpose:</strong>
+Find the actual cause instead of only correcting the defective part.
+</p>
 
-<div class="section explanation-section">
+<p>
+<strong>What to write:</strong>
+Use 5 Why, Fishbone, process analysis, data and evidence.
+</p>
 
-    <h2>D1 to D8 - Quick Meaning</h2>
-
-    <table class="report-table">
-
-        <tr>
-            <th>D1</th>
-            <td>Team Formation - Create the right problem-solving team.</td>
-        </tr>
-
-        <tr>
-            <th>D2</th>
-            <td>Problem Description - Define the problem using facts and data.</td>
-        </tr>
-
-        <tr>
-            <th>D3</th>
-            <td>Interim Containment - Immediately control and contain the problem.</td>
-        </tr>
-
-        <tr>
-            <th>D4</th>
-            <td>Root Cause - Identify and verify the actual cause.</td>
-        </tr>
-
-        <tr>
-            <th>D5</th>
-            <td>Permanent Corrective Action - Eliminate the root cause.</td>
-        </tr>
-
-        <tr>
-            <th>D6</th>
-            <td>Implement & Validate - Implement and verify effectiveness.</td>
-        </tr>
-
-        <tr>
-            <th>D7</th>
-            <td>Prevent Recurrence - Improve the system to prevent repeat problems.</td>
-        </tr>
-
-        <tr>
-            <th>D8</th>
-            <td>Recognition & Closure - Complete and formally close the 8D.</td>
-        </tr>
-
-    </table>
+<p>
+<strong>Important:</strong>
+A suspected cause should be verified with evidence before calling it the root cause.
+</p>
 
 </div>
 
 
-<div class="section explanation-section">
+<h3 style="margin-bottom:12px;">
+5 Why Analysis
+</h3>
 
-    <h2>Correction vs Corrective Action</h2>
 
-    <div class="meaning">
+<table class="why-table">
 
-        <strong>Correction:</strong>
-        Fix the existing defective product or immediate problem.
+<thead>
 
-        <br><br>
+<tr>
 
-        <strong>Corrective Action:</strong>
-        Eliminate the root cause so the problem does not happen again.
+<th>Level</th>
 
-        <br><br>
+<th>Why / Answer</th>
 
-        <strong>Example:</strong><br>
+</tr>
 
-        Correction → Sort defective parts.<br>
+</thead>
 
-        Corrective Action → Correct the process condition that caused
-        the defect and introduce a control to prevent recurrence.
+<tbody>
 
-    </div>
+<tr>
+
+<td><strong>Why 1</strong></td>
+
+<td>
+<textarea
+id="why1"
+placeholder="Why did the problem occur?"
+></textarea>
+</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Why 2</strong></td>
+
+<td>
+<textarea
+id="why2"
+placeholder="Why did Why 1 happen?"
+></textarea>
+</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Why 3</strong></td>
+
+<td>
+<textarea
+id="why3"
+placeholder="Why did Why 2 happen?"
+></textarea>
+</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Why 4</strong></td>
+
+<td>
+<textarea
+id="why4"
+placeholder="Why did Why 3 happen?"
+></textarea>
+</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Why 5</strong></td>
+
+<td>
+<textarea
+id="why5"
+placeholder="Why did Why 4 happen?"
+></textarea>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+<div class="form-grid" style="margin-top:20px;">
+
+<div class="form-group">
+
+<label for="rootCause">
+Root Cause
+</label>
+
+<textarea
+id="rootCause"
+placeholder="Write the verified root cause."
+></textarea>
 
 </div>
 
 
-<div class="section explanation-section">
+<div class="form-group">
 
-    <h2>Important 8D Rules</h2>
+<label for="rootCauseEvidence">
+Root Cause Evidence
+</label>
 
-    <div class="warning">
+<textarea
+id="rootCauseEvidence"
+placeholder="Write the evidence used to verify the root cause."
+></textarea>
 
-        <ul>
+</div>
 
-            <li>Use facts and data instead of assumptions.</li>
+</div>
 
-            <li>Containment and corrective action are different.</li>
+</div>
 
-            <li>"Operator Error" alone is normally not enough as a root cause.</li>
 
-            <li>Verify the root cause before selecting permanent action.</li>
+<!-- =========================
+     D5
+========================= -->
 
-            <li>Verify effectiveness after implementing corrective action.</li>
+<div class="d-section">
 
-            <li>Update PFMEA, Control Plan, SOP or Work Instruction when required.</li>
+<h2>D5 — Permanent Corrective Action</h2>
 
-            <li>Close the 8D only after effectiveness is confirmed.</li>
+<p class="d-subtitle">
+Select and implement permanent corrective action to eliminate the root cause.
+</p>
 
-        </ul>
+<div class="meaning-box">
 
-    </div>
+<p>
+<strong>Meaning:</strong>
+D5 defines the permanent action that will eliminate the verified root cause.
+</p>
+
+<p>
+<strong>Purpose:</strong>
+Make sure the same problem does not continue because of the same root cause.
+</p>
+
+<p>
+<strong>Example:</strong>
+Introduce first-piece approval checklist and mandatory setting verification before production.
+</p>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="correctiveAction">
+Permanent Corrective Action
+</label>
+
+<textarea
+id="correctiveAction"
+placeholder="Describe the permanent corrective action."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="actionResponsible">
+Responsible Person / Department
+</label>
+
+<input
+type="text"
+id="actionResponsible"
+placeholder="Example: Production Engineering"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="actionTargetDate">
+Target Date
+</label>
+
+<input
+type="date"
+id="actionTargetDate"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="actionReason">
+Why This Action Will Solve the Root Cause
+</label>
+
+<textarea
+id="actionReason"
+placeholder="Explain the connection between action and root cause."
+></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     D6
+========================= -->
+
+<div class="d-section">
+
+<h2>D6 — Implement & Validate Corrective Action</h2>
+
+<p class="d-subtitle">
+Implement the corrective action and verify that it works.
+</p>
+
+<div class="meaning-box">
+
+<p>
+<strong>Meaning:</strong>
+D6 confirms that the corrective action was implemented and is effective.
+</p>
+
+<p>
+<strong>Purpose:</strong>
+Prove through data or inspection that the problem has been eliminated.
+</p>
+
+<p>
+<strong>What to write:</strong>
+Mention implementation date, inspection results, trial results or performance data.
+</p>
+
+<p>
+<strong>Example:</strong>
+After implementing the new setup checklist, 500 consecutive parts were inspected with zero dimensional rejection.
+</p>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="implementation">
+Implementation Details
+</label>
+
+<textarea
+id="implementation"
+placeholder="Describe how the corrective action was implemented."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="validation">
+Validation / Effectiveness Result
+</label>
+
+<textarea
+id="validation"
+placeholder="Enter evidence showing that the corrective action is effective."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="validationDate">
+Validation Date
+</label>
+
+<input
+type="date"
+id="validationDate"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="validationStatus">
+Validation Status
+</label>
+
+<select id="validationStatus">
+
+<option value="">
+Select Status
+</option>
+
+<option value="Effective">
+Effective
+</option>
+
+<option value="Not Effective">
+Not Effective
+</option>
+
+<option value="Under Verification">
+Under Verification
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     D7
+========================= -->
+
+<div class="d-section">
+
+<h2>D7 — Prevent Recurrence</h2>
+
+<p class="d-subtitle">
+Prevent the same or similar problem from occurring again.
+</p>
+
+<div class="meaning-box">
+
+<p>
+<strong>Meaning:</strong>
+D7 makes the improvement permanent across the relevant process or system.
+</p>
+
+<p>
+<strong>Purpose:</strong>
+Update standards, procedures, control plans, FMEA, training or other systems.
+</p>
+
+<p>
+<strong>Example:</strong>
+Update PFMEA and Control Plan, revise work instruction and train operators.
+</p>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="preventionAction">
+Preventive / System Action
+</label>
+
+<textarea
+id="preventionAction"
+placeholder="Describe actions taken to prevent recurrence."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="preventionResponsible">
+Responsible Person / Department
+</label>
+
+<input
+type="text"
+id="preventionResponsible"
+placeholder="Example: Quality Department"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="preventionTargetDate">
+Target Date
+</label>
+
+<input
+type="date"
+id="preventionTargetDate"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="documentsUpdated">
+Documents / Systems Updated
+</label>
+
+<textarea
+id="documentsUpdated"
+placeholder="Example: PFMEA, Control Plan, SOP, Work Instruction, Training"
+></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     D8
+========================= -->
+
+<div class="d-section">
+
+<h2>D8 — Team Recognition & Closure</h2>
+
+<p class="d-subtitle">
+Recognize the team effort and formally close the 8D report.
+</p>
+
+<div class="meaning-box">
+
+<p>
+<strong>Meaning:</strong>
+D8 confirms that all required actions are completed and the problem is closed.
+</p>
+
+<p>
+<strong>Purpose:</strong>
+Document successful completion and recognize the team.
+</p>
+
+<p>
+<strong>What to write:</strong>
+Enter team recognition, final remarks and closure status.
+</p>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="recognition">
+Team Recognition
+</label>
+
+<textarea
+id="recognition"
+placeholder="Example: Team successfully completed root cause analysis and corrective action."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="closureStatus">
+Closure Status
+</label>
+
+<select id="closureStatus">
+
+<option value="">
+Select Status
+</option>
+
+<option value="Open">
+Open
+</option>
+
+<option value="Under Review">
+Under Review
+</option>
+
+<option value="Closed">
+Closed
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group full">
+
+<label for="finalRemarks">
+Final Remarks
+</label>
+
+<textarea
+id="finalRemarks"
+placeholder="Enter final remarks before closing the 8D."
+></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     BUTTONS
+========================= -->
+
+<div class="buttons">
+
+<button
+class="btn btn-primary"
+onclick="generateReport()"
+>
+Generate 8D Report
+</button>
+
+<button
+class="btn btn-primary"
+onclick="printReport()"
+>
+Print Report
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="loadExample()"
+>
+Load Example
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="clearAll()"
+>
+Clear All
+</button>
+
+</div>
+
+
+<!-- =========================
+     REPORT
+========================= -->
+
+<div class="report" id="report">
+
+<h2>
+8D Problem Solving Report
+</h2>
+
+
+<div class="report-section">
+
+<h3>
+Basic Problem Information
+</h3>
+
+<div class="report-row">
+
+<div class="report-label">
+Report / 8D No.
+</div>
+
+<div class="report-value" id="rReportNo">-</div>
+
+</div>
+
+
+<div class="report-row">
+
+<div class="report-label">
+Report Date
+</div>
+
+<div class="report-value" id="rDate">-</div>
+
+</div>
+
+
+<div class="report-row">
+
+<div class="report-label">
+Customer
+</div>
+
+<div class="report-value" id="rCustomer">-</div>
+
+</div>
+
+
+<div class="report-row">
+
+<div class="report-label">
+Part No.
+</div>
+
+<div class="report-value" id="rPartNo">-</div>
+
+</div>
+
+
+<div class="report-row">
+
+<div class="report-label">
+Part Name
+</div>
+
+<div class="report-value" id="rPartName">-</div>
+
+</div>
+
+
+<div class="report-row">
+
+<div class="report-label">
+Problem Date
+</div>
+
+<div class="report-value" id="rProblemDate">-</div>
+
+</div>
+
+
+<div class="report-row">
+
+<div class="report-label">
+Problem Summary
+</div>
+
+<div class="report-value" id="rProblemSummary">-</div>
+
+</div>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D1 — Team Formation</h3>
+
+<div class="report-row">
+
+<div class="report-label">
+Team Members
+</div>
+
+<div class="report-value" id="rTeamMembers">-</div>
+
+</div>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D2 — Problem Description</h3>
+
+<div class="report-table">
+
+<table class="report-table">
+
+<tr>
+
+<th>What</th>
+
+<td id="rWhat">-</td>
+
+</tr>
+
+<tr>
+
+<th>Where</th>
+
+<td id="rWhere">-</td>
+
+</tr>
+
+<tr>
+
+<th>When</th>
+
+<td id="rWhen">-</td>
+
+</tr>
+
+<tr>
+
+<th>How Much</th>
+
+<td id="rHowMuch">-</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D3 — Interim Containment Action</h3>
+
+<div class="report-row">
+
+<div class="report-label">
+Containment Action
+</div>
+
+<div class="report-value" id="rContainment">-</div>
+
+</div>
+
+<div class="report-row">
+
+<div class="report-label">
+Containment Date
+</div>
+
+<div class="report-value" id="rContainmentDate">-</div>
+
+</div>
+
+<div class="report-row">
+
+<div class="report-label">
+Containment Result
+</div>
+
+<div class="report-value" id="rContainmentResult">-</div>
+
+</div>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D4 — Root Cause Analysis</h3>
+
+<table class="report-table">
+
+<tr>
+<th>Why 1</th>
+<td id="rWhy1">-</td>
+</tr>
+
+<tr>
+<th>Why 2</th>
+<td id="rWhy2">-</td>
+</tr>
+
+<tr>
+<th>Why 3</th>
+<td id="rWhy3">-</td>
+</tr>
+
+<tr>
+<th>Why 4</th>
+<td id="rWhy4">-</td>
+</tr>
+
+<tr>
+<th>Why 5</th>
+<td id="rWhy5">-</td>
+</tr>
+
+<tr>
+<th>Root Cause</th>
+<td id="rRootCause">-</td>
+</tr>
+
+<tr>
+<th>Evidence</th>
+<td id="rRootCauseEvidence">-</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D5 — Permanent Corrective Action</h3>
+
+<table class="report-table">
+
+<tr>
+<th>Corrective Action</th>
+<td id="rCorrectiveAction">-</td>
+</tr>
+
+<tr>
+<th>Responsible</th>
+<td id="rActionResponsible">-</td>
+</tr>
+
+<tr>
+<th>Target Date</th>
+<td id="rActionTargetDate">-</td>
+</tr>
+
+<tr>
+<th>Reason</th>
+<td id="rActionReason">-</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D6 — Implement & Validate</h3>
+
+<table class="report-table">
+
+<tr>
+<th>Implementation</th>
+<td id="rImplementation">-</td>
+</tr>
+
+<tr>
+<th>Validation Result</th>
+<td id="rValidation">-</td>
+</tr>
+
+<tr>
+<th>Validation Date</th>
+<td id="rValidationDate">-</td>
+</tr>
+
+<tr>
+<th>Status</th>
+<td id="rValidationStatus">-</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D7 — Prevent Recurrence</h3>
+
+<table class="report-table">
+
+<tr>
+<th>Prevention Action</th>
+<td id="rPreventionAction">-</td>
+</tr>
+
+<tr>
+<th>Responsible</th>
+<td id="rPreventionResponsible">-</td>
+</tr>
+
+<tr>
+<th>Target Date</th>
+<td id="rPreventionTargetDate">-</td>
+</tr>
+
+<tr>
+<th>Documents Updated</th>
+<td id="rDocumentsUpdated">-</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="report-section">
+
+<h3>D8 — Team Recognition & Closure</h3>
+
+<table class="report-table">
+
+<tr>
+<th>Team Recognition</th>
+<td id="rRecognition">-</td>
+</tr>
+
+<tr>
+<th>Closure Status</th>
+<td id="rClosureStatus">-</td>
+</tr>
+
+<tr>
+<th>Final Remarks</th>
+<td id="rFinalRemarks">-</td>
+</tr>
+
+</table>
+
+</div>
 
 </div>
 
 
 </div>
 
+
+<!-- =========================
+     INFORMATION
+========================= -->
+
+<div class="info-grid">
+
+
+<div class="info-card">
+
+<h3>
+What is 8D Problem Solving?
+</h3>
+
+<p>
+8D means <strong>Eight Disciplines</strong>. It is a structured
+problem-solving method commonly used in quality engineering,
+manufacturing and customer complaint management.
+</p>
+
+<br>
+
+<p>
+The objective is not only to correct the defective part, but to
+identify the root cause, implement permanent corrective action and
+prevent recurrence.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+8D Structure
+</h3>
+
+<ol>
+
+<li>
+<strong>D1:</strong> Team Formation
+</li>
+
+<li>
+<strong>D2:</strong> Problem Description
+</li>
+
+<li>
+<strong>D3:</strong> Interim Containment Action
+</li>
+
+<li>
+<strong>D4:</strong> Root Cause Analysis
+</li>
+
+<li>
+<strong>D5:</strong> Permanent Corrective Action
+</li>
+
+<li>
+<strong>D6:</strong> Implement & Validate
+</li>
+
+<li>
+<strong>D7:</strong> Prevent Recurrence
+</li>
+
+<li>
+<strong>D8:</strong> Team Recognition & Closure
+</li>
+
+</ol>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Correction vs Corrective Action
+</h3>
+
+<p>
+<strong>Correction:</strong>
+Immediate action taken to fix the existing defective product.
+</p>
+
+<br>
+
+<p>
+Example: Rework a defective sheet metal part.
+</p>
+
+<br>
+
+<p>
+<strong>Corrective Action:</strong>
+Action taken to eliminate the root cause and prevent the problem from happening again.
+</p>
+
+<br>
+
+<p>
+Example: Improve machine setup verification and introduce a first-piece approval checklist.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Important 8D Rules
+</h3>
+
+<ul>
+
+<li>
+Use facts and data wherever possible.
+</li>
+
+<li>
+Do not stop at the first obvious cause.
+</li>
+
+<li>
+Verify the root cause with evidence.
+</li>
+
+<li>
+Contain the problem before implementing permanent action.
+</li>
+
+<li>
+Validate corrective action using measurable results.
+</li>
+
+<li>
+Update relevant documents and systems to prevent recurrence.
+</li>
+
+<li>
+Do not close the 8D until effectiveness is confirmed.
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Example
+</h3>
+
+<p>
+<strong>Problem:</strong>
+Sheet metal part dimension is out of specification.
+</p>
+
+<br>
+
+<p>
+<strong>Why 1:</strong>
+Bending angle is incorrect.
+</p>
+
+<p>
+<strong>Why 2:</strong>
+Machine setting was incorrect.
+</p>
+
+<p>
+<strong>Why 3:</strong>
+Setting was not verified.
+</p>
+
+<p>
+<strong>Why 4:</strong>
+First-piece inspection was not completed.
+</p>
+
+<p>
+<strong>Why 5:</strong>
+No first-piece inspection checklist was available.
+</p>
+
+<br>
+
+<p>
+<strong>Root Cause:</strong>
+Missing standard first-piece inspection checklist and verification process.
+</p>
+
+<br>
+
+<p>
+<strong>Corrective Action:</strong>
+Introduce first-piece inspection checklist and mandatory verification.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+How to Use This Tool
+</h3>
+
+<ol>
+
+<li>
+Enter the basic problem information.
+</li>
+
+<li>
+Complete D1 to D8 step by step.
+</li>
+
+<li>
+Use measurable facts wherever possible.
+</li>
+
+<li>
+Enter the verified root cause in D4.
+</li>
+
+<li>
+Enter permanent corrective action in D5.
+</li>
+
+<li>
+Validate effectiveness in D6.
+</li>
+
+<li>
+Prevent recurrence in D7.
+</li>
+
+<li>
+Select closure status in D8.
+</li>
+
+<li>
+Click <strong>Generate 8D Report</strong>.
+</li>
+
+<li>
+Click <strong>Print Report</strong> to print or save the report as PDF.
+</li>
+
+</ol>
+
+</div>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
-    © 2026 MechQTools — Engineering & Quality Tools for Professionals.
+<div class="footer-container">
+
+
+<div>
+
+<div class="footer-logo">
+MechQTools
+</div>
+
+<p class="footer-text">
+Engineering & Quality Tools for Professionals.
+Free calculators, practical engineering resources and professional templates.
+</p>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+Quick Links
+</h4>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="index.html#mechanical-tools">
+Mechanical Tools
+</a>
+
+<a href="index.html#quality-tools">
+Quality Tools
+</a>
+
+<a href="index.html#templates">
+Templates
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+Resources
+</h4>
+
+<a href="index.html#guides-section">
+Engineering Guides
+</a>
+
+<a href="index.html#about">
+About
+</a>
+
+<a href="#">
+Contact
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 MechQTools. All Rights Reserved.
+
+</div>
 
 </footer>
 
 
 <script>
 
+/* =========================
+   GET VALUE
+========================= */
+
 function getValue(id){
 
-    return document.getElementById(id).value.trim();
+    const element =
+        document.getElementById(id);
 
-}
-
-
-function escapeHTML(text){
-
-    if(!text){
-
+    if(!element){
         return "-";
-
     }
 
-    return text
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/\n/g,"<br>");
-
+    return element.value.trim() || "-";
 }
 
 
-function formatDate(date){
-
-    if(!date){
-
-        return "-";
-
-    }
-
-    const parts = date.split("-");
-
-    if(parts.length !== 3){
-
-        return date;
-
-    }
-
-    return parts[2] + "-" + parts[1] + "-" + parts[0];
-
-}
-
+/* =========================
+   GENERATE REPORT
+========================= */
 
 function generateReport(){
 
-    document.getElementById("rReportNo").innerHTML =
-        escapeHTML(getValue("reportNo"));
+    document.getElementById("rReportNo").textContent =
+        getValue("reportNo");
 
-    document.getElementById("rReportDate").innerHTML =
-        escapeHTML(formatDate(getValue("reportDate")));
+    document.getElementById("rDate").textContent =
+        getValue("date");
 
-    document.getElementById("rCustomer").innerHTML =
-        escapeHTML(getValue("customer"));
+    document.getElementById("rCustomer").textContent =
+        getValue("customer");
 
-    document.getElementById("rPartName").innerHTML =
-        escapeHTML(getValue("partName"));
+    document.getElementById("rPartNo").textContent =
+        getValue("partNo");
 
-    document.getElementById("rPartNumber").innerHTML =
-        escapeHTML(getValue("partNumber"));
+    document.getElementById("rPartName").textContent =
+        getValue("partName");
 
-    document.getElementById("rPreparedBy").innerHTML =
-        escapeHTML(getValue("preparedBy"));
+    document.getElementById("rProblemDate").textContent =
+        getValue("problemDate");
 
-
-    document.getElementById("rD1").innerHTML =
-        escapeHTML(getValue("d1"));
-
-    document.getElementById("rD2").innerHTML =
-        escapeHTML(getValue("d2"));
-
-    document.getElementById("rD3").innerHTML =
-        escapeHTML(getValue("d3"));
+    document.getElementById("rProblemSummary").textContent =
+        getValue("problemSummary");
 
 
-    document.getElementById("rD4").innerHTML =
-        "Why 1: " + escapeHTML(getValue("why1")) +
-        "<br><br>" +
-
-        "Why 2: " + escapeHTML(getValue("why2")) +
-        "<br><br>" +
-
-        "Why 3: " + escapeHTML(getValue("why3")) +
-        "<br><br>" +
-
-        "Why 4: " + escapeHTML(getValue("why4")) +
-        "<br><br>" +
-
-        "Why 5 / Root Cause: " +
-        escapeHTML(getValue("why5")) +
-        "<br><br>" +
-
-        "Evidence: " +
-        escapeHTML(getValue("rootEvidence"));
+    document.getElementById("rTeamMembers").textContent =
+        getValue("teamMembers");
 
 
-    document.getElementById("rD5").innerHTML =
-        escapeHTML(getValue("d5"));
+    document.getElementById("rWhat").textContent =
+        getValue("whatProblem");
 
-    document.getElementById("rD6").innerHTML =
-        escapeHTML(getValue("d6"));
+    document.getElementById("rWhere").textContent =
+        getValue("whereProblem");
 
-    document.getElementById("rD7").innerHTML =
-        escapeHTML(getValue("d7"));
+    document.getElementById("rWhen").textContent =
+        getValue("whenProblem");
 
-    document.getElementById("rD8").innerHTML =
-        escapeHTML(getValue("d8"));
-
-
-    document.getElementById("rWhy1").innerHTML =
-        escapeHTML(getValue("why1"));
-
-    document.getElementById("rWhy2").innerHTML =
-        escapeHTML(getValue("why2"));
-
-    document.getElementById("rWhy3").innerHTML =
-        escapeHTML(getValue("why3"));
-
-    document.getElementById("rWhy4").innerHTML =
-        escapeHTML(getValue("why4"));
-
-    document.getElementById("rWhy5").innerHTML =
-        escapeHTML(getValue("why5"));
-
-    document.getElementById("rRootEvidence").innerHTML =
-        escapeHTML(getValue("rootEvidence"));
+    document.getElementById("rHowMuch").textContent =
+        getValue("howMuch");
 
 
-    document.getElementById("rD5Responsible").innerHTML =
-        escapeHTML(getValue("d5Responsible"));
+    document.getElementById("rContainment").textContent =
+        getValue("containmentAction");
 
-    document.getElementById("rD5Date").innerHTML =
-        escapeHTML(formatDate(getValue("d5Date")));
+    document.getElementById("rContainmentDate").textContent =
+        getValue("containmentDate");
 
-    document.getElementById("rD6Evidence").innerHTML =
-        escapeHTML(getValue("d6Evidence"));
-
-    document.getElementById("rD7Responsible").innerHTML =
-        escapeHTML(getValue("d7Responsible"));
-
-    document.getElementById("rD7Date").innerHTML =
-        escapeHTML(formatDate(getValue("d7Date")));
-
-    document.getElementById("rClosureStatus").innerHTML =
-        escapeHTML(getValue("closureStatus"));
+    document.getElementById("rContainmentResult").textContent =
+        getValue("containmentResult");
 
 
-    document.getElementById("reportSection").style.display =
+    document.getElementById("rWhy1").textContent =
+        getValue("why1");
+
+    document.getElementById("rWhy2").textContent =
+        getValue("why2");
+
+    document.getElementById("rWhy3").textContent =
+        getValue("why3");
+
+    document.getElementById("rWhy4").textContent =
+        getValue("why4");
+
+    document.getElementById("rWhy5").textContent =
+        getValue("why5");
+
+    document.getElementById("rRootCause").textContent =
+        getValue("rootCause");
+
+    document.getElementById("rRootCauseEvidence").textContent =
+        getValue("rootCauseEvidence");
+
+
+    document.getElementById("rCorrectiveAction").textContent =
+        getValue("correctiveAction");
+
+    document.getElementById("rActionResponsible").textContent =
+        getValue("actionResponsible");
+
+    document.getElementById("rActionTargetDate").textContent =
+        getValue("actionTargetDate");
+
+    document.getElementById("rActionReason").textContent =
+        getValue("actionReason");
+
+
+    document.getElementById("rImplementation").textContent =
+        getValue("implementation");
+
+    document.getElementById("rValidation").textContent =
+        getValue("validation");
+
+    document.getElementById("rValidationDate").textContent =
+        getValue("validationDate");
+
+    document.getElementById("rValidationStatus").textContent =
+        getValue("validationStatus");
+
+
+    document.getElementById("rPreventionAction").textContent =
+        getValue("preventionAction");
+
+    document.getElementById("rPreventionResponsible").textContent =
+        getValue("preventionResponsible");
+
+    document.getElementById("rPreventionTargetDate").textContent =
+        getValue("preventionTargetDate");
+
+    document.getElementById("rDocumentsUpdated").textContent =
+        getValue("documentsUpdated");
+
+
+    document.getElementById("rRecognition").textContent =
+        getValue("recognition");
+
+    document.getElementById("rClosureStatus").textContent =
+        getValue("closureStatus");
+
+    document.getElementById("rFinalRemarks").textContent =
+        getValue("finalRemarks");
+
+
+    document.getElementById("report").style.display =
         "block";
 
 
-    document.getElementById("reportSection").scrollIntoView({
+    document.getElementById("report").scrollIntoView({
         behavior:"smooth",
         block:"start"
     });
@@ -1589,185 +2495,186 @@ function generateReport(){
 }
 
 
+/* =========================
+   PRINT REPORT
+========================= */
+
+function printReport(){
+
+    generateReport();
+
+    setTimeout(function(){
+
+        window.print();
+
+    },300);
+
+}
+
+
+/* =========================
+   LOAD EXAMPLE
+========================= */
+
 function loadExample(){
 
     document.getElementById("reportNo").value =
         "8D-2026-001";
 
-    document.getElementById("reportDate").value =
-        new Date().toISOString().split("T")[0];
+    document.getElementById("date").value =
+        "2026-10-08";
 
     document.getElementById("customer").value =
-        "ABC Motors";
+        "ABC Automotive";
+
+    document.getElementById("partNo").value =
+        "BRK-1001";
 
     document.getElementById("partName").value =
         "Sheet Metal Bracket";
 
-    document.getElementById("partNumber").value =
-        "BRK-1001";
+    document.getElementById("problemDate").value =
+        "2026-10-05";
 
-    document.getElementById("preparedBy").value =
-        "Quality Engineer";
-
-
-    document.getElementById("d1").value =
-        "Quality Engineer - Problem Investigation\n" +
-        "Production Engineer - Process\n" +
-        "Maintenance Engineer - Machine\n" +
-        "Production Supervisor - Production";
+    document.getElementById("problemSummary").value =
+        "Bracket hole position found out of specification during final inspection.";
 
 
-    document.getElementById("d2").value =
-        "Bracket hole diameter specification is Ø10.00 ±0.10 mm. " +
-        "Actual measured diameter is Ø10.35 mm. " +
-        "12 out of 50 parts were found out of specification during final inspection.";
+    document.getElementById("teamMembers").value =
+        "Quality Engineer - Investigation\nProduction Engineer - Process\nMaintenance Engineer - Machine\nProduction Supervisor - Implementation";
 
 
-    document.getElementById("d3").value =
-        "Production stopped. Finished stock quarantined. " +
-        "100% inspection started. Customer stock checked for affected parts.";
+    document.getElementById("whatProblem").value =
+        "Hole position is outside drawing specification.";
+
+    document.getElementById("whereProblem").value =
+        "Final inspection.";
+
+    document.getElementById("whenProblem").value =
+        "2026-10-05, Shift A.";
+
+    document.getElementById("howMuch").value =
+        "25 rejected parts out of 500 inspected.";
+
+
+    document.getElementById("containmentAction").value =
+        "Affected batch quarantined and 100% inspection started.";
+
+    document.getElementById("containmentDate").value =
+        "2026-10-05";
+
+    document.getElementById("containmentResult").value =
+        "No additional defective parts released to customer.";
 
 
     document.getElementById("why1").value =
-        "Hole diameter was above specification.";
-
+        "Hole position was incorrect.";
 
     document.getElementById("why2").value =
-        "Tool condition and process setting were not properly controlled.";
-
+        "Fixture position was incorrect.";
 
     document.getElementById("why3").value =
-        "Tool condition was not verified at the defined frequency.";
-
+        "Fixture setting was not verified.";
 
     document.getElementById("why4").value =
-        "The inspection checklist did not include a specific tool condition verification point.";
-
+        "First-piece fixture verification was skipped.";
 
     document.getElementById("why5").value =
-        "The process control system did not define and monitor the required tool condition verification.";
+        "No standard first-piece fixture verification checklist was available.";
 
 
-    document.getElementById("rootEvidence").value =
-        "Process checklist and production records confirmed that tool condition verification was not defined or recorded at the required frequency.";
+    document.getElementById("rootCause").value =
+        "Missing standard first-piece fixture verification checklist and process.";
+
+    document.getElementById("rootCauseEvidence").value =
+        "Review of production records confirmed that fixture verification was not documented for the affected batch.";
 
 
-    document.getElementById("d5").value =
-        "Define tool condition verification frequency, update the inspection checklist and establish tool replacement criteria.";
+    document.getElementById("correctiveAction").value =
+        "Introduce mandatory first-piece fixture verification checklist before production release.";
+
+    document.getElementById("actionResponsible").value =
+        "Production Engineering";
+
+    document.getElementById("actionTargetDate").value =
+        "2026-10-10";
+
+    document.getElementById("actionReason").value =
+        "The checklist ensures fixture position is verified before production starts.";
 
 
-    document.getElementById("d5Responsible").value =
-        "Production Engineer";
+    document.getElementById("implementation").value =
+        "New checklist implemented and operators trained.";
+
+    document.getElementById("validation").value =
+        "500 consecutive parts inspected with zero hole-position rejection.";
+
+    document.getElementById("validationDate").value =
+        "2026-10-15";
+
+    document.getElementById("validationStatus").value =
+        "Effective";
 
 
-    document.getElementById("d5Date").value =
-        new Date().toISOString().split("T")[0];
+    document.getElementById("preventionAction").value =
+        "Update PFMEA, Control Plan and Work Instruction. Add operator training.";
+
+    document.getElementById("preventionResponsible").value =
+        "Quality Department";
+
+    document.getElementById("preventionTargetDate").value =
+        "2026-10-18";
+
+    document.getElementById("documentsUpdated").value =
+        "PFMEA, Control Plan, Work Instruction and Training Record";
 
 
-    document.getElementById("d6").value =
-        "Corrective action implemented. 100 consecutive parts inspected and all hole diameters were within specification.";
-
-
-    document.getElementById("d6Evidence").value =
-        "Inspection report and production trial results confirmed that the process remained within specification.";
-
-
-    document.getElementById("d7").value =
-        "Update PFMEA, Control Plan and Work Instruction. Train operators and add periodic audit of tool condition verification.";
-
-
-    document.getElementById("d7Responsible").value =
-        "Quality + Production";
-
-
-    document.getElementById("d7Date").value =
-        new Date().toISOString().split("T")[0];
-
-
-    document.getElementById("d8").value =
-        "All 8D actions completed and effectiveness verified. Thanks to Quality, Production and Maintenance teams for successful problem resolution.";
-
+    document.getElementById("recognition").value =
+        "Cross-functional team successfully completed root cause analysis and corrective action.";
 
     document.getElementById("closureStatus").value =
         "Closed";
 
+    document.getElementById("finalRemarks").value =
+        "Problem eliminated and effectiveness verified through production data.";
 
-    generateReport();
+
+    alert("Example data loaded.");
 
 }
 
 
+/* =========================
+   CLEAR ALL
+========================= */
+
 function clearAll(){
 
-    const confirmClear = confirm(
-        "Are you sure you want to clear the complete 8D report?"
-    );
+    const inputs =
+        document.querySelectorAll(
+            "input, textarea, select"
+        );
 
+    inputs.forEach(function(element){
 
-    if(!confirmClear){
-
-        return;
-
-    }
-
-
-    const ids = [
-
-        "reportNo",
-        "reportDate",
-        "customer",
-        "partName",
-        "partNumber",
-        "preparedBy",
-
-        "d1",
-        "d2",
-        "d3",
-
-        "why1",
-        "why2",
-        "why3",
-        "why4",
-        "why5",
-        "rootEvidence",
-
-        "d5",
-        "d5Responsible",
-        "d5Date",
-
-        "d6",
-        "d6Evidence",
-
-        "d7",
-        "d7Responsible",
-        "d7Date",
-
-        "d8"
-
-    ];
-
-
-    ids.forEach(function(id){
-
-        document.getElementById(id).value = "";
+        element.value = "";
 
     });
 
 
-    document.getElementById("closureStatus").value =
-        "Open";
-
-
-    document.getElementById("reportSection").style.display =
+    document.getElementById("report").style.display =
         "none";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
-
-document.getElementById("reportDate").value =
-    new Date().toISOString().split("T")[0];
-
 </script>
+
 
 </body>
 </html>
