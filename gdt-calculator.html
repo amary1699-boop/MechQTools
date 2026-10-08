@@ -6,15 +6,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GD&T Calculator - Free GD&T Inspection Tool | MechQTools</title>
+<title>GD&T Calculator - MechQTools</title>
 
 <meta name="description"
-content="Free GD&T calculator for straightness, flatness, parallelism, perpendicularity, circularity and cylindricity inspection.">
+content="Free GD&T inspection calculator for mechanical and quality engineers. Calculate tolerance deviation and Pass/Fail results.">
 
 <meta name="keywords"
-content="GD&T calculator, GD&T inspection calculator, straightness calculator, flatness calculator, perpendicularity calculator, cylindricity calculator">
+content="GD&T calculator, GD&T inspection, geometric dimensioning tolerancing, quality engineering tools">
 
 <style>
+
+/* =========================
+   GLOBAL
+========================= */
 
 *{
     margin:0;
@@ -29,7 +33,10 @@ body{
     line-height:1.6;
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 header{
     background:#ffffff;
@@ -40,7 +47,7 @@ header{
 }
 
 .navbar{
-    max-width:1100px;
+    max-width:1200px;
     margin:auto;
     padding:15px 20px;
     display:flex;
@@ -55,44 +62,73 @@ header{
     text-decoration:none;
 }
 
-/* MAIN */
-
-.container{
-    max-width:850px;
-    margin:50px auto;
-    padding:0 20px;
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
 }
 
-/* INTRO */
-
-.intro{
-    text-align:center;
-    margin-bottom:30px;
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
 }
 
-.intro h1{
-    font-size:36px;
-    margin-bottom:10px;
-}
-
-.intro h1 span{
+.nav-links a:hover{
     color:#e53232;
 }
 
-.intro p{
-    color:#666;
-    font-size:16px;
+
+/* =========================
+   MAIN
+========================= */
+
+.section{
+    max-width:850px;
+    margin:auto;
+    padding:60px 20px;
 }
 
-/* CALCULATOR */
+
+/* =========================
+   TITLE
+========================= */
+
+.section-title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.section-title span{
+    color:#e53232;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#777;
+    max-width:700px;
+    margin:0 auto 35px;
+}
+
+
+/* =========================
+   CALCULATOR CARD
+========================= */
 
 .calculator{
-    background:#fff;
-    border:1px solid #e2e2e2;
+    background:#ffffff;
+    border:1px solid #e5e5e5;
     border-radius:10px;
     padding:30px;
     box-shadow:0 5px 20px rgba(0,0,0,0.05);
 }
+
+
+/* =========================
+   FORM
+========================= */
 
 .form-group{
     margin-bottom:20px;
@@ -104,87 +140,97 @@ header{
     margin-bottom:7px;
 }
 
-.form-group select,
-.form-group input{
+.form-group input,
+.form-group select{
     width:100%;
-    padding:12px;
+    padding:12px 13px;
     border:1px solid #ccc;
     border-radius:6px;
     font-size:15px;
-    outline:none;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#fff;
 }
 
-.form-group select:focus,
-.form-group input:focus{
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
     border-color:#e53232;
 }
 
 .help-text{
-    margin-top:5px;
-    font-size:13px;
     color:#777;
+    font-size:13px;
+    margin-top:5px;
 }
 
-/* BUTTONS */
+
+/* =========================
+   BUTTONS
+========================= */
 
 .buttons{
     display:flex;
     gap:12px;
-    margin-top:10px;
+    margin-top:25px;
 }
 
-button{
-    border:none;
-    padding:13px 22px;
+.btn{
+    padding:13px 25px;
     border-radius:6px;
     font-size:15px;
     font-weight:600;
     cursor:pointer;
+    border:none;
 }
 
-.calculate-btn{
+.btn-primary{
     background:#e53232;
-    color:#fff;
+    color:#ffffff;
 }
 
-.calculate-btn:hover{
+.btn-primary:hover{
     background:#c92727;
 }
 
-.clear-btn{
-    background:#eee;
-    color:#333;
+.btn-secondary{
+    background:#ffffff;
+    color:#e53232;
+    border:1px solid #e53232;
 }
 
-.clear-btn:hover{
-    background:#ddd;
+.btn-secondary:hover{
+    background:#fff4f4;
 }
 
-/* RESULT */
+
+/* =========================
+   RESULT
+========================= */
 
 .result{
-    margin-top:30px;
-    padding:25px;
-    background:#f8f8f8;
-    border:1px solid #e3e3e3;
-    border-radius:8px;
     display:none;
+    margin-top:30px;
+    background:#f9f9f9;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:22px;
 }
 
-.result h2{
-    font-size:22px;
-    margin-bottom:18px;
+.result h3{
+    font-size:21px;
+    margin-bottom:15px;
 }
 
 .result-row{
     display:flex;
     justify-content:space-between;
+    align-items:center;
     gap:20px;
-    padding:10px 0;
-    border-bottom:1px solid #ddd;
+    padding:11px 0;
+    border-bottom:1px solid #e5e5e5;
 }
 
-.result-row:last-child{
+.result-row:last-of-type{
     border-bottom:none;
 }
 
@@ -197,13 +243,18 @@ button{
     text-align:right;
 }
 
+
+/* =========================
+   STATUS
+========================= */
+
 .status{
     margin-top:20px;
     padding:14px;
     border-radius:6px;
     text-align:center;
-    font-size:18px;
     font-weight:bold;
+    font-size:17px;
 }
 
 .pass{
@@ -216,60 +267,141 @@ button{
     color:#d93025;
 }
 
-/* INFO */
 
-.info{
-    margin-top:30px;
-    background:#fff;
+/* =========================
+   INFORMATION CARDS
+========================= */
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-card{
+    background:#ffffff;
     border:1px solid #e5e5e5;
     border-radius:10px;
     padding:25px;
 }
 
-.info h2{
-    margin-bottom:12px;
-    font-size:22px;
-}
-
-.info p{
-    color:#666;
+.info-card h3{
     margin-bottom:10px;
 }
 
-.info ul{
-    padding-left:20px;
+.info-card p{
     color:#666;
+    font-size:15px;
 }
 
-.info li{
+.info-card ul{
+    padding-left:20px;
+    color:#666;
+    font-size:15px;
+}
+
+.info-card li{
     margin-bottom:7px;
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
     background:#151515;
-    color:#fff;
-    margin-top:50px;
-    text-align:center;
-    padding:25px 20px;
+    color:#ffffff;
+    margin-top:30px;
 }
 
-footer p{
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-logo{
+    color:#e53232;
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-text{
     color:#aaa;
+    font-size:14px;
+    max-width:450px;
+}
+
+.footer-column h4{
+    margin-bottom:12px;
+}
+
+.footer-column a{
+    display:block;
+    color:#aaa;
+    text-decoration:none;
+    margin-bottom:7px;
     font-size:14px;
 }
 
-/* MOBILE */
+.footer-column a:hover{
+    color:#ffffff;
+}
 
-@media(max-width:600px){
+.copyright{
+    border-top:1px solid #333;
+    text-align:center;
+    padding:18px;
+    color:#888;
+    font-size:13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        gap:15px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
 
     .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
         justify-content:center;
     }
 
-    .intro h1{
-        font-size:29px;
+    .section{
+        padding:45px 18px;
+    }
+
+    .section-title{
+        font-size:28px;
     }
 
     .calculator{
@@ -280,17 +412,22 @@ footer p{
         flex-direction:column;
     }
 
-    button{
+    .btn{
         width:100%;
     }
 
     .result-row{
         flex-direction:column;
+        align-items:flex-start;
         gap:3px;
     }
 
     .result-value{
         text-align:left;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
     }
 
 }
@@ -301,7 +438,10 @@ footer p{
 
 <body>
 
-<!-- HEADER -->
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
@@ -311,26 +451,59 @@ footer p{
 MechQTools
 </a>
 
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
+
 </div>
 
 </header>
 
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN
+========================= -->
 
-<main class="container">
+<section class="section">
 
-<div class="intro">
 
-<h1>
+<h1 class="section-title">
 GD&T <span>Calculator</span>
 </h1>
 
-<p>
+<p class="section-subtitle">
 Practical GD&T inspection calculator for mechanical and quality engineers.
 </p>
-
-</div>
 
 
 <!-- CALCULATOR -->
@@ -341,7 +514,7 @@ Practical GD&T inspection calculator for mechanical and quality engineers.
 <div class="form-group">
 
 <label for="gdtType">
-Select GD&T Feature
+GD&T Feature
 </label>
 
 <select id="gdtType">
@@ -378,18 +551,19 @@ Cylindricity
 <div class="form-group">
 
 <label for="measuredValue">
-Measured Deviation
+Measured Deviation (mm)
 </label>
 
 <input
 type="number"
 id="measuredValue"
 step="any"
-placeholder="Example: 0.025"
+min="0"
+placeholder="Example: 0.030"
 >
 
 <div class="help-text">
-Enter the measured deviation in mm.
+Enter the measured deviation obtained during inspection.
 </div>
 
 </div>
@@ -398,18 +572,19 @@ Enter the measured deviation in mm.
 <div class="form-group">
 
 <label for="tolerance">
-Allowed Tolerance
+Specified GD&T Tolerance (mm)
 </label>
 
 <input
 type="number"
 id="tolerance"
 step="any"
+min="0"
 placeholder="Example: 0.050"
 >
 
 <div class="help-text">
-Enter the maximum permitted GD&T tolerance in mm.
+Enter the maximum permitted GD&T tolerance.
 </div>
 
 </div>
@@ -418,14 +593,14 @@ Enter the maximum permitted GD&T tolerance in mm.
 <div class="buttons">
 
 <button
-class="calculate-btn"
+class="btn btn-primary"
 onclick="calculateGDT()"
 >
 Calculate
 </button>
 
 <button
-class="clear-btn"
+class="btn btn-secondary"
 onclick="clearCalculator()"
 >
 Clear
@@ -438,9 +613,9 @@ Clear
 
 <div class="result" id="result">
 
-<h2>
+<h3>
 Inspection Result
-</h2>
+</h3>
 
 
 <div class="result-row">
@@ -472,7 +647,7 @@ Measured Deviation
 <div class="result-row">
 
 <span class="result-label">
-Allowed Tolerance
+Specified Tolerance
 </span>
 
 <span class="result-value" id="resultTolerance">
@@ -506,15 +681,14 @@ Remaining Tolerance
 
 <!-- INFORMATION -->
 
-<div class="info">
+<div class="info-grid">
 
-<h2>
+
+<div class="info-card">
+
+<h3>
 How to Use
-</h2>
-
-<p>
-This calculator compares the measured GD&T deviation with the specified tolerance.
-</p>
+</h3>
 
 <ul>
 
@@ -523,11 +697,11 @@ Select the required GD&T feature.
 </li>
 
 <li>
-Enter the measured deviation in mm.
+Enter measured deviation.
 </li>
 
 <li>
-Enter the allowed GD&T tolerance in mm.
+Enter specified tolerance.
 </li>
 
 <li>
@@ -535,7 +709,7 @@ Click Calculate.
 </li>
 
 <li>
-The calculator will show the remaining tolerance and Pass/Fail result.
+Check the Pass/Fail result.
 </li>
 
 </ul>
@@ -543,36 +717,114 @@ The calculator will show the remaining tolerance and Pass/Fail result.
 </div>
 
 
-<div class="info">
+<div class="info-card">
 
-<h2>
+<h3>
 Example
-</h2>
+</h3>
 
 <p>
-Suppose the specified flatness tolerance is 0.050 mm and the measured flatness deviation is 0.030 mm.
+Flatness tolerance = <strong>0.050 mm</strong>
 </p>
 
 <p>
-Remaining tolerance = 0.050 − 0.030 = <strong>0.020 mm</strong>
+Measured deviation = <strong>0.030 mm</strong>
 </p>
 
 <p>
-Because the measured deviation is within the specified tolerance, the result is <strong>PASS</strong>.
+Remaining tolerance =
+<strong>0.020 mm</strong>
+</p>
+
+<p>
+Result = <strong>PASS</strong>
 </p>
 
 </div>
 
-</main>
+</div>
 
 
-<!-- FOOTER -->
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
-<p>
-© 2026 MechQTools. All Rights Reserved.
+<div class="footer-container">
+
+
+<div>
+
+<div class="footer-logo">
+MechQTools
+</div>
+
+<p class="footer-text">
+Engineering & Quality Tools for Professionals.
+Free calculators, practical engineering resources and professional templates.
 </p>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+Quick Links
+</h4>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="index.html#mechanical-tools">
+Mechanical Tools
+</a>
+
+<a href="index.html#quality-tools">
+Quality Tools
+</a>
+
+<a href="index.html#templates">
+Templates
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+Resources
+</h4>
+
+<a href="index.html#guides-section">
+Engineering Guides
+</a>
+
+<a href="index.html#about">
+About
+</a>
+
+<a href="#">
+Contact
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 MechQTools. All Rights Reserved.
+
+</div>
 
 </footer>
 
@@ -595,9 +847,14 @@ function calculateGDT(){
         );
 
 
-    if(isNaN(measured) || isNaN(tolerance)){
+    if(
+        isNaN(measured) ||
+        isNaN(tolerance)
+    ){
 
-        alert("Please enter measured deviation and tolerance.");
+        alert(
+            "Please enter measured deviation and specified tolerance."
+        );
 
         return;
     }
@@ -605,7 +862,9 @@ function calculateGDT(){
 
     if(measured < 0){
 
-        alert("Measured deviation cannot be negative.");
+        alert(
+            "Measured deviation cannot be negative."
+        );
 
         return;
     }
@@ -613,7 +872,9 @@ function calculateGDT(){
 
     if(tolerance <= 0){
 
-        alert("Allowed tolerance must be greater than 0.");
+        alert(
+            "Specified tolerance must be greater than 0."
+        );
 
         return;
     }
@@ -643,11 +904,14 @@ function calculateGDT(){
     document.getElementById("resultType").textContent =
         featureNames[type];
 
+
     document.getElementById("resultMeasured").textContent =
         measured.toFixed(3) + " mm";
 
+
     document.getElementById("resultTolerance").textContent =
         tolerance.toFixed(3) + " mm";
+
 
     document.getElementById("resultRemaining").textContent =
         remaining.toFixed(3) + " mm";
@@ -701,6 +965,7 @@ function clearCalculator(){
 }
 
 </script>
+
 
 </body>
 </html>
