@@ -1,0 +1,1255 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Tap Drill Size Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free metric tap drill size calculator. Calculate recommended tap drill size for metric threads and check common thread sizes.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+header{
+    background:#fff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+.container{
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:32px;
+    color:#e53232;
+    margin:0 0 8px;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.06);
+    border:1px solid #eee;
+}
+
+.card h2{
+    margin-top:0;
+    font-size:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#e53232;
+    box-shadow:0 0 0 2px rgba(229,50,50,0.08);
+}
+
+.form-group small{
+    color:#777;
+    margin-top:4px;
+}
+
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:22px;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92525;
+}
+
+.clear-btn{
+    background:#eee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#ddd;
+}
+
+.home-btn{
+    display:inline-block;
+    text-decoration:none;
+    background:#222;
+    color:#fff;
+    padding:12px 20px;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-btn:hover{
+    background:#000;
+}
+
+.error{
+    display:none;
+    margin-top:18px;
+    background:#fff1f1;
+    color:#d62828;
+    border:1px solid #f0b5b5;
+    padding:12px;
+    border-radius:7px;
+}
+
+.result-box{
+    display:none;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.result-item{
+    background:#f7f8fa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:15px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:14px;
+    margin-bottom:4px;
+}
+
+.result-item strong{
+    font-size:20px;
+}
+
+.formula-box{
+    margin-top:20px;
+    padding:15px;
+    background:#fff8f8;
+    border-left:4px solid #e53232;
+    border-radius:6px;
+}
+
+.formula-box strong{
+    color:#e53232;
+}
+
+.info-list{
+    margin:0;
+    padding-left:20px;
+}
+
+.info-list li{
+    margin-bottom:10px;
+}
+
+.example-box{
+    background:#fff8f8;
+    border-left:4px solid #e53232;
+    padding:15px;
+    border-radius:6px;
+    margin-top:18px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:600px;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:11px;
+    text-align:center;
+}
+
+th{
+    background:#f3f3f3;
+}
+
+tr:hover td{
+    background:#fafafa;
+}
+
+footer{
+    margin-top:50px;
+    background:#222;
+    color:#fff;
+    text-align:center;
+    padding:25px 20px;
+}
+
+footer p{
+    margin:5px 0;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .container{
+        margin:30px auto;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .button-row{
+        flex-direction:column;
+    }
+
+    button,
+    .home-btn{
+        width:100%;
+        text-align:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="page-title">
+
+<h1>
+Tap Drill Size Calculator
+</h1>
+
+<p>
+Calculate recommended tap drill size for metric threads.
+</p>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div class="card">
+
+<h2>
+Metric Thread Calculator
+</h2>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label for="threadSize">
+Thread Size
+</label>
+
+<select id="threadSize">
+
+<option value="M3">M3</option>
+<option value="M4">M4</option>
+<option value="M5">M5</option>
+<option value="M6" selected>M6</option>
+<option value="M8">M8</option>
+<option value="M10">M10</option>
+<option value="M12">M12</option>
+<option value="M14">M14</option>
+<option value="M16">M16</option>
+<option value="M18">M18</option>
+<option value="M20">M20</option>
+<option value="M22">M22</option>
+<option value="M24">M24</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="pitch">
+Thread Pitch (mm)
+</label>
+
+<input
+type="number"
+id="pitch"
+step="0.01"
+value="1.00"
+placeholder="Example: 1.0"
+>
+
+<small>
+Enter actual thread pitch.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="customDiameter">
+Major Diameter (mm)
+</label>
+
+<input
+type="number"
+id="customDiameter"
+step="0.01"
+value="6"
+placeholder="Example: 6"
+>
+
+<small>
+Major diameter of the thread.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="threadPercentage">
+Thread Percentage
+</label>
+
+<select id="threadPercentage">
+
+<option value="60" selected>60% — Standard Approx.</option>
+<option value="65">65%</option>
+<option value="70">70%</option>
+<option value="75">75%</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateTapDrill()"
+>
+Calculate
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+<a
+href="index.html"
+class="home-btn"
+>
+Home
+</a>
+
+</div>
+
+
+<div
+class="error"
+id="errorMessage"
+></div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div
+class="card result-box"
+id="resultBox"
+>
+
+<h2>
+Calculation Result
+</h2>
+
+
+<div class="result-grid">
+
+
+<div class="result-item">
+
+<span>
+Thread Size
+</span>
+
+<strong id="resultThread">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Major Diameter
+</span>
+
+<strong id="resultMajor">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Thread Pitch
+</span>
+
+<strong id="resultPitch">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Thread Percentage
+</span>
+
+<strong id="resultPercentage">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Recommended Tap Drill
+</span>
+
+<strong id="resultTapDrill">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Basic Approximation
+</span>
+
+<strong id="resultBasic">
+-
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div
+class="formula-box"
+id="formulaBox"
+>
+</div>
+
+</div>
+
+
+<!-- COMMON THREAD TABLE -->
+
+<div class="card">
+
+<h2>
+Common Metric Tap Drill Sizes
+</h2>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Thread</th>
+
+<th>Pitch (mm)</th>
+
+<th>Approx. Tap Drill (mm)</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>M3 × 0.5</td>
+<td>0.50</td>
+<td>2.50</td>
+</tr>
+
+<tr>
+<td>M4 × 0.7</td>
+<td>0.70</td>
+<td>3.30</td>
+</tr>
+
+<tr>
+<td>M5 × 0.8</td>
+<td>0.80</td>
+<td>4.20</td>
+</tr>
+
+<tr>
+<td>M6 × 1.0</td>
+<td>1.00</td>
+<td>5.00</td>
+</tr>
+
+<tr>
+<td>M8 × 1.25</td>
+<td>1.25</td>
+<td>6.75</td>
+</tr>
+
+<tr>
+<td>M10 × 1.5</td>
+<td>1.50</td>
+<td>8.50</td>
+</tr>
+
+<tr>
+<td>M12 × 1.75</td>
+<td>1.75</td>
+<td>10.25</td>
+</tr>
+
+<tr>
+<td>M14 × 2.0</td>
+<td>2.00</td>
+<td>12.00</td>
+</tr>
+
+<tr>
+<td>M16 × 2.0</td>
+<td>2.00</td>
+<td>14.00</td>
+</tr>
+
+<tr>
+<td>M18 × 2.5</td>
+<td>2.50</td>
+<td>15.50</td>
+</tr>
+
+<tr>
+<td>M20 × 2.5</td>
+<td>2.50</td>
+<td>17.50</td>
+</tr>
+
+<tr>
+<td>M22 × 2.5</td>
+<td>2.50</td>
+<td>19.50</td>
+</tr>
+
+<tr>
+<td>M24 × 3.0</td>
+<td>3.00</td>
+<td>21.00</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- EXPLANATION -->
+
+<div class="card">
+
+<h2>
+How Tap Drill Size Works
+</h2>
+
+<ul class="info-list">
+
+<li>
+<strong>Major Diameter</strong> is the nominal outside diameter of the thread.
+</li>
+
+<li>
+<strong>Pitch</strong> is the distance between two adjacent thread peaks.
+</li>
+
+<li>
+The tap drill creates the hole before internal threading.
+</li>
+
+<li>
+A smaller tap drill produces a higher percentage of thread engagement.
+</li>
+
+<li>
+A larger tap drill produces a lower percentage of thread engagement.
+</li>
+
+<li>
+For normal engineering work, the recommended drill size should be selected according to the required thread percentage, material and applicable standard.
+</li>
+
+</ul>
+
+
+<div class="example-box">
+
+<strong>Example — M6 × 1.0</strong>
+
+<br><br>
+
+Major Diameter = 6.00 mm
+
+<br>
+
+Pitch = 1.00 mm
+
+<br>
+
+Basic Tap Drill Approximation:
+
+<br>
+
+6.00 − 1.00 = <strong>5.00 mm</strong>
+
+<br><br>
+
+Recommended approximate tap drill:
+
+<strong>5.00 mm</strong>
+
+</div>
+
+
+<div class="example-box">
+
+<strong>Important:</strong>
+
+<br><br>
+
+The calculator gives an approximate engineering value.
+
+Actual tap drill selection can depend on:
+
+<br><br>
+
+• Thread standard
+
+<br>
+
+• Required percentage of thread
+
+<br>
+
+• Material
+
+<br>
+
+• Tapping method
+
+<br>
+
+• Tap manufacturer recommendation
+
+<br>
+
+• Hole tolerance
+
+<br>
+
+For production work, always follow the applicable drawing, thread standard or tooling manufacturer's recommendation.
+
+</div>
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+<p>
+<strong>MechQTools</strong>
+</p>
+
+<p>
+Engineering & Quality Tools for Professionals.
+</p>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+
+/* COMMON THREAD DATA */
+
+const threadData = {
+
+    M3: 3,
+    M4: 4,
+    M5: 5,
+    M6: 6,
+    M8: 8,
+    M10: 10,
+    M12: 12,
+    M14: 14,
+    M16: 16,
+    M18: 18,
+    M20: 20,
+    M22: 22,
+    M24: 24
+
+};
+
+
+/* PITCH DATA */
+
+const pitchData = {
+
+    M3: 0.50,
+    M4: 0.70,
+    M5: 0.80,
+    M6: 1.00,
+    M8: 1.25,
+    M10: 1.50,
+    M12: 1.75,
+    M14: 2.00,
+    M16: 2.00,
+    M18: 2.50,
+    M20: 2.50,
+    M22: 2.50,
+    M24: 3.00
+
+};
+
+
+/* CHANGE THREAD */
+
+document
+.getElementById("threadSize")
+.addEventListener(
+    "change",
+    function(){
+
+        const selected =
+        this.value;
+
+        document.getElementById(
+            "customDiameter"
+        ).value =
+            threadData[selected];
+
+        document.getElementById(
+            "pitch"
+        ).value =
+            pitchData[selected];
+
+    }
+);
+
+
+/* CALCULATE */
+
+function calculateTapDrill(){
+
+    const thread =
+    document.getElementById(
+        "threadSize"
+    ).value;
+
+    const diameter =
+    parseFloat(
+        document.getElementById(
+            "customDiameter"
+        ).value
+    );
+
+    const pitch =
+    parseFloat(
+        document.getElementById(
+            "pitch"
+        ).value
+    );
+
+    const percentage =
+    parseFloat(
+        document.getElementById(
+            "threadPercentage"
+        ).value
+    );
+
+
+    const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+    const resultBox =
+    document.getElementById(
+        "resultBox"
+    );
+
+
+    errorMessage.style.display =
+        "none";
+
+    resultBox.style.display =
+        "none";
+
+
+    /* VALIDATION */
+
+    if(
+        isNaN(diameter) ||
+        isNaN(pitch) ||
+        isNaN(percentage)
+    ){
+
+        showError(
+            "Please enter valid diameter, pitch and thread percentage."
+        );
+
+        return;
+
+    }
+
+
+    if(diameter <= 0){
+
+        showError(
+            "Major Diameter must be greater than 0."
+        );
+
+        return;
+
+    }
+
+
+    if(pitch <= 0){
+
+        showError(
+            "Thread Pitch must be greater than 0."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        percentage <= 0 ||
+        percentage > 100
+    ){
+
+        showError(
+            "Thread Percentage must be between 1% and 100%."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       BASIC TAP DRILL APPROXIMATION
+
+       Tap Drill ≈ Major Diameter - Pitch
+    */
+
+    const basicTapDrill =
+        diameter - pitch;
+
+
+    /*
+       APPROXIMATE PERCENTAGE ADJUSTMENT
+
+       60% is treated as the basic
+       engineering approximation.
+
+       Higher percentage:
+       slightly smaller drill.
+
+       Lower percentage:
+       slightly larger drill.
+    */
+
+    const adjustment =
+        pitch *
+        ((60 - percentage) / 100) *
+        0.5;
+
+
+    let recommendedDrill =
+        basicTapDrill + adjustment;
+
+
+    if(recommendedDrill <= 0){
+
+        showError(
+            "Calculated tap drill size is invalid. Please check the inputs."
+        );
+
+        return;
+
+    }
+
+
+    /* DISPLAY */
+
+    document.getElementById(
+        "resultThread"
+    ).textContent =
+        thread;
+
+
+    document.getElementById(
+        "resultMajor"
+    ).textContent =
+        diameter.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultPitch"
+    ).textContent =
+        pitch.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultPercentage"
+    ).textContent =
+        percentage.toFixed(0) +
+        "%";
+
+
+    document.getElementById(
+        "resultTapDrill"
+    ).textContent =
+        recommendedDrill.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultBasic"
+    ).textContent =
+        basicTapDrill.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "formulaBox"
+    ).innerHTML =
+
+        "<strong>Formula:</strong><br><br>" +
+
+        "Basic Tap Drill ≈ Major Diameter − Pitch<br><br>" +
+
+        "Basic Tap Drill = " +
+
+        diameter.toFixed(2) +
+
+        " − " +
+
+        pitch.toFixed(2) +
+
+        " = " +
+
+        basicTapDrill.toFixed(2) +
+
+        " mm<br><br>" +
+
+        "Approx. Recommended Drill = " +
+
+        recommendedDrill.toFixed(2) +
+
+        " mm";
+
+
+    resultBox.style.display =
+        "block";
+
+}
+
+
+/* ERROR */
+
+function showError(message){
+
+    const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+    errorMessage.textContent =
+        message;
+
+    errorMessage.style.display =
+        "block";
+
+}
+
+
+/* CLEAR */
+
+function clearCalculator(){
+
+    document.getElementById(
+        "threadSize"
+    ).value =
+        "M6";
+
+
+    document.getElementById(
+        "pitch"
+    ).value =
+        "1.00";
+
+
+    document.getElementById(
+        "customDiameter"
+    ).value =
+        "6";
+
+
+    document.getElementById(
+        "threadPercentage"
+    ).value =
+        "60";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "errorMessage"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+
+</html>
+```
