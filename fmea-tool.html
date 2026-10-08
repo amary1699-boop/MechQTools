@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FMEA Tool - Failure Mode and Effects Analysis | MechQTools</title>
+
+<meta name="description"
+content="Free online FMEA tool to identify failure modes, calculate RPN, analyze risks and plan corrective actions.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.section{
+    max-width:1100px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.section-title span{
+    color:#e53232;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:#777;
+    max-width:750px;
+    margin:0 auto 35px;
+}
+
+/* CARD */
+
+.calculator{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+    margin-bottom:25px;
+}
+
+.calculator h2{
+    color:#e53232;
+    margin-bottom:20px;
+    font-size:23px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+    font-family:Arial, Helvetica, sans-serif;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#e53232;
+}
+
+/* BUTTONS */
+
+.button-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.btn{
+    padding:13px 25px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92727;
+}
+
+.btn-secondary{
+    background:#fff;
+    color:#e53232;
+    border:1px solid #e53232;
+}
+
+.btn-secondary:hover{
+    background:#fff4f4;
+}
+
+/* FMEA TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+    margin-top:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1500px;
+}
+
+th{
+    background:#e53232;
+    color:#fff;
+    padding:10px 8px;
+    border:1px solid #d32d2d;
+    font-size:13px;
+    text-align:center;
+}
+
+td{
+    border:1px solid #ddd;
+    padding:8px;
+    vertical-align:top;
+    background:#fff;
+}
+
+td input,
+td select,
+td textarea{
+    width:100%;
+    border:1px solid #ccc;
+    border-radius:4px;
+    padding:7px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+}
+
+td textarea{
+    min-height:70px;
+    resize:vertical;
+}
+
+td input:focus,
+td select:focus,
+td textarea:focus{
+    border-color:#e53232;
+    outline:none;
+}
+
+.rpn-cell{
+    font-weight:bold;
+    text-align:center;
+    font-size:15px;
+}
+
+.risk-cell{
+    text-align:center;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.delete-btn{
+    background:#fff;
+    color:#e53232;
+    border:1px solid #e53232;
+    border-radius:5px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.delete-btn:hover{
+    background:#fff4f4;
+}
+
+/* RESULT */
+
+.summary-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.summary-card{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:18px;
+    text-align:center;
+}
+
+.summary-card h3{
+    color:#777;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.summary-card strong{
+    font-size:24px;
+    color:#e53232;
+}
+
+/* INFO */
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-card{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+}
+
+.info-card h3{
+    color:#e53232;
+    margin-bottom:12px;
+}
+
+.info-card p{
+    margin-bottom:10px;
+}
+
+.info-card ul{
+    padding-left:20px;
+}
+
+.formula{
+    background:#f7f8fa;
+    border-left:4px solid #e53232;
+    padding:12px 15px;
+    margin:12px 0;
+    font-weight:600;
+}
+
+/* MESSAGE */
+
+.message{
+    display:none;
+    padding:12px 15px;
+    border-radius:6px;
+    margin-top:15px;
+    background:#fff4f4;
+    border:1px solid #e53232;
+    color:#b22222;
+    font-weight:600;
+}
+
+/* FOOTER */
+
+footer{
+    background:#151515;
+    color:#fff;
+    margin-top:30px;
+}
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-logo{
+    color:#e53232;
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-text{
+    color:#aaa;
+    font-size:14px;
+    max-width:450px;
+}
+
+.footer-column h4{
+    margin-bottom:12px;
+}
+
+.footer-column a{
+    display:block;
+    color:#aaa;
+    text-decoration:none;
+    margin-bottom:7px;
+    font-size:14px;
+}
+
+.footer-column a:hover{
+    color:#fff;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    text-align:center;
+    padding:18px;
+    color:#888;
+    font-size:13px;
+}
+
+/* PRINT */
+
+@media print{
+
+    header,
+    footer,
+    .button-row,
+    .info-grid,
+    .section-subtitle,
+    .calculator:first-of-type{
+        display:none !important;
+    }
+
+    body{
+        background:#fff;
+    }
+
+    .section{
+        max-width:100%;
+        padding:10px;
+    }
+
+    .calculator{
+        box-shadow:none;
+        border:none;
+        padding:0;
+    }
+
+    table{
+        min-width:100%;
+        font-size:9px;
+    }
+
+    th,
+    td{
+        padding:5px;
+    }
+
+    td input,
+    td select,
+    td textarea{
+        border:none;
+        padding:2px;
+        font-size:9px;
+    }
+
+    .section-title{
+        font-size:24px;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .section{
+        padding:40px 15px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+    .calculator{
+        padding:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="index.html#mechanical-tools">Mechanical</a></li>
+<li><a href="index.html#quality-tools">Quality</a></li>
+<li><a href="index.html#templates">Templates</a></li>
+<li><a href="index.html#guides-section">Guides</a></li>
+<li><a href="index.html#about">About</a></li>
+</ul>
+
+</div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<section class="section">
+
+<h1 class="section-title">
+FMEA <span>Tool</span>
+</h1>
+
+<p class="section-subtitle">
+Failure Mode and Effects Analysis tool to identify potential failures,
+evaluate risks using Severity, Occurrence and Detection, calculate RPN
+and plan corrective actions.
+</p>
+
+
+<!-- BASIC INFORMATION -->
+
+<div class="calculator">
+
+<h2>FMEA Basic Information</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>FMEA Title / Process</label>
+<input type="text" id="fmeaTitle"
+placeholder="Example: Sheet Metal Bending Process">
+</div>
+
+<div class="form-group">
+<label>Part / Process Number</label>
+<input type="text" id="partNumber"
+placeholder="Example: SM-001">
+</div>
+
+<div class="form-group">
+<label>Prepared By</label>
+<input type="text" id="preparedBy"
+placeholder="Name / Department">
+</div>
+
+<div class="form-group">
+<label>Date</label>
+<input type="date" id="fmeaDate">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FMEA TABLE -->
+
+<div class="calculator">
+
+<h2>FMEA Analysis</h2>
+
+<p>
+Enter each potential failure mode and rate <strong>Severity (S)</strong>,
+<strong>Occurrence (O)</strong> and <strong>Detection (D)</strong> from
+1 to 10.
+</p>
+
+<div class="table-wrapper">
+
+<table id="fmeaTable">
+
+<thead>
+
+<tr>
+
+<th>Sr.</th>
+
+<th>Process / Operation</th>
+
+<th>Potential Failure Mode</th>
+
+<th>Potential Effect of Failure</th>
+
+<th>Severity<br>(S)</th>
+
+<th>Potential Cause</th>
+
+<th>Occurrence<br>(O)</th>
+
+<th>Current Controls</th>
+
+<th>Detection<br>(D)</th>
+
+<th>RPN<br>S×O×D</th>
+
+<th>Risk Level</th>
+
+<th>Recommended Action</th>
+
+<th>Responsible</th>
+
+<th>Target Date</th>
+
+<th>Action Result</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="fmeaBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="button-row">
+
+<button class="btn btn-primary" onclick="addRow()">
++ Add FMEA Row
+</button>
+
+<button class="btn btn-secondary" onclick="calculateFMEA()">
+Calculate RPN
+</button>
+
+<button class="btn btn-secondary" onclick="loadExample()">
+Load Example
+</button>
+
+<button class="btn btn-secondary" onclick="printReport()">
+Print Report
+</button>
+
+<button class="btn btn-secondary" onclick="clearAll()">
+Clear All
+</button>
+
+</div>
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<!-- SUMMARY -->
+
+<div class="calculator">
+
+<h2>FMEA Summary</h2>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<h3>Total Failure Modes</h3>
+<strong id="totalModes">0</strong>
+</div>
+
+<div class="summary-card">
+<h3>High Risk</h3>
+<strong id="highRisk">0</strong>
+</div>
+
+<div class="summary-card">
+<h3>Medium Risk</h3>
+<strong id="mediumRisk">0</strong>
+</div>
+
+<div class="summary-card">
+<h3>Highest RPN</h3>
+<strong id="highestRPN">0</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<div class="info-grid">
+
+<div class="info-card">
+
+<h3>What is FMEA?</h3>
+
+<p>
+<strong>FMEA</strong> means
+<strong>Failure Mode and Effects Analysis</strong>.
+It is a systematic method used to identify potential failures in a
+product, process or system before they create serious problems.
+</p>
+
+<p>
+FMEA helps the Quality, Production, Design and Engineering teams
+prioritize risks and decide where corrective or preventive action is
+required.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>What is Failure Mode?</h3>
+
+<p>
+A <strong>Failure Mode</strong> is the way in which a product or process
+could fail to meet the required specification or expectation.
+</p>
+
+<p>
+Example:
+<strong>Hole diameter out of specification</strong>,
+<strong>wrong bending angle</strong>,
+<strong>surface scratch</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Severity (S)</h3>
+
+<p>
+Severity indicates how serious the effect of a failure is.
+The rating normally ranges from <strong>1 to 10</strong>.
+</p>
+
+<ul>
+<li>1 = Very low effect</li>
+<li>5 = Moderate effect</li>
+<li>8 = Serious effect</li>
+<li>10 = Very severe / critical effect</li>
+</ul>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Occurrence (O)</h3>
+
+<p>
+Occurrence indicates how frequently the potential cause of failure
+may happen.
+The rating normally ranges from <strong>1 to 10</strong>.
+</p>
+
+<ul>
+<li>1 = Very unlikely</li>
+<li>5 = Occasional</li>
+<li>8 = Frequent</li>
+<li>10 = Very frequent</li>
+</ul>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Detection (D)</h3>
+
+<p>
+Detection indicates how likely the current controls are to detect the
+failure or its cause before the product reaches the customer.
+</p>
+
+<ul>
+<li>1 = Very easy to detect</li>
+<li>5 = Moderate detection</li>
+<li>8 = Difficult to detect</li>
+<li>10 = Almost impossible to detect</li>
+</ul>
+
+<p>
+<strong>Important:</strong> In the traditional FMEA scale,
+a higher Detection number means poorer detection capability.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>RPN Formula</h3>
+
+<p>
+RPN means <strong>Risk Priority Number</strong>.
+It is calculated using Severity, Occurrence and Detection.
+</p>
+
+<div class="formula">
+RPN = Severity × Occurrence × Detection
+</div>
+
+<p>
+Example:
+If S = 8, O = 5 and D = 4:
+</p>
+
+<div class="formula">
+RPN = 8 × 5 × 4 = 160
+</div>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Risk Level Used in This Tool</h3>
+
+<ul>
+<li><strong>RPN 1–49:</strong> Low Risk</li>
+<li><strong>RPN 50–99:</strong> Medium Risk</li>
+<li><strong>RPN 100–199:</strong> High Risk</li>
+<li><strong>RPN 200–1000:</strong> Very High Risk</li>
+</ul>
+
+<p>
+These ranges are a practical screening guide. Your company's
+FMEA procedure or customer-specific requirements may use different
+risk criteria.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>How to Use This FMEA Tool</h3>
+
+<ul>
+
+<li>Enter the FMEA process or title.</li>
+
+<li>Add the process or operation.</li>
+
+<li>Identify the potential failure mode.</li>
+
+<li>Describe the effect of the failure.</li>
+
+<li>Give Severity from 1 to 10.</li>
+
+<li>Identify the potential cause.</li>
+
+<li>Give Occurrence from 1 to 10.</li>
+
+<li>Enter existing/current controls.</li>
+
+<li>Give Detection from 1 to 10.</li>
+
+<li>Click Calculate RPN.</li>
+
+<li>Review high-risk failure modes.</li>
+
+<li>Define recommended corrective actions.</li>
+
+</ul>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Example FMEA</h3>
+
+<p><strong>Process:</strong> Sheet Metal Bending</p>
+
+<p><strong>Failure Mode:</strong> Bend angle out of specification</p>
+
+<p><strong>Effect:</strong> Part does not fit during assembly</p>
+
+<p><strong>Severity:</strong> 8</p>
+
+<p><strong>Cause:</strong> Incorrect machine setting</p>
+
+<p><strong>Occurrence:</strong> 5</p>
+
+<p><strong>Current Control:</strong> First-piece inspection</p>
+
+<p><strong>Detection:</strong> 4</p>
+
+<p><strong>RPN:</strong> 8 × 5 × 4 = <strong>160</strong></p>
+
+<p>
+This would be classified as <strong>High Risk</strong> in this tool,
+so corrective action should be considered.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Important FMEA Points</h3>
+
+<ul>
+
+<li>FMEA is a preventive risk analysis method.</li>
+
+<li>Do not select ratings randomly.</li>
+
+<li>Use actual inspection and process data whenever available.</li>
+
+<li>High RPN items should receive priority.</li>
+
+<li>A low RPN does not automatically mean zero risk.</li>
+
+<li>After corrective action, review the ratings again.</li>
+
+<li>Customer-specific FMEA requirements should always be followed.</li>
+
+<li>FMEA helps prioritize risk but does not replace engineering judgement.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-container">
+
+<div>
+<div class="footer-logo">MechQTools</div>
+
+<p class="footer-text">
+Engineering & Quality Tools for Professionals.
+Free practical calculators, templates and analysis tools
+for Mechanical and Quality Engineers.
+</p>
+</div>
+
+
+<div class="footer-column">
+
+<h4>Tools</h4>
+
+<a href="index.html#mechanical-tools">Mechanical Tools</a>
+<a href="index.html#quality-tools">Quality Tools</a>
+<a href="index.html#templates">Templates</a>
+<a href="index.html#guides-section">Guides</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>Quality</h4>
+
+<a href="cp-cpk-calculator.html">Cp & Cpk</a>
+<a href="pp-ppk-calculator.html">Pp & Ppk</a>
+<a href="pareto-analysis-tool.html">Pareto Analysis</a>
+<a href="5-why-analysis-tool.html">5 Why Analysis</a>
+<a href="8d-problem-solving-tool.html">8D Problem Solving</a>
+
+</div>
+
+</div>
+
+
+<div class="copyright">
+© 2026 MechQTools. All Rights Reserved.
+</div>
+
+</footer>
+
+
+<script>
+
+let rowCounter = 0;
+
+
+/* ADD ROW */
+
+function addRow(data = {}){
+
+    rowCounter++;
+
+    const tbody = document.getElementById("fmeaBody");
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+
+        <td class="sr">${rowCounter}</td>
+
+        <td>
+            <input type="text"
+                   class="operation"
+                   value="${escapeValue(data.operation || "")}"
+                   placeholder="Bending">
+        </td>
+
+        <td>
+            <textarea class="failure"
+                      placeholder="Potential failure mode">${escapeValue(data.failure || "")}</textarea>
+        </td>
+
+        <td>
+            <textarea class="effect"
+                      placeholder="Effect of failure">${escapeValue(data.effect || "")}</textarea>
+        </td>
+
+        <td>
+            <select class="severity">
+                ${ratingOptions(data.severity || "")}
+            </select>
+        </td>
+
+        <td>
+            <textarea class="cause"
+                      placeholder="Potential cause">${escapeValue(data.cause || "")}</textarea>
+        </td>
+
+        <td>
+            <select class="occurrence">
+                ${ratingOptions(data.occurrence || "")}
+            </select>
+        </td>
+
+        <td>
+            <textarea class="control"
+                      placeholder="Current controls">${escapeValue(data.control || "")}</textarea>
+        </td>
+
+        <td>
+            <select class="detection">
+                ${ratingOptions(data.detection || "")}
+            </select>
+        </td>
+
+        <td class="rpn-cell">0</td>
+
+        <td class="risk-cell">-</td>
+
+        <td>
+            <textarea class="recommended"
+                      placeholder="Recommended action">${escapeValue(data.recommended || "")}</textarea>
+        </td>
+
+        <td>
+            <input type="text"
+                   class="responsible"
+                   value="${escapeValue(data.responsible || "")}"
+                   placeholder="QE">
+        </td>
+
+        <td>
+            <input type="date"
+                   class="targetDate"
+                   value="${escapeValue(data.targetDate || "")}">
+        </td>
+
+        <td>
+            <textarea class="result"
+                      placeholder="Result / verification">${escapeValue(data.result || "")}</textarea>
+        </td>
+
+        <td>
+            <button class="delete-btn" onclick="deleteRow(this)">
+                Delete
+            </button>
+        </td>
+
+    `;
+
+    tbody.appendChild(tr);
+
+    updateSerialNumbers();
+
+}
+
+
+/* RATING OPTIONS */
+
+function ratingOptions(selected){
+
+    let html = '<option value="">Select</option>';
+
+    for(let i = 1; i <= 10; i++){
+
+        html += `
+            <option value="${i}" ${String(selected) === String(i) ? "selected" : ""}>
+                ${i}
+            </option>
+        `;
+
+    }
+
+    return html;
+}
+
+
+/* ESCAPE */
+
+function escapeValue(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/"/g,"&quot;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
+
+}
+
+
+/* DELETE ROW */
+
+function deleteRow(button){
+
+    const row = button.closest("tr");
+
+    row.remove();
+
+    updateSerialNumbers();
+
+    calculateFMEA();
+
+}
+
+
+/* SERIAL NUMBERS */
+
+function updateSerialNumbers(){
+
+    const rows = document.querySelectorAll("#fmeaBody tr");
+
+    rows.forEach((row,index)=>{
+
+        row.querySelector(".sr").textContent = index + 1;
+
+    });
+
+}
+
+
+/* CALCULATE FMEA */
+
+function calculateFMEA(){
+
+    const rows = document.querySelectorAll("#fmeaBody tr");
+
+    let high = 0;
+    let medium = 0;
+    let highest = 0;
+
+    rows.forEach(row => {
+
+        const s = Number(row.querySelector(".severity").value) || 0;
+        const o = Number(row.querySelector(".occurrence").value) || 0;
+        const d = Number(row.querySelector(".detection").value) || 0;
+
+        const rpnCell = row.querySelector(".rpn-cell");
+        const riskCell = row.querySelector(".risk-cell");
+
+        if(s && o && d){
+
+            const rpn = s * o * d;
+
+            rpnCell.textContent = rpn;
+
+            if(rpn >= 200){
+
+                riskCell.textContent = "Very High Risk";
+
+            }
+            else if(rpn >= 100){
+
+                riskCell.textContent = "High Risk";
+                high++;
+
+            }
+            else if(rpn >= 50){
+
+                riskCell.textContent = "Medium Risk";
+                medium++;
+
+            }
+            else{
+
+                riskCell.textContent = "Low Risk";
+
+            }
+
+            if(rpn > highest){
+                highest = rpn;
+            }
+
+        }
+        else{
+
+            rpnCell.textContent = "0";
+            riskCell.textContent = "-";
+
+        }
+
+    });
+
+
+    document.getElementById("totalModes").textContent = rows.length;
+
+    document.getElementById("highRisk").textContent = high;
+
+    document.getElementById("mediumRisk").textContent = medium;
+
+    document.getElementById("highestRPN").textContent = highest;
+
+}
+
+
+/* EXAMPLE */
+
+function loadExample(){
+
+    document.getElementById("fmeaTitle").value =
+        "Sheet Metal Bending Process";
+
+    document.getElementById("partNumber").value =
+        "SM-001";
+
+    document.getElementById("preparedBy").value =
+        "Quality Engineer";
+
+    document.getElementById("fmeaDate").value =
+        new Date().toISOString().split("T")[0];
+
+
+    document.getElementById("fmeaBody").innerHTML = "";
+
+    rowCounter = 0;
+
+
+    addRow({
+
+        operation:"Bending",
+
+        failure:"Bend angle out of specification",
+
+        effect:"Part does not fit during assembly",
+
+        severity:8,
+
+        cause:"Incorrect machine setting",
+
+        occurrence:5,
+
+        control:"First-piece inspection",
+
+        detection:4,
+
+        recommended:"Verify machine setting and strengthen first-piece inspection",
+
+        responsible:"Quality",
+
+        targetDate:"",
+
+        result:""
+
+    });
+
+
+    addRow({
+
+        operation:"Cutting",
+
+        failure:"Incorrect part length",
+
+        effect:"Assembly mismatch",
+
+        severity:7,
+
+        cause:"Incorrect cutting program",
+
+        occurrence:4,
+
+        control:"Dimensional inspection",
+
+        detection:3,
+
+        recommended:"Verify CNC program before production",
+
+        responsible:"Production",
+
+        targetDate:"",
+
+        result:""
+
+    });
+
+
+    addRow({
+
+        operation:"Deburring",
+
+        failure:"Sharp edge / burr remains",
+
+        effect:"Operator safety issue",
+
+        severity:8,
+
+        cause:"Improper deburring",
+
+        occurrence:3,
+
+        control:"Visual inspection",
+
+        detection:5,
+
+        recommended:"Add standard deburring instruction and inspection",
+
+        responsible:"Production",
+
+        targetDate:"",
+
+        result:""
+
+    });
+
+
+    calculateFMEA();
+
+}
+
+
+/* CLEAR ALL */
+
+function clearAll(){
+
+    if(!confirm("Are you sure you want to clear all FMEA data?")){
+        return;
+    }
+
+    document.getElementById("fmeaTitle").value = "";
+    document.getElementById("partNumber").value = "";
+    document.getElementById("preparedBy").value = "";
+    document.getElementById("fmeaDate").value = "";
+
+    document.getElementById("fmeaBody").innerHTML = "";
+
+    rowCounter = 0;
+
+    document.getElementById("totalModes").textContent = "0";
+    document.getElementById("highRisk").textContent = "0";
+    document.getElementById("mediumRisk").textContent = "0";
+    document.getElementById("highestRPN").textContent = "0";
+
+}
+
+
+/* PRINT */
+
+function printReport(){
+
+    calculateFMEA();
+
+    window.print();
+
+}
+
+
+/* MESSAGE */
+
+function showMessage(text){
+
+    const message = document.getElementById("message");
+
+    message.textContent = text;
+
+    message.style.display = "block";
+
+    setTimeout(()=>{
+        message.style.display = "none";
+    },3000);
+
+}
+
+
+/* INITIAL ROW */
+
+addRow();
+
+</script>
+
+</body>
+</html>
