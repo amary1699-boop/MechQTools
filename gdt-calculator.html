@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GD&T Calculator - Free GD&T Inspection Tool | MechQTools</title>
+
+<meta name="description"
+content="Free GD&T calculator for straightness, flatness, parallelism, perpendicularity, circularity and cylindricity inspection.">
+
+<meta name="keywords"
+content="GD&T calculator, GD&T inspection calculator, straightness calculator, flatness calculator, perpendicularity calculator, cylindricity calculator">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1100px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+/* MAIN */
+
+.container{
+    max-width:850px;
+    margin:50px auto;
+    padding:0 20px;
+}
+
+/* INTRO */
+
+.intro{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.intro h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.intro h1 span{
+    color:#e53232;
+}
+
+.intro p{
+    color:#666;
+    font-size:16px;
+}
+
+/* CALCULATOR */
+
+.calculator{
+    background:#fff;
+    border:1px solid #e2e2e2;
+    border-radius:10px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group select,
+.form-group input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group select:focus,
+.form-group input:focus{
+    border-color:#e53232;
+}
+
+.help-text{
+    margin-top:5px;
+    font-size:13px;
+    color:#777;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:10px;
+}
+
+button{
+    border:none;
+    padding:13px 22px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92727;
+}
+
+.clear-btn{
+    background:#eee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#ddd;
+}
+
+/* RESULT */
+
+.result{
+    margin-top:30px;
+    padding:25px;
+    background:#f8f8f8;
+    border:1px solid #e3e3e3;
+    border-radius:8px;
+    display:none;
+}
+
+.result h2{
+    font-size:22px;
+    margin-bottom:18px;
+}
+
+.result-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:10px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.result-row:last-child{
+    border-bottom:none;
+}
+
+.result-label{
+    font-weight:600;
+}
+
+.result-value{
+    font-weight:bold;
+    text-align:right;
+}
+
+.status{
+    margin-top:20px;
+    padding:14px;
+    border-radius:6px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.pass{
+    background:#e8f7e8;
+    color:#188038;
+}
+
+.fail{
+    background:#fdeaea;
+    color:#d93025;
+}
+
+/* INFO */
+
+.info{
+    margin-top:30px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+}
+
+.info h2{
+    margin-bottom:12px;
+    font-size:22px;
+}
+
+.info p{
+    color:#666;
+    margin-bottom:10px;
+}
+
+.info ul{
+    padding-left:20px;
+    color:#666;
+}
+
+.info li{
+    margin-bottom:7px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#151515;
+    color:#fff;
+    margin-top:50px;
+    text-align:center;
+    padding:25px 20px;
+}
+
+footer p{
+    color:#aaa;
+    font-size:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .navbar{
+        justify-content:center;
+    }
+
+    .intro h1{
+        font-size:29px;
+    }
+
+    .calculator{
+        padding:20px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    button{
+        width:100%;
+    }
+
+    .result-row{
+        flex-direction:column;
+        gap:3px;
+    }
+
+    .result-value{
+        text-align:left;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+</div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+<div class="intro">
+
+<h1>
+GD&T <span>Calculator</span>
+</h1>
+
+<p>
+Practical GD&T inspection calculator for mechanical and quality engineers.
+</p>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div class="calculator">
+
+
+<div class="form-group">
+
+<label for="gdtType">
+Select GD&T Feature
+</label>
+
+<select id="gdtType">
+
+<option value="straightness">
+Straightness
+</option>
+
+<option value="flatness">
+Flatness
+</option>
+
+<option value="parallelism">
+Parallelism
+</option>
+
+<option value="perpendicularity">
+Perpendicularity
+</option>
+
+<option value="circularity">
+Circularity
+</option>
+
+<option value="cylindricity">
+Cylindricity
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="measuredValue">
+Measured Deviation
+</label>
+
+<input
+type="number"
+id="measuredValue"
+step="any"
+placeholder="Example: 0.025"
+>
+
+<div class="help-text">
+Enter the measured deviation in mm.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="tolerance">
+Allowed Tolerance
+</label>
+
+<input
+type="number"
+id="tolerance"
+step="any"
+placeholder="Example: 0.050"
+>
+
+<div class="help-text">
+Enter the maximum permitted GD&T tolerance in mm.
+</div>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+class="calculate-btn"
+onclick="calculateGDT()"
+>
+Calculate
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+
+<h2>
+Inspection Result
+</h2>
+
+
+<div class="result-row">
+
+<span class="result-label">
+GD&T Feature
+</span>
+
+<span class="result-value" id="resultType">
+-
+</span>
+
+</div>
+
+
+<div class="result-row">
+
+<span class="result-label">
+Measured Deviation
+</span>
+
+<span class="result-value" id="resultMeasured">
+-
+</span>
+
+</div>
+
+
+<div class="result-row">
+
+<span class="result-label">
+Allowed Tolerance
+</span>
+
+<span class="result-value" id="resultTolerance">
+-
+</span>
+
+</div>
+
+
+<div class="result-row">
+
+<span class="result-label">
+Remaining Tolerance
+</span>
+
+<span class="result-value" id="resultRemaining">
+-
+</span>
+
+</div>
+
+
+<div class="status" id="status">
+-
+</div>
+
+</div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<div class="info">
+
+<h2>
+How to Use
+</h2>
+
+<p>
+This calculator compares the measured GD&T deviation with the specified tolerance.
+</p>
+
+<ul>
+
+<li>
+Select the required GD&T feature.
+</li>
+
+<li>
+Enter the measured deviation in mm.
+</li>
+
+<li>
+Enter the allowed GD&T tolerance in mm.
+</li>
+
+<li>
+Click Calculate.
+</li>
+
+<li>
+The calculator will show the remaining tolerance and Pass/Fail result.
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="info">
+
+<h2>
+Example
+</h2>
+
+<p>
+Suppose the specified flatness tolerance is 0.050 mm and the measured flatness deviation is 0.030 mm.
+</p>
+
+<p>
+Remaining tolerance = 0.050 − 0.030 = <strong>0.020 mm</strong>
+</p>
+
+<p>
+Because the measured deviation is within the specified tolerance, the result is <strong>PASS</strong>.
+</p>
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+function calculateGDT(){
+
+    const type =
+        document.getElementById("gdtType").value;
+
+    const measured =
+        parseFloat(
+            document.getElementById("measuredValue").value
+        );
+
+    const tolerance =
+        parseFloat(
+            document.getElementById("tolerance").value
+        );
+
+
+    if(isNaN(measured) || isNaN(tolerance)){
+
+        alert("Please enter measured deviation and tolerance.");
+
+        return;
+    }
+
+
+    if(measured < 0){
+
+        alert("Measured deviation cannot be negative.");
+
+        return;
+    }
+
+
+    if(tolerance <= 0){
+
+        alert("Allowed tolerance must be greater than 0.");
+
+        return;
+    }
+
+
+    const remaining =
+        tolerance - measured;
+
+
+    const featureNames = {
+
+        straightness:"Straightness",
+
+        flatness:"Flatness",
+
+        parallelism:"Parallelism",
+
+        perpendicularity:"Perpendicularity",
+
+        circularity:"Circularity",
+
+        cylindricity:"Cylindricity"
+
+    };
+
+
+    document.getElementById("resultType").textContent =
+        featureNames[type];
+
+    document.getElementById("resultMeasured").textContent =
+        measured.toFixed(3) + " mm";
+
+    document.getElementById("resultTolerance").textContent =
+        tolerance.toFixed(3) + " mm";
+
+    document.getElementById("resultRemaining").textContent =
+        remaining.toFixed(3) + " mm";
+
+
+    const status =
+        document.getElementById("status");
+
+
+    status.classList.remove("pass");
+    status.classList.remove("fail");
+
+
+    if(measured <= tolerance){
+
+        status.textContent =
+            "✓ PASS — Within GD&T Tolerance";
+
+        status.classList.add("pass");
+
+    }else{
+
+        status.textContent =
+            "✗ FAIL — Outside GD&T Tolerance";
+
+        status.classList.add("fail");
+
+    }
+
+
+    document.getElementById("result").style.display =
+        "block";
+
+}
+
+
+function clearCalculator(){
+
+    document.getElementById("gdtType").value =
+        "straightness";
+
+    document.getElementById("measuredValue").value =
+        "";
+
+    document.getElementById("tolerance").value =
+        "";
+
+    document.getElementById("result").style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
