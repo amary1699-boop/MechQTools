@@ -615,6 +615,14 @@ Result
 0.000 mm
 </div>
 
+<button
+class="btn btn-primary"
+onclick="useInBendDeduction()"
+style="margin-bottom:20px;"
+>
+Use in Bend Deduction →
+</button>
+
 
 <div class="result-row">
 
@@ -943,6 +951,73 @@ function calculateBA(){
 
 }
 
+
+/* =========================
+   USE IN BEND DEDUCTION
+========================= */
+
+function useInBendDeduction(){
+
+    const BA =
+        document.getElementById("baResult").textContent
+        .replace(" mm","");
+
+    const T =
+        document.getElementById("thickness").value;
+
+    const R =
+        document.getElementById("radius").value;
+
+    const A =
+        document.getElementById("angle").value;
+
+
+    if(
+        !BA ||
+        BA === "0.000" ||
+        !T ||
+        !R ||
+        !A
+    ){
+
+        alert(
+            "Please calculate Bend Allowance first."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "mechqtools_bendAllowance",
+        BA
+    );
+
+    localStorage.setItem(
+        "mechqtools_thickness",
+        T
+    );
+
+    localStorage.setItem(
+        "mechqtools_radius",
+        R
+    );
+
+    localStorage.setItem(
+        "mechqtools_angle",
+        A
+    );
+
+
+    window.location.href =
+        "bend-deduction-calculator.html";
+
+}
+
+
+/* =========================
+   CLEAR
+========================= */
 
 function clearCalculator(){
 
