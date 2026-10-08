@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Inspection Report Template - MechQTools</title>
+
+<meta name="description"
+content="Free inspection report template for Quality Engineers. Create dimensional inspection reports online with PASS and FAIL results.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.5;
+}
+
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+
+/* PAGE */
+
+.container{
+    max-width:1200px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:32px;
+    color:#e53232;
+    margin-bottom:8px;
+}
+
+.page-title p{
+    color:#666;
+}
+
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.04);
+}
+
+.card h2{
+    font-size:21px;
+    margin-bottom:20px;
+}
+
+
+/* FORM */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.form-group label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+}
+
+.form-group textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+
+/* TABLE */
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1000px;
+}
+
+th,
+td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+th{
+    background:#f1f1f1;
+    font-size:13px;
+}
+
+td{
+    background:#fff;
+}
+
+td input,
+td select{
+    width:100%;
+    padding:7px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:13px;
+}
+
+td input:focus,
+td select:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+
+/* RESULT */
+
+.result-pass{
+    color:#16833a;
+    font-weight:bold;
+}
+
+.result-fail{
+    color:#e53232;
+    font-weight:bold;
+}
+
+.result-pending{
+    color:#777;
+    font-weight:bold;
+}
+
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.btn-primary{
+    background:#e53232;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#c92727;
+}
+
+.btn-secondary{
+    background:#eeeeee;
+    color:#333;
+}
+
+.btn-secondary:hover{
+    background:#dddddd;
+}
+
+.btn-danger{
+    background:#555;
+    color:#fff;
+}
+
+.btn-danger:hover{
+    background:#333;
+}
+
+.delete-btn{
+    background:#eeeeee;
+    border:none;
+    color:#333;
+    padding:6px 10px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.delete-btn:hover{
+    background:#e53232;
+    color:#fff;
+}
+
+
+/* SUMMARY */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.summary-box{
+    border:1px solid #e5e5e5;
+    background:#fafafa;
+    border-radius:8px;
+    padding:15px;
+    text-align:center;
+}
+
+.summary-box strong{
+    display:block;
+    font-size:24px;
+    color:#e53232;
+}
+
+.summary-box span{
+    color:#666;
+    font-size:13px;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#151515;
+    color:#fff;
+    margin-top:50px;
+}
+
+.footer-container{
+    max-width:1200px;
+    margin:auto;
+    padding:35px 20px;
+    text-align:center;
+}
+
+.footer-logo{
+    color:#e53232;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.footer-text{
+    color:#aaa;
+    font-size:14px;
+}
+
+.copyright{
+    border-top:1px solid #333;
+    padding:15px;
+    text-align:center;
+    color:#888;
+    font-size:13px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+}
+
+
+/* PRINT */
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    header,
+    .buttons,
+    footer,
+    .delete-column{
+        display:none !important;
+    }
+
+    .container{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .card{
+        box-shadow:none;
+        border:1px solid #999;
+        page-break-inside:avoid;
+    }
+
+    input,
+    textarea,
+    select{
+        border:none !important;
+        padding:2px !important;
+        background:#fff !important;
+    }
+
+    table{
+        min-width:0;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+<div class="page-title">
+
+<h1>
+Inspection Report Template
+</h1>
+
+<p>
+Create a professional dimensional inspection report online.
+</p>
+
+</div>
+
+
+
+<!-- BASIC INFORMATION -->
+
+<div class="card">
+
+<h2>
+Inspection Information
+</h2>
+
+<div class="info-grid">
+
+
+<div class="form-group">
+
+<label>
+Part Name
+</label>
+
+<input
+type="text"
+id="partName"
+placeholder="Example: Bracket">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Part Number
+</label>
+
+<input
+type="text"
+id="partNumber"
+placeholder="Example: BR-001">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Drawing Number
+</label>
+
+<input
+type="text"
+id="drawingNumber"
+placeholder="Example: DWG-001">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Revision
+</label>
+
+<input
+type="text"
+id="revision"
+placeholder="Example: Rev A">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Customer
+</label>
+
+<input
+type="text"
+id="customer"
+placeholder="Customer Name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Inspection Date
+</label>
+
+<input
+type="date"
+id="inspectionDate">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Inspector Name
+</label>
+
+<input
+type="text"
+id="inspector"
+placeholder="Inspector Name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Material
+</label>
+
+<input
+type="text"
+id="material"
+placeholder="Example: MS / GI / SS">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Lot / Batch No.
+</label>
+
+<input
+type="text"
+id="batchNumber"
+placeholder="Batch Number">
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- INSPECTION TABLE -->
+
+<div class="card">
+
+<h2>
+Dimensional Inspection
+</h2>
+
+<div class="table-wrapper">
+
+<table id="inspectionTable">
+
+<thead>
+
+<tr>
+
+<th>
+Sr. No.
+</th>
+
+<th>
+Characteristic
+</th>
+
+<th>
+Drawing / Specification
+</th>
+
+<th>
+Nominal
+</th>
+
+<th>
+Upper Limit
+</th>
+
+<th>
+Lower Limit
+</th>
+
+<th>
+Actual
+</th>
+
+<th>
+Result
+</th>
+
+<th class="delete-column">
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="inspectionBody">
+
+
+<tr>
+
+<td>
+1
+</td>
+
+<td>
+<input
+type="text"
+placeholder="Length">
+
+</td>
+
+<td>
+<input
+type="text"
+placeholder="Drawing Ref.">
+
+</td>
+
+<td>
+<input
+type="number"
+step="any"
+class="nominal">
+
+</td>
+
+<td>
+<input
+type="number"
+step="any"
+class="upper">
+
+</td>
+
+<td>
+<input
+type="number"
+step="any"
+class="lower">
+
+</td>
+
+<td>
+<input
+type="number"
+step="any"
+class="actual">
+
+</td>
+
+<td class="result-cell">
+Pending
+</td>
+
+<td class="delete-column">
+
+<button
+class="delete-btn"
+onclick="deleteRow(this)">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+class="btn btn-primary"
+onclick="addRow()">
++ Add Inspection Row
+</button>
+
+</div>
+
+
+<div class="summary">
+
+<div class="summary-box">
+
+<strong id="totalCount">
+1
+</strong>
+
+<span>
+Total Characteristics
+</span>
+
+</div>
+
+
+<div class="summary-box">
+
+<strong id="passCount">
+0
+</strong>
+
+<span>
+PASS
+</span>
+
+</div>
+
+
+<div class="summary-box">
+
+<strong id="failCount">
+0
+</strong>
+
+<span>
+FAIL
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- REMARKS -->
+
+<div class="card">
+
+<h2>
+Remarks
+</h2>
+
+<div class="form-group">
+
+<textarea
+id="remarks"
+placeholder="Enter inspection remarks, observations, NCR details, corrective action, etc."></textarea>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+class="btn btn-primary"
+onclick="window.print()">
+Print Report
+</button>
+
+
+<button
+class="btn btn-secondary"
+onclick="clearReport()">
+Clear Report
+</button>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-logo">
+MechQTools
+</div>
+
+<p class="footer-text">
+Engineering &amp; Quality Tools for Professionals.
+</p>
+
+</div>
+
+
+<div class="copyright">
+© 2026 MechQTools. All Rights Reserved.
+</div>
+
+</footer>
+
+
+
+<script>
+
+
+/* ADD ROW */
+
+function addRow(){
+
+    const tbody =
+    document.getElementById(
+        "inspectionBody"
+    );
+
+    const row =
+    document.createElement("tr");
+
+    row.innerHTML = `
+
+        <td></td>
+
+        <td>
+            <input
+            type="text"
+            placeholder="Characteristic">
+        </td>
+
+        <td>
+            <input
+            type="text"
+            placeholder="Drawing Ref.">
+        </td>
+
+        <td>
+            <input
+            type="number"
+            step="any"
+            class="nominal">
+        </td>
+
+        <td>
+            <input
+            type="number"
+            step="any"
+            class="upper">
+        </td>
+
+        <td>
+            <input
+            type="number"
+            step="any"
+            class="lower">
+        </td>
+
+        <td>
+            <input
+            type="number"
+            step="any"
+            class="actual">
+        </td>
+
+        <td class="result-cell">
+            Pending
+        </td>
+
+        <td class="delete-column">
+
+            <button
+            class="delete-btn"
+            onclick="deleteRow(this)">
+            Delete
+            </button>
+
+        </td>
+
+    `;
+
+
+    tbody.appendChild(row);
+
+    updateSerialNumbers();
+
+    attachCalculationEvents();
+
+    updateSummary();
+
+}
+
+
+/* DELETE ROW */
+
+function deleteRow(button){
+
+    const tbody =
+    document.getElementById(
+        "inspectionBody"
+    );
+
+
+    if(tbody.rows.length <= 1){
+
+        alert(
+            "At least one inspection row is required."
+        );
+
+        return;
+
+    }
+
+
+    button
+    .closest("tr")
+    .remove();
+
+
+    updateSerialNumbers();
+
+    updateSummary();
+
+}
+
+
+/* SERIAL NUMBERS */
+
+function updateSerialNumbers(){
+
+    const rows =
+    document.querySelectorAll(
+        "#inspectionBody tr"
+    );
+
+
+    rows.forEach(
+        function(row,index){
+
+            row.cells[0].textContent =
+            index + 1;
+
+        }
+    );
+
+}
+
+
+/* CALCULATE RESULT */
+
+function calculateRow(row){
+
+    const upperInput =
+    row.querySelector(".upper");
+
+    const lowerInput =
+    row.querySelector(".lower");
+
+    const actualInput =
+    row.querySelector(".actual");
+
+    const resultCell =
+    row.querySelector(".result-cell");
+
+
+    const upper =
+    parseFloat(
+        upperInput.value
+    );
+
+    const lower =
+    parseFloat(
+        lowerInput.value
+    );
+
+    const actual =
+    parseFloat(
+        actualInput.value
+    );
+
+
+    resultCell.className =
+    "result-cell";
+
+
+    if(
+        isNaN(upper) ||
+        isNaN(lower) ||
+        isNaN(actual)
+    ){
+
+        resultCell.textContent =
+        "Pending";
+
+        resultCell.classList.add(
+            "result-pending"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        lower <= actual &&
+        actual <= upper
+    ){
+
+        resultCell.textContent =
+        "PASS";
+
+        resultCell.classList.add(
+            "result-pass"
+        );
+
+    }else{
+
+        resultCell.textContent =
+        "FAIL";
+
+        resultCell.classList.add(
+            "result-fail"
+        );
+
+    }
+
+
+    updateSummary();
+
+}
+
+
+/* ATTACH EVENTS */
+
+function attachCalculationEvents(){
+
+    const rows =
+    document.querySelectorAll(
+        "#inspectionBody tr"
+    );
+
+
+    rows.forEach(
+        function(row){
+
+            const inputs =
+            row.querySelectorAll(
+                ".upper, .lower, .actual"
+            );
+
+
+            inputs.forEach(
+                function(input){
+
+                    input.oninput =
+                    function(){
+
+                        calculateRow(row);
+
+                    };
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* SUMMARY */
+
+function updateSummary(){
+
+    const rows =
+    document.querySelectorAll(
+        "#inspectionBody tr"
+    );
+
+
+    let pass = 0;
+
+    let fail = 0;
+
+
+    rows.forEach(
+        function(row){
+
+            const result =
+            row.querySelector(
+                ".result-cell"
+            );
+
+
+            if(
+                result.textContent === "PASS"
+            ){
+
+                pass++;
+
+            }
+
+
+            if(
+                result.textContent === "FAIL"
+            ){
+
+                fail++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+    rows.length;
+
+
+    document.getElementById(
+        "passCount"
+    ).textContent =
+    pass;
+
+
+    document.getElementById(
+        "failCount"
+    ).textContent =
+    fail;
+
+}
+
+
+/* CLEAR REPORT */
+
+function clearReport(){
+
+    const confirmClear =
+    confirm(
+        "Are you sure you want to clear the complete inspection report?"
+    );
+
+
+    if(!confirmClear){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "partName"
+    ).value = "";
+
+    document.getElementById(
+        "partNumber"
+    ).value = "";
+
+    document.getElementById(
+        "drawingNumber"
+    ).value = "";
+
+    document.getElementById(
+        "revision"
+    ).value = "";
+
+    document.getElementById(
+        "customer"
+    ).value = "";
+
+    document.getElementById(
+        "inspectionDate"
+    ).value = "";
+
+    document.getElementById(
+        "inspector"
+    ).value = "";
+
+    document.getElementById(
+        "material"
+    ).value = "";
+
+    document.getElementById(
+        "batchNumber"
+    ).value = "";
+
+    document.getElementById(
+        "remarks"
+    ).value = "";
+
+
+    const tbody =
+    document.getElementById(
+        "inspectionBody"
+    );
+
+
+    tbody.innerHTML = `
+
+        <tr>
+
+        <td>
+        1
+        </td>
+
+        <td>
+        <input
+        type="text"
+        placeholder="Length">
+        </td>
+
+        <td>
+        <input
+        type="text"
+        placeholder="Drawing Ref.">
+        </td>
+
+        <td>
+        <input
+        type="number"
+        step="any"
+        class="nominal">
+        </td>
+
+        <td>
+        <input
+        type="number"
+        step="any"
+        class="upper">
+        </td>
+
+        <td>
+        <input
+        type="number"
+        step="any"
+        class="lower">
+        </td>
+
+        <td>
+        <input
+        type="number"
+        step="any"
+        class="actual">
+        </td>
+
+        <td class="result-cell result-pending">
+        Pending
+        </td>
+
+        <td class="delete-column">
+
+        <button
+        class="delete-btn"
+        onclick="deleteRow(this)">
+        Delete
+        </button>
+
+        </td>
+
+        </tr>
+
+    `;
+
+
+    attachCalculationEvents();
+
+    updateSummary();
+
+}
+
+
+/* START */
+
+attachCalculationEvents();
+
+updateSummary();
+
+</script>
+
+
+</body>
+
+</html>
