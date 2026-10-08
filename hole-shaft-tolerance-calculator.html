@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Hole & Shaft Tolerance Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free Hole and Shaft Tolerance Calculator for calculating maximum size, minimum size, total tolerance and actual size PASS or FAIL.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.container{
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:32px;
+    color:#e53232;
+    margin:0 0 8px;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.06);
+    border:1px solid #eeeeee;
+}
+
+.card h2{
+    margin-top:0;
+    font-size:22px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#e53232;
+    box-shadow:0 0 0 2px rgba(229,50,50,0.08);
+}
+
+/* BUTTONS */
+
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:22px;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#ffffff;
+}
+
+.calculate-btn:hover{
+    background:#c92525;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+.home-btn{
+    display:inline-block;
+    text-decoration:none;
+    background:#222;
+    color:#ffffff;
+    padding:12px 20px;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-btn:hover{
+    background:#000;
+}
+
+/* RESULT */
+
+.result-box{
+    display:none;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.result-item{
+    background:#f7f8fa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:15px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:14px;
+    margin-bottom:4px;
+}
+
+.result-item strong{
+    font-size:20px;
+}
+
+/* STATUS */
+
+.status{
+    margin-top:20px;
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+    font-size:20px;
+    font-weight:700;
+}
+
+.pass{
+    background:#e8f7ed;
+    color:#188544;
+    border:1px solid #b8e6c7;
+}
+
+.fail{
+    background:#fdecec;
+    color:#d62828;
+    border:1px solid #f3b6b6;
+}
+
+.error{
+    display:none;
+    margin-top:18px;
+    background:#fff1f1;
+    color:#d62828;
+    border:1px solid #f0b5b5;
+    padding:12px;
+    border-radius:7px;
+}
+
+/* INFORMATION */
+
+.info-list{
+    margin:0;
+    padding-left:20px;
+}
+
+.info-list li{
+    margin-bottom:8px;
+}
+
+.example-box{
+    background:#fff8f8;
+    border-left:4px solid #e53232;
+    padding:15px;
+    border-radius:6px;
+    margin-top:15px;
+}
+
+.example-box strong{
+    color:#e53232;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    background:#222;
+    color:#ffffff;
+    text-align:center;
+    padding:25px 20px;
+}
+
+footer p{
+    margin:5px 0;
+    font-size:14px;
+}
+
+footer a{
+    color:#ffffff;
+    text-decoration:none;
+}
+
+footer a:hover{
+    color:#e53232;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:14px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .container{
+        margin:30px auto;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .button-row{
+        flex-direction:column;
+    }
+
+    button,
+    .home-btn{
+        width:100%;
+        text-align:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+<div class="page-title">
+
+<h1>
+Hole & Shaft Tolerance Calculator
+</h1>
+
+<p>
+Calculate maximum size, minimum size, total tolerance and check actual size.
+</p>
+
+</div>
+
+
+<!-- INPUT CARD -->
+
+<div class="card">
+
+<h2>
+Enter Tolerance Details
+</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label for="nominal">
+Nominal Size (mm)
+</label>
+
+<input
+type="number"
+id="nominal"
+step="0.001"
+placeholder="Example: 50"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="upper">
+Upper Deviation (mm)
+</label>
+
+<input
+type="number"
+id="upper"
+step="0.001"
+placeholder="Example: +0.020"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="lower">
+Lower Deviation (mm)
+</label>
+
+<input
+type="number"
+id="lower"
+step="0.001"
+placeholder="Example: -0.010"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="actual">
+Actual Size (mm) - Optional
+</label>
+
+<input
+type="number"
+id="actual"
+step="0.001"
+placeholder="Example: 50.005"
+>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculateTolerance()"
+>
+Calculate
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+<a
+href="index.html"
+class="home-btn"
+>
+Home
+</a>
+
+</div>
+
+
+<div
+class="error"
+id="errorMessage"
+></div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div
+class="card result-box"
+id="resultBox"
+>
+
+<h2>
+Calculation Result
+</h2>
+
+
+<div class="result-grid">
+
+
+<div class="result-item">
+
+<span>
+Nominal Size
+</span>
+
+<strong id="resultNominal">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Upper Limit / Maximum Size
+</span>
+
+<strong id="resultMaximum">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Lower Limit / Minimum Size
+</span>
+
+<strong id="resultMinimum">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Total Tolerance
+</span>
+
+<strong id="resultTolerance">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Upper Deviation
+</span>
+
+<strong id="resultUpper">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Lower Deviation
+</span>
+
+<strong id="resultLower">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Actual Size
+</span>
+
+<strong id="resultActual">
+Not Entered
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Deviation from Nominal
+</span>
+
+<strong id="resultDeviation">
+-
+</strong>
+
+</div>
+
+</div>
+
+
+<div
+class="status"
+id="statusBox"
+>
+-
+</div>
+
+</div>
+
+
+<!-- EXPLANATION -->
+
+<div class="card">
+
+<h2>
+How This Calculator Works
+</h2>
+
+<ul class="info-list">
+
+<li>
+<strong>Maximum Size</strong> = Nominal Size + Upper Deviation
+</li>
+
+<li>
+<strong>Minimum Size</strong> = Nominal Size + Lower Deviation
+</li>
+
+<li>
+<strong>Total Tolerance</strong> = Maximum Size − Minimum Size
+</li>
+
+<li>
+<strong>Deviation from Nominal</strong> = Actual Size − Nominal Size
+</li>
+
+<li>
+Actual size is <strong>PASS</strong> when it lies between the minimum and maximum limits.
+</li>
+
+</ul>
+
+
+<div class="example-box">
+
+<strong>Example:</strong>
+
+<br><br>
+
+Nominal Size = 50 mm
+
+<br>
+
+Upper Deviation = +0.020 mm
+
+<br>
+
+Lower Deviation = −0.010 mm
+
+<br>
+
+Actual Size = 50.005 mm
+
+<br><br>
+
+Maximum Size = 50.020 mm
+
+<br>
+
+Minimum Size = 49.990 mm
+
+<br>
+
+Total Tolerance = 0.030 mm
+
+<br>
+
+Actual Size 50.005 mm → <strong>PASS</strong>
+
+</div>
+
+</div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+<strong>MechQTools</strong>
+</p>
+
+<p>
+Engineering & Quality Tools for Professionals.
+</p>
+
+<p>
+© 2026 MechQTools. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+/* CALCULATE TOLERANCE */
+
+function calculateTolerance(){
+
+    const nominal =
+    parseFloat(
+        document.getElementById("nominal").value
+    );
+
+    const upper =
+    parseFloat(
+        document.getElementById("upper").value
+    );
+
+    const lower =
+    parseFloat(
+        document.getElementById("lower").value
+    );
+
+    const actualValue =
+    document.getElementById("actual").value.trim();
+
+    const errorMessage =
+    document.getElementById("errorMessage");
+
+    const resultBox =
+    document.getElementById("resultBox");
+
+    const statusBox =
+    document.getElementById("statusBox");
+
+
+    /* CLEAR OLD ERROR */
+
+    errorMessage.style.display = "none";
+
+    resultBox.style.display = "none";
+
+
+    /* VALIDATION */
+
+    if(
+        isNaN(nominal) ||
+        isNaN(upper) ||
+        isNaN(lower)
+    ){
+
+        showError(
+            "Please enter Nominal Size, Upper Deviation and Lower Deviation."
+        );
+
+        return;
+    }
+
+
+    if(nominal <= 0){
+
+        showError(
+            "Nominal Size must be greater than 0."
+        );
+
+        return;
+    }
+
+
+    if(upper < lower){
+
+        showError(
+            "Upper Deviation must be greater than or equal to Lower Deviation."
+        );
+
+        return;
+    }
+
+
+    /* CALCULATIONS */
+
+    const maximum =
+        nominal + upper;
+
+    const minimum =
+        nominal + lower;
+
+    const tolerance =
+        maximum - minimum;
+
+
+    /* DISPLAY BASIC RESULTS */
+
+    document.getElementById(
+        "resultNominal"
+    ).textContent =
+        nominal.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "resultMaximum"
+    ).textContent =
+        maximum.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "resultMinimum"
+    ).textContent =
+        minimum.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "resultTolerance"
+    ).textContent =
+        tolerance.toFixed(3) + " mm";
+
+
+    document.getElementById(
+        "resultUpper"
+    ).textContent =
+        formatDeviation(upper);
+
+
+    document.getElementById(
+        "resultLower"
+    ).textContent =
+        formatDeviation(lower);
+
+
+    /* ACTUAL SIZE */
+
+    if(actualValue === ""){
+
+        document.getElementById(
+            "resultActual"
+        ).textContent =
+            "Not Entered";
+
+        document.getElementById(
+            "resultDeviation"
+        ).textContent =
+            "Not Available";
+
+        statusBox.textContent =
+            "Actual Size Not Entered";
+
+        statusBox.className =
+            "status";
+
+    }else{
+
+        const actual =
+        parseFloat(actualValue);
+
+
+        if(isNaN(actual)){
+
+            showError(
+                "Actual Size must be a valid number."
+            );
+
+            return;
+        }
+
+
+        const deviation =
+            actual - nominal;
+
+
+        document.getElementById(
+            "resultActual"
+        ).textContent =
+            actual.toFixed(3) + " mm";
+
+
+        document.getElementById(
+            "resultDeviation"
+        ).textContent =
+            formatDeviation(deviation);
+
+
+        /* PASS / FAIL */
+
+        if(
+            actual >= minimum &&
+            actual <= maximum
+        ){
+
+            statusBox.textContent =
+                "PASS ✓ — Actual Size is within tolerance.";
+
+            statusBox.className =
+                "status pass";
+
+        }else{
+
+            statusBox.textContent =
+                "FAIL ✕ — Actual Size is outside tolerance.";
+
+            statusBox.className =
+                "status fail";
+
+        }
+
+    }
+
+
+    resultBox.style.display =
+        "block";
+
+}
+
+
+/* FORMAT DEVIATION */
+
+function formatDeviation(value){
+
+    if(value > 0){
+
+        return "+" + value.toFixed(3) + " mm";
+
+    }
+
+    return value.toFixed(3) + " mm";
+
+}
+
+
+/* ERROR MESSAGE */
+
+function showError(message){
+
+    const errorMessage =
+    document.getElementById("errorMessage");
+
+    errorMessage.textContent =
+        message;
+
+    errorMessage.style.display =
+        "block";
+
+}
+
+
+/* CLEAR */
+
+function clearCalculator(){
+
+    document.getElementById(
+        "nominal"
+    ).value = "";
+
+    document.getElementById(
+        "upper"
+    ).value = "";
+
+    document.getElementById(
+        "lower"
+    ).value = "";
+
+    document.getElementById(
+        "actual"
+    ).value = "";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "errorMessage"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+
+</html>
