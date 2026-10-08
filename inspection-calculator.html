@@ -8,7 +8,7 @@
 <title>Inspection Calculator - MechQTools</title>
 
 <meta name="description"
-content="Free inspection calculator for checking measured dimensions, deviation, tolerance limits and PASS or FAIL results.">
+content="Free Inspection Calculator for checking measured dimensions, limits, deviation and PASS or FAIL results.">
 
 <style>
 
@@ -24,8 +24,6 @@ body{
     color:#222;
     line-height:1.6;
 }
-
-/* HEADER */
 
 header{
     background:#ffffff;
@@ -68,6 +66,7 @@ header{
     color:#e53232;
 }
 
+
 /* MAIN */
 
 .container{
@@ -78,7 +77,7 @@ header{
 
 .page-title{
     text-align:center;
-    margin-bottom:10px;
+    margin-bottom:30px;
 }
 
 .page-title h1{
@@ -91,20 +90,21 @@ header{
     font-size:15px;
 }
 
+
 /* CARD */
 
 .card{
-    background:#ffffff;
+    background:#fff;
     padding:30px;
-    margin-top:30px;
-    border-radius:12px;
-    box-shadow:0 3px 15px rgba(0,0,0,0.08);
+    border-radius:10px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
 }
 
 .card h2{
     font-size:22px;
     margin-bottom:20px;
 }
+
 
 /* FORM */
 
@@ -120,32 +120,33 @@ header{
 
 .form-group input{
     width:100%;
-    padding:12px 14px;
+    padding:11px 12px;
     border:1px solid #ccc;
-    border-radius:7px;
+    border-radius:6px;
     font-size:15px;
-    outline:none;
 }
 
 .form-group input:focus{
+    outline:none;
     border-color:#e53232;
 }
 
-/* BUTTONS */
+
+/* BUTTON */
 
 .buttons{
     display:flex;
-    gap:12px;
+    gap:10px;
     margin-top:20px;
 }
 
 button{
+    padding:11px 22px;
     border:none;
-    padding:12px 22px;
-    border-radius:7px;
+    border-radius:6px;
     font-size:15px;
-    font-weight:600;
     cursor:pointer;
+    font-weight:600;
 }
 
 .calculate-btn{
@@ -154,7 +155,7 @@ button{
 }
 
 .calculate-btn:hover{
-    background:#c92828;
+    background:#c92b2b;
 }
 
 .clear-btn{
@@ -165,6 +166,7 @@ button{
 .clear-btn:hover{
     background:#dddddd;
 }
+
 
 /* RESULT */
 
@@ -186,7 +188,7 @@ button{
 .result-table th,
 .result-table td{
     border:1px solid #ddd;
-    padding:12px;
+    padding:11px;
     text-align:left;
 }
 
@@ -195,12 +197,12 @@ button{
 }
 
 .status{
-    margin-top:20px;
-    padding:15px;
-    border-radius:8px;
-    font-size:18px;
-    font-weight:700;
+    margin-top:18px;
+    padding:12px;
+    border-radius:6px;
     text-align:center;
+    font-size:18px;
+    font-weight:bold;
 }
 
 .pass{
@@ -213,6 +215,7 @@ button{
     color:#d62828;
 }
 
+
 /* INFO */
 
 .info{
@@ -220,7 +223,7 @@ button{
     margin-top:25px;
     padding:22px;
     border-radius:10px;
-    border-left:4px solid #e53232;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
 }
 
 .info h3{
@@ -230,8 +233,9 @@ button{
 .info p{
     color:#555;
     font-size:14px;
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
+
 
 /* FOOTER */
 
@@ -244,9 +248,10 @@ footer{
 }
 
 footer p{
-    font-size:14px;
     color:#ccc;
+    font-size:14px;
 }
+
 
 /* MOBILE */
 
@@ -264,7 +269,7 @@ footer p{
     }
 
     .page-title h1{
-        font-size:26px;
+        font-size:27px;
     }
 
     .card{
@@ -279,10 +284,6 @@ footer p{
         width:100%;
     }
 
-    .result-table{
-        font-size:14px;
-    }
-
 }
 
 </style>
@@ -290,6 +291,7 @@ footer p{
 </head>
 
 <body>
+
 
 <!-- HEADER -->
 
@@ -301,47 +303,31 @@ footer p{
 MechQTools
 </a>
 
-<nav>
+<nav class="nav-links">
 
-<ul class="nav-links">
-
-<li>
 <a href="index.html">
 Home
 </a>
-</li>
 
-<li>
 <a href="index.html#mechanical">
 Mechanical
 </a>
-</li>
 
-<li>
 <a href="index.html#quality">
 Quality
 </a>
-</li>
 
-<li>
 <a href="index.html#templates">
 Templates
 </a>
-</li>
 
-<li>
 <a href="index.html#guides">
 Guides
 </a>
-</li>
 
-<li>
 <a href="index.html#about">
 About
 </a>
-</li>
-
-</ul>
 
 </nav>
 
@@ -352,14 +338,15 @@ About
 
 <!-- MAIN -->
 
-<main class="container">
+<div class="container">
+
 
 <div class="page-title">
 
 <h1>Inspection Calculator</h1>
 
 <p>
-Check measured dimensions, deviation, tolerance limits and inspection result.
+Check measured dimensions, deviation, limits and inspection status.
 </p>
 
 </div>
@@ -380,7 +367,7 @@ Nominal / Basic Size (mm)
 type="number"
 id="nominal"
 step="0.001"
-placeholder="Example: 50"
+placeholder="Example: 50.000"
 >
 
 </div>
@@ -453,11 +440,10 @@ Clear
 </div>
 
 
-<!-- RESULT -->
-
 <div class="result" id="result">
 
 <h3>Inspection Result</h3>
+
 
 <table class="result-table">
 
@@ -505,8 +491,8 @@ Clear
 
 
 <div
-class="status"
 id="status"
+class="status"
 >
 -
 </div>
@@ -515,8 +501,6 @@ id="status"
 
 </div>
 
-
-<!-- INFORMATION -->
 
 <div class="info">
 
@@ -527,11 +511,11 @@ id="status"
 </p>
 
 <p>
-If the measured size is between the Upper Limit and Lower Limit, the component is <strong>PASS</strong>.
+If the measured size is between the Upper Limit and Lower Limit, the result is <strong>PASS</strong>.
 </p>
 
 <p>
-If the measured size is outside the specified limits, the component is <strong>FAIL</strong>.
+If the measured size is outside the specified limits, the result is <strong>FAIL</strong>.
 </p>
 
 <p>
@@ -540,7 +524,8 @@ Example: Nominal = 50.000 mm, Upper Limit = 50.020 mm, Lower Limit = 49.990 mm a
 
 </div>
 
-</main>
+
+</div>
 
 
 <!-- FOOTER -->
@@ -615,21 +600,26 @@ function calculateInspection(){
     document.getElementById("rLower").textContent =
         lower.toFixed(3) + " mm";
 
+
     document.getElementById("rDeviation").textContent =
         (deviation >= 0 ? "+" : "") +
         deviation.toFixed(3) +
         " mm";
 
+
     document.getElementById("rUpperDiff").textContent =
         upperDifference.toFixed(3) +
         " mm";
+
 
     document.getElementById("rLowerDiff").textContent =
         lowerDifference.toFixed(3) +
         " mm";
 
 
-    const status = document.getElementById("status");
+    const status =
+        document.getElementById("status");
+
 
     if(
         measured >= lower &&
@@ -651,6 +641,7 @@ function calculateInspection(){
 
     document.getElementById("result").style.display =
         "block";
+
 }
 
 
@@ -670,6 +661,7 @@ function clearInspection(){
 }
 
 </script>
+
 
 </body>
 </html>
