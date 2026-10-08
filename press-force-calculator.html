@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Press Force Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free press force calculator for sheet metal cutting and shearing. Calculate required press force in kN and ton force.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    color:#e53232;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+.card{
+    background:#ffffff;
+    border:1px solid #e3e3e3;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+
+.card h2{
+    margin-top:0;
+    font-size:22px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#e53232;
+}
+
+.help-text{
+    font-size:13px;
+    color:#777;
+    margin-top:5px;
+}
+
+.button-row{
+    display:flex;
+    gap:12px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.calculate-btn{
+    background:#e53232;
+    color:#fff;
+}
+
+.calculate-btn:hover{
+    background:#c92727;
+}
+
+.clear-btn{
+    background:#eeeeee;
+    color:#333;
+}
+
+.clear-btn:hover{
+    background:#dddddd;
+}
+
+.result-box{
+    display:none;
+    margin-top:25px;
+    padding:20px;
+    background:#fff5f5;
+    border:1px solid #f0caca;
+    border-radius:10px;
+}
+
+.result-box h3{
+    margin-top:0;
+    color:#e53232;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.result-item{
+    background:#ffffff;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:12px;
+}
+
+.result-item span{
+    display:block;
+    color:#666;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.result-item strong{
+    font-size:18px;
+}
+
+.main-result{
+    margin-top:18px;
+    padding:18px;
+    background:#ffffff;
+    border:2px solid #e53232;
+    border-radius:9px;
+    text-align:center;
+}
+
+.main-result span{
+    display:block;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.main-result strong{
+    color:#e53232;
+    font-size:30px;
+}
+
+.secondary-result{
+    margin-top:12px;
+    padding:15px;
+    background:#ffffff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    text-align:center;
+}
+
+.secondary-result span{
+    display:block;
+    color:#666;
+    font-size:14px;
+}
+
+.secondary-result strong{
+    font-size:22px;
+}
+
+.formula{
+    margin-top:20px;
+    padding:15px;
+    background:#f7f7f7;
+    border-left:4px solid #e53232;
+    border-radius:5px;
+}
+
+.note{
+    background:#fff9e6;
+    border:1px solid #ead58a;
+    padding:15px;
+    border-radius:8px;
+    color:#5f5000;
+}
+
+.home-button{
+    display:inline-block;
+    margin-top:5px;
+    padding:11px 18px;
+    background:#e53232;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:600;
+}
+
+.home-button:hover{
+    background:#c92727;
+}
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#777;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .form-grid,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:27px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+<li>
+<a href="index.html#about">
+About
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="page-title">
+
+<h1>
+Press Force Calculator
+</h1>
+
+<p>
+Calculate approximate press force for sheet metal cutting and shearing.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Press Force Calculation
+</h2>
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label for="thickness">
+Sheet Thickness (mm)
+</label>
+
+<input
+type="number"
+id="thickness"
+value="2"
+min="0.01"
+step="0.01"
+>
+
+<div class="help-text">
+Example: 2 mm sheet
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="cutLength">
+Total Cutting Length (mm)
+</label>
+
+<input
+type="number"
+id="cutLength"
+value="100"
+min="0.1"
+step="0.1"
+>
+
+<div class="help-text">
+Total length being sheared/cut.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="shearStrength">
+Shear Strength (MPa)
+</label>
+
+<input
+type="number"
+id="shearStrength"
+value="300"
+min="1"
+step="1"
+>
+
+<div class="help-text">
+Typical sheet metal value.
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="safetyFactor">
+Safety Factor
+</label>
+
+<input
+type="number"
+id="safetyFactor"
+value="1.2"
+min="1"
+step="0.1"
+>
+
+<div class="help-text">
+Common practical range: 1.1–1.5
+</div>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="calculate-btn"
+onclick="calculatePressForce()"
+>
+Calculate Press Force
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCalculator()"
+>
+Clear
+</button>
+
+</div>
+
+
+<div class="result-box" id="resultBox">
+
+<h3>
+Calculation Result
+</h3>
+
+
+<div class="result-grid">
+
+<div class="result-item">
+
+<span>
+Sheet Thickness
+</span>
+
+<strong id="resultThickness">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Cutting Length
+</span>
+
+<strong id="resultLength">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Shear Strength
+</span>
+
+<strong id="resultStrength">
+-
+</strong>
+
+</div>
+
+
+<div class="result-item">
+
+<span>
+Safety Factor
+</span>
+
+<strong id="resultSafety">
+-
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="main-result">
+
+<span>
+Required Press Force
+</span>
+
+<strong id="resultForce">
+-
+</strong>
+
+</div>
+
+
+<div class="secondary-result">
+
+<span>
+Approximate Press Capacity Required</span>
+
+<strong id="resultTon">
+-
+</strong>
+
+</div>
+
+
+<div class="formula">
+
+<strong>
+Formula:
+</strong>
+
+<br><br>
+
+Basic Cutting Force
+
+<br>
+
+F = L × t × τ
+
+<br><br>
+
+Required Force
+
+<br>
+
+F<sub>required</sub> =
+F × Safety Factor
+
+<br><br>
+
+Where:
+
+<br>
+
+L = Cutting length in mm
+
+<br>
+
+t = Sheet thickness in mm
+
+<br>
+
+τ = Shear strength in MPa
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Example Calculation
+</h2>
+
+<p>
+
+Suppose:
+
+</p>
+
+<ul>
+
+<li>
+Sheet thickness = <strong>2 mm</strong>
+</li>
+
+<li>
+Cutting length = <strong>100 mm</strong>
+</li>
+
+<li>
+Shear strength = <strong>300 MPa</strong>
+</li>
+
+<li>
+Safety factor = <strong>1.2</strong>
+</li>
+
+</ul>
+
+<p>
+
+Basic cutting force:
+
+<br>
+
+100 × 2 × 300 = <strong>60,000 N</strong>
+
+</p>
+
+<p>
+
+With safety factor:
+
+<br>
+
+60,000 × 1.2 =
+<strong>72,000 N</strong>
+
+</p>
+
+<p>
+
+Therefore:
+
+<br>
+
+Required press force ≈
+<strong>72 kN</strong>
+
+<br>
+
+≈ <strong>7.34 ton-force</strong>
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Important Note
+</h2>
+
+<div class="note">
+
+This calculator gives an
+<strong>approximate cutting/shearing force</strong>.
+
+Actual press force can vary depending on:
+
+<ul>
+
+<li>
+Material grade
+</li>
+
+<li>
+Actual shear strength
+</li>
+
+<li>
+Punch and die clearance
+</li>
+
+<li>
+Cutting geometry
+</li>
+
+<li>
+Progressive die arrangement
+</li>
+
+<li>
+Number of cutting operations
+</li>
+
+<li>
+Press type and operating condition
+</li>
+
+</ul>
+
+For production tooling, always verify the force with the
+actual material specification and die/tooling design.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<a
+href="index.html"
+class="home-button"
+>
+← Back to Home
+</a>
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 MechQTools. All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+function calculatePressForce(){
+
+    const thickness =
+        parseFloat(
+            document.getElementById(
+                "thickness"
+            ).value
+        );
+
+    const cutLength =
+        parseFloat(
+            document.getElementById(
+                "cutLength"
+            ).value
+        );
+
+    const shearStrength =
+        parseFloat(
+            document.getElementById(
+                "shearStrength"
+            ).value
+        );
+
+    const safetyFactor =
+        parseFloat(
+            document.getElementById(
+                "safetyFactor"
+            ).value
+        );
+
+
+    if(
+        isNaN(thickness) ||
+        thickness <= 0
+    ){
+
+        alert(
+            "Please enter a valid sheet thickness."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(cutLength) ||
+        cutLength <= 0
+    ){
+
+        alert(
+            "Please enter a valid cutting length."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(shearStrength) ||
+        shearStrength <= 0
+    ){
+
+        alert(
+            "Please enter a valid shear strength."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(safetyFactor) ||
+        safetyFactor < 1
+    ){
+
+        alert(
+            "Safety factor must be 1.0 or greater."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Basic cutting force:
+
+       F = L × t × τ
+
+       Since:
+       1 MPa = 1 N/mm²
+
+       Result is directly in Newton.
+    */
+
+    const basicForce =
+        cutLength *
+        thickness *
+        shearStrength;
+
+
+    /*
+       Apply safety factor
+    */
+
+    const requiredForce =
+        basicForce *
+        safetyFactor;
+
+
+    /*
+       Convert Newton to kN
+    */
+
+    const forceKN =
+        requiredForce / 1000;
+
+
+    /*
+       Convert Newton to ton-force
+
+       1 ton-force ≈ 9806.65 N
+    */
+
+    const forceTon =
+        requiredForce / 9806.65;
+
+
+    document.getElementById(
+        "resultThickness"
+    ).textContent =
+        thickness.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultLength"
+    ).textContent =
+        cutLength.toFixed(2) +
+        " mm";
+
+
+    document.getElementById(
+        "resultStrength"
+    ).textContent =
+        shearStrength.toFixed(0) +
+        " MPa";
+
+
+    document.getElementById(
+        "resultSafety"
+    ).textContent =
+        safetyFactor.toFixed(2);
+
+
+    document.getElementById(
+        "resultForce"
+    ).textContent =
+        forceKN.toFixed(2) +
+        " kN";
+
+
+    document.getElementById(
+        "resultTon"
+    ).textContent =
+        forceTon.toFixed(2) +
+        " ton-force";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "block";
+
+}
+
+
+function clearCalculator(){
+
+    document.getElementById(
+        "thickness"
+    ).value =
+        "2";
+
+
+    document.getElementById(
+        "cutLength"
+    ).value =
+        "100";
+
+
+    document.getElementById(
+        "shearStrength"
+    ).value =
+        "300";
+
+
+    document.getElementById(
+        "safetyFactor"
+    ).value =
+        "1.2";
+
+
+    document.getElementById(
+        "resultBox"
+    ).style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+
+</html>
