@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DPMO & Sigma Calculator - MechQTools</title>
+
+<meta name="description"
+content="Free DPMO and Sigma Calculator. Calculate DPMO, DPU, yield and approximate sigma level with formulas and quality engineering explanations.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8fa;
+    color:#222;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e5e5;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:700;
+    color:#e53232;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:15px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    color:#e53232;
+}
+
+/* MAIN */
+
+.container{
+    max-width:1000px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    font-size:32px;
+    margin-bottom:8px;
+    color:#e53232;
+}
+
+.page-title p{
+    color:#666;
+    margin:0;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.card h2{
+    margin-top:0;
+    color:#333;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group small{
+    color:#777;
+    margin-top:4px;
+}
+
+.form-group input{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#e53232;
+}
+
+/* BUTTON */
+
+button{
+    margin-top:25px;
+    padding:12px 22px;
+    border:none;
+    border-radius:7px;
+    background:#e53232;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#c92525;
+}
+
+/* RESULTS */
+
+.results{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.result-box{
+    background:#f7f8fa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:16px;
+}
+
+.result-box span{
+    display:block;
+    color:#666;
+    font-size:14px;
+}
+
+.result-box strong{
+    display:block;
+    font-size:21px;
+    margin-top:4px;
+}
+
+/* STATUS */
+
+.status{
+    margin-top:20px;
+    padding:18px;
+    border-radius:8px;
+    text-align:center;
+    font-size:18px;
+    font-weight:700;
+    background:#f7f8fa;
+    border:1px solid #ddd;
+}
+
+/* FORMULA */
+
+.formula{
+    margin-top:25px;
+    padding:18px;
+    background:#fafafa;
+    border-left:4px solid #e53232;
+}
+
+.formula p{
+    margin:8px 0;
+}
+
+/* INFO */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.info-box{
+    background:#fafafa;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    padding:18px;
+}
+
+.info-box h3{
+    margin-top:0;
+    color:#e53232;
+}
+
+.note{
+    margin-top:20px;
+    padding:15px;
+    background:#fff8f8;
+    border:1px solid #f0cccc;
+    border-radius:7px;
+    color:#555;
+}
+
+/* TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:11px;
+    text-align:center;
+}
+
+th{
+    background:#f2f2f2;
+}
+
+/* HOME */
+
+.home-btn{
+    display:inline-block;
+    margin-top:5px;
+    padding:11px 20px;
+    background:#333;
+    color:#fff;
+    text-decoration:none;
+    border-radius:7px;
+}
+
+.home-btn:hover{
+    background:#111;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .form-grid,
+    .results,
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:26px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo">
+MechQTools
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="index.html#mechanical-tools">
+Mechanical
+</a>
+</li>
+
+<li>
+<a href="index.html#quality-tools">
+Quality
+</a>
+</li>
+
+<li>
+<a href="index.html#templates">
+Templates
+</a>
+</li>
+
+<li>
+<a href="index.html#guides-section">
+Guides
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="page-title">
+
+<h1>
+DPMO & Sigma Calculator
+</h1>
+
+<p>
+Calculate DPMO, DPU, Yield and approximate Sigma Level.
+</p>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div class="card">
+
+<h2>
+Process Data
+</h2>
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label for="units">
+Total Units
+</label>
+
+<input
+type="number"
+id="units"
+min="1"
+step="1"
+value="1000"
+>
+
+<small>
+Total number of products or units inspected.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="opportunities">
+Opportunities per Unit
+</label>
+
+<input
+type="number"
+id="opportunities"
+min="1"
+step="1"
+value="5"
+>
+
+<small>
+Possible defect opportunities in one unit.
+</small>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="defects">
+Total Defects
+</label>
+
+<input
+type="number"
+id="defects"
+min="0"
+step="1"
+value="10"
+>
+
+<small>
+Total number of defects found.
+</small>
+
+</div>
+
+</div>
+
+
+<button onclick="calculateDPMO()">
+Calculate DPMO & Sigma
+</button>
+
+</div>
+
+
+<!-- RESULTS -->
+
+<div class="card">
+
+<h2>
+Results
+</h2>
+
+<div class="results">
+
+
+<div class="result-box">
+
+<span>
+Total Units
+</span>
+
+<strong id="resultUnits">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Opportunities / Unit
+</span>
+
+<strong id="resultOpportunities">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Total Opportunities
+</span>
+
+<strong id="resultTotalOpportunities">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Total Defects
+</span>
+
+<strong id="resultDefects">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+DPU
+</span>
+
+<strong id="resultDPU">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+DPMO
+</span>
+
+<strong id="resultDPMO">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Yield
+</span>
+
+<strong id="resultYield">
+-
+</strong>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+Approx. Sigma Level
+</span>
+
+<strong id="resultSigma">
+-
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="status" id="status">
+Enter values and calculate.
+</div>
+
+
+<div class="formula">
+
+<h3>
+Formulas
+</h3>
+
+<p>
+<strong>Total Opportunities</strong>
+=
+Total Units × Opportunities per Unit
+</p>
+
+<p>
+<strong>DPU</strong>
+=
+Total Defects ÷ Total Units
+</p>
+
+<p>
+<strong>DPMO</strong>
+=
+Total Defects ÷ Total Opportunities × 1,000,000
+</p>
+
+<p>
+<strong>Yield %</strong>
+=
+(1 − Total Defects ÷ Total Opportunities) × 100
+</p>
+
+<p>
+<strong>Sigma Level</strong>
+=
+Approximate conversion from DPMO to Sigma Level
+</p>
+
+</div>
+
+</div>
+
+
+<!-- MEANING -->
+
+<div class="card">
+
+<h2>
+What do these terms mean?
+</h2>
+
+<div class="info-grid">
+
+
+<div class="info-box">
+
+<h3>
+DPMO
+</h3>
+
+<p>
+<strong>DPMO</strong> means
+<strong>Defects Per Million Opportunities</strong>.
+</p>
+
+<p>
+It tells us approximately how many defects would occur
+if there were 1,000,000 possible defect opportunities.
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<h3>
+DPU
+</h3>
+
+<p>
+<strong>DPU</strong> means
+<strong>Defects Per Unit</strong>.
+</p>
+
+<p>
+It shows the average number of defects found per unit.
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<h3>
+Yield
+</h3>
+
+<p>
+Yield tells us the percentage of opportunities that were
+completed without a defect.
+</p>
+
+<p>
+Higher yield generally means better process performance.
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<h3>
+Sigma Level
+</h3>
+
+<p>
+Sigma level is a statistical measure commonly used to
+describe process performance.
+</p>
+
+<p>
+Higher Sigma generally means fewer defects and better
+process performance.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SIGMA TABLE -->
+
+<div class="card">
+
+<h2>
+Approximate Sigma Reference
+</h2>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Sigma Level
+</th>
+
+<th>
+Approx. DPMO
+</th>
+
+<th>
+Meaning
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+2 Sigma
+</td>
+
+<td>
+≈ 308,537
+</td>
+
+<td>
+Poor Process Performance
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+3 Sigma
+</td>
+
+<td>
+≈ 66,807
+</td>
+
+<td>
+Basic Process Performance
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+4 Sigma
+</td>
+
+<td>
+≈ 6,210
+</td>
+
+<td>
+Good Process Performance
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+5 Sigma
+</td>
+
+<td>
+≈ 233
+</td>
+
+<td>
+Very Good Process Performance
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+6 Sigma
+</td>
+
+<td>
+≈ 3.4
+</td>
+
+<td>
+Very High Process Performance
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- EXAMPLE -->
+
+<div class="card">
+
+<h2>
+Example
+</h2>
+
+<p>
+Suppose a factory inspects:
+</p>
+
+<ul>
+
+<li>
+1,000 units
+</li>
+
+<li>
+5 defect opportunities per unit
+</li>
+
+<li>
+10 total defects
+</li>
+
+</ul>
+
+<p>
+Then:
+</p>
+
+<p>
+<strong>
+Total Opportunities = 1,000 × 5 = 5,000
+</strong>
+</p>
+
+<p>
+<strong>
+DPMO = 10 ÷ 5,000 × 1,000,000 = 2,000
+</strong>
+</p>
+
+<p>
+This means the process has approximately
+<strong>2,000 defects per million opportunities</strong>.
+</p>
+
+</div>
+
+
+<!-- NOTE -->
+
+<div class="card">
+
+<div class="note">
+
+<strong>Important:</strong>
+
+DPMO and Sigma calculations are useful for process
+performance analysis. The Sigma conversion shown here is
+an approximate industry-style reference and can vary
+depending on the convention used.
+
+For actual customer requirements, inspection standards,
+drawing requirements and company procedures should always
+be followed.
+
+</div>
+
+</div>
+
+
+<a href="index.html" class="home-btn">
+← Back to Home
+</a>
+
+
+</main>
+
+
+<script>
+
+function calculateDPMO(){
+
+    const units =
+        parseFloat(
+            document.getElementById("units").value
+        );
+
+    const opportunities =
+        parseFloat(
+            document.getElementById("opportunities").value
+        );
+
+    const defects =
+        parseFloat(
+            document.getElementById("defects").value
+        );
+
+
+    if(
+        isNaN(units) ||
+        isNaN(opportunities) ||
+        isNaN(defects)
+    ){
+
+        alert(
+            "Please enter all values."
+        );
+
+        return;
+    }
+
+
+    if(
+        units <= 0 ||
+        opportunities <= 0
+    ){
+
+        alert(
+            "Units and opportunities must be greater than 0."
+        );
+
+        return;
+    }
+
+
+    if(defects < 0){
+
+        alert(
+            "Defects cannot be negative."
+        );
+
+        return;
+    }
+
+
+    const totalOpportunities =
+        units * opportunities;
+
+
+    if(defects > totalOpportunities){
+
+        alert(
+            "Total defects cannot be greater than total opportunities."
+        );
+
+        return;
+    }
+
+
+    const DPU =
+        defects / units;
+
+
+    const DPMO =
+        (defects / totalOpportunities)
+        * 1000000;
+
+
+    const yieldPercent =
+        (
+            1 -
+            defects / totalOpportunities
+        ) * 100;
+
+
+    /*
+        Approximate Sigma conversion.
+
+        This uses the commonly used
+        1.5 sigma shift convention.
+    */
+
+    let sigma;
+
+
+    if(DPMO <= 3.4){
+
+        sigma = 6;
+
+    }
+    else if(DPMO <= 233){
+
+        sigma = 5;
+
+    }
+    else if(DPMO <= 6210){
+
+        sigma = 4;
+
+    }
+    else if(DPMO <= 66807){
+
+        sigma = 3;
+
+    }
+    else if(DPMO <= 308537){
+
+        sigma = 2;
+
+    }
+    else{
+
+        sigma = 1;
+
+    }
+
+
+    document.getElementById(
+        "resultUnits"
+    ).textContent =
+        units.toLocaleString();
+
+
+    document.getElementById(
+        "resultOpportunities"
+    ).textContent =
+        opportunities.toLocaleString();
+
+
+    document.getElementById(
+        "resultTotalOpportunities"
+    ).textContent =
+        totalOpportunities.toLocaleString();
+
+
+    document.getElementById(
+        "resultDefects"
+    ).textContent =
+        defects.toLocaleString();
+
+
+    document.getElementById(
+        "resultDPU"
+    ).textContent =
+        DPU.toFixed(4);
+
+
+    document.getElementById(
+        "resultDPMO"
+    ).textContent =
+        DPMO.toFixed(2);
+
+
+    document.getElementById(
+        "resultYield"
+    ).textContent =
+        yieldPercent.toFixed(3) + "%";
+
+
+    document.getElementById(
+        "resultSigma"
+    ).textContent =
+        sigma + " Sigma";
+
+
+    let performance;
+
+
+    if(sigma >= 6){
+
+        performance =
+            "Very High Process Performance";
+
+    }
+    else if(sigma >= 5){
+
+        performance =
+            "Very Good Process Performance";
+
+    }
+    else if(sigma >= 4){
+
+        performance =
+            "Good Process Performance";
+
+    }
+    else if(sigma >= 3){
+
+        performance =
+            "Basic Process Performance";
+
+    }
+    else if(sigma >= 2){
+
+        performance =
+            "Poor Process Performance";
+
+    }
+    else{
+
+        performance =
+            "Very Poor Process Performance";
+
+    }
+
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        "Process Performance: " +
+        performance;
+
+}
+
+</script>
+
+</body>
+
+</html>
