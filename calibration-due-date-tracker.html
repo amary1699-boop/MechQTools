@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calibration Due Date Tracker - MechQTools</title>
+<meta name="description" content="Track measuring instrument calibration dates, due dates, overdue instruments and calibration records online.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --white: #ffffff;
+    --text: #222222;
+    --muted: #666666;
+    --border: #e2e5e9;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.logo {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.home-btn {
+    text-decoration: none;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.home-btn:hover { background: var(--red); color: white; }
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 28px auto;
+}
+.page-title { text-align: center; margin-bottom: 24px; }
+.page-title h1 { margin: 0 0 8px; font-size: 30px; }
+.page-title p { color: var(--muted); margin: 0; }
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.035);
+}
+.card h2 { font-size: 21px; margin: 0 0 18px; }
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: bold; font-size: 14px; }
+input, select, textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cfd4da;
+    border-radius: 6px;
+    font: inherit;
+    background: white;
+    min-width: 0;
+}
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid rgba(229,50,50,.15);
+    border-color: var(--red);
+}
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+button {
+    border: 1px solid var(--red);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    background: var(--red);
+    color: white;
+}
+button:hover { opacity: .9; }
+button.secondary {
+    background: white;
+    color: var(--red);
+}
+button.danger {
+    background: white;
+    color: #b42318;
+    border-color: #b42318;
+}
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+.stat {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 17px;
+}
+.stat span { display: block; color: var(--muted); font-size: 14px; }
+.stat strong { display: block; font-size: 27px; margin-top: 5px; }
+.table-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.search { max-width: 350px; }
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+th, td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 14px;
+    vertical-align: top;
+}
+th { background: #f4f5f7; white-space: nowrap; }
+.status {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.status.ok { background: #dcfce7; color: #166534; }
+.status.soon { background: #fef3c7; color: #92400e; }
+.status.overdue { background: #fee2e2; color: #991b1b; }
+.status.unknown { background: #e5e7eb; color: #374151; }
+.small-btn { padding: 6px 9px; font-size: 12px; margin: 2px; }
+.note { color: var(--muted); font-size: 13px; }
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 22px 12px;
+    margin-top: 40px;
+}
+footer p { margin: 4px; }
+.empty { text-align: center; color: var(--muted); padding: 25px; }
+@media (max-width: 800px) {
+    .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .page-title h1 { font-size: 25px; }
+}
+@media (max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .card { padding: 15px; }
+    .logo { font-size: 20px; }
+    .header-inner { flex-wrap: wrap; }
+    .stat { padding: 12px; }
+    .stat strong { font-size: 23px; }
+}
+@media print {
+    header, footer, .form-card, .table-tools, .no-print, .page-title p {
+        display: none !important;
+    }
+    body { background: white; }
+    .container { width: 100%; max-width: none; margin: 0; }
+    .card, .stat { box-shadow: none; border: 1px solid #ccc; }
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .table-wrap { overflow: visible; }
+    table { min-width: 0; }
+    th, td { font-size: 10px; padding: 6px 4px; }
+    .actions-cell { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="index.html">MechQTools</a>
+        <a class="home-btn" href="index.html">← Home</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="page-title">
+        <h1>Calibration Due Date Tracker</h1>
+        <p>Track measuring instruments, calibration dates and upcoming due dates.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <span>Total Instruments</span>
+            <strong id="totalCount">0</strong>
+        </div>
+        <div class="stat">
+            <span>Calibration Valid</span>
+            <strong id="validCount">0</strong>
+        </div>
+        <div class="stat">
+            <span>Due Within 30 Days</span>
+            <strong id="soonCount">0</strong>
+        </div>
+        <div class="stat">
+            <span>Overdue</span>
+            <strong id="overdueCount">0</strong>
+        </div>
+    </section>
+
+    <section class="card form-card">
+        <h2 id="formTitle">Add Instrument</h2>
+
+        <form id="instrumentForm">
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="instrumentName">Instrument Name *</label>
+                    <input id="instrumentName" required
+                           placeholder="e.g. Vernier Caliper">
+                </div>
+
+                <div class="field">
+                    <label for="instrumentId">Instrument ID / Code *</label>
+                    <input id="instrumentId" required
+                           placeholder="e.g. QC-001">
+                </div>
+
+                <div class="field">
+                    <label for="serialNumber">Serial Number</label>
+                    <input id="serialNumber" placeholder="Serial number">
+                </div>
+
+                <div class="field">
+                    <label for="department">Department / Location</label>
+                    <input id="department" placeholder="e.g. Quality Lab">
+                </div>
+
+                <div class="field">
+                    <label for="lastDate">Last Calibration Date *</label>
+                    <input id="lastDate" type="date" required>
+                </div>
+
+                <div class="field">
+                    <label for="dueDate">Next Due Date *</label>
+                    <input id="dueDate" type="date" required>
+                </div>
+
+                <div class="field">
+                    <label for="vendor">Calibration Agency</label>
+                    <input id="vendor" placeholder="Agency / Lab name">
+                </div>
+
+                <div class="field">
+                    <label for="certificate">Certificate Number</label>
+                    <input id="certificate" placeholder="Certificate number">
+                </div>
+
+                <div class="field">
+                    <label for="owner">Responsible Person</label>
+                    <input id="owner" placeholder="Employee name">
+                </div>
+
+                <div class="field">
+                    <label for="remarks">Remarks</label>
+                    <input id="remarks" placeholder="Optional notes">
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button type="submit" id="saveBtn">Add Instrument</button>
+                <button type="button" class="secondary" id="cancelEditBtn"
+                        hidden>Cancel Edit</button>
+                <button type="reset" class="secondary" id="clearBtn">Clear Form</button>
+            </div>
+        </form>
+
+        <p class="note">
+            * Required fields. Keep instrument IDs unique. This tracker is a
+            record-keeping aid; verify calibration status against your approved
+            calibration procedure and certificates.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>Instrument Calibration Register</h2>
+
+        <div class="table-tools">
+            <input id="searchInput" class="search"
+                   placeholder="Search name, ID, department, agency...">
+            <div class="actions" style="margin-top:0">
+                <button type="button" class="secondary" id="exportBtn">
+                    Export CSV
+                </button>
+                <button type="button" class="secondary" id="printBtn">
+                    Print / Save PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr.</th>
+                        <th>Instrument</th>
+                        <th>Instrument ID</th>
+                        <th>Serial No.</th>
+                        <th>Department</th>
+                        <th>Last Calibration</th>
+                        <th>Next Due Date</th>
+                        <th>Status</th>
+                        <th>Agency / Certificate</th>
+                        <th>Responsible Person</th>
+                        <th>Remarks</th>
+                        <th class="actions-cell">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="emptyMessage" class="empty">
+            No instruments added yet. Use the form above to add your first instrument.
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p><strong>MechQTools</strong></p>
+    <p>Engineering &amp; Quality Tools for Professionals.</p>
+    <p>© <span id="year"></span> MechQTools. All rights reserved.</p>
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "mechqtools_calibration_tracker_v1";
+
+const form = document.getElementById("instrumentForm");
+const tableBody = document.getElementById("tableBody");
+const emptyMessage = document.getElementById("emptyMessage");
+const searchInput = document.getElementById("searchInput");
+
+const fields = [
+    "instrumentName", "instrumentId", "serialNumber", "department",
+    "lastDate", "dueDate", "vendor", "certificate", "owner", "remarks"
+];
+
+let instruments = loadInstruments();
+let editingId = null;
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function loadInstruments() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        alert("Saved records could not be read from this browser.");
+        return [];
+    }
+}
+
+function saveInstruments() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(instruments));
+        return true;
+    } catch (error) {
+        alert("Records could not be saved. Check browser storage settings.");
+        return false;
+    }
+}
+
+function getFormData() {
+    const data = {};
+    fields.forEach(id => {
+        data[id] = document.getElementById(id).value.trim();
+    });
+    return data;
+}
+
+function fillForm(item) {
+    fields.forEach(id => {
+        document.getElementById(id).value = item[id] || "";
+    });
+}
+
+function resetFormState() {
+    editingId = null;
+    form.reset();
+    document.getElementById("formTitle").textContent = "Add Instrument";
+    document.getElementById("saveBtn").textContent = "Add Instrument";
+    document.getElementById("cancelEditBtn").hidden = true;
+}
+
+function startEdit(id) {
+    const item = instruments.find(record => record.id === id);
+    if (!item) return;
+
+    editingId = id;
+    fillForm(item);
+    document.getElementById("formTitle").textContent = "Edit Instrument";
+    document.getElementById("saveBtn").textContent = "Update Instrument";
+    document.getElementById("cancelEditBtn").hidden = false;
+
+    document.querySelector(".form-card").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function getStatus(dueDate) {
+    if (!dueDate) {
+        return { label: "No Due Date", className: "unknown" };
+    }
+
+    // Compare calendar dates, avoiding time-of-day differences.
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const due = new Date(dueDate + "T00:00:00");
+    if (Number.isNaN(due.getTime())) {
+        return { label: "Invalid Date", className: "unknown" };
+    }
+
+    const days = Math.round((due - today) / 86400000);
+
+    if (days < 0) {
+        return {
+            label: "Overdue (" + Math.abs(days) + "d)",
+            className: "overdue"
+        };
+    }
+
+    if (days <= 30) {
+        return {
+            label: days === 0 ? "Due Today" : "Due in " + days + "d",
+            className: "soon"
+        };
+    }
+
+    return { label: "Valid", className: "ok" };
+}
+
+function formatDate(value) {
+    if (!value) return "—";
+    const parts = value.split("-");
+    if (parts.length !== 3) return value;
+    return parts[2] + "-" + parts[1] + "-" + parts[0];
+}
+
+function addCell(row, value) {
+    const cell = document.createElement("td");
+    cell.textContent = value || "—";
+    row.appendChild(cell);
+    return cell;
+}
+
+function render() {
+    tableBody.replaceChildren();
+
+    const query = searchInput.value.trim().toLowerCase();
+
+    const filtered = instruments.filter(item => {
+        const searchable = fields.map(key => item[key] || "").join(" ");
+        return searchable.toLowerCase().includes(query);
+    });
+
+    instruments.forEach(() => {});
+
+    let valid = 0;
+    let soon = 0;
+    let overdue = 0;
+
+    instruments.forEach(item => {
+        const status = getStatus(item.dueDate);
+        if (status.className === "ok") valid++;
+        if (status.className === "soon") soon++;
+        if (status.className === "overdue") overdue++;
+    });
+
+    document.getElementById("totalCount").textContent = instruments.length;
+    document.getElementById("validCount").textContent = valid;
+    document.getElementById("soonCount").textContent = soon;
+    document.getElementById("overdueCount").textContent = overdue;
+
+    filtered.forEach((item, index) => {
+        const row = document.createElement("tr");
+        addCell(row, String(index + 1));
+        addCell(row, item.instrumentName);
+        addCell(row, item.instrumentId);
+        addCell(row, item.serialNumber);
+        addCell(row, item.department);
+        addCell(row, formatDate(item.lastDate));
+        addCell(row, formatDate(item.dueDate));
+
+        const statusCell = document.createElement("td");
+        const status = getStatus(item.dueDate);
+        const badge = document.createElement("span");
+        badge.className = "status " + status.className;
+        badge.textContent = status.label;
+        statusCell.appendChild(badge);
+        row.appendChild(statusCell);
+
+        addCell(row, [item.vendor, item.certificate]
+            .filter(Boolean).join(" / "));
+        addCell(row, item.owner);
+        addCell(row, item.remarks);
+
+        const actionCell = document.createElement("td");
+        actionCell.className = "actions-cell";
+
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "small-btn secondary";
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => startEdit(item.id));
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "small-btn danger";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => deleteInstrument(item.id));
+
+        actionCell.append(editButton, deleteButton);
+        row.appendChild(actionCell);
+        tableBody.appendChild(row);
+    });
+
+    emptyMessage.style.display = filtered.length ? "none" : "block";
+    if (instruments.length && !filtered.length) {
+        emptyMessage.textContent = "No instruments match your search.";
+    } else {
+        emptyMessage.textContent =
+            "No instruments added yet. Use the form above to add your first instrument.";
+    }
+}
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const data = getFormData();
+
+    if (data.lastDate && data.dueDate && data.dueDate < data.lastDate) {
+        alert("Next Due Date cannot be earlier than Last Calibration Date.");
+        return;
+    }
+
+    const duplicate = instruments.find(item =>
+        item.instrumentId.toLowerCase() === data.instrumentId.toLowerCase() &&
+        item.id !== editingId
+    );
+
+    if (duplicate) {
+        alert("This Instrument ID already exists. Please use a unique ID.");
+        document.getElementById("instrumentId").focus();
+        return;
+    }
+
+    if (editingId) {
+        const index = instruments.findIndex(item => item.id === editingId);
+        if (index === -1) {
+            alert("Record not found. Please add the instrument again.");
+            resetFormState();
+            return;
+        }
+        instruments[index] = { ...instruments[index], ...data };
+    } else {
+        data.id = (window.crypto && crypto.randomUUID)
+            ? crypto.randomUUID()
+            : String(Date.now()) + Math.random().toString(16).slice(2);
+        instruments.push(data);
+    }
+
+    if (!saveInstruments()) return;
+
+    resetFormState();
+    render();
+});
+
+function deleteInstrument(id) {
+    const item = instruments.find(record => record.id === id);
+    if (!item) return;
+
+    if (!confirm("Delete instrument " + item.instrumentId + "?")) return;
+
+    const previous = instruments;
+    instruments = instruments.filter(record => record.id !== id);
+
+    if (!saveInstruments()) {
+        instruments = previous;
+        render();
+        return;
+    }
+
+    if (editingId === id) resetFormState();
+    render();
+}
+
+document.getElementById("cancelEditBtn").addEventListener("click", resetFormState);
+
+document.getElementById("clearBtn").addEventListener("click", function() {
+    setTimeout(resetFormState, 0);
+});
+
+searchInput.addEventListener("input", render);
+
+document.getElementById("printBtn").addEventListener("click", function() {
+    window.print();
+});
+
+function csvEscape(value) {
+    const text = String(value ?? "");
+    return '"' + text.replace(/"/g, '""') + '"';
+}
+
+document.getElementById("exportBtn").addEventListener("click", function() {
+    if (!instruments.length) {
+        alert("There are no instrument records to export.");
+        return;
+    }
+
+    const headers = [
+        "Instrument Name", "Instrument ID", "Serial Number",
+        "Department", "Last Calibration Date", "Next Due Date",
+        "Status", "Calibration Agency", "Certificate Number",
+        "Responsible Person", "Remarks"
+    ];
+
+    const rows = instruments.map(item => [
+        item.instrumentName, item.instrumentId, item.serialNumber,
+        item.department, item.lastDate, item.dueDate,
+        getStatus(item.dueDate).label, item.vendor, item.certificate,
+        item.owner, item.remarks
+    ]);
+
+    const csv = [headers, ...rows]
+        .map(row => row.map(csvEscape).join(","))
+        .join("\r\n");
+
+    const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "calibration-register.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+});
+
+render();
+</script>
+
+</body>
+</html>
