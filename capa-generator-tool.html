@@ -1,0 +1,947 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CAPA Generator Tool - MechQTools</title>
+<meta name="description" content="Create professional Corrective and Preventive Action (CAPA) reports for manufacturing and quality management.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --border: #dfe3e8;
+    --text: #222;
+    --muted: #666;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.logo {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 16px;
+}
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+}
+
+.page-title p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.panel, .report {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    font-size: 20px;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--red);
+}
+
+.section-title {
+    margin-top: 28px !important;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field {
+    min-width: 0;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cfd4da;
+    border-radius: 7px;
+    font: inherit;
+    font-size: 14px;
+    background: #fff;
+    color: #222;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #f8caca;
+    border-color: var(--red);
+}
+
+textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 5px 0 0;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: var(--red);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #333;
+    color: #fff;
+}
+
+.btn-light {
+    background: #e9edf2;
+    color: #222;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.report-header {
+    text-align: center;
+    border-bottom: 3px solid var(--red);
+    padding-bottom: 15px;
+    margin-bottom: 18px;
+}
+
+.report-header h2 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.report-header p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.report-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.meta-item {
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 5px;
+    overflow-wrap: anywhere;
+}
+
+.meta-label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 3px;
+}
+
+.meta-value {
+    font-weight: bold;
+    white-space: pre-wrap;
+}
+
+.report-section {
+    margin: 20px 0;
+    break-inside: auto;
+}
+
+.report-section h3 {
+    font-size: 15px;
+    background: #fce9e9;
+    border-left: 4px solid var(--red);
+    padding: 9px 10px;
+    margin: 0 0 10px;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.report-table th,
+.report-table td {
+    border: 1px solid #cbd0d6;
+    padding: 9px;
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.report-table th {
+    background: #f0f2f5;
+    width: 30%;
+    font-weight: bold;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.report-table tr {
+    break-inside: avoid;
+}
+
+.report-note {
+    font-size: 12px;
+    color: #555;
+    margin-top: 18px;
+}
+
+.signature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 35px;
+}
+
+.signature-box {
+    border-top: 1px solid #777;
+    padding-top: 8px;
+    font-size: 12px;
+    min-height: 35px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .page-title h1 {
+        font-size: 25px;
+    }
+
+    .panel, .report {
+        padding: 15px;
+    }
+
+    .report-table th,
+    .report-table td {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .signature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 10pt;
+    }
+
+    header, footer, .page-title, #formPanel,
+    .actions, .no-print {
+        display: none !important;
+    }
+
+    main {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .report {
+        display: block !important;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .report-header {
+        border-bottom: 2px solid #333;
+    }
+
+    .report-section {
+        break-inside: auto;
+    }
+
+    .report-section h3 {
+        background: #eee !important;
+        border-left-color: #555;
+    }
+
+    .report-table th,
+    .report-table td {
+        border: 1px solid #777;
+        color: #000;
+        padding: 7px;
+        font-size: 9pt;
+    }
+
+    .report-table th {
+        background: #eee !important;
+    }
+
+    .meta-item {
+        border-color: #777;
+    }
+
+    .report-note {
+        color: #333;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="index.html">MechQTools</a>
+        <a class="back-link" href="index.html">← Back to Home</a>
+    </div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h1>CAPA Generator Tool</h1>
+        <p>Create a Corrective and Preventive Action report for manufacturing and quality problems.</p>
+    </div>
+
+    <section class="panel" id="formPanel">
+        <h2>1. CAPA Information</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="capaNo">CAPA Number *</label>
+                <input id="capaNo" placeholder="e.g. CAPA-2026-001" required>
+            </div>
+
+            <div class="field">
+                <label for="capaDate">Date *</label>
+                <input type="date" id="capaDate" required>
+            </div>
+
+            <div class="field">
+                <label for="raisedBy">Raised By *</label>
+                <input id="raisedBy" placeholder="Name of Quality Engineer" required>
+            </div>
+
+            <div class="field">
+                <label for="department">Department</label>
+                <input id="department" placeholder="e.g. Quality / Production">
+            </div>
+
+            <div class="field">
+                <label for="source">Problem Source *</label>
+                <select id="source" required>
+                    <option value="">Select source</option>
+                    <option>Customer Complaint</option>
+                    <option>Internal Rejection</option>
+                    <option>Supplier Quality Issue</option>
+                    <option>Internal Audit</option>
+                    <option>External Audit</option>
+                    <option>Process Non-Conformance</option>
+                    <option>Repeated Defect</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="priority">Priority</label>
+                <select id="priority">
+                    <option value="">Select priority</option>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                    <option>Critical</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="section-title">2. Part and Problem Details</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="partName">Part / Product Name</label>
+                <input id="partName" placeholder="e.g. Sheet Metal Bracket">
+            </div>
+
+            <div class="field">
+                <label for="partNo">Part / Drawing Number</label>
+                <input id="partNo" placeholder="Part number or drawing number">
+            </div>
+
+            <div class="field">
+                <label for="supplier">Supplier / Customer</label>
+                <input id="supplier" placeholder="Company name">
+            </div>
+
+            <div class="field">
+                <label for="lotNo">Lot / Batch Number</label>
+                <input id="lotNo" placeholder="Lot or batch reference">
+            </div>
+
+            <div class="field">
+                <label for="quantityAffected">Quantity Affected</label>
+                <input id="quantityAffected" type="number" min="0" placeholder="0">
+            </div>
+
+            <div class="field">
+                <label for="process">Process / Machine</label>
+                <input id="process" placeholder="e.g. Bending / Press Machine">
+            </div>
+
+            <div class="field full">
+                <label for="problem">Problem Description *</label>
+                <textarea id="problem" placeholder="Describe what happened, where it occurred and when it was detected." required></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="requirement">Requirement / Standard</label>
+                <textarea id="requirement" placeholder="Drawing specification, control plan requirement or customer standard."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="evidence">Evidence / Reference</label>
+                <textarea id="evidence" placeholder="Inspection report number, defect records, audit reference or measurement data."></textarea>
+            </div>
+        </div>
+
+        <h2 class="section-title">3. Immediate Correction and Containment</h2>
+
+        <div class="grid">
+            <div class="field full">
+                <label for="correction">Immediate Correction</label>
+                <textarea id="correction" placeholder="Describe the immediate fix or correction made to address the detected problem."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="containment">Containment Action</label>
+                <textarea id="containment" placeholder="e.g. Segregate stock, stop shipment, inspect affected batches and inform stakeholders."></textarea>
+            </div>
+
+            <div class="field">
+                <label for="containmentBy">Containment Responsible Person</label>
+                <input id="containmentBy" placeholder="Name / Department">
+            </div>
+
+            <div class="field">
+                <label for="containmentDate">Containment Completion Date</label>
+                <input type="date" id="containmentDate">
+            </div>
+        </div>
+
+        <h2 class="section-title">4. Root Cause Analysis — 5 Why</h2>
+
+        <p class="hint">Enter evidence-based answers. Do not assume a root cause without verification.</p>
+
+        <div class="grid">
+            <div class="field full">
+                <label for="why1">Why 1 — Why did the problem occur?</label>
+                <textarea id="why1" placeholder="First level cause"></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="why2">Why 2 — Why did that cause occur?</label>
+                <textarea id="why2" placeholder="Second level cause"></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="why3">Why 3</label>
+                <textarea id="why3" placeholder="Third level cause"></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="why4">Why 4</label>
+                <textarea id="why4" placeholder="Fourth level cause"></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="why5">Why 5</label>
+                <textarea id="why5" placeholder="Fifth level cause, if applicable"></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="rootCause">Verified Root Cause *</label>
+                <textarea id="rootCause" placeholder="State the confirmed root cause supported by evidence." required></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="causeEvidence">Root Cause Verification / Evidence</label>
+                <textarea id="causeEvidence" placeholder="Trial results, machine settings, records, observations or other evidence."></textarea>
+            </div>
+        </div>
+
+        <h2 class="section-title">5. Corrective and Preventive Actions</h2>
+
+        <div class="grid">
+            <div class="field full">
+                <label for="correctiveAction">Corrective Action *</label>
+                <textarea id="correctiveAction" placeholder="Action to eliminate the confirmed root cause and prevent recurrence." required></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="preventiveAction">Preventive Action</label>
+                <textarea id="preventiveAction" placeholder="Action to prevent similar problems in other products, machines or processes."></textarea>
+            </div>
+
+            <div class="field">
+                <label for="actionOwner">Action Owner *</label>
+                <input id="actionOwner" placeholder="Responsible person / department" required>
+            </div>
+
+            <div class="field">
+                <label for="targetDate">Target Completion Date *</label>
+                <input type="date" id="targetDate" required>
+            </div>
+
+            <div class="field">
+                <label for="actualDate">Actual Completion Date</label>
+                <input type="date" id="actualDate">
+            </div>
+
+            <div class="field">
+                <label for="actionStatus">Action Status</label>
+                <select id="actionStatus">
+                    <option>Open</option>
+                    <option>In Progress</option>
+                    <option>Completed - Pending Verification</option>
+                    <option>Verified and Closed</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label for="actionRemarks">Action Implementation Remarks</label>
+                <textarea id="actionRemarks" placeholder="Describe implementation details and supporting records."></textarea>
+            </div>
+        </div>
+
+        <h2 class="section-title">6. Effectiveness Verification</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="verificationDate">Verification Date</label>
+                <input type="date" id="verificationDate">
+            </div>
+
+            <div class="field">
+                <label for="verifiedBy">Verified By</label>
+                <input id="verifiedBy" placeholder="Quality / Authorized person">
+            </div>
+
+            <div class="field">
+                <label for="verificationResult">Verification Result</label>
+                <select id="verificationResult">
+                    <option value="">Select result</option>
+                    <option>Pending</option>
+                    <option>Effective</option>
+                    <option>Not Effective</option>
+                    <option>Reverification Required</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="capaStatus">CAPA Status</label>
+                <select id="capaStatus">
+                    <option>Open</option>
+                    <option>Action In Progress</option>
+                    <option>Pending Verification</option>
+                    <option>Reopened</option>
+                    <option>Closed</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label for="verificationMethod">Verification Method and Criteria</label>
+                <textarea id="verificationMethod" placeholder="Define how effectiveness will be checked, the sample size, monitoring period and acceptance criteria."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="verificationEvidence">Verification Evidence / Results</label>
+                <textarea id="verificationEvidence" placeholder="Record actual results, inspection findings, trend data or supporting document references."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="closureRemarks">Closure Remarks / Further Action</label>
+                <textarea id="closureRemarks" placeholder="Closure justification or additional actions required if the action was not effective."></textarea>
+            </div>
+        </div>
+
+        <p class="report-note">
+            * Required fields. CAPA closure should be based on verified effectiveness and applicable company procedures.
+        </p>
+    </section>
+
+    <div class="actions">
+        <button class="btn-primary" type="button" id="generateBtn">Generate / Update Report</button>
+        <button class="btn-secondary" type="button" id="printBtn">Print / Save as PDF</button>
+        <button class="btn-light" type="button" id="resetBtn">Reset Form</button>
+    </div>
+
+    <section class="report" id="report">
+        <div class="report-header">
+            <h2>CORRECTIVE AND PREVENTIVE ACTION REPORT</h2>
+            <p>CAPA Report | MechQTools</p>
+        </div>
+
+        <div class="report-meta">
+            <div class="meta-item">
+                <span class="meta-label">CAPA Number</span>
+                <span class="meta-value" id="outCapaNo">—</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">CAPA Date</span>
+                <span class="meta-value" id="outCapaDate">—</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Priority</span>
+                <span class="meta-value" id="outPriority">—</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">CAPA Status</span>
+                <span class="meta-value" id="outStatus">—</span>
+            </div>
+        </div>
+
+        <div id="reportContent"></div>
+
+        <div class="signature-grid">
+            <div class="signature-box">Prepared By / Date</div>
+            <div class="signature-box">Reviewed By / Date</div>
+            <div class="signature-box">Approved By / Date</div>
+        </div>
+
+        <p class="report-note">
+            This report records the information entered by the user. Root cause, actions,
+            effectiveness and closure must be reviewed and verified by authorized personnel.
+        </p>
+    </section>
+</main>
+
+<footer>
+    MechQTools — Engineering &amp; Quality Tools for Professionals
+</footer>
+
+<script>
+(function () {
+    "use strict";
+
+    const $ = id => document.getElementById(id);
+
+    function value(id) {
+        const element = $(id);
+        return element ? element.value.trim() : "";
+    }
+
+    function shown(text) {
+        return text || "—";
+    }
+
+    function formatDate(text) {
+        if (!text) return "—";
+
+        const parts = text.split("-");
+        if (parts.length !== 3) return text;
+
+        return parts[2] + "-" + parts[1] + "-" + parts[0];
+    }
+
+    function addRow(table, label, content) {
+        const tr = document.createElement("tr");
+        const th = document.createElement("th");
+        const td = document.createElement("td");
+
+        th.textContent = label;
+        th.scope = "row";
+        td.textContent = shown(content);
+
+        tr.appendChild(th);
+        tr.appendChild(td);
+        table.appendChild(tr);
+    }
+
+    function addSection(container, title, rows) {
+        const section = document.createElement("section");
+        section.className = "report-section";
+
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+        section.appendChild(heading);
+
+        const table = document.createElement("table");
+        table.className = "report-table";
+
+        const tbody = document.createElement("tbody");
+
+        rows.forEach(function (row) {
+            addRow(tbody, row[0], row[1]);
+        });
+
+        table.appendChild(tbody);
+        section.appendChild(table);
+        container.appendChild(section);
+    }
+
+    function updateReport() {
+        $("outCapaNo").textContent = shown(value("capaNo"));
+        $("outCapaDate").textContent = formatDate(value("capaDate"));
+        $("outPriority").textContent = shown(value("priority"));
+        $("outStatus").textContent = shown(value("capaStatus"));
+
+        const content = $("reportContent");
+        content.replaceChildren();
+
+        addSection(content, "1. CAPA INFORMATION", [
+            ["CAPA Number", value("capaNo")],
+            ["Date", formatDate(value("capaDate"))],
+            ["Raised By", value("raisedBy")],
+            ["Department", value("department")],
+            ["Problem Source", value("source")],
+            ["Priority", value("priority")]
+        ]);
+
+        addSection(content, "2. PART AND PROBLEM DETAILS", [
+            ["Part / Product Name", value("partName")],
+            ["Part / Drawing Number", value("partNo")],
+            ["Supplier / Customer", value("supplier")],
+            ["Lot / Batch Number", value("lotNo")],
+            ["Quantity Affected", value("quantityAffected")],
+            ["Process / Machine", value("process")],
+            ["Problem Description", value("problem")],
+            ["Requirement / Standard", value("requirement")],
+            ["Evidence / Reference", value("evidence")]
+        ]);
+
+        addSection(content, "3. IMMEDIATE CORRECTION AND CONTAINMENT", [
+            ["Immediate Correction", value("correction")],
+            ["Containment Action", value("containment")],
+            ["Containment Responsible Person", value("containmentBy")],
+            ["Containment Completion Date", formatDate(value("containmentDate"))]
+        ]);
+
+        addSection(content, "4. ROOT CAUSE ANALYSIS — 5 WHY", [
+            ["Why 1", value("why1")],
+            ["Why 2", value("why2")],
+            ["Why 3", value("why3")],
+            ["Why 4", value("why4")],
+            ["Why 5", value("why5")],
+            ["Verified Root Cause", value("rootCause")],
+            ["Root Cause Verification / Evidence", value("causeEvidence")]
+        ]);
+
+        addSection(content, "5. CORRECTIVE AND PREVENTIVE ACTIONS", [
+            ["Corrective Action", value("correctiveAction")],
+            ["Preventive Action", value("preventiveAction")],
+            ["Action Owner", value("actionOwner")],
+            ["Target Completion Date", formatDate(value("targetDate"))],
+            ["Actual Completion Date", formatDate(value("actualDate"))],
+            ["Action Status", value("actionStatus")],
+            ["Action Implementation Remarks", value("actionRemarks")]
+        ]);
+
+        addSection(content, "6. EFFECTIVENESS VERIFICATION AND CLOSURE", [
+            ["Verification Date", formatDate(value("verificationDate"))],
+            ["Verified By", value("verifiedBy")],
+            ["Verification Result", value("verificationResult")],
+            ["CAPA Status", value("capaStatus")],
+            ["Verification Method and Criteria", value("verificationMethod")],
+            ["Verification Evidence / Results", value("verificationEvidence")],
+            ["Closure Remarks / Further Action", value("closureRemarks")]
+        ]);
+    }
+
+    function validateForm() {
+        const requiredFields = [
+            ["capaNo", "CAPA Number"],
+            ["capaDate", "Date"],
+            ["raisedBy", "Raised By"],
+            ["source", "Problem Source"],
+            ["problem", "Problem Description"],
+            ["rootCause", "Verified Root Cause"],
+            ["correctiveAction", "Corrective Action"],
+            ["actionOwner", "Action Owner"],
+            ["targetDate", "Target Completion Date"]
+        ];
+
+        for (const [id, label] of requiredFields) {
+            const element = $(id);
+
+            if (!element.value.trim()) {
+                alert("Please complete the required field: " + label);
+                element.focus();
+                return false;
+            }
+        }
+
+        const targetDate = value("targetDate");
+        const actualDate = value("actualDate");
+
+        if (actualDate && actualDate < value("capaDate")) {
+            alert("Actual Completion Date cannot be earlier than the CAPA Date.");
+            $("actualDate").focus();
+            return false;
+        }
+
+        if (actualDate && actualDate < targetDate &&
+            value("actionStatus") === "Open") {
+            // The user may have completed an action before the target date.
+            // No error is necessary for this situation.
+        }
+
+        return true;
+    }
+
+    $("generateBtn").addEventListener("click", function () {
+        if (!validateForm()) return;
+
+        updateReport();
+
+        $("report").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+
+    $("printBtn").addEventListener("click", function () {
+        if (!validateForm()) return;
+
+        updateReport();
+        window.print();
+    });
+
+    $("resetBtn").addEventListener("click", function () {
+        if (!window.confirm("Are you sure you want to clear all CAPA information?")) {
+            return;
+        }
+
+        $("formPanel").querySelectorAll("input, textarea").forEach(function (element) {
+            element.value = "";
+        });
+
+        $("formPanel").querySelectorAll("select").forEach(function (element) {
+            element.selectedIndex = 0;
+        });
+
+        $("capaDate").value = new Date().toLocaleDateString("en-CA");
+        $("actionStatus").value = "Open";
+        $("capaStatus").value = "Open";
+
+        updateReport();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+    // Keep the preview updated when information changes.
+    $("formPanel").addEventListener("input", updateReport);
+    $("formPanel").addEventListener("change", updateReport);
+
+    $("capaDate").value = new Date().toLocaleDateString("en-CA");
+    updateReport();
+})();
+</script>
+
+</body>
+</html>
