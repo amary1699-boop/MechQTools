@@ -1,0 +1,774 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NCR Generator Tool - MechQTools</title>
+<meta name="description" content="Create and print professional Non-Conformance Reports for manufacturing and quality inspection.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --border: #dfe3e8;
+    --text: #222;
+    --muted: #666;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.logo {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 16px;
+}
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+}
+
+.page-title p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.panel {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    font-size: 20px;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--red);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field {
+    min-width: 0;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cfd4da;
+    border-radius: 7px;
+    font: inherit;
+    font-size: 14px;
+    background: #fff;
+    color: #222;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #f8caca;
+    border-color: var(--red);
+}
+
+textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: var(--red);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #333;
+    color: #fff;
+}
+
+.btn-light {
+    background: #e9edf2;
+    color: #222;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.report {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.report-header {
+    text-align: center;
+    border-bottom: 3px solid var(--red);
+    padding-bottom: 15px;
+    margin-bottom: 18px;
+}
+
+.report-header h2 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.report-header p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 22px;
+    table-layout: fixed;
+}
+
+.report-table th,
+.report-table td {
+    border: 1px solid #cbd0d6;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.report-table th {
+    background: #f0f2f5;
+    font-weight: bold;
+}
+
+.report-table .section-heading {
+    background: #fce9e9;
+    color: #222;
+    font-weight: bold;
+}
+
+.report-table td {
+    min-height: 30px;
+}
+
+.report-note {
+    font-size: 12px;
+    color: #555;
+    margin-top: 18px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .page-title h1 {
+        font-size: 25px;
+    }
+
+    .panel, .report {
+        padding: 15px;
+    }
+
+    .report-table th,
+    .report-table td {
+        padding: 7px;
+        font-size: 12px;
+    }
+}
+
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 10pt;
+    }
+
+    header, footer, .page-title, #formPanel,
+    .actions, .no-print {
+        display: none !important;
+    }
+
+    main {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .report {
+        display: block !important;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .report-header {
+        border-bottom: 2px solid #333;
+    }
+
+    .report-table {
+        break-inside: auto;
+        font-size: 9pt;
+    }
+
+    .report-table tr {
+        break-inside: avoid;
+    }
+
+    .report-table th,
+    .report-table td {
+        border: 1px solid #777;
+        padding: 7px;
+        color: #000;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .report-table .section-heading,
+    .report-table th {
+        background: #eee !important;
+    }
+
+    .report-note {
+        color: #333;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="index.html">MechQTools</a>
+        <a class="back-link" href="index.html">← Back to Home</a>
+    </div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h1>NCR Generator Tool</h1>
+        <p>Create a professional Non-Conformance Report for manufacturing and quality issues.</p>
+    </div>
+
+    <section class="panel" id="formPanel">
+        <h2>1. NCR Information</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="ncrNo">NCR Number *</label>
+                <input id="ncrNo" placeholder="e.g. NCR-2026-001" required>
+            </div>
+
+            <div class="field">
+                <label for="ncrDate">NCR Date *</label>
+                <input type="date" id="ncrDate" required>
+            </div>
+
+            <div class="field">
+                <label for="raisedBy">Raised By</label>
+                <input id="raisedBy" placeholder="Quality Engineer name">
+            </div>
+
+            <div class="field">
+                <label for="department">Department</label>
+                <input id="department" placeholder="e.g. Quality / Production">
+            </div>
+
+            <div class="field">
+                <label for="source">Non-Conformance Source</label>
+                <select id="source">
+                    <option value="">Select source</option>
+                    <option>Incoming Inspection</option>
+                    <option>In-Process Inspection</option>
+                    <option>Final Inspection</option>
+                    <option>Customer Complaint</option>
+                    <option>Supplier Quality</option>
+                    <option>Internal Audit</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="severity">Severity</label>
+                <select id="severity">
+                    <option value="">Select severity</option>
+                    <option>Minor</option>
+                    <option>Major</option>
+                    <option>Critical</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 style="margin-top:28px">2. Part and Supplier Details</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="partName">Part Name</label>
+                <input id="partName" placeholder="e.g. Mounting Bracket">
+            </div>
+
+            <div class="field">
+                <label for="partNo">Part Number</label>
+                <input id="partNo" placeholder="Part / Drawing Number">
+            </div>
+
+            <div class="field">
+                <label for="supplier">Supplier / Customer</label>
+                <input id="supplier" placeholder="Company name">
+            </div>
+
+            <div class="field">
+                <label for="lotNo">Lot / Batch Number</label>
+                <input id="lotNo" placeholder="Lot or batch reference">
+            </div>
+
+            <div class="field">
+                <label for="quantity">Quantity Inspected</label>
+                <input id="quantity" type="number" min="0" placeholder="0">
+            </div>
+
+            <div class="field">
+                <label for="defectQty">Quantity Non-Conforming</label>
+                <input id="defectQty" type="number" min="0" placeholder="0">
+            </div>
+        </div>
+
+        <h2 style="margin-top:28px">3. Non-Conformance Details</h2>
+
+        <div class="grid">
+            <div class="field full">
+                <label for="defect">Defect Description *</label>
+                <textarea id="defect" placeholder="Describe the defect clearly..." required></textarea>
+            </div>
+
+            <div class="field">
+                <label for="specification">Required Specification</label>
+                <textarea id="specification" placeholder="e.g. Hole diameter: 10 ± 0.1 mm"></textarea>
+            </div>
+
+            <div class="field">
+                <label for="actual">Actual Observation / Reading</label>
+                <textarea id="actual" placeholder="e.g. Measured diameter: 10.35 mm"></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="evidence">Evidence / Inspection Reference</label>
+                <textarea id="evidence" placeholder="Inspection report, drawing revision, photos reference, instrument ID, etc."></textarea>
+            </div>
+        </div>
+
+        <h2 style="margin-top:28px">4. Containment and Corrective Action</h2>
+
+        <div class="grid">
+            <div class="field full">
+                <label for="containment">Immediate Containment Action</label>
+                <textarea id="containment" placeholder="e.g. Hold stock, identify affected lots, segregate rejected parts..."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="rootCause">Root Cause Analysis</label>
+                <textarea id="rootCause" placeholder="Describe the verified root cause."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="corrective">Corrective Action</label>
+                <textarea id="corrective" placeholder="Action taken to eliminate the identified cause."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="preventive">Preventive Action</label>
+                <textarea id="preventive" placeholder="Action to prevent recurrence in other parts or processes."></textarea>
+            </div>
+
+            <div class="field">
+                <label for="responsible">Action Responsible Person</label>
+                <input id="responsible" placeholder="Name / Department">
+            </div>
+
+            <div class="field">
+                <label for="dueDate">Target Completion Date</label>
+                <input id="dueDate" type="date">
+            </div>
+        </div>
+
+        <h2 style="margin-top:28px">5. Disposition and Verification</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="disposition">Disposition</label>
+                <select id="disposition">
+                    <option value="">Select disposition</option>
+                    <option>Rework</option>
+                    <option>Repair</option>
+                    <option>Scrap</option>
+                    <option>Return to Supplier</option>
+                    <option>Use As Is - Approved Concession</option>
+                    <option>Pending Review</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="verifiedBy">Verified By</label>
+                <input id="verifiedBy" placeholder="Quality / Authorized person">
+            </div>
+
+            <div class="field full">
+                <label for="verification">Verification Result / Remarks</label>
+                <textarea id="verification" placeholder="Record re-inspection results and objective evidence."></textarea>
+            </div>
+
+            <div class="field">
+                <label for="status">NCR Status</label>
+                <select id="status">
+                    <option>Open</option>
+                    <option>Action In Progress</option>
+                    <option>Pending Verification</option>
+                    <option>Closed</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="closureDate">Closure Date</label>
+                <input type="date" id="closureDate">
+            </div>
+
+            <div class="field full">
+                <label for="approvalRemarks">Approval / Closure Remarks</label>
+                <textarea id="approvalRemarks" placeholder="Final approval or closure comments."></textarea>
+            </div>
+        </div>
+
+        <p class="report-note">
+            * Required fields. Verify all information and obtain required approvals before closing an NCR.
+        </p>
+    </section>
+
+    <div class="actions">
+        <button class="btn-primary" type="button" id="generateBtn">Generate / Update Report</button>
+        <button class="btn-secondary" type="button" id="printBtn">Print / Save as PDF</button>
+        <button class="btn-light" type="button" id="resetBtn">Reset Form</button>
+    </div>
+
+    <section class="report" id="report">
+        <div class="report-header">
+            <h2>NON-CONFORMANCE REPORT (NCR)</h2>
+            <p>MechQTools | Engineering &amp; Quality Tools for Professionals</p>
+        </div>
+
+        <table class="report-table">
+            <tbody id="reportBody"></tbody>
+        </table>
+
+        <p class="report-note">
+            This report records the supplied non-conformance information. Review the findings,
+            disposition, corrective actions and approvals before final release.
+        </p>
+    </section>
+</main>
+
+<footer>
+    MechQTools — Engineering &amp; Quality Tools for Professionals
+</footer>
+
+<script>
+(function () {
+    "use strict";
+
+    const fields = [
+        ["NCR Number", "ncrNo"],
+        ["NCR Date", "ncrDate"],
+        ["Raised By", "raisedBy"],
+        ["Department", "department"],
+        ["Non-Conformance Source", "source"],
+        ["Severity", "severity"],
+        ["Part Name", "partName"],
+        ["Part Number", "partNo"],
+        ["Supplier / Customer", "supplier"],
+        ["Lot / Batch Number", "lotNo"],
+        ["Quantity Inspected", "quantity"],
+        ["Quantity Non-Conforming", "defectQty"],
+        ["Defect Description", "defect"],
+        ["Required Specification", "specification"],
+        ["Actual Observation / Reading", "actual"],
+        ["Evidence / Inspection Reference", "evidence"],
+        ["Immediate Containment Action", "containment"],
+        ["Root Cause Analysis", "rootCause"],
+        ["Corrective Action", "corrective"],
+        ["Preventive Action", "preventive"],
+        ["Action Responsible Person", "responsible"],
+        ["Target Completion Date", "dueDate"],
+        ["Disposition", "disposition"],
+        ["Verified By", "verifiedBy"],
+        ["Verification Result / Remarks", "verification"],
+        ["NCR Status", "status"],
+        ["Closure Date", "closureDate"],
+        ["Approval / Closure Remarks", "approvalRemarks"]
+    ];
+
+    const formPanel = document.getElementById("formPanel");
+    const reportBody = document.getElementById("reportBody");
+
+    function getValue(id) {
+        const element = document.getElementById(id);
+        if (!element) return "";
+        return element.value.trim();
+    }
+
+    function displayValue(value) {
+        return value || "—";
+    }
+
+    function addRow(label, value) {
+        const row = document.createElement("tr");
+
+        const heading = document.createElement("th");
+        heading.scope = "row";
+        heading.textContent = label;
+
+        const cell = document.createElement("td");
+        cell.colSpan = 3;
+        cell.textContent = displayValue(value);
+
+        row.appendChild(heading);
+        row.appendChild(cell);
+        reportBody.appendChild(row);
+    }
+
+    function addSection(title) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 4;
+        cell.className = "section-heading";
+        cell.textContent = title;
+        row.appendChild(cell);
+        reportBody.appendChild(row);
+    }
+
+    function updateReport() {
+        reportBody.replaceChildren();
+
+        addSection("A. NCR INFORMATION");
+        [
+            ["NCR Number", "ncrNo"],
+            ["NCR Date", "ncrDate"],
+            ["Raised By", "raisedBy"],
+            ["Department", "department"],
+            ["Non-Conformance Source", "source"],
+            ["Severity", "severity"]
+        ].forEach(([label, id]) => addRow(label, getValue(id)));
+
+        addSection("B. PART AND SUPPLIER DETAILS");
+        [
+            ["Part Name", "partName"],
+            ["Part Number", "partNo"],
+            ["Supplier / Customer", "supplier"],
+            ["Lot / Batch Number", "lotNo"],
+            ["Quantity Inspected", "quantity"],
+            ["Quantity Non-Conforming", "defectQty"]
+        ].forEach(([label, id]) => addRow(label, getValue(id)));
+
+        addSection("C. NON-CONFORMANCE DETAILS");
+        [
+            ["Defect Description", "defect"],
+            ["Required Specification", "specification"],
+            ["Actual Observation / Reading", "actual"],
+            ["Evidence / Inspection Reference", "evidence"]
+        ].forEach(([label, id]) => addRow(label, getValue(id)));
+
+        addSection("D. CONTAINMENT AND CORRECTIVE ACTION");
+        [
+            ["Immediate Containment Action", "containment"],
+            ["Root Cause Analysis", "rootCause"],
+            ["Corrective Action", "corrective"],
+            ["Preventive Action", "preventive"],
+            ["Action Responsible Person", "responsible"],
+            ["Target Completion Date", "dueDate"]
+        ].forEach(([label, id]) => addRow(label, getValue(id)));
+
+        addSection("E. DISPOSITION AND VERIFICATION");
+        [
+            ["Disposition", "disposition"],
+            ["Verified By", "verifiedBy"],
+            ["Verification Result / Remarks", "verification"],
+            ["NCR Status", "status"],
+            ["Closure Date", "closureDate"],
+            ["Approval / Closure Remarks", "approvalRemarks"]
+        ].forEach(([label, id]) => addRow(label, getValue(id)));
+    }
+
+    function validateRequired() {
+        const required = [
+            ["ncrNo", "NCR Number"],
+            ["ncrDate", "NCR Date"],
+            ["defect", "Defect Description"]
+        ];
+
+        for (const [id, label] of required) {
+            const input = document.getElementById(id);
+
+            if (!input.value.trim()) {
+                alert("Please enter " + label + ".");
+                input.focus();
+                return false;
+            }
+        }
+
+        const inspected = getValue("quantity");
+        const rejected = getValue("defectQty");
+
+        if (inspected !== "" && rejected !== "") {
+            const inspectedNumber = Number(inspected);
+            const rejectedNumber = Number(rejected);
+
+            if (rejectedNumber > inspectedNumber) {
+                alert("Quantity Non-Conforming cannot exceed Quantity Inspected.");
+                document.getElementById("defectQty").focus();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    document.getElementById("generateBtn").addEventListener("click", function () {
+        if (!validateRequired()) return;
+        updateReport();
+        document.getElementById("report").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+
+    document.getElementById("printBtn").addEventListener("click", function () {
+        if (!validateRequired()) return;
+        updateReport();
+        window.print();
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function () {
+        const confirmed = window.confirm("Clear all NCR form information?");
+        if (!confirmed) return;
+
+        formPanel.querySelectorAll("input, textarea").forEach(function (element) {
+            element.value = "";
+        });
+
+        formPanel.querySelectorAll("select").forEach(function (element) {
+            element.selectedIndex = 0;
+        });
+
+        document.getElementById("ncrDate").value =
+            new Date().toLocaleDateString("en-CA");
+
+        document.getElementById("status").value = "Open";
+        updateReport();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("ncrDate").value =
+        new Date().toLocaleDateString("en-CA");
+
+    updateReport();
+})();
+</script>
+
+</body>
+</html>
