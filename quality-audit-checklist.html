@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quality Audit Checklist - MechQTools</title>
+<meta name="description" content="Create and manage quality audits with checklist questions, findings, corrective actions, audit scoring, CSV export and print support.">
+
+<style>
+:root{--red:#e53232;--bg:#f7f8fa;--text:#222;--border:#ddd;--green:#198754}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#fff;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.logo{color:var(--red);font-size:23px;font-weight:bold;text-decoration:none}
+.home{background:var(--red);color:#fff;text-decoration:none;padding:10px 17px;border-radius:5px;font-weight:bold}
+.container{max-width:1200px;margin:25px auto;padding:0 16px}
+h1{font-size:28px;margin-bottom:8px}
+.subtitle{color:#666;line-height:1.6}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;margin:20px 0;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+h2{font-size:20px;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+label{display:block;font-size:14px;font-weight:bold;margin-bottom:6px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;font:inherit;background:#fff}
+textarea{min-height:75px;resize:vertical}
+button{border:0;border-radius:5px;padding:10px 15px;cursor:pointer;color:#fff;background:var(--red);font-size:14px;font-weight:bold}
+button:hover{opacity:.9}
+.secondary{background:#555}.green{background:var(--green)}.danger{background:#b42318}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.notice{background:#fff8e6;border-left:4px solid #f0ad4e;padding:12px;line-height:1.5;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{background:#fff;border:1px solid var(--border);padding:16px;border-radius:8px}
+.stat strong{display:block;font-size:24px;margin-top:7px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:950px;font-size:13px}
+th,td{border:1px solid var(--border);padding:9px;text-align:left;vertical-align:top}
+th{background:#f0f1f3}
+.badge{display:inline-block;padding:4px 7px;border-radius:4px;font-weight:bold;font-size:12px}
+.conforming{background:#d1e7dd;color:#0f5132}
+.nonconforming{background:#f8d7da;color:#842029}
+.observation{background:#fff3cd;color:#664d03}
+.na{background:#e2e3e5;color:#41464b}
+.small-actions{display:flex;gap:5px}
+.small-actions button{padding:7px 9px}
+.progress{height:12px;background:#eee;border-radius:20px;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--red)}
+.empty{text-align:center;color:#777;padding:24px}
+footer{background:#222;color:#fff;text-align:center;padding:22px 12px;margin-top:35px}
+footer p{margin:5px 0}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}h1{font-size:23px}.card{padding:14px}}
+@media print{header,.form-card,.filter-actions,.no-print,footer,.notice{display:none!important}body{background:#fff}.container{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0;padding:0}.stats{margin-bottom:15px}table{min-width:0;font-size:9px}th,td{padding:5px}h1{font-size:20px}}
+</style>
+</head>
+
+<body>
+<header>
+<a class="logo" href="index.html">MechQTools</a>
+<a class="home" href="index.html">⌂ Home</a>
+</header>
+
+<main class="container">
+<h1>Quality Audit Checklist</h1>
+<p class="subtitle">Plan audits, evaluate checklist requirements, record findings and track corrective actions.</p>
+
+<div class="notice">
+<strong>Note:</strong> Customize the checklist according to your organization's approved audit procedure and applicable standards. The score is a checklist-based indicator, not a certification or proof of compliance with an entire standard.
+</div>
+
+<section class="card form-card">
+<h2>Audit Details</h2>
+<div class="grid">
+<div><label for="auditNo">Audit Number *</label><input id="auditNo" placeholder="e.g. AUD-2026-001" required></div>
+<div><label for="auditType">Audit Type *</label>
+<select id="auditType">
+<option>Internal Audit</option><option>Supplier Audit</option><option>Process Audit</option><option>Product Audit</option><option>System Audit</option><option>5S Audit</option><option>Other</option>
+</select></div>
+<div><label for="auditDate">Audit Date *</label><input id="auditDate" type="date" required></div>
+<div><label for="department">Department / Supplier *</label><input id="department" placeholder="e.g. Production / Supplier name" required></div>
+<div><label for="auditor">Lead Auditor *</label><input id="auditor" placeholder="Auditor name" required></div>
+<div><label for="auditee">Auditee / Responsible Person</label><input id="auditee" placeholder="Responsible person"></div>
+<div><label for="standard">Applicable Standard / Procedure</label><input id="standard" placeholder="e.g. ISO 9001 / internal procedure"></div>
+<div><label for="scope">Audit Scope</label><input id="scope" placeholder="Process, product or area"></div>
+<div><label for="auditStatus">Audit Status</label>
+<select id="auditStatus"><option>Planned</option><option>In Progress</option><option>Completed</option><option>Follow-up Required</option><option>Closed</option></select></div>
+</div>
+</section>
+
+<section class="card form-card">
+<h2>Add Checklist Item</h2>
+<div class="grid">
+<div><label for="clause">Clause / Reference</label><input id="clause" placeholder="e.g. 7.1"></div>
+<div><label for="category">Category</label>
+<select id="category">
+<option>Document Control</option><option>Incoming Inspection</option><option>Production</option><option>In-process Inspection</option><option>Final Inspection</option><option>Calibration</option><option>Traceability</option><option>Nonconforming Product</option><option>Corrective Action</option><option>Training</option><option>Housekeeping / 5S</option><option>Safety</option><option>Other</option>
+</select></div>
+<div><label for="result">Audit Result</label>
+<select id="result"><option value="Conforming">Conforming</option><option value="Non-Conforming">Non-Conforming</option><option value="Observation">Observation</option><option value="N/A">N/A</option></select></div>
+<div class="full" style="grid-column:1/-1"><label for="question">Checklist Question / Requirement *</label><textarea id="question" placeholder="e.g. Are inspection records available and controlled?" required></textarea></div>
+<div><label for="evidence">Objective Evidence / Finding</label><textarea id="evidence" placeholder="Record observed evidence"></textarea></div>
+<div><label for="action">Corrective Action / Recommendation</label><textarea id="action" placeholder="Action required, if applicable"></textarea></div>
+<div><label for="owner">Action Owner</label><input id="owner" placeholder="Responsible person"></div>
+<div><label for="dueDate">Target Due Date</label><input id="dueDate" type="date"></div>
+<div><label for="itemStatus">Action Status</label>
+<select id="itemStatus"><option>Open</option><option>In Progress</option><option>Completed</option><option>Verified</option><option>Not Required</option></select></div>
+</div>
+<div class="actions">
+<button id="addItemBtn" type="button">Add Checklist Item</button>
+<button id="clearItemBtn" type="button" class="secondary">Clear Item Form</button>
+<button id="sampleBtn" type="button" class="secondary">Load Sample Checklist</button>
+</div>
+<p class="subtitle" id="itemMode">Mode: Add new checklist item</p>
+</section>
+
+<section class="stats">
+<div class="stat">Total Items<strong id="totalCount">0</strong></div>
+<div class="stat">Conforming<strong id="conformingCount">0</strong></div>
+<div class="stat">Non-Conforming<strong id="ncCount">0</strong></div>
+<div class="stat">Open Actions<strong id="openCount">0</strong></div>
+</section>
+
+<section class="card">
+<h2>Audit Score</h2>
+<p id="scoreText">No checklist items added yet.</p>
+<div class="progress"><div id="scoreBar"></div></div>
+<p class="subtitle">Score = Conforming items ÷ (Conforming + Non-Conforming items) × 100. Observation and N/A items are excluded.</p>
+</section>
+
+<section class="card">
+<h2>Checklist Records</h2>
+<div class="grid filter-actions">
+<div><label for="search">Search</label><input id="search" placeholder="Search question, clause, evidence..."></div>
+<div><label for="resultFilter">Filter by Result</label><select id="resultFilter"><option value="">All Results</option><option>Conforming</option><option>Non-Conforming</option><option>Observation</option><option>N/A</option></select></div>
+<div><label for="actionFilter">Filter by Action Status</label><select id="actionFilter"><option value="">All Action Statuses</option><option>Open</option><option>In Progress</option><option>Completed</option><option>Verified</option><option>Not Required</option></select></div>
+</div>
+<div class="actions filter-actions">
+<button id="saveAuditBtn" type="button" class="green">Save Audit</button>
+<button id="exportBtn" type="button" class="green">Export CSV</button>
+<button id="printBtn" type="button" class="secondary">Print / Save PDF</button>
+<button id="newAuditBtn" type="button" class="secondary">New Audit</button>
+<button id="deleteAuditBtn" type="button" class="danger">Delete Current Audit</button>
+</div>
+<p class="subtitle" id="recordSummary"></p>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th>#</th><th>Clause</th><th>Category</th><th>Requirement / Question</th><th>Result</th><th>Evidence / Finding</th><th>Corrective Action</th><th>Owner / Due Date</th><th>Action Status</th><th class="no-print">Actions</th>
+</tr></thead>
+<tbody id="itemsBody"></tbody>
+</table>
+</div>
+</section>
+</main>
+
+<footer>
+<p><strong>MechQTools</strong></p>
+<p>Engineering &amp; Quality Tools for Professionals.</p>
+<p>© <span id="year"></span> MechQTools. All rights reserved.</p>
+</footer>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = "mechqtools_quality_audits_v1";
+let audits = [];
+let currentAuditId = null;
+let items = [];
+let editingItemId = null;
+
+function uid(){
+ return window.crypto && crypto.randomUUID ? crypto.randomUUID() :
+  String(Date.now()) + Math.random().toString(16).slice(2);
+}
+function esc(v){
+ return String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function getMeta(){
+ return {
+  auditNo:$("auditNo").value.trim(),
+  auditType:$("auditType").value,
+  auditDate:$("auditDate").value,
+  department:$("department").value.trim(),
+  auditor:$("auditor").value.trim(),
+  auditee:$("auditee").value.trim(),
+  standard:$("standard").value.trim(),
+  scope:$("scope").value.trim(),
+  auditStatus:$("auditStatus").value
+ };
+}
+function metaValid(){
+ const m=getMeta();
+ if(!m.auditNo || !m.auditDate || !m.department || !m.auditor){
+  alert("Please fill in Audit Number, Audit Date, Department/Supplier and Lead Auditor.");
+  return false;
+ }
+ return true;
+}
+function saveStorage(){
+ try{
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(audits));
+  return true;
+ }catch(e){
+  alert("Could not save data in this browser. Storage may be disabled or full.");
+  return false;
+ }
+}
+function loadStorage(){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  const parsed=raw?JSON.parse(raw):[];
+  audits=Array.isArray(parsed)?parsed:[];
+ }catch(e){audits=[];}
+}
+function saveCurrentAudit(silent=false){
+ if(!metaValid()) return false;
+ const previous=JSON.stringify(audits);
+ let audit=audits.find(a=>a.id===currentAuditId);
+ if(!audit){
+  audit={id:uid(),createdAt:new Date().toISOString(),items:[]};
+  audits.push(audit);
+  currentAuditId=audit.id;
+ }
+ audit.meta=getMeta();
+ audit.items=items;
+ audit.updatedAt=new Date().toISOString();
+ if(!saveStorage()){
+  audits=JSON.parse(previous);
+  return false;
+ }
+ if(!silent) alert("Audit saved successfully in this browser.");
+ return true;
+}
+function resetItemForm(){
+ ["clause","question","evidence","action","owner","dueDate"].forEach(id=>$(id).value="");
+ $("category").value="Document Control";
+ $("result").value="Conforming";
+ $("itemStatus").value="Open";
+ editingItemId=null;
+ $("addItemBtn").textContent="Add Checklist Item";
+ $("itemMode").textContent="Mode: Add new checklist item";
+}
+function getItemForm(){
+ const question=$("question").value.trim();
+ if(!question){alert("Please enter a checklist question or requirement.");return null;}
+ return {
+  id:editingItemId||uid(),
+  clause:$("clause").value.trim(),
+  category:$("category").value,
+  question,
+  result:$("result").value,
+  evidence:$("evidence").value.trim(),
+  action:$("action").value.trim(),
+  owner:$("owner").value.trim(),
+  dueDate:$("dueDate").value,
+  itemStatus:$("itemStatus").value
+ };
+}
+function addOrUpdateItem(){
+ const item=getItemForm();
+ if(!item)return;
+ if(editingItemId){
+  const i=items.findIndex(x=>x.id===editingItemId);
+  if(i<0){alert("Item not found.");return;}
+  items[i]=item;
+ }else items.push(item);
+ resetItemForm();
+ render();
+}
+function resultBadge(result){
+ const cls={"Conforming":"conforming","Non-Conforming":"nonconforming","Observation":"observation","N/A":"na"}[result]||"na";
+ return `<span class="badge ${cls}">${esc(result)}</span>`;
+}
+function visibleItems(){
+ const q=$("search").value.trim().toLowerCase();
+ const r=$("resultFilter").value;
+ const s=$("actionFilter").value;
+ return items.filter(it=>{
+  const hay=[it.clause,it.category,it.question,it.result,it.evidence,it.action,it.owner,it.itemStatus].join(" ").toLowerCase();
+  return (!q||hay.includes(q))&&(!r||it.result===r)&&(!s||it.itemStatus===s);
+ });
+}
+function render(){
+ const shown=visibleItems();
+ $("recordSummary").textContent=`Showing ${shown.length} of ${items.length} checklist items.`;
+ if(!shown.length){
+  $("itemsBody").innerHTML='<tr><td colspan="10" class="empty">No checklist items yet. Add an item above.</td></tr>';
+ }else{
+  $("itemsBody").innerHTML=shown.map((it,index)=>`
+   <tr>
+    <td>${index+1}</td>
+    <td>${esc(it.clause)}</td>
+    <td>${esc(it.category)}</td>
+    <td>${esc(it.question)}</td>
+    <td>${resultBadge(it.result)}</td>
+    <td>${esc(it.evidence)}</td>
+    <td>${esc(it.action)}</td>
+    <td>${esc(it.owner)}<br>${esc(it.dueDate)}</td>
+    <td>${esc(it.itemStatus)}</td>
+    <td class="no-print"><div class="small-actions">
+     <button type="button" data-action="edit" data-id="${esc(it.id)}">Edit</button>
+     <button type="button" class="danger" data-action="delete" data-id="${esc(it.id)}">Delete</button>
+    </div></td>
+   </tr>`).join("");
+ }
+ const count=result=>items.filter(it=>it.result===result).length;
+ const open=items.filter(it=>["Open","In Progress"].includes(it.itemStatus)&&it.result==="Non-Conforming").length;
+ $("totalCount").textContent=items.length;
+ $("conformingCount").textContent=count("Conforming");
+ $("ncCount").textContent=count("Non-Conforming");
+ $("openCount").textContent=open;
+ const conforming=count("Conforming"), nc=count("Non-Conforming");
+ const denominator=conforming+nc;
+ const score=denominator?conforming/denominator*100:null;
+ $("scoreText").textContent=score===null
+  ?"No Conforming or Non-Conforming items available to score."
+  :`Checklist score: ${score.toFixed(1)}% (${conforming} Conforming out of ${denominator} scored items).`;
+ $("scoreBar").style.width=(score===null?0:score)+"%";
+}
+function editItem(id){
+ const it=items.find(x=>x.id===id);if(!it)return;
+ editingItemId=id;
+ ["clause","question","evidence","action","owner","dueDate","category","result","itemStatus"].forEach(k=>$(k).value=it[k]??"");
+ $("addItemBtn").textContent="Update Checklist Item";
+ $("itemMode").textContent="Mode: Editing checklist item";
+ $("question").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function deleteItem(id){
+ const it=items.find(x=>x.id===id);if(!it)return;
+ if(!confirm("Delete this checklist item?"))return;
+ items=items.filter(x=>x.id!==id);
+ if(editingItemId===id)resetItemForm();
+ render();
+}
+function newAudit(){
+ if((items.length||$("auditNo").value.trim())&&!confirm("Start a new audit? Save the current audit first if you want to keep it."))return;
+ currentAuditId=null;items=[];
+ ["auditNo","department","auditor","auditee","standard","scope"].forEach(id=>$(id).value="");
+ $("auditType").value="Internal Audit";
+ $("auditStatus").value="Planned";
+ $("auditDate").value=new Date().toISOString().slice(0,10);
+ $("search").value="";$("resultFilter").value="";$("actionFilter").value="";
+ resetItemForm();render();
+}
+function loadSample(){
+ if(items.length&&!confirm("Replace the current unsaved checklist items with sample items?"))return;
+ items=[
+  {id:uid(),clause:"Document Control",category:"Document Control",question:"Are current approved drawings and work instructions available at the point of use?",result:"Conforming",evidence:"Current revision verified at workstation.",action:"",owner:"",dueDate:"",itemStatus:"Not Required"},
+  {id:uid(),clause:"Incoming Inspection",category:"Incoming Inspection",question:"Are incoming materials inspected against approved specifications?",result:"Non-Conforming",evidence:"One sampled receipt had no completed inspection record.",action:"Complete inspection and review the missing record.",owner:"Quality Engineer",dueDate:"",itemStatus:"Open"},
+  {id:uid(),clause:"Calibration",category:"Calibration",question:"Are measuring instruments within calibration due date?",result:"Observation",evidence:"One instrument due next month.",action:"Plan calibration before due date.",owner:"Calibration In-charge",dueDate:"",itemStatus:"In Progress"},
+  {id:uid(),clause:"Traceability",category:"Traceability",question:"Can material lot or heat number be traced through the process?",result:"Conforming",evidence:"Sampled batch traceability record available.",action:"",owner:"",dueDate:"",itemStatus:"Not Required"},
+  {id:uid(),clause:"Corrective Action",category:"Corrective Action",question:"Are corrective actions verified for effectiveness?",result:"N/A",evidence:"Not applicable to this audit sample.",action:"",owner:"",dueDate:"",itemStatus:"Not Required"}
+ ];
+ render();
+}
+function exportCSV(){
+ const shown=visibleItems();
+ if(!shown.length){alert("No checklist items to export.");return;}
+ const meta=getMeta();
+ const rows=[
+  ["Audit Number",meta.auditNo],["Audit Type",meta.auditType],["Audit Date",meta.auditDate],
+  ["Department / Supplier",meta.department],["Lead Auditor",meta.auditor],["Auditee",meta.auditee],
+  ["Standard / Procedure",meta.standard],["Scope",meta.scope],["Audit Status",meta.auditStatus],[],
+  ["Clause","Category","Question / Requirement","Result","Evidence / Finding","Corrective Action","Owner","Due Date","Action Status"],
+  ...shown.map(it=>[it.clause,it.category,it.question,it.result,it.evidence,it.action,it.owner,it.dueDate,it.itemStatus])
+ ];
+ const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+ const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");
+ a.href=url;a.download="quality-audit-checklist.csv";
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+$("addItemBtn").addEventListener("click",addOrUpdateItem);
+$("clearItemBtn").addEventListener("click",resetItemForm);
+$("sampleBtn").addEventListener("click",loadSample);
+$("saveAuditBtn").addEventListener("click",()=>saveCurrentAudit());
+$("newAuditBtn").addEventListener("click",newAudit);
+$("deleteAuditBtn").addEventListener("click",()=>{
+ if(!currentAuditId){alert("This audit has not been saved yet.");return;}
+ if(!confirm("Delete the saved current audit permanently from this browser?"))return;
+ audits=audits.filter(a=>a.id!==currentAuditId);
+ if(!saveStorage())return;
+ currentAuditId=null;items=[];newAudit();render();
+});
+$("exportBtn").addEventListener("click",exportCSV);
+$("printBtn").addEventListener("click",()=>window.print());
+$("itemsBody").addEventListener("click",event=>{
+ const b=event.target.closest("button[data-action]");if(!b)return;
+ if(b.dataset.action==="edit")editItem(b.dataset.id);
+ if(b.dataset.action==="delete")deleteItem(b.dataset.id);
+});
+["search","resultFilter","actionFilter"].forEach(id=>{
+ $(id).addEventListener("input",render);
+ $(id).addEventListener("change",render);
+});
+$("year").textContent=new Date().getFullYear();
+$("auditDate").value=new Date().toISOString().slice(0,10);
+loadStorage();
+render();
+</script>
+</body>
+</html>
