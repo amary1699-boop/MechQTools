@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MTC Tracker - MechQTools</title>
+<meta name="description" content="Track material test certificates, heat numbers, material grades, suppliers and certificate verification status.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --white: #ffffff;
+    --text: #222222;
+    --muted: #666666;
+    --border: #e2e5e9;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.logo {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.home-btn {
+    text-decoration: none;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.home-btn:hover { background: var(--red); color: white; }
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 28px auto;
+}
+.page-title { text-align: center; margin-bottom: 24px; }
+.page-title h1 { margin: 0 0 8px; font-size: 30px; }
+.page-title p { color: var(--muted); margin: 0; }
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 7px rgba(0,0,0,.035);
+}
+.card h2 { font-size: 21px; margin: 0 0 18px; }
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: bold; font-size: 14px; }
+input, select, textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid #cfd4da;
+    border-radius: 6px;
+    font: inherit;
+    background: white;
+}
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid rgba(229,50,50,.15);
+    border-color: var(--red);
+}
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+button {
+    border: 1px solid var(--red);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    background: var(--red);
+    color: white;
+}
+button:hover { opacity: .9; }
+button.secondary {
+    background: white;
+    color: var(--red);
+}
+button.danger {
+    background: white;
+    color: #b42318;
+    border-color: #b42318;
+}
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+.stat {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 17px;
+}
+.stat span { display: block; color: var(--muted); font-size: 14px; }
+.stat strong { display: block; font-size: 27px; margin-top: 5px; }
+.table-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.search { max-width: 350px; }
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+}
+th, td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 14px;
+    vertical-align: top;
+}
+th { background: #f4f5f7; white-space: nowrap; }
+.status {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.status.verified { background: #dcfce7; color: #166534; }
+.status.pending { background: #fef3c7; color: #92400e; }
+.status.rejected { background: #fee2e2; color: #991b1b; }
+.status.unknown { background: #e5e7eb; color: #374151; }
+.note { color: var(--muted); font-size: 13px; }
+.empty { text-align: center; color: var(--muted); padding: 25px; }
+.small-btn { padding: 6px 9px; font-size: 12px; margin: 2px; }
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 22px 12px;
+    margin-top: 40px;
+}
+footer p { margin: 4px; }
+@media (max-width: 800px) {
+    .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .page-title h1 { font-size: 25px; }
+}
+@media (max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .card { padding: 15px; }
+    .logo { font-size: 20px; }
+    .header-inner { flex-wrap: wrap; }
+    .stat { padding: 12px; }
+    .stat strong { font-size: 23px; }
+}
+@media print {
+    header, footer, .form-card, .table-tools, .no-print {
+        display: none !important;
+    }
+    body { background: white; }
+    .container { width: 100%; max-width: none; margin: 0; }
+    .card, .stat { box-shadow: none; border: 1px solid #ccc; }
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .table-wrap { overflow: visible; }
+    table { min-width: 0; }
+    th, td { font-size: 9px; padding: 5px 3px; }
+    .actions-cell { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="index.html">MechQTools</a>
+        <a class="home-btn" href="index.html">← Home</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="page-title">
+        <h1>MTC Tracker</h1>
+        <p>Material Test Certificate Register for Quality Engineers</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <span>Total Records</span>
+            <strong id="totalCount">0</strong>
+        </div>
+        <div class="stat">
+            <span>Verified</span>
+            <strong id="verifiedCount">0</strong>
+        </div>
+        <div class="stat">
+            <span>Pending Verification</span>
+            <strong id="pendingCount">0</strong>
+        </div>
+        <div class="stat">
+            <span>Rejected / Not Accepted</span>
+            <strong id="rejectedCount">0</strong>
+        </div>
+    </section>
+
+    <section class="card form-card">
+        <h2 id="formTitle">Add Material Certificate</h2>
+
+        <form id="mtcForm">
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="materialName">Material / Product Name *</label>
+                    <input id="materialName" required
+                           placeholder="e.g. MS Sheet">
+                </div>
+
+                <div class="field">
+                    <label for="materialGrade">Material Grade *</label>
+                    <input id="materialGrade" required
+                           placeholder="e.g. IS 2062 E250">
+                </div>
+
+                <div class="field">
+                    <label for="heatNumber">Heat / Cast Number *</label>
+                    <input id="heatNumber" required
+                           placeholder="Heat number">
+                </div>
+
+                <div class="field">
+                    <label for="batchNumber">Batch / Lot Number</label>
+                    <input id="batchNumber" placeholder="Batch or lot number">
+                </div>
+
+                <div class="field">
+                    <label for="supplier">Supplier Name *</label>
+                    <input id="supplier" required placeholder="Supplier name">
+                </div>
+
+                <div class="field">
+                    <label for="supplierInvoice">Invoice / Challan Number</label>
+                    <input id="supplierInvoice" placeholder="Invoice / challan">
+                </div>
+
+                <div class="field">
+                    <label for="mtcNumber">MTC Certificate Number *</label>
+                    <input id="mtcNumber" required placeholder="Certificate number">
+                </div>
+
+                <div class="field">
+                    <label for="receiptDate">Material Receipt Date *</label>
+                    <input id="receiptDate" type="date" required>
+                </div>
+
+                <div class="field">
+                    <label for="quantity">Received Quantity *</label>
+                    <input id="quantity" type="number" min="0.001" step="any"
+                           required placeholder="e.g. 500">
+                </div>
+
+                <div class="field">
+                    <label for="unit">Quantity Unit *</label>
+                    <select id="unit" required>
+                        <option value="kg">kg</option>
+                        <option value="ton">ton</option>
+                        <option value="Nos">Nos</option>
+                        <option value="sheet">sheet</option>
+                        <option value="meter">meter</option>
+                        <option value="piece">piece</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="certificateDate">Certificate Date</label>
+                    <input id="certificateDate" type="date">
+                </div>
+
+                <div class="field">
+                    <label for="status">Verification Status *</label>
+                    <select id="status" required>
+                        <option value="Pending">Pending Verification</option>
+                        <option value="Verified">Verified</option>
+                        <option value="Rejected">Rejected / Not Accepted</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="verifiedBy">Verified By</label>
+                    <input id="verifiedBy" placeholder="Inspector / QE name">
+                </div>
+
+                <div class="field">
+                    <label for="poNumber">Purchase Order Number</label>
+                    <input id="poNumber" placeholder="PO number">
+                </div>
+
+                <div class="field">
+                    <label for="remarks">Remarks / Verification Notes</label>
+                    <input id="remarks" placeholder="Optional remarks">
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button type="submit" id="saveBtn">Add Record</button>
+                <button type="button" class="secondary"
+                        id="cancelEditBtn" hidden>Cancel Edit</button>
+                <button type="reset" class="secondary" id="clearBtn">
+                    Clear Form
+                </button>
+            </div>
+        </form>
+
+        <p class="note">
+            * Required fields. This tool records certificate information only.
+            Verify chemical composition, mechanical properties, grade and
+            traceability against the original MTC and approved specifications.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>Material Certificate Register</h2>
+
+        <div class="table-tools">
+            <input id="searchInput" class="search"
+                   placeholder="Search material, heat no., supplier, MTC...">
+            <div class="actions" style="margin-top:0">
+                <button type="button" class="secondary" id="exportBtn">
+                    Export CSV
+                </button>
+                <button type="button" class="secondary" id="printBtn">
+                    Print / Save PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr.</th>
+                        <th>Material</th>
+                        <th>Grade</th>
+                        <th>Heat / Cast No.</th>
+                        <th>Batch / Lot No.</th>
+                        <th>Supplier</th>
+                        <th>MTC No.</th>
+                        <th>Receipt Date</th>
+                        <th>Quantity</th>
+                        <th>Certificate Date</th>
+                        <th>Status</th>
+                        <th>Verified By</th>
+                        <th>PO / Invoice</th>
+                        <th>Remarks</th>
+                        <th class="actions-cell">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="emptyMessage" class="empty">
+            No MTC records yet. Add your first material certificate above.
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p><strong>MechQTools</strong></p>
+    <p>Engineering &amp; Quality Tools for Professionals.</p>
+    <p>© <span id="year"></span> MechQTools. All rights reserved.</p>
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "mechqtools_mtc_tracker_v1";
+
+const form = document.getElementById("mtcForm");
+const tableBody = document.getElementById("tableBody");
+const emptyMessage = document.getElementById("emptyMessage");
+const searchInput = document.getElementById("searchInput");
+
+const fields = [
+    "materialName", "materialGrade", "heatNumber", "batchNumber",
+    "supplier", "supplierInvoice", "mtcNumber", "receiptDate",
+    "quantity", "unit", "certificateDate", "status", "verifiedBy",
+    "poNumber", "remarks"
+];
+
+let records = loadRecords();
+let editingId = null;
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function loadRecords() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        alert("Saved MTC records could not be read from this browser.");
+        return [];
+    }
+}
+
+function saveRecords() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        return true;
+    } catch (error) {
+        alert("Records could not be saved. Check browser storage settings.");
+        return false;
+    }
+}
+
+function getFormData() {
+    const data = {};
+    fields.forEach(id => {
+        data[id] = document.getElementById(id).value.trim();
+    });
+    return data;
+}
+
+function resetFormState() {
+    editingId = null;
+    form.reset();
+    document.getElementById("formTitle").textContent = "Add Material Certificate";
+    document.getElementById("saveBtn").textContent = "Add Record";
+    document.getElementById("cancelEditBtn").hidden = true;
+}
+
+function startEdit(id) {
+    const record = records.find(item => item.id === id);
+    if (!record) return;
+
+    editingId = id;
+    fields.forEach(key => {
+        document.getElementById(key).value = record[key] ?? "";
+    });
+
+    document.getElementById("formTitle").textContent = "Edit Material Certificate";
+    document.getElementById("saveBtn").textContent = "Update Record";
+    document.getElementById("cancelEditBtn").hidden = false;
+
+    document.querySelector(".form-card").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function addCell(row, value) {
+    const cell = document.createElement("td");
+    cell.textContent = value === undefined || value === null || value === ""
+        ? "—" : String(value);
+    row.appendChild(cell);
+    return cell;
+}
+
+function formatDate(value) {
+    if (!value) return "—";
+    const parts = value.split("-");
+    if (parts.length !== 3) return value;
+    return parts[2] + "-" + parts[1] + "-" + parts[0];
+}
+
+function statusClass(status) {
+    if (status === "Verified") return "verified";
+    if (status === "Pending") return "pending";
+    if (status === "Rejected") return "rejected";
+    return "unknown";
+}
+
+function render() {
+    tableBody.replaceChildren();
+
+    const query = searchInput.value.trim().toLowerCase();
+    const filtered = records.filter(record =>
+        fields.map(key => record[key] ?? "").join(" ")
+            .toLowerCase().includes(query)
+    );
+
+    document.getElementById("totalCount").textContent = records.length;
+    document.getElementById("verifiedCount").textContent =
+        records.filter(r => r.status === "Verified").length;
+    document.getElementById("pendingCount").textContent =
+        records.filter(r => r.status === "Pending").length;
+    document.getElementById("rejectedCount").textContent =
+        records.filter(r => r.status === "Rejected").length;
+
+    filtered.forEach((record, index) => {
+        const row = document.createElement("tr");
+
+        addCell(row, index + 1);
+        addCell(row, record.materialName);
+        addCell(row, record.materialGrade);
+        addCell(row, record.heatNumber);
+        addCell(row, record.batchNumber);
+        addCell(row, record.supplier);
+        addCell(row, record.mtcNumber);
+        addCell(row, formatDate(record.receiptDate));
+        addCell(row, record.quantity + " " + record.unit);
+        addCell(row, formatDate(record.certificateDate));
+
+        const statusCell = document.createElement("td");
+        const badge = document.createElement("span");
+        badge.className = "status " + statusClass(record.status);
+        badge.textContent = record.status || "Unknown";
+        statusCell.appendChild(badge);
+        row.appendChild(statusCell);
+
+        addCell(row, record.verifiedBy);
+        addCell(row, [record.poNumber, record.supplierInvoice]
+            .filter(Boolean).join(" / "));
+        addCell(row, record.remarks);
+
+        const actions = document.createElement("td");
+        actions.className = "actions-cell";
+
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "small-btn secondary";
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => startEdit(record.id));
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "small-btn danger";
+        remove.textContent = "Delete";
+        remove.addEventListener("click", () => deleteRecord(record.id));
+
+        actions.append(edit, remove);
+        row.appendChild(actions);
+        tableBody.appendChild(row);
+    });
+
+    emptyMessage.style.display = filtered.length ? "none" : "block";
+    emptyMessage.textContent = records.length && !filtered.length
+        ? "No records match your search."
+        : "No MTC records yet. Add your first material certificate above.";
+}
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const data = getFormData();
+
+    const duplicate = records.find(record =>
+        record.mtcNumber.toLowerCase() === data.mtcNumber.toLowerCase() &&
+        record.id !== editingId
+    );
+
+    if (duplicate) {
+        const sameTraceability = records.find(record =>
+            record.mtcNumber.toLowerCase() === data.mtcNumber.toLowerCase() &&
+            record.heatNumber.toLowerCase() === data.heatNumber.toLowerCase() &&
+            record.id !== editingId
+        );
+
+        if (sameTraceability) {
+            alert("This MTC Number and Heat Number combination already exists.");
+            return;
+        }
+
+        if (!confirm("This MTC Number already exists for another heat. Save this record anyway?")) {
+            return;
+        }
+    }
+
+    if (editingId) {
+        const index = records.findIndex(record => record.id === editingId);
+        if (index === -1) {
+            alert("Record not found. Please add it again.");
+            resetFormState();
+            return;
+        }
+        records[index] = { ...records[index], ...data };
+    } else {
+        data.id = (window.crypto && crypto.randomUUID)
+            ? crypto.randomUUID()
+            : String(Date.now()) + Math.random().toString(16).slice(2);
+        records.push(data);
+    }
+
+    if (!saveRecords()) return;
+
+    resetFormState();
+    render();
+});
+
+function deleteRecord(id) {
+    const record = records.find(item => item.id === id);
+    if (!record) return;
+
+    if (!confirm("Delete MTC record " + record.mtcNumber + "?")) return;
+
+    const previous = records;
+    records = records.filter(item => item.id !== id);
+
+    if (!saveRecords()) {
+        records = previous;
+        render();
+        return;
+    }
+
+    if (editingId === id) resetFormState();
+    render();
+}
+
+document.getElementById("cancelEditBtn")
+    .addEventListener("click", resetFormState);
+
+document.getElementById("clearBtn").addEventListener("click", function() {
+    setTimeout(resetFormState, 0);
+});
+
+searchInput.addEventListener("input", render);
+
+document.getElementById("printBtn").addEventListener("click", function() {
+    window.print();
+});
+
+function csvEscape(value) {
+    const text = String(value ?? "");
+    return '"' + text.replace(/"/g, '""') + '"';
+}
+
+document.getElementById("exportBtn").addEventListener("click", function() {
+    if (!records.length) {
+        alert("There are no MTC records to export.");
+        return;
+    }
+
+    const headers = [
+        "Material Name", "Material Grade", "Heat / Cast Number",
+        "Batch / Lot Number", "Supplier", "Supplier Invoice",
+        "MTC Number", "Receipt Date", "Quantity", "Unit",
+        "Certificate Date", "Status", "Verified By", "PO Number", "Remarks"
+    ];
+
+    const rows = records.map(record => [
+        record.materialName, record.materialGrade, record.heatNumber,
+        record.batchNumber, record.supplier, record.supplierInvoice,
+        record.mtcNumber, record.receiptDate, record.quantity, record.unit,
+        record.certificateDate, record.status, record.verifiedBy,
+        record.poNumber, record.remarks
+    ]);
+
+    const csv = [headers, ...rows]
+        .map(row => row.map(csvEscape).join(","))
+        .join("\r\n");
+
+    const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "mtc-register.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+});
+
+render();
+</script>
+
+</body>
+</html>
