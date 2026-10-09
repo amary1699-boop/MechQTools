@@ -1,0 +1,742 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incoming Material Inspection Register - MechQTools</title>
+<meta name="description" content="Record incoming material inspections, supplier details, quantities, and acceptance status online.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --text: #222;
+    --border: #ddd;
+    --green: #198754;
+    --orange: #f0ad4e;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+header {
+    background: #fff;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.logo {
+    color: var(--red);
+    font-size: 23px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.home {
+    background: var(--red);
+    color: white;
+    text-decoration: none;
+    padding: 10px 17px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.container {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 0 16px;
+}
+h1 { font-size: 28px; margin-bottom: 8px; }
+.subtitle { color: #666; line-height: 1.6; }
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+}
+h2 { font-size: 20px; margin-top: 0; }
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font: inherit;
+    background: white;
+}
+textarea { min-height: 75px; resize: vertical; }
+.full { grid-column: 1 / -1; }
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 17px;
+}
+button {
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: white;
+    background: var(--red);
+    font-size: 14px;
+    font-weight: bold;
+}
+button:hover { opacity: .9; }
+.secondary { background: #555; }
+.green { background: var(--green); }
+.orange { background: #c78112; }
+.danger { background: #b42318; }
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+.stat {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 8px;
+}
+.stat strong {
+    display: block;
+    font-size: 25px;
+    margin-top: 7px;
+}
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1050px;
+    font-size: 13px;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+th { background: #f0f1f3; }
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.accepted { background: #d1e7dd; color: #0f5132; }
+.rejected { background: #f8d7da; color: #842029; }
+.pending { background: #fff3cd; color: #664d03; }
+.hold { background: #e2e3e5; color: #41464b; }
+.small-actions { display: flex; gap: 5px; }
+.small-actions button { padding: 7px 9px; }
+.notice {
+    background: #fff8e6;
+    border-left: 4px solid var(--orange);
+    padding: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+.empty { text-align: center; color: #777; padding: 24px; }
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 22px 12px;
+    margin-top: 35px;
+}
+footer p { margin: 5px 0; }
+@media(max-width: 800px) {
+    .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media(max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .full { grid-column: auto; }
+    h1 { font-size: 23px; }
+    .card { padding: 14px; }
+}
+@media print {
+    header, .form-card, .search-actions, .no-print, footer, .notice {
+        display: none !important;
+    }
+    body { background: white; }
+    .container { max-width: none; margin: 0; padding: 0; }
+    .card { border: 0; box-shadow: none; padding: 0; }
+    .stats { margin-bottom: 15px; }
+    table { min-width: 0; font-size: 9px; }
+    th, td { padding: 5px; }
+    h1 { font-size: 20px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+    <a class="logo" href="index.html">MechQTools</a>
+    <a class="home" href="index.html">⌂ Home</a>
+</header>
+
+<main class="container">
+    <h1>Incoming Material Inspection Register</h1>
+    <p class="subtitle">
+        Record incoming material details, supplier information, inspection quantities
+        and acceptance decisions in one place.
+    </p>
+
+    <div class="notice">
+        <strong>Important:</strong> Use the approved drawing, purchase specification,
+        sampling plan and applicable inspection procedure to make acceptance decisions.
+        This register records your entries; it does not automatically certify material quality.
+    </div>
+
+    <section class="stats">
+        <div class="stat">Total Records<strong id="totalCount">0</strong></div>
+        <div class="stat">Accepted<strong id="acceptedCount">0</strong></div>
+        <div class="stat">Rejected<strong id="rejectedCount">0</strong></div>
+        <div class="stat">Pending / Hold<strong id="pendingCount">0</strong></div>
+    </section>
+
+    <section class="card form-card">
+        <h2 id="formTitle">Add Inspection Record</h2>
+        <form id="inspectionForm">
+            <input type="hidden" id="recordId">
+
+            <div class="form-grid">
+                <div>
+                    <label for="inspectionDate">Inspection Date *</label>
+                    <input type="date" id="inspectionDate" required>
+                </div>
+                <div>
+                    <label for="supplier">Supplier Name *</label>
+                    <input id="supplier" required placeholder="Supplier/company name">
+                </div>
+                <div>
+                    <label for="grn">GRN / Receipt Number *</label>
+                    <input id="grn" required placeholder="e.g. GRN-1001">
+                </div>
+                <div>
+                    <label for="partName">Material / Part Name *</label>
+                    <input id="partName" required placeholder="e.g. MS Sheet">
+                </div>
+                <div>
+                    <label for="partNumber">Part / Material Number</label>
+                    <input id="partNumber" placeholder="Part number">
+                </div>
+                <div>
+                    <label for="grade">Material Grade</label>
+                    <input id="grade" placeholder="e.g. IS 2062 E250">
+                </div>
+                <div>
+                    <label for="lotNumber">Lot / Batch / Heat Number</label>
+                    <input id="lotNumber" placeholder="Batch or heat number">
+                </div>
+                <div>
+                    <label for="poNumber">Purchase Order Number</label>
+                    <input id="poNumber" placeholder="PO number">
+                </div>
+                <div>
+                    <label for="invoice">Invoice / Challan Number</label>
+                    <input id="invoice" placeholder="Invoice or challan">
+                </div>
+                <div>
+                    <label for="receivedQty">Received Quantity *</label>
+                    <input type="number" id="receivedQty" min="0.001" step="any" required placeholder="e.g. 100">
+                </div>
+                <div>
+                    <label for="inspectedQty">Inspected Quantity *</label>
+                    <input type="number" id="inspectedQty" min="0" step="any" required placeholder="e.g. 20">
+                </div>
+                <div>
+                    <label for="unit">Quantity Unit *</label>
+                    <select id="unit" required>
+                        <option value="Nos">Nos</option>
+                        <option value="Kg">Kg</option>
+                        <option value="Meter">Meter</option>
+                        <option value="Sheet">Sheet</option>
+                        <option value="Set">Set</option>
+                        <option value="Box">Box</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="acceptedQty">Accepted Quantity *</label>
+                    <input type="number" id="acceptedQty" min="0" step="any" required value="0">
+                </div>
+                <div>
+                    <label for="rejectedQty">Rejected Quantity *</label>
+                    <input type="number" id="rejectedQty" min="0" step="any" required value="0">
+                </div>
+                <div>
+                    <label for="status">Inspection Status *</label>
+                    <select id="status" required>
+                        <option value="Pending">Pending</option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Hold">Hold</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="inspector">Inspected By</label>
+                    <input id="inspector" placeholder="Inspector / Quality Engineer">
+                </div>
+                <div>
+                    <label for="reportNo">Inspection Report Number</label>
+                    <input id="reportNo" placeholder="Report number">
+                </div>
+                <div class="full">
+                    <label for="remarks">Remarks / Defects Found</label>
+                    <textarea id="remarks" placeholder="Dimensions, visual defects, documents checked, action required..."></textarea>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="submit" id="saveBtn">Save Record</button>
+                <button type="button" class="secondary" id="resetBtn">Clear Form</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Inspection Records</h2>
+        <div class="form-grid search-actions">
+            <div>
+                <label for="searchInput">Search Records</label>
+                <input id="searchInput" placeholder="Supplier, GRN, part, batch...">
+            </div>
+            <div>
+                <label for="statusFilter">Filter by Status</label>
+                <select id="statusFilter">
+                    <option value="">All Statuses</option>
+                    <option>Pending</option>
+                    <option>Accepted</option>
+                    <option>Rejected</option>
+                    <option>Hold</option>
+                </select>
+            </div>
+            <div>
+                <label for="dateFilter">Filter by Inspection Date</label>
+                <input type="date" id="dateFilter">
+            </div>
+        </div>
+
+        <div class="actions search-actions">
+            <button type="button" class="green" id="exportBtn">Export CSV</button>
+            <button type="button" class="secondary" id="printBtn">Print / Save PDF</button>
+            <button type="button" class="danger" id="clearAllBtn">Delete All Records</button>
+        </div>
+
+        <p id="recordSummary" class="subtitle"></p>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Supplier / GRN</th>
+                        <th>Material / Part No.</th>
+                        <th>Grade / Batch</th>
+                        <th>PO / Invoice</th>
+                        <th>Received</th>
+                        <th>Inspected</th>
+                        <th>Accepted</th>
+                        <th>Rejected</th>
+                        <th>Status</th>
+                        <th>Inspector / Report</th>
+                        <th>Remarks</th>
+                        <th class="no-print">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsBody"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p><strong>MechQTools</strong></p>
+    <p>Engineering &amp; Quality Tools for Professionals.</p>
+    <p>© <span id="year"></span> MechQTools. All rights reserved.</p>
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "mechqtools_incoming_material_inspection_v1";
+const $ = id => document.getElementById(id);
+
+let records = [];
+let editingId = null;
+
+function loadRecords() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : [];
+        records = Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        records = [];
+        alert("Saved records could not be read. Check browser storage.");
+    }
+}
+
+function saveRecords() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        return true;
+    } catch (error) {
+        alert("Records could not be saved. Browser storage may be full or disabled.");
+        return false;
+    }
+}
+
+function value(id) {
+    return $(id).value.trim();
+}
+
+function numberValue(id) {
+    return Number($(id).value);
+}
+
+function escapeHTML(input) {
+    return String(input ?? "").replace(/[&<>"']/g, ch => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[ch]);
+}
+
+function showStatus(status) {
+    const className = {
+        Accepted: "accepted",
+        Rejected: "rejected",
+        Pending: "pending",
+        Hold: "hold"
+    }[status] || "pending";
+
+    return '<span class="status ' + className + '">' +
+        escapeHTML(status) + '</span>';
+}
+
+function getFormData() {
+    const received = numberValue("receivedQty");
+    const inspected = numberValue("inspectedQty");
+    const accepted = numberValue("acceptedQty");
+    const rejected = numberValue("rejectedQty");
+
+    if (![received, inspected, accepted, rejected].every(Number.isFinite)) {
+        alert("Please enter valid quantities.");
+        return null;
+    }
+
+    if (received <= 0 || inspected < 0 || accepted < 0 || rejected < 0) {
+        alert("Received quantity must be greater than zero. Other quantities cannot be negative.");
+        return null;
+    }
+
+    if (inspected > received) {
+        alert("Inspected quantity cannot exceed received quantity.");
+        return null;
+    }
+
+    if (accepted + rejected > inspected + 0.0000001) {
+        alert("Accepted plus rejected quantity cannot exceed inspected quantity.");
+        return null;
+    }
+
+    if (accepted + rejected > received + 0.0000001) {
+        alert("Accepted plus rejected quantity cannot exceed received quantity.");
+        return null;
+    }
+
+    return {
+        id: editingId || (
+            window.crypto && crypto.randomUUID
+                ? crypto.randomUUID()
+                : String(Date.now()) + Math.random().toString(16).slice(2)
+        ),
+        inspectionDate: value("inspectionDate"),
+        supplier: value("supplier"),
+        grn: value("grn"),
+        partName: value("partName"),
+        partNumber: value("partNumber"),
+        grade: value("grade"),
+        lotNumber: value("lotNumber"),
+        poNumber: value("poNumber"),
+        invoice: value("invoice"),
+        receivedQty: received,
+        inspectedQty: inspected,
+        unit: value("unit"),
+        acceptedQty: accepted,
+        rejectedQty: rejected,
+        status: value("status"),
+        inspector: value("inspector"),
+        reportNo: value("reportNo"),
+        remarks: value("remarks"),
+        updatedAt: new Date().toISOString()
+    };
+}
+
+function resetForm() {
+    $("inspectionForm").reset();
+    $("recordId").value = "";
+    $("formTitle").textContent = "Add Inspection Record";
+    $("saveBtn").textContent = "Save Record";
+    editingId = null;
+    $("inspectionDate").value = new Date().toISOString().slice(0, 10);
+    $("acceptedQty").value = "0";
+    $("rejectedQty").value = "0";
+}
+
+function filteredRecords() {
+    const query = value("searchInput").toLowerCase();
+    const status = value("statusFilter");
+    const date = value("dateFilter");
+
+    return records.filter(record => {
+        const haystack = [
+            record.supplier, record.grn, record.partName, record.partNumber,
+            record.grade, record.lotNumber, record.poNumber, record.invoice,
+            record.status, record.inspector, record.reportNo, record.remarks
+        ].join(" ").toLowerCase();
+
+        return (!query || haystack.includes(query)) &&
+               (!status || record.status === status) &&
+               (!date || record.inspectionDate === date);
+    }).sort((a, b) =>
+        String(b.inspectionDate).localeCompare(String(a.inspectionDate))
+    );
+}
+
+function renderStats() {
+    $("totalCount").textContent = records.length;
+    $("acceptedCount").textContent =
+        records.filter(r => r.status === "Accepted").length;
+    $("rejectedCount").textContent =
+        records.filter(r => r.status === "Rejected").length;
+    $("pendingCount").textContent =
+        records.filter(r => r.status === "Pending" || r.status === "Hold").length;
+}
+
+function renderTable() {
+    const visible = filteredRecords();
+    $("recordSummary").textContent =
+        "Showing " + visible.length + " of " + records.length + " records.";
+
+    if (!visible.length) {
+        $("recordsBody").innerHTML =
+            '<tr><td colspan="13" class="empty">No records found. Add an inspection record above.</td></tr>';
+        renderStats();
+        return;
+    }
+
+    $("recordsBody").innerHTML = visible.map(r => `
+        <tr>
+            <td>${escapeHTML(r.inspectionDate)}</td>
+            <td><strong>${escapeHTML(r.supplier)}</strong><br>GRN: ${escapeHTML(r.grn)}</td>
+            <td>${escapeHTML(r.partName)}<br>${escapeHTML(r.partNumber)}</td>
+            <td>${escapeHTML(r.grade)}<br>Batch: ${escapeHTML(r.lotNumber)}</td>
+            <td>PO: ${escapeHTML(r.poNumber)}<br>Invoice: ${escapeHTML(r.invoice)}</td>
+            <td>${escapeHTML(r.receivedQty)} ${escapeHTML(r.unit)}</td>
+            <td>${escapeHTML(r.inspectedQty)} ${escapeHTML(r.unit)}</td>
+            <td>${escapeHTML(r.acceptedQty)} ${escapeHTML(r.unit)}</td>
+            <td>${escapeHTML(r.rejectedQty)} ${escapeHTML(r.unit)}</td>
+            <td>${showStatus(r.status)}</td>
+            <td>${escapeHTML(r.inspector)}<br>${escapeHTML(r.reportNo)}</td>
+            <td>${escapeHTML(r.remarks)}</td>
+            <td class="no-print">
+                <div class="small-actions">
+                    <button type="button" data-action="edit" data-id="${escapeHTML(r.id)}">Edit</button>
+                    <button type="button" class="danger" data-action="delete" data-id="${escapeHTML(r.id)}">Delete</button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+
+    renderStats();
+}
+
+$("inspectionForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const record = getFormData();
+    if (!record) return;
+
+    const previous = records.slice();
+
+    if (editingId) {
+        const index = records.findIndex(r => r.id === editingId);
+        if (index === -1) {
+            alert("Record not found. Please try again.");
+            return;
+        }
+        records[index] = record;
+    } else {
+        records.push(record);
+    }
+
+    if (!saveRecords()) {
+        records = previous;
+        return;
+    }
+
+    renderTable();
+    resetForm();
+    alert(editingId ? "Record updated successfully." : "Inspection record saved successfully.");
+});
+
+$("recordsBody").addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+
+    const id = button.dataset.id;
+    const action = button.dataset.action;
+    const record = records.find(r => r.id === id);
+
+    if (!record) return;
+
+    if (action === "edit") {
+        editingId = record.id;
+        $("recordId").value = record.id;
+
+        const fields = [
+            "inspectionDate", "supplier", "grn", "partName", "partNumber",
+            "grade", "lotNumber", "poNumber", "invoice", "receivedQty",
+            "inspectedQty", "unit", "acceptedQty", "rejectedQty", "status",
+            "inspector", "reportNo", "remarks"
+        ];
+
+        fields.forEach(field => {
+            $(field).value = record[field] ?? "";
+        });
+
+        $("formTitle").textContent = "Edit Inspection Record";
+        $("saveBtn").textContent = "Update Record";
+        $("inspectionForm").scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (action === "delete") {
+        if (!confirm("Delete this inspection record? This cannot be undone.")) return;
+
+        const previous = records.slice();
+        records = records.filter(r => r.id !== id);
+
+        if (!saveRecords()) {
+            records = previous;
+            return;
+        }
+
+        if (editingId === id) resetForm();
+        renderTable();
+    }
+});
+
+$("resetBtn").addEventListener("click", resetForm);
+
+["searchInput", "statusFilter", "dateFilter"].forEach(id => {
+    $(id).addEventListener("input", renderTable);
+    $(id).addEventListener("change", renderTable);
+});
+
+$("exportBtn").addEventListener("click", () => {
+    const data = filteredRecords();
+
+    if (!data.length) {
+        alert("There are no records to export.");
+        return;
+    }
+
+    const columns = [
+        ["Inspection Date", "inspectionDate"],
+        ["Supplier", "supplier"],
+        ["GRN / Receipt No.", "grn"],
+        ["Material / Part Name", "partName"],
+        ["Part Number", "partNumber"],
+        ["Material Grade", "grade"],
+        ["Lot / Batch / Heat No.", "lotNumber"],
+        ["PO Number", "poNumber"],
+        ["Invoice / Challan", "invoice"],
+        ["Received Quantity", "receivedQty"],
+        ["Inspected Quantity", "inspectedQty"],
+        ["Unit", "unit"],
+        ["Accepted Quantity", "acceptedQty"],
+        ["Rejected Quantity", "rejectedQty"],
+        ["Status", "status"],
+        ["Inspector", "inspector"],
+        ["Inspection Report No.", "reportNo"],
+        ["Remarks", "remarks"]
+    ];
+
+    const csvCell = val =>
+        '"' + String(val ?? "").replace(/"/g, '""') + '"';
+
+    const csv = [
+        columns.map(c => csvCell(c[0])).join(","),
+        ...data.map(r => columns.map(c => csvCell(r[c[1]])).join(","))
+    ].join("\r\n");
+
+    const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "incoming-material-inspection-register.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+});
+
+$("printBtn").addEventListener("click", () => window.print());
+
+$("clearAllBtn").addEventListener("click", () => {
+    if (!records.length) {
+        alert("There are no records to delete.");
+        return;
+    }
+
+    if (!confirm("Delete ALL inspection records saved in this browser? This cannot be undone.")) {
+        return;
+    }
+
+    const previous = records.slice();
+    records = [];
+
+    if (!saveRecords()) {
+        records = previous;
+        return;
+    }
+
+    resetForm();
+    renderTable();
+});
+
+$("year").textContent = new Date().getFullYear();
+loadRecords();
+resetForm();
+renderTable();
+</script>
+</body>
+</html>
