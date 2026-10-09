@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspection Checklist Generator - MechQTools</title>
+<meta name="description" content="Create and print inspection checklists for manufacturing and quality inspection.">
+
+<style>
+:root {
+    --red: #e53232;
+    --light: #f7f8fa;
+    --border: #dfe3e8;
+    --text: #252a34;
+    --muted: #667085;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.5;
+}
+header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.header-inner {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.logo {
+    color: var(--red);
+    font-size: 23px;
+    font-weight: 800;
+    text-decoration: none;
+}
+.tagline { color: var(--muted); font-size: 12px; }
+.home { color: var(--red); font-weight: bold; text-decoration: none; }
+main { max-width: 1400px; margin: 25px auto; padding: 0 18px; }
+.page-title { margin-bottom: 22px; }
+.page-title h1 { margin: 0 0 5px; font-size: 28px; }
+.page-title p { color: var(--muted); margin: 0; }
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+.card h2 {
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 20px;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+.field { min-width: 0; }
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+}
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfd5dd;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+}
+textarea { min-height: 65px; resize: vertical; }
+input:focus, textarea:focus, select:focus {
+    outline: 2px solid #f7b6b6;
+    border-color: var(--red);
+}
+.full { grid-column: 1 / -1; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; min-width: 1100px; border-collapse: collapse; }
+th, td {
+    border: 1px solid #cfd5dd;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+th { background: #f1f3f6; font-size: 12px; }
+td input, td textarea, td select {
+    min-width: 100px;
+    padding: 7px;
+    font-size: 12px;
+}
+td textarea { min-height: 55px; }
+.step-number { text-align: center; font-weight: bold; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+button {
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+.primary { background: var(--red); color: #fff; }
+.secondary { background: #f0f2f5; color: var(--text); border: 1px solid var(--border); }
+.danger { background: #fff0f0; color: #b42318; border: 1px solid #ffd0d0; }
+button:hover { opacity: .88; }
+.note {
+    padding: 12px;
+    background: #fff8e8;
+    border: 1px solid #f1d9a8;
+    border-radius: 6px;
+    font-size: 13px;
+}
+#status { margin-top: 12px; color: #067647; font-size: 14px; }
+.help-list { padding-left: 20px; }
+.help-list li { margin-bottom: 8px; }
+footer {
+    margin-top: 35px;
+    padding: 22px;
+    background: #20242c;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+}
+#printReport { display: none; }
+@media(max-width: 800px) {
+    .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card { padding: 15px; }
+    .page-title h1 { font-size: 23px; }
+}
+@media(max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .full { grid-column: auto; }
+    .tagline { display: none; }
+}
+@media print {
+    body { background: #fff; }
+    header, main, footer { display: none !important; }
+    #printReport { display: block !important; }
+}
+</style>
+</head>
+
+<body>
+<header>
+    <div class="header-inner">
+        <div>
+            <a class="logo" href="index.html">MechQTools</a>
+            <div class="tagline">Engineering &amp; Quality Tools for Professionals.</div>
+        </div>
+        <a class="home" href="index.html">Home</a>
+    </div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h1>Inspection Checklist Generator</h1>
+        <p>Create inspection checklists with specifications, measuring instruments and inspection results.</p>
+    </div>
+
+    <section class="card">
+        <h2>1. Inspection Information</h2>
+        <div class="form-grid">
+            <div class="field">
+                <label for="checkTitle">Checklist Title *</label>
+                <input id="checkTitle" placeholder="e.g. Final Inspection Checklist">
+            </div>
+            <div class="field">
+                <label for="checkNo">Checklist Number</label>
+                <input id="checkNo" placeholder="e.g. QC/CHK/001">
+            </div>
+            <div class="field">
+                <label for="revision">Revision</label>
+                <input id="revision" placeholder="e.g. 00">
+            </div>
+            <div class="field">
+                <label for="partName">Part / Product Name</label>
+                <input id="partName" placeholder="Part name">
+            </div>
+            <div class="field">
+                <label for="partNo">Part Number</label>
+                <input id="partNo" placeholder="Part number">
+            </div>
+            <div class="field">
+                <label for="drawingNo">Drawing Number / Revision</label>
+                <input id="drawingNo" placeholder="Drawing reference">
+            </div>
+            <div class="field">
+                <label for="inspectionType">Inspection Type</label>
+                <select id="inspectionType">
+                    <option>Incoming Inspection</option>
+                    <option>In-Process Inspection</option>
+                    <option>First-Off Inspection</option>
+                    <option>Final Inspection</option>
+                    <option>Layout Inspection</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="lotNo">Lot / Batch Number</label>
+                <input id="lotNo" placeholder="Lot or batch number">
+            </div>
+            <div class="field">
+                <label for="quantity">Quantity Inspected</label>
+                <input id="quantity" type="number" min="0" placeholder="e.g. 25">
+            </div>
+            <div class="field">
+                <label for="date">Inspection Date</label>
+                <input id="date" type="date">
+            </div>
+            <div class="field">
+                <label for="inspector">Inspector Name</label>
+                <input id="inspector" placeholder="Inspector name">
+            </div>
+            <div class="field">
+                <label for="department">Department / Supplier</label>
+                <input id="department" placeholder="Department or supplier">
+            </div>
+            <div class="field full">
+                <label for="remarks">General Remarks</label>
+                <textarea id="remarks" placeholder="Additional inspection information"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>2. Inspection Characteristics</h2>
+        <p style="color:#667085;font-size:13px">
+            Add each dimension or characteristic from the approved drawing, specification or control plan.
+        </p>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:45px">No.</th>
+                        <th>Characteristic / Check Point</th>
+                        <th>Specification / Tolerance</th>
+                        <th>Measuring Instrument / Method</th>
+                        <th>Actual Result / Observation</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="checkBody"></tbody>
+            </table>
+        </div>
+        <div class="actions">
+            <button type="button" class="secondary" onclick="addRow()">+ Add Inspection Point</button>
+            <button type="button" class="secondary" onclick="loadExample()">Load Example</button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>3. Inspection Summary</h2>
+        <div class="form-grid">
+            <div class="field">
+                <label for="overall">Overall Inspection Result</label>
+                <select id="overall">
+                    <option value="">Select Result</option>
+                    <option>Accepted</option>
+                    <option>Rejected</option>
+                    <option>Accepted with Deviation Approval</option>
+                    <option>Pending Review</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="reviewedBy">Reviewed / Approved By</label>
+                <input id="reviewedBy" placeholder="Name / designation">
+            </div>
+            <div class="field">
+                <label for="reportDate">Report Date</label>
+                <input id="reportDate" type="date">
+            </div>
+            <div class="field full">
+                <label for="action">Action / Disposition for Failed Items</label>
+                <textarea id="action" placeholder="e.g. Identify, segregate, and raise NCR as applicable"></textarea>
+            </div>
+        </div>
+
+        <div class="note" style="margin-top:16px">
+            <strong>Important:</strong> Use approved specifications and calibrated measuring instruments where required. A checklist result does not replace the applicable control plan, drawing or inspection procedure.
+        </div>
+        <div class="actions">
+            <button type="button" class="primary" onclick="printReport()">Print Inspection Report</button>
+            <button type="button" class="secondary" onclick="loadExample()">Load Example</button>
+            <button type="button" class="danger" onclick="clearAll()">Clear All</button>
+        </div>
+        <div id="status" role="status"></div>
+    </section>
+
+    <section class="card">
+        <h2>How to Use This Tool</h2>
+        <ol class="help-list">
+            <li>Enter the part, drawing and inspection details.</li>
+            <li>Add each required characteristic and its specification.</li>
+            <li>Enter the instrument, actual result and inspection status.</li>
+            <li>Complete the overall result and disposition details.</li>
+            <li>Click Print Inspection Report and choose a printer or Save as PDF.</li>
+        </ol>
+    </section>
+</main>
+
+<footer>© <span id="year"></span> MechQTools. Engineering &amp; Quality Tools for Professionals.</footer>
+<div id="printReport"></div>
+
+<script>
+const checkBody = document.getElementById("checkBody");
+
+function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#39;"
+    })[char]);
+}
+
+function addRow(data = {}) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td class="step-number"></td>
+        <td><textarea data-field="characteristic" placeholder="e.g. Overall length">${esc(data.characteristic || "")}</textarea></td>
+        <td><textarea data-field="specification" placeholder="e.g. 100 ± 0.5 mm">${esc(data.specification || "")}</textarea></td>
+        <td><input data-field="instrument" placeholder="e.g. Vernier caliper" value="${esc(data.instrument || "")}"></td>
+        <td><textarea data-field="actual" placeholder="Measured value / observation">${esc(data.actual || "")}</textarea></td>
+        <td>
+            <select data-field="status" aria-label="Inspection status">
+                <option value="Not Checked" ${data.status === "Not Checked" ? "selected" : ""}>Not Checked</option>
+                <option value="OK" ${data.status === "OK" ? "selected" : ""}>OK</option>
+                <option value="Not OK" ${data.status === "Not OK" ? "selected" : ""}>Not OK</option>
+                <option value="N/A" ${data.status === "N/A" ? "selected" : ""}>N/A</option>
+            </select>
+        </td>
+        <td><textarea data-field="remarks" placeholder="Remarks">${esc(data.remarks || "")}</textarea></td>
+        <td><button type="button" class="danger" onclick="removeRow(this)">Delete</button></td>
+    `;
+    checkBody.appendChild(row);
+    updateNumbers();
+}
+
+function removeRow(button) {
+    button.closest("tr").remove();
+    updateNumbers();
+}
+
+function updateNumbers() {
+    [...checkBody.rows].forEach((row, index) => {
+        row.querySelector(".step-number").textContent = index + 1;
+    });
+}
+
+function getValue(id) {
+    return document.getElementById(id).value.trim();
+}
+
+function getRows() {
+    return [...checkBody.rows].map((row, index) => {
+        const item = { number: index + 1 };
+        ["characteristic", "specification", "instrument", "actual", "status", "remarks"]
+            .forEach(key => item[key] = row.querySelector(`[data-field="${key}"]`).value.trim());
+        return item;
+    }).filter(item => [
+        item.characteristic, item.specification, item.instrument,
+        item.actual, item.remarks
+    ].some(Boolean) || item.status !== "Not Checked");
+}
+
+function setStatus(message) {
+    document.getElementById("status").textContent = message;
+}
+
+function loadExample() {
+    const sample = {
+        checkTitle: "Sheet Metal Component Final Inspection",
+        checkNo: "QC/CHK/001",
+        revision: "00",
+        partName: "Sheet Metal Bracket",
+        partNo: "PART-001",
+        drawingNo: "DWG-001 / Rev 00",
+        lotNo: "LOT-001",
+        quantity: "5",
+        inspector: "Quality Inspector",
+        department: "Quality",
+        remarks: "Example only. Verify actual drawing requirements before use.",
+        overall: "Pending Review",
+        reviewedBy: "",
+        action: ""
+    };
+
+    Object.entries(sample).forEach(([id, text]) => {
+        document.getElementById(id).value = text;
+    });
+
+    checkBody.innerHTML = "";
+    [
+        {
+            characteristic: "Overall length",
+            specification: "As per approved drawing",
+            instrument: "Vernier caliper",
+            actual: "",
+            status: "Not Checked",
+            remarks: ""
+        },
+        {
+            characteristic: "Hole diameter",
+            specification: "As per approved drawing",
+            instrument: "Suitable bore gauge / pin gauge",
+            actual: "",
+            status: "Not Checked",
+            remarks: ""
+        },
+        {
+            characteristic: "Bend angle",
+            specification: "As per approved drawing",
+            instrument: "Angle gauge / suitable method",
+            actual: "",
+            status: "Not Checked",
+            remarks: ""
+        },
+        {
+            characteristic: "Visual condition / burrs",
+            specification: "No unacceptable defects per approved criteria",
+            instrument: "Visual inspection",
+            actual: "",
+            status: "Not Checked",
+            remarks: ""
+        }
+    ].forEach(addRow);
+
+    setStatus("Example loaded. Enter actual results and verify specifications before use.");
+}
+
+function buildInfoRows(items) {
+    return items.map(([label, value]) => `
+        <tr><th>${esc(label)}</th><td>${esc(value) || "—"}</td></tr>
+    `).join("");
+}
+
+function printReport() {
+    if (!getValue("checkTitle")) {
+        setStatus("Please enter the Checklist Title before printing.");
+        document.getElementById("checkTitle").focus();
+        return;
+    }
+
+    const rows = getRows();
+    if (!rows.length) {
+        setStatus("Please add at least one inspection point.");
+        return;
+    }
+
+    const info = [
+        ["Checklist Title", getValue("checkTitle")],
+        ["Checklist Number", getValue("checkNo")],
+        ["Revision", getValue("revision")],
+        ["Part / Product Name", getValue("partName")],
+        ["Part Number", getValue("partNo")],
+        ["Drawing Number / Revision", getValue("drawingNo")],
+        ["Inspection Type", getValue("inspectionType")],
+        ["Lot / Batch Number", getValue("lotNo")],
+        ["Quantity Inspected", getValue("quantity")],
+        ["Inspection Date", getValue("date")],
+        ["Inspector Name", getValue("inspector")],
+        ["Department / Supplier", getValue("department")],
+        ["General Remarks", getValue("remarks")]
+    ];
+
+    const summary = [
+        ["Overall Inspection Result", getValue("overall")],
+        ["Reviewed / Approved By", getValue("reviewedBy")],
+        ["Report Date", getValue("reportDate")],
+        ["Action / Disposition for Failed Items", getValue("action")]
+    ];
+
+    const report = document.getElementById("printReport");
+    report.innerHTML = `
+        <style>
+            #printReport { font-family: Arial, Helvetica, sans-serif; color: #111; }
+            #printReport h1 { text-align: center; font-size: 21px; margin: 0 0 5px; }
+            #printReport .subtitle { text-align: center; font-size: 11px; margin-bottom: 18px; }
+            #printReport h2 { font-size: 14px; margin: 18px 0 8px; page-break-after: avoid; }
+            #printReport table { width: 100%; min-width: 0; border-collapse: collapse; table-layout: fixed; }
+            #printReport th, #printReport td {
+                border: 1px solid #333; padding: 6px; font-size: 9px;
+                text-align: left; vertical-align: top; white-space: pre-wrap; overflow-wrap: anywhere;
+            }
+            #printReport th { background: #eee; }
+            #printReport .info th { width: 28%; }
+            #printReport .inspection-table { page-break-inside: auto; }
+            #printReport .inspection-table tr { page-break-inside: avoid; }
+            #printReport .status-OK { font-weight: bold; }
+            #printReport .approval td { height: 45px; vertical-align: bottom; }
+            #printReport .footnote { font-size: 9px; margin-top: 14px; }
+            @page { size: A4 landscape; margin: 12mm; }
+            @media print {
+                #printReport { display: block !important; }
+                #printReport thead { display: table-header-group; }
+            }
+        </style>
+
+        <h1>INSPECTION CHECKLIST REPORT</h1>
+        <div class="subtitle">MechQTools — Engineering &amp; Quality Tools for Professionals</div>
+
+        <h2>1. Inspection Information</h2>
+        <table class="info"><tbody>${buildInfoRows(info)}</tbody></table>
+
+        <h2>2. Inspection Characteristics and Results</h2>
+        <table class="inspection-table">
+            <thead><tr>
+                <th style="width:4%">No.</th>
+                <th style="width:17%">Characteristic / Check Point</th>
+                <th style="width:17%">Specification / Tolerance</th>
+                <th style="width:14%">Measuring Instrument / Method</th>
+                <th style="width:15%">Actual Result / Observation</th>
+                <th style="width:10%">Status</th>
+                <th style="width:23%">Remarks</th>
+            </tr></thead>
+            <tbody>${rows.map(item => `
+                <tr>
+                    <td>${item.number}</td>
+                    <td>${esc(item.characteristic) || "—"}</td>
+                    <td>${esc(item.specification) || "—"}</td>
+                    <td>${esc(item.instrument) || "—"}</td>
+                    <td>${esc(item.actual) || "—"}</td>
+                    <td>${esc(item.status) || "Not Checked"}</td>
+                    <td>${esc(item.remarks) || "—"}</td>
+                </tr>
+            `).join("")}</tbody>
+        </table>
+
+        <h2>3. Inspection Summary and Disposition</h2>
+        <table class="info"><tbody>${buildInfoRows(summary)}</tbody></table>
+
+        <h2>4. Verification</h2>
+        <table class="approval">
+            <thead><tr><th>Inspector</th><th>Reviewer / Approver</th></tr></thead>
+            <tbody><tr>
+                <td>${esc(getValue("inspector")) || "Name / Signature / Date"}</td>
+                <td>${esc(getValue("reviewedBy")) || "Name / Signature / Date"}</td>
+            </tr></tbody>
+        </table>
+
+        <p class="footnote">Verify results against the current approved drawing, specification and inspection plan. This report records entered data and does not independently validate measurements.</p>
+    `;
+
+    setStatus("Report ready. Select a printer or Save as PDF in the print dialog.");
+    window.print();
+}
+
+function clearAll() {
+    if (!confirm("Clear all inspection checklist information?")) return;
+
+    document.querySelectorAll("main input, main textarea").forEach(element => {
+        element.value = "";
+    });
+
+    document.getElementById("inspectionType").selectedIndex = 0;
+    document.getElementById("overall").selectedIndex = 0;
+    checkBody.innerHTML = "";
+    addRow();
+    setStatus("All fields cleared.");
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+addRow();
+</script>
+</body>
+</html>
