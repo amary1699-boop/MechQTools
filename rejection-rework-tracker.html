@@ -1,0 +1,1011 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rejection & Rework Tracker - MechQTools</title>
+<meta name="description" content="Track rejected parts, rework, scrap, defects, root causes and corrective actions with this free quality tool.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --text: #222;
+    --muted: #666;
+    --border: #e3e5e8;
+    --white: #fff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--red);
+    text-decoration: none;
+}
+
+.home-btn {
+    text-decoration: none;
+    color: var(--white);
+    background: var(--red);
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 0 16px;
+}
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+    margin: 0 0 6px;
+}
+
+.page-title p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+.card h2 {
+    font-size: 20px;
+    margin: 0 0 18px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 11px;
+    border: 1px solid #cfd3d8;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 14px;
+    background: white;
+    color: var(--text);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #f7b1b1;
+    border-color: var(--red);
+}
+
+textarea {
+    min-height: 82px;
+    resize: vertical;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.btn {
+    border: 0;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: var(--red);
+    color: white;
+}
+
+.btn-secondary {
+    background: #eceff2;
+    color: #222;
+}
+
+.btn-danger {
+    background: #b42318;
+    color: white;
+}
+
+.btn-small {
+    padding: 7px 10px;
+    margin: 2px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.stat {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 17px;
+}
+
+.stat span {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.stat strong {
+    font-size: 25px;
+    overflow-wrap: anywhere;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.toolbar input, .toolbar select {
+    max-width: 280px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+    background: white;
+}
+
+th, td {
+    padding: 11px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    max-width: 240px;
+}
+
+th {
+    background: #f0f1f3;
+    white-space: nowrap;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #eceff2;
+    white-space: nowrap;
+}
+
+.status-open {
+    background: #fff0d0;
+    color: #8a5700;
+}
+
+.status-progress {
+    background: #e2efff;
+    color: #174ea6;
+}
+
+.status-closed {
+    background: #dff5e5;
+    color: #176b35;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+}
+
+.note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 22px 16px;
+    margin-top: 35px;
+}
+
+footer p {
+    margin: 5px 0;
+    font-size: 13px;
+}
+
+footer a {
+    color: white;
+}
+
+@media (max-width: 800px) {
+    .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .page-title h1 {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 500px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .stats {
+        gap: 9px;
+    }
+
+    .stat {
+        padding: 12px;
+    }
+
+    .stat strong {
+        font-size: 21px;
+    }
+}
+
+@media print {
+    header, footer, .no-print, #entryCard {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .card, .stat {
+        border: 1px solid #ccc;
+        break-inside: avoid;
+    }
+
+    .table-wrap {
+        overflow: visible;
+    }
+
+    table {
+        min-width: 0;
+        table-layout: auto;
+    }
+
+    th, td {
+        font-size: 9px;
+        padding: 5px;
+        color: black;
+    }
+
+    .actions, .edit-action, .delete-action {
+        display: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="index.html">MechQTools</a>
+        <a class="home-btn" href="index.html">⌂ Home</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="page-title">
+        <h1>Rejection &amp; Rework Tracker</h1>
+        <p>Record rejected parts, rework, scrap, root causes and corrective actions.</p>
+    </div>
+
+    <section class="stats">
+        <div class="stat">
+            <span>Total Records</span>
+            <strong id="totalRecords">0</strong>
+        </div>
+        <div class="stat">
+            <span>Total Rejected Qty</span>
+            <strong id="totalRejected">0</strong>
+        </div>
+        <div class="stat">
+            <span>Total Rework Qty</span>
+            <strong id="totalRework">0</strong>
+        </div>
+        <div class="stat">
+            <span>Total Scrap Qty</span>
+            <strong id="totalScrap">0</strong>
+        </div>
+    </section>
+
+    <section class="card" id="entryCard">
+        <h2 id="formHeading">Add Rejection / Rework Record</h2>
+
+        <form id="recordForm">
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="recordDate">Date *</label>
+                    <input type="date" id="recordDate" required>
+                </div>
+
+                <div class="field">
+                    <label for="partName">Part Name *</label>
+                    <input type="text" id="partName" placeholder="e.g. Mounting Bracket" required>
+                </div>
+
+                <div class="field">
+                    <label for="partNumber">Part Number *</label>
+                    <input type="text" id="partNumber" placeholder="e.g. MB-1001" required>
+                </div>
+
+                <div class="field">
+                    <label for="supplier">Supplier / Department</label>
+                    <input type="text" id="supplier" placeholder="Supplier or department name">
+                </div>
+
+                <div class="field">
+                    <label for="defectType">Defect Type *</label>
+                    <select id="defectType" required>
+                        <option value="">Select defect</option>
+                        <option>Dimensional Defect</option>
+                        <option>Bending Defect</option>
+                        <option>Welding Defect</option>
+                        <option>Surface Defect</option>
+                        <option>Crack / Damage</option>
+                        <option>Material Defect</option>
+                        <option>Hole / Slot Defect</option>
+                        <option>Assembly Defect</option>
+                        <option>Wrong Material</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="inspectionQty">Inspected Quantity</label>
+                    <input type="number" id="inspectionQty" min="0" step="1" value="0">
+                </div>
+
+                <div class="field">
+                    <label for="rejectedQty">Rejected Quantity *</label>
+                    <input type="number" id="rejectedQty" min="0" step="1" value="0" required>
+                </div>
+
+                <div class="field">
+                    <label for="reworkQty">Rework Quantity *</label>
+                    <input type="number" id="reworkQty" min="0" step="1" value="0" required>
+                </div>
+
+                <div class="field">
+                    <label for="scrapQty">Scrap Quantity *</label>
+                    <input type="number" id="scrapQty" min="0" step="1" value="0" required>
+                </div>
+
+                <div class="field">
+                    <label for="responsible">Responsible Person</label>
+                    <input type="text" id="responsible" placeholder="Name">
+                </div>
+
+                <div class="field">
+                    <label for="status">Status *</label>
+                    <select id="status" required>
+                        <option value="Open">Open</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="rootCause">Root Cause</label>
+                    <textarea id="rootCause" placeholder="Why did the defect occur?"></textarea>
+                </div>
+
+                <div class="field full">
+                    <label for="correctiveAction">Corrective / Preventive Action</label>
+                    <textarea id="correctiveAction" placeholder="What action will prevent recurrence?"></textarea>
+                </div>
+
+                <div class="field full">
+                    <label for="remarks">Remarks</label>
+                    <textarea id="remarks" placeholder="Additional inspection or disposition details"></textarea>
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" type="submit" id="saveBtn">Save Record</button>
+                <button class="btn btn-secondary" type="button" id="resetBtn">Clear Form</button>
+                <button class="btn btn-secondary" type="button" id="cancelEditBtn" hidden>Cancel Edit</button>
+            </div>
+
+            <p class="note">* Required fields. Quantity values must be zero or greater. Rejected, rework and scrap quantities are tracked separately.</p>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Rejection &amp; Rework Records</h2>
+
+        <div class="toolbar no-print">
+            <input type="search" id="searchInput" placeholder="Search part, defect, supplier...">
+
+            <select id="statusFilter" aria-label="Filter by status">
+                <option value="">All Statuses</option>
+                <option value="Open">Open</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Closed">Closed</option>
+            </select>
+
+            <button class="btn btn-primary" type="button" id="exportBtn">Export CSV</button>
+            <button class="btn btn-secondary" type="button" id="printBtn">Print / Save PDF</button>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Part Name</th>
+                        <th>Part Number</th>
+                        <th>Supplier / Dept.</th>
+                        <th>Defect</th>
+                        <th>Inspected</th>
+                        <th>Rejected</th>
+                        <th>Rework</th>
+                        <th>Scrap</th>
+                        <th>Root Cause</th>
+                        <th>Corrective Action</th>
+                        <th>Responsible</th>
+                        <th>Status</th>
+                        <th class="no-print">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsBody"></tbody>
+            </table>
+        </div>
+
+        <p class="note" id="recordCount">Showing 0 records</p>
+        <p class="note">Records are stored in this browser. Export CSV regularly as a backup. Clearing browser data may remove locally saved records.</p>
+    </section>
+
+</main>
+
+<footer>
+    <p><strong>MechQTools</strong></p>
+    <p>Engineering &amp; Quality Tools for Professionals.</p>
+    <p>© <span id="year"></span> MechQTools. All rights reserved.</p>
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "mechqtools_rejection_rework_records_v1";
+
+const form = document.getElementById("recordForm");
+const recordsBody = document.getElementById("recordsBody");
+
+let records = [];
+let editingId = null;
+
+const fields = [
+    "recordDate",
+    "partName",
+    "partNumber",
+    "supplier",
+    "defectType",
+    "inspectionQty",
+    "rejectedQty",
+    "reworkQty",
+    "scrapQty",
+    "responsible",
+    "status",
+    "rootCause",
+    "correctiveAction",
+    "remarks"
+];
+
+function $(id) {
+    return document.getElementById(id);
+}
+
+function makeId() {
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+    }
+    return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
+function loadRecords() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : [];
+        records = Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        records = [];
+        alert("Saved records could not be read. Check browser storage settings.");
+    }
+}
+
+function saveRecords() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        return true;
+    } catch (error) {
+        alert("Records could not be saved. Browser storage may be full or disabled.");
+        return false;
+    }
+}
+
+function getFormData() {
+    const data = {};
+
+    fields.forEach(function(id) {
+        data[id] = $(id).value.trim();
+    });
+
+    [
+        "inspectionQty",
+        "rejectedQty",
+        "reworkQty",
+        "scrapQty"
+    ].forEach(function(id) {
+        data[id] = Number(data[id] || 0);
+    });
+
+    return data;
+}
+
+function validateData(data) {
+    const quantities = [
+        data.inspectionQty,
+        data.rejectedQty,
+        data.reworkQty,
+        data.scrapQty
+    ];
+
+    if (quantities.some(function(value) {
+        return !Number.isFinite(value) ||
+            value < 0 ||
+            !Number.isInteger(value);
+    })) {
+        alert("Please enter valid whole-number quantities greater than or equal to zero.");
+        return false;
+    }
+
+    if (data.inspectionQty > 0 &&
+        data.rejectedQty > data.inspectionQty) {
+        alert("Rejected quantity cannot exceed inspected quantity.");
+        return false;
+    }
+
+    if (data.inspectionQty > 0 &&
+        data.reworkQty + data.scrapQty > data.rejectedQty) {
+        alert("Rework quantity + scrap quantity cannot exceed rejected quantity.");
+        return false;
+    }
+
+    return true;
+}
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const data = getFormData();
+
+    if (!validateData(data)) return;
+
+    if (editingId !== null) {
+        const index = records.findIndex(function(record) {
+            return record.id === editingId;
+        });
+
+        if (index === -1) {
+            alert("This record was not found. Please try again.");
+            resetForm();
+            return;
+        }
+
+        records[index] = {
+            ...records[index],
+            ...data,
+            updatedAt: new Date().toISOString()
+        };
+    } else {
+        records.unshift({
+            id: makeId(),
+            ...data,
+            createdAt: new Date().toISOString()
+        });
+    }
+
+    if (!saveRecords()) return;
+
+    renderRecords();
+    resetForm();
+});
+
+function resetForm() {
+    form.reset();
+    $("recordDate").value = new Date().toISOString().slice(0, 10);
+    $("inspectionQty").value = "0";
+    $("rejectedQty").value = "0";
+    $("reworkQty").value = "0";
+    $("scrapQty").value = "0";
+    $("status").value = "Open";
+
+    editingId = null;
+    $("formHeading").textContent = "Add Rejection / Rework Record";
+    $("saveBtn").textContent = "Save Record";
+    $("cancelEditBtn").hidden = true;
+}
+
+$("resetBtn").addEventListener("click", resetForm);
+$("cancelEditBtn").addEventListener("click", resetForm);
+
+function addCell(row, value) {
+    const cell = document.createElement("td");
+    cell.textContent = value === undefined || value === null ? "" : String(value);
+    row.appendChild(cell);
+    return cell;
+}
+
+function statusClass(status) {
+    if (status === "Open") return "status status-open";
+    if (status === "In Progress") return "status status-progress";
+    return "status status-closed";
+}
+
+function renderRecords() {
+    const search = $("searchInput").value.trim().toLowerCase();
+    const filter = $("statusFilter").value;
+
+    const filtered = records.filter(function(record) {
+        const searchable = [
+            record.recordDate,
+            record.partName,
+            record.partNumber,
+            record.supplier,
+            record.defectType,
+            record.responsible,
+            record.rootCause,
+            record.correctiveAction,
+            record.remarks,
+            record.status
+        ].join(" ").toLowerCase();
+
+        return searchable.includes(search) &&
+            (!filter || record.status === filter);
+    });
+
+    recordsBody.replaceChildren();
+
+    if (filtered.length === 0) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 14;
+        cell.className = "empty";
+        cell.textContent = records.length === 0
+            ? "No records yet. Add your first record above."
+            : "No matching records found.";
+        row.appendChild(cell);
+        recordsBody.appendChild(row);
+    }
+
+    filtered.forEach(function(record) {
+        const row = document.createElement("tr");
+
+        [
+            record.recordDate,
+            record.partName,
+            record.partNumber,
+            record.supplier,
+            record.defectType,
+            record.inspectionQty,
+            record.rejectedQty,
+            record.reworkQty,
+            record.scrapQty,
+            record.rootCause,
+            record.correctiveAction,
+            record.responsible
+        ].forEach(function(value) {
+            addCell(row, value);
+        });
+
+        const statusCell = addCell(row, "");
+        const badge = document.createElement("span");
+        badge.className = statusClass(record.status);
+        badge.textContent = record.status;
+        statusCell.appendChild(badge);
+
+        const actionsCell = addCell(row, "");
+        actionsCell.className = "no-print";
+
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "btn btn-secondary btn-small edit-action";
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", function() {
+            editRecord(record.id);
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "btn btn-danger btn-small delete-action";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", function() {
+            deleteRecord(record.id);
+        });
+
+        actionsCell.append(editButton, deleteButton);
+        recordsBody.appendChild(row);
+    });
+
+    updateStats();
+    $("recordCount").textContent =
+        "Showing " + filtered.length + " of " + records.length + " records";
+}
+
+function updateStats() {
+    $("totalRecords").textContent = records.length;
+
+    $("totalRejected").textContent = records.reduce(function(total, record) {
+        return total + Number(record.rejectedQty || 0);
+    }, 0);
+
+    $("totalRework").textContent = records.reduce(function(total, record) {
+        return total + Number(record.reworkQty || 0);
+    }, 0);
+
+    $("totalScrap").textContent = records.reduce(function(total, record) {
+        return total + Number(record.scrapQty || 0);
+    }, 0);
+}
+
+function editRecord(id) {
+    const record = records.find(function(item) {
+        return item.id === id;
+    });
+
+    if (!record) return;
+
+    editingId = id;
+
+    fields.forEach(function(field) {
+        $(field).value = record[field] === undefined ||
+            record[field] === null ? "" : record[field];
+    });
+
+    $("formHeading").textContent = "Edit Rejection / Rework Record";
+    $("saveBtn").textContent = "Update Record";
+    $("cancelEditBtn").hidden = false;
+
+    $("entryCard").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function deleteRecord(id) {
+    const record = records.find(function(item) {
+        return item.id === id;
+    });
+
+    if (!record) return;
+
+    if (!confirm(
+        "Delete the record for " + record.partName +
+        " (" + record.partNumber + ")? This cannot be undone."
+    )) {
+        return;
+    }
+
+    const previous = records;
+    records = records.filter(function(item) {
+        return item.id !== id;
+    });
+
+    if (!saveRecords()) {
+        records = previous;
+        return;
+    }
+
+    if (editingId === id) resetForm();
+
+    renderRecords();
+}
+
+$("searchInput").addEventListener("input", renderRecords);
+$("statusFilter").addEventListener("change", renderRecords);
+
+function csvEscape(value) {
+    let text = String(value === undefined || value === null ? "" : value);
+
+    // Prevent spreadsheet formula execution for untrusted text fields.
+    if (/^[\s]*[=+\-@]/.test(text)) {
+        text = "'" + text;
+    }
+
+    return '"' + text.replace(/"/g, '""') + '"';
+}
+
+$("exportBtn").addEventListener("click", function() {
+    if (records.length === 0) {
+        alert("There are no records to export.");
+        return;
+    }
+
+    const headers = [
+        "Date",
+        "Part Name",
+        "Part Number",
+        "Supplier / Department",
+        "Defect Type",
+        "Inspected Quantity",
+        "Rejected Quantity",
+        "Rework Quantity",
+        "Scrap Quantity",
+        "Responsible Person",
+        "Status",
+        "Root Cause",
+        "Corrective Action",
+        "Remarks"
+    ];
+
+    const keys = [
+        "recordDate",
+        "partName",
+        "partNumber",
+        "supplier",
+        "defectType",
+        "inspectionQty",
+        "rejectedQty",
+        "reworkQty",
+        "scrapQty",
+        "responsible",
+        "status",
+        "rootCause",
+        "correctiveAction",
+        "remarks"
+    ];
+
+    const lines = [
+        headers.map(csvEscape).join(","),
+        ...records.map(function(record) {
+            return keys.map(function(key) {
+                return csvEscape(record[key]);
+            }).join(",");
+        })
+    ];
+
+    const blob = new Blob(
+        ["\uFEFF" + lines.join("\r\n")],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "rejection-rework-records.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+});
+
+$("printBtn").addEventListener("click", function() {
+    window.print();
+});
+
+$("year").textContent = new Date().getFullYear();
+
+loadRecords();
+
+$("recordDate").value = new Date().toISOString().slice(0, 10);
+
+renderRecords();
+</script>
+
+</body>
+</html>
