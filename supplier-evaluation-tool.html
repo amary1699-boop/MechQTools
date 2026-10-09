@@ -1,0 +1,1009 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Supplier Evaluation Tool - MechQTools</title>
+<meta name="description" content="Evaluate supplier quality, delivery, cost, documentation and responsiveness with a weighted supplier performance score.">
+
+<style>
+:root {
+    --red: #e53232;
+    --bg: #f7f8fa;
+    --border: #dfe3e8;
+    --text: #222;
+    --muted: #666;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.logo {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 16px;
+}
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+}
+
+.page-title p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.panel, .report {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    font-size: 20px;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--red);
+}
+
+.section-title {
+    margin-top: 28px !important;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field {
+    min-width: 0;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cfd4da;
+    border-radius: 7px;
+    font: inherit;
+    font-size: 14px;
+    background: #fff;
+    color: #222;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #f8caca;
+    border-color: var(--red);
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 5px 0 0;
+}
+
+.weight-note {
+    padding: 12px 14px;
+    background: #fff5f5;
+    border: 1px solid #f4cccc;
+    border-radius: 7px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: var(--red);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #333;
+    color: #fff;
+}
+
+.btn-light {
+    background: #e9edf2;
+    color: #222;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.score-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.score-card {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 15px;
+    text-align: center;
+}
+
+.score-card span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.score-card strong {
+    display: block;
+    font-size: 25px;
+    overflow-wrap: anywhere;
+}
+
+.score-card.rating strong {
+    color: var(--red);
+}
+
+.report-header {
+    text-align: center;
+    border-bottom: 3px solid var(--red);
+    padding-bottom: 15px;
+    margin-bottom: 18px;
+}
+
+.report-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.report-header p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.report-section {
+    margin: 22px 0;
+}
+
+.report-section h3 {
+    font-size: 15px;
+    background: #fce9e9;
+    border-left: 4px solid var(--red);
+    padding: 9px 10px;
+    margin: 0 0 10px;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.report-table th,
+.report-table td {
+    border: 1px solid #cbd0d6;
+    padding: 9px;
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.report-table th {
+    background: #f0f2f5;
+    font-weight: bold;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.report-table tr {
+    break-inside: avoid;
+}
+
+.report-note {
+    font-size: 12px;
+    color: #555;
+    margin-top: 18px;
+}
+
+.signature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 38px;
+}
+
+.signature-box {
+    border-top: 1px solid #777;
+    padding-top: 8px;
+    min-height: 35px;
+    font-size: 12px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .page-title h1 {
+        font-size: 25px;
+    }
+
+    .panel, .report {
+        padding: 15px;
+    }
+
+    .score-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .report-table th,
+    .report-table td {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .signature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 10pt;
+    }
+
+    header, footer, .page-title, #formPanel,
+    .actions, .no-print {
+        display: none !important;
+    }
+
+    main {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .report {
+        display: block !important;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .report-header {
+        border-bottom: 2px solid #333;
+    }
+
+    .report-section {
+        break-inside: auto;
+    }
+
+    .report-section h3 {
+        background: #eee !important;
+        border-left-color: #555;
+    }
+
+    .report-table th,
+    .report-table td {
+        border: 1px solid #777;
+        color: #000;
+        padding: 7px;
+        font-size: 9pt;
+    }
+
+    .report-table th {
+        background: #eee !important;
+    }
+
+    .score-card {
+        border-color: #777;
+    }
+
+    .score-card.rating strong {
+        color: #000;
+    }
+
+    .report-note {
+        color: #333;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="index.html">MechQTools</a>
+        <a class="back-link" href="index.html">← Back to Home</a>
+    </div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h1>Supplier Evaluation Tool</h1>
+        <p>Evaluate supplier performance using quality, delivery, cost and service criteria.</p>
+    </div>
+
+    <section class="panel" id="formPanel">
+        <h2>1. Supplier Information</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="supplierName">Supplier Name *</label>
+                <input id="supplierName" placeholder="Enter supplier company name" required>
+            </div>
+
+            <div class="field">
+                <label for="supplierCode">Supplier Code</label>
+                <input id="supplierCode" placeholder="e.g. SUP-001">
+            </div>
+
+            <div class="field">
+                <label for="contactPerson">Contact Person</label>
+                <input id="contactPerson" placeholder="Supplier contact name">
+            </div>
+
+            <div class="field">
+                <label for="evaluator">Evaluated By *</label>
+                <input id="evaluator" placeholder="Quality Engineer / SQE name" required>
+            </div>
+
+            <div class="field">
+                <label for="evaluationDate">Evaluation Date *</label>
+                <input type="date" id="evaluationDate" required>
+            </div>
+
+            <div class="field">
+                <label for="period">Evaluation Period</label>
+                <input id="period" placeholder="e.g. April–September 2026">
+            </div>
+
+            <div class="field">
+                <label for="material">Material / Part Supplied</label>
+                <input id="material" placeholder="e.g. Sheet Metal Components">
+            </div>
+
+            <div class="field">
+                <label for="supplierType">Supplier Type</label>
+                <select id="supplierType">
+                    <option value="">Select type</option>
+                    <option>Raw Material</option>
+                    <option>Sheet Metal / Fabrication</option>
+                    <option>Machining</option>
+                    <option>Forging / Casting</option>
+                    <option>Heat Treatment</option>
+                    <option>Surface Treatment</option>
+                    <option>Packaging</option>
+                    <option>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="section-title">2. Performance Scores</h2>
+
+        <div class="weight-note">
+            Enter a score from <strong>0 to 100</strong> for each category based on your actual supplier data.
+            The weights total 100%. The weighted total is calculated automatically.
+            These default weights and rating bands are examples; align them with your company's supplier procedure.
+        </div>
+
+        <div class="grid">
+            <div class="field">
+                <label for="quality">Quality Score (0–100) — Weight 40%</label>
+                <input id="quality" type="number" min="0" max="100" step="0.1" placeholder="e.g. 95" required>
+                <p class="hint">Use inspection rejection, defect rate or PPM evidence.</p>
+            </div>
+
+            <div class="field">
+                <label for="delivery">On-Time Delivery Score (0–100) — Weight 25%</label>
+                <input id="delivery" type="number" min="0" max="100" step="0.1" placeholder="e.g. 90" required>
+                <p class="hint">Base this on actual on-time deliveries.</p>
+            </div>
+
+            <div class="field">
+                <label for="cost">Cost Competitiveness (0–100) — Weight 15%</label>
+                <input id="cost" type="number" min="0" max="100" step="0.1" placeholder="e.g. 85" required>
+            </div>
+
+            <div class="field">
+                <label for="documentation">Documentation / Compliance (0–100) — Weight 10%</label>
+                <input id="documentation" type="number" min="0" max="100" step="0.1" placeholder="e.g. 95" required>
+            </div>
+
+            <div class="field">
+                <label for="response">Responsiveness / Support (0–100) — Weight 10%</label>
+                <input id="response" type="number" min="0" max="100" step="0.1" placeholder="e.g. 90" required>
+            </div>
+
+            <div class="field">
+                <label for="auditScore">Supplier Audit Score (Optional, 0–100)</label>
+                <input id="auditScore" type="number" min="0" max="100" step="0.1" placeholder="Optional audit score">
+                <p class="hint">Recorded separately; it is not included in the weighted total.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">3. Supporting Performance Data</h2>
+
+        <div class="grid">
+            <div class="field">
+                <label for="totalReceived">Total Quantity Received</label>
+                <input id="totalReceived" type="number" min="0" step="1" placeholder="e.g. 10000">
+            </div>
+
+            <div class="field">
+                <label for="rejectedQty">Rejected Quantity</label>
+                <input id="rejectedQty" type="number" min="0" step="1" placeholder="e.g. 100">
+            </div>
+
+            <div class="field">
+                <label for="totalDeliveries">Total Deliveries Due</label>
+                <input id="totalDeliveries" type="number" min="0" step="1" placeholder="e.g. 50">
+            </div>
+
+            <div class="field">
+                <label for="onTimeDeliveries">On-Time Deliveries</label>
+                <input id="onTimeDeliveries" type="number" min="0" step="1" placeholder="e.g. 46">
+            </div>
+
+            <div class="field">
+                <label for="qualityRemarks">Quality Remarks</label>
+                <textarea id="qualityRemarks" placeholder="Defect trends, rejection history, PPM or inspection findings"></textarea>
+            </div>
+
+            <div class="field">
+                <label for="deliveryRemarks">Delivery Remarks</label>
+                <textarea id="deliveryRemarks" placeholder="Late deliveries, shortages or delivery improvements"></textarea>
+            </div>
+        </div>
+
+        <h2 class="section-title">4. Improvement Plan and Approval</h2>
+
+        <div class="grid">
+            <div class="field full">
+                <label for="strengths">Supplier Strengths</label>
+                <textarea id="strengths" placeholder="List positive performance or improvement strengths."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="improvements">Areas for Improvement</label>
+                <textarea id="improvements" placeholder="List the issues requiring improvement."></textarea>
+            </div>
+
+            <div class="field full">
+                <label for="actionPlan">Required Improvement / Corrective Action Plan</label>
+                <textarea id="actionPlan" placeholder="Describe required actions, evidence and expected results."></textarea>
+            </div>
+
+            <div class="field">
+                <label for="actionOwner">Action Owner</label>
+                <input id="actionOwner" placeholder="Supplier / Internal owner">
+            </div>
+
+            <div class="field">
+                <label for="targetDate">Target Completion Date</label>
+                <input type="date" id="targetDate">
+            </div>
+
+            <div class="field">
+                <label for="approvalStatus">Evaluation Decision</label>
+                <select id="approvalStatus">
+                    <option>Pending Review</option>
+                    <option>Approved</option>
+                    <option>Approved with Improvement Actions</option>
+                    <option>Conditional Approval</option>
+                    <option>Not Approved</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="reviewer">Reviewed / Approved By</label>
+                <input id="reviewer" placeholder="Authorized reviewer">
+            </div>
+
+            <div class="field full">
+                <label for="finalRemarks">Final Remarks</label>
+                <textarea id="finalRemarks" placeholder="Overall assessment, follow-up requirements or review comments."></textarea>
+            </div>
+        </div>
+
+        <p class="report-note">
+            * Required fields. Use verified records and your company's approved supplier evaluation criteria.
+        </p>
+    </section>
+
+    <div class="actions">
+        <button type="button" class="btn-primary" id="generateBtn">Generate / Update Report</button>
+        <button type="button" class="btn-secondary" id="printBtn">Print / Save as PDF</button>
+        <button type="button" class="btn-light" id="resetBtn">Reset Form</button>
+    </div>
+
+    <section class="report" id="report">
+        <div class="report-header">
+            <h2>SUPPLIER PERFORMANCE EVALUATION</h2>
+            <p>MechQTools | Engineering &amp; Quality Tools for Professionals</p>
+        </div>
+
+        <div class="score-summary">
+            <div class="score-card">
+                <span>Weighted Total Score</span>
+                <strong id="outScore">—</strong>
+                <span>Out of 100</span>
+            </div>
+
+            <div class="score-card rating">
+                <span>Supplier Rating</span>
+                <strong id="outRating">—</strong>
+                <span id="outRatingNote">Awaiting scores</span>
+            </div>
+
+            <div class="score-card">
+                <span>Rejection Rate</span>
+                <strong id="outRejection">—</strong>
+                <span>Based on entered quantities</span>
+            </div>
+        </div>
+
+        <div id="reportContent"></div>
+
+        <div class="signature-grid">
+            <div class="signature-box">Evaluated By / Date</div>
+            <div class="signature-box">Reviewed By / Date</div>
+            <div class="signature-box">Approved By / Date</div>
+        </div>
+
+        <p class="report-note">
+            This report is based on user-entered information. Review the source data, rating thresholds
+            and approval decision against the applicable company procedure before using it for supplier decisions.
+        </p>
+    </section>
+</main>
+
+<footer>
+    MechQTools — Engineering &amp; Quality Tools for Professionals
+</footer>
+
+<script>
+(function () {
+    "use strict";
+
+    const $ = id => document.getElementById(id);
+
+    const scoreFields = [
+        { id: "quality", label: "Quality", weight: 40 },
+        { id: "delivery", label: "On-Time Delivery", weight: 25 },
+        { id: "cost", label: "Cost Competitiveness", weight: 15 },
+        { id: "documentation", label: "Documentation / Compliance", weight: 10 },
+        { id: "response", label: "Responsiveness / Support", weight: 10 }
+    ];
+
+    function value(id) {
+        const element = $(id);
+        return element ? element.value.trim() : "";
+    }
+
+    function numberValue(id) {
+        const text = value(id);
+        return text === "" ? null : Number(text);
+    }
+
+    function display(text) {
+        return text === "" || text === null || text === undefined ? "—" : String(text);
+    }
+
+    function formatDate(text) {
+        if (!text) return "—";
+
+        const parts = text.split("-");
+        return parts.length === 3
+            ? parts[2] + "-" + parts[1] + "-" + parts[0]
+            : text;
+    }
+
+    function weightedScore() {
+        let total = 0;
+
+        scoreFields.forEach(function (field) {
+            total += Number(value(field.id)) * field.weight / 100;
+        });
+
+        return total;
+    }
+
+    function ratingFor(score) {
+        if (score >= 90) {
+            return {
+                rating: "A — Excellent",
+                note: "Preferred performance range"
+            };
+        }
+
+        if (score >= 75) {
+            return {
+                rating: "B — Good",
+                note: "Acceptable performance range"
+            };
+        }
+
+        if (score >= 60) {
+            return {
+                rating: "C — Conditional",
+                note: "Improvement plan recommended"
+            };
+        }
+
+        return {
+            rating: "D — Poor",
+            note: "Review and action required"
+        };
+    }
+
+    function rejectionRate() {
+        const received = numberValue("totalReceived");
+        const rejected = numberValue("rejectedQty");
+
+        if (received === null || rejected === null || received <= 0) {
+            return null;
+        }
+
+        return rejected / received * 100;
+    }
+
+    function onTimeRate() {
+        const total = numberValue("totalDeliveries");
+        const onTime = numberValue("onTimeDeliveries");
+
+        if (total === null || onTime === null || total <= 0) {
+            return null;
+        }
+
+        return onTime / total * 100;
+    }
+
+    function addRow(table, label, content) {
+        const tr = document.createElement("tr");
+        const th = document.createElement("th");
+        const td = document.createElement("td");
+
+        th.scope = "row";
+        th.textContent = label;
+        td.textContent = display(content);
+
+        tr.appendChild(th);
+        tr.appendChild(td);
+        table.appendChild(tr);
+    }
+
+    function addSection(container, title, rows) {
+        const section = document.createElement("section");
+        section.className = "report-section";
+
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+        section.appendChild(heading);
+
+        const table = document.createElement("table");
+        table.className = "report-table";
+
+        const tbody = document.createElement("tbody");
+
+        rows.forEach(function (row) {
+            addRow(tbody, row[0], row[1]);
+        });
+
+        table.appendChild(tbody);
+        section.appendChild(table);
+        container.appendChild(section);
+    }
+
+    function updateReport() {
+        const content = $("reportContent");
+        content.replaceChildren();
+
+        const complete = scoreFields.every(function (field) {
+            return value(field.id) !== "";
+        });
+
+        let totalScore = null;
+        let rating = { rating: "—", note: "Enter all five scores" };
+
+        if (complete) {
+            totalScore = weightedScore();
+            rating = ratingFor(totalScore);
+        }
+
+        const rejectRate = rejectionRate();
+        const deliveryRate = onTimeRate();
+
+        $("outScore").textContent =
+            totalScore === null ? "—" : totalScore.toFixed(2);
+
+        $("outRating").textContent = rating.rating;
+        $("outRatingNote").textContent = rating.note;
+
+        $("outRejection").textContent =
+            rejectRate === null ? "—" : rejectRate.toFixed(2) + "%";
+
+        addSection(content, "1. SUPPLIER INFORMATION", [
+            ["Supplier Name", value("supplierName")],
+            ["Supplier Code", value("supplierCode")],
+            ["Contact Person", value("contactPerson")],
+            ["Evaluated By", value("evaluator")],
+            ["Evaluation Date", formatDate(value("evaluationDate"))],
+            ["Evaluation Period", value("period")],
+            ["Material / Part Supplied", value("material")],
+            ["Supplier Type", value("supplierType")]
+        ]);
+
+        const scoreRows = scoreFields.map(function (field) {
+            const entered = numberValue(field.id);
+
+            return [
+                field.label + " (" + field.weight + "% weight)",
+                entered === null
+                    ? "Not entered"
+                    : entered.toFixed(2) + " / 100 — Weighted contribution: " +
+                      (entered * field.weight / 100).toFixed(2)
+            ];
+        });
+
+        scoreRows.push([
+            "Weighted Total Score",
+            totalScore === null ? "Incomplete" : totalScore.toFixed(2) + " / 100"
+        ]);
+
+        scoreRows.push(["Supplier Rating", rating.rating]);
+        scoreRows.push(["Rating Guidance", rating.note]);
+        scoreRows.push([
+            "Optional Supplier Audit Score",
+            value("auditScore") === "" ? "Not provided" : value("auditScore") + " / 100"
+        ]);
+
+        addSection(content, "2. PERFORMANCE SCORECARD", scoreRows);
+
+        addSection(content, "3. SUPPORTING PERFORMANCE DATA", [
+            ["Total Quantity Received", value("totalReceived")],
+            ["Rejected Quantity", value("rejectedQty")],
+            ["Calculated Rejection Rate", rejectRate === null ? "Not calculated — enter valid quantities" : rejectRate.toFixed(2) + "%"],
+            ["Total Deliveries Due", value("totalDeliveries")],
+            ["On-Time Deliveries", value("onTimeDeliveries")],
+            ["Calculated On-Time Delivery Rate", deliveryRate === null ? "Not calculated — enter valid delivery counts" : deliveryRate.toFixed(2) + "%"],
+            ["Quality Remarks", value("qualityRemarks")],
+            ["Delivery Remarks", value("deliveryRemarks")]
+        ]);
+
+        addSection(content, "4. IMPROVEMENT PLAN AND APPROVAL", [
+            ["Supplier Strengths", value("strengths")],
+            ["Areas for Improvement", value("improvements")],
+            ["Required Improvement / Corrective Action Plan", value("actionPlan")],
+            ["Action Owner", value("actionOwner")],
+            ["Target Completion Date", formatDate(value("targetDate"))],
+            ["Evaluation Decision", value("approvalStatus")],
+            ["Reviewed / Approved By", value("reviewer")],
+            ["Final Remarks", value("finalRemarks")]
+        ]);
+    }
+
+    function validateForm() {
+        const requiredFields = [
+            ["supplierName", "Supplier Name"],
+            ["evaluator", "Evaluated By"],
+            ["evaluationDate", "Evaluation Date"]
+        ];
+
+        for (const [id, label] of requiredFields) {
+            if (!value(id)) {
+                alert("Please complete: " + label);
+                $(id).focus();
+                return false;
+            }
+        }
+
+        for (const field of scoreFields) {
+            const raw = value(field.id);
+
+            if (raw === "") {
+                alert("Please enter the " + field.label + " score.");
+                $(field.id).focus();
+                return false;
+            }
+
+            const score = Number(raw);
+
+            if (!Number.isFinite(score) || score < 0 || score > 100) {
+                alert(field.label + " score must be between 0 and 100.");
+                $(field.id).focus();
+                return false;
+            }
+        }
+
+        if (value("auditScore") !== "") {
+            const audit = numberValue("auditScore");
+
+            if (!Number.isFinite(audit) || audit < 0 || audit > 100) {
+                alert("Supplier Audit Score must be between 0 and 100.");
+                $("auditScore").focus();
+                return false;
+            }
+        }
+
+        const received = numberValue("totalReceived");
+        const rejected = numberValue("rejectedQty");
+
+        if (received !== null && rejected !== null) {
+            if (received < 0 || rejected < 0 || rejected > received) {
+                alert("Rejected Quantity must be between zero and Total Quantity Received.");
+                $("rejectedQty").focus();
+                return false;
+            }
+        }
+
+        const totalDeliveries = numberValue("totalDeliveries");
+        const onTime = numberValue("onTimeDeliveries");
+
+        if (totalDeliveries !== null && onTime !== null) {
+            if (totalDeliveries < 0 || onTime < 0 || onTime > totalDeliveries) {
+                alert("On-Time Deliveries cannot exceed Total Deliveries Due.");
+                $("onTimeDeliveries").focus();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    $("generateBtn").addEventListener("click", function () {
+        if (!validateForm()) return;
+
+        updateReport();
+
+        $("report").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+
+    $("printBtn").addEventListener("click", function () {
+        if (!validateForm()) return;
+
+        updateReport();
+        window.print();
+    });
+
+    $("resetBtn").addEventListener("click", function () {
+        if (!window.confirm("Clear all supplier evaluation information?")) {
+            return;
+        }
+
+        $("formPanel").querySelectorAll("input, textarea").forEach(function (element) {
+            element.value = "";
+        });
+
+        $("formPanel").querySelectorAll("select").forEach(function (element) {
+            element.selectedIndex = 0;
+        });
+
+        $("evaluationDate").value = new Date().toLocaleDateString("en-CA");
+        $("approvalStatus").value = "Pending Review";
+
+        updateReport();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+    $("formPanel").addEventListener("input", updateReport);
+    $("formPanel").addEventListener("change", updateReport);
+
+    $("evaluationDate").value = new Date().toLocaleDateString("en-CA");
+
+    updateReport();
+})();
+</script>
+
+</body>
+</html>
