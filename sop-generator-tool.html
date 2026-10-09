@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOP Generator Tool - MechQTools</title>
+<meta name="description" content="Create and print Standard Operating Procedures for manufacturing and quality processes.">
+
+<style>
+:root {
+    --red: #e53232;
+    --light: #f7f8fa;
+    --border: #dfe3e8;
+    --text: #252a34;
+    --muted: #667085;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.5;
+}
+header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.header-inner {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.logo {
+    color: var(--red);
+    font-weight: 800;
+    font-size: 23px;
+    text-decoration: none;
+}
+.tagline { color: var(--muted); font-size: 12px; }
+main { max-width: 1400px; margin: 25px auto; padding: 0 18px; }
+.page-title { margin-bottom: 22px; }
+.page-title h1 { margin: 0 0 5px; font-size: 28px; }
+.page-title p { color: var(--muted); margin: 0; }
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+.card h2 {
+    margin: 0 0 18px;
+    font-size: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+.field { min-width: 0; }
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+input, textarea, select {
+    width: 100%;
+    border: 1px solid #cfd5dd;
+    border-radius: 6px;
+    padding: 10px;
+    font: inherit;
+    font-size: 14px;
+    background: #fff;
+    color: var(--text);
+}
+textarea { min-height: 75px; resize: vertical; }
+input:focus, textarea:focus, select:focus {
+    outline: 2px solid #f7b6b6;
+    border-color: var(--red);
+}
+.full { grid-column: 1 / -1; }
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1050px;
+}
+th, td {
+    border: 1px solid #cfd5dd;
+    padding: 8px;
+    vertical-align: top;
+    text-align: left;
+}
+th {
+    background: #f1f3f6;
+    font-size: 12px;
+}
+td input, td textarea, td select {
+    min-width: 110px;
+    border: 1px solid #d9dee5;
+    padding: 7px;
+    font-size: 12px;
+}
+td textarea { min-height: 65px; }
+.step-number { text-align: center; font-weight: bold; }
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+button {
+    border: 0;
+    border-radius: 6px;
+    padding: 11px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+.primary { background: var(--red); color: #fff; }
+.secondary { background: #f0f2f5; color: #252a34; border: 1px solid var(--border); }
+.danger { background: #fff0f0; color: #b42318; border: 1px solid #ffd0d0; }
+button:hover { opacity: .88; }
+.note {
+    background: #fff8e8;
+    border: 1px solid #f1d9a8;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+#status { margin-top: 12px; color: #067647; font-size: 14px; }
+footer {
+    background: #20242c;
+    color: #fff;
+    text-align: center;
+    padding: 22px;
+    margin-top: 35px;
+    font-size: 13px;
+}
+.help-list { padding-left: 20px; }
+.help-list li { margin-bottom: 8px; }
+@media(max-width: 800px) {
+    .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .page-title h1 { font-size: 23px; }
+    .card { padding: 15px; }
+}
+@media(max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .full { grid-column: auto; }
+    .tagline { display: none; }
+    header { padding: 13px 16px; }
+}
+@media print {
+    body { background: #fff; }
+    header, main, footer { display: none !important; }
+    #printReport { display: block !important; }
+}
+#printReport { display: none; }
+</style>
+</head>
+
+<body>
+<header>
+    <div class="header-inner">
+        <div>
+            <a class="logo" href="index.html">MechQTools</a>
+            <div class="tagline">Engineering &amp; Quality Tools for Professionals.</div>
+        </div>
+        <a href="index.html" style="color:#e53232;text-decoration:none;font-weight:bold">Home</a>
+    </div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h1>SOP Generator Tool</h1>
+        <p>Create a Standard Operating Procedure for manufacturing, inspection and quality processes.</p>
+    </div>
+
+    <section class="card">
+        <h2>1. SOP Basic Information</h2>
+        <div class="form-grid">
+            <div class="field">
+                <label for="sopTitle">SOP Title *</label>
+                <input id="sopTitle" placeholder="e.g. Sheet Metal Bending Operation">
+            </div>
+            <div class="field">
+                <label for="sopNo">SOP Number</label>
+                <input id="sopNo" placeholder="e.g. SOP/PROD/001">
+            </div>
+            <div class="field">
+                <label for="revision">Revision</label>
+                <input id="revision" placeholder="e.g. 00">
+            </div>
+            <div class="field">
+                <label for="department">Department</label>
+                <input id="department" placeholder="e.g. Production">
+            </div>
+            <div class="field">
+                <label for="process">Process / Operation</label>
+                <input id="process" placeholder="e.g. Press Brake Bending">
+            </div>
+            <div class="field">
+                <label for="machine">Machine / Equipment</label>
+                <input id="machine" placeholder="e.g. CNC Press Brake">
+            </div>
+            <div class="field">
+                <label for="preparedBy">Prepared By</label>
+                <input id="preparedBy" placeholder="Name / Designation">
+            </div>
+            <div class="field">
+                <label for="checkedBy">Checked By</label>
+                <input id="checkedBy" placeholder="Name / Designation">
+            </div>
+            <div class="field">
+                <label for="approvedBy">Approved By</label>
+                <input id="approvedBy" placeholder="Name / Designation">
+            </div>
+            <div class="field">
+                <label for="effectiveDate">Effective Date</label>
+                <input id="effectiveDate" type="date">
+            </div>
+            <div class="field">
+                <label for="product">Product / Part Name</label>
+                <input id="product" placeholder="Part name">
+            </div>
+            <div class="field">
+                <label for="partNo">Part Number</label>
+                <input id="partNo" placeholder="Part number">
+            </div>
+            <div class="field full">
+                <label for="purpose">Purpose</label>
+                <textarea id="purpose" placeholder="Why is this procedure required?"></textarea>
+            </div>
+            <div class="field full">
+                <label for="scope">Scope</label>
+                <textarea id="scope" placeholder="Where and to which operations does this SOP apply?"></textarea>
+            </div>
+            <div class="field full">
+                <label for="tools">Tools, Equipment and Materials Required</label>
+                <textarea id="tools" placeholder="e.g. Press brake, vernier caliper, drawing, PPE"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>2. Process Steps</h2>
+        <p style="color:#667085;font-size:13px">
+            Enter each operation in order. Add more rows when required.
+        </p>
+        <div class="table-wrap">
+            <table id="stepsTable">
+                <thead>
+                    <tr>
+                        <th style="width:45px">Step</th>
+                        <th>Process Step / Activity</th>
+                        <th>Operating Instructions</th>
+                        <th>Safety Precautions</th>
+                        <th>Inspection / Acceptance Criteria</th>
+                        <th>Responsibility</th>
+                        <th style="width:75px">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="stepsBody"></tbody>
+            </table>
+        </div>
+        <div class="actions">
+            <button class="secondary" type="button" onclick="addStep()">+ Add Step</button>
+            <button class="secondary" type="button" onclick="loadExample()">Load Example</button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>3. Safety and Quality Requirements</h2>
+        <div class="form-grid">
+            <div class="field full">
+                <label for="ppe">Personal Protective Equipment (PPE)</label>
+                <textarea id="ppe" placeholder="e.g. Safety shoes, safety glasses, gloves where appropriate"></textarea>
+            </div>
+            <div class="field full">
+                <label for="hazards">Potential Hazards / Special Precautions</label>
+                <textarea id="hazards" placeholder="Identify hazards and required precautions"></textarea>
+            </div>
+            <div class="field full">
+                <label for="qualityPoints">Key Quality Points</label>
+                <textarea id="qualityPoints" placeholder="e.g. Check first-off part, dimensions, burrs and surface condition"></textarea>
+            </div>
+            <div class="field full">
+                <label for="abnormal">Action in Case of Abnormality / Nonconformance</label>
+                <textarea id="abnormal" placeholder="Stop the process if needed, segregate suspect parts and inform the responsible person"></textarea>
+            </div>
+            <div class="field full">
+                <label for="records">Records to Maintain</label>
+                <textarea id="records" placeholder="e.g. Inspection report, machine checklist, production record"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>4. Document Control</h2>
+        <div class="form-grid">
+            <div class="field full">
+                <label for="changeHistory">Revision History / Change Details</label>
+                <textarea id="changeHistory" placeholder="e.g. Rev. 00 - Initial issue"></textarea>
+            </div>
+            <div class="field full">
+                <label for="remarks">Remarks</label>
+                <textarea id="remarks" placeholder="Additional notes, if any"></textarea>
+            </div>
+        </div>
+        <div class="note" style="margin-top:16px">
+            <strong>Important:</strong> This tool creates a draft SOP. Before implementation, the responsible department must verify technical instructions, safety controls, acceptance criteria and required approvals.
+        </div>
+        <div class="actions">
+            <button class="primary" type="button" onclick="printReport()">Print SOP Report</button>
+            <button class="secondary" type="button" onclick="loadExample()">Load Example</button>
+            <button class="danger" type="button" onclick="clearAll()">Clear All</button>
+        </div>
+        <div id="status" role="status"></div>
+    </section>
+
+    <section class="card">
+        <h2>How to Use This Tool</h2>
+        <ol class="help-list">
+            <li>Enter the SOP title, number, revision and process information.</li>
+            <li>Write the purpose, scope, required tools and materials.</li>
+            <li>Add each process step and provide clear operating instructions.</li>
+            <li>Specify safety precautions and inspection or acceptance criteria.</li>
+            <li>Complete quality requirements and document control details.</li>
+            <li>Click <strong>Print SOP Report</strong> to review and print the report or save it as PDF using your browser's print dialog.</li>
+        </ol>
+    </section>
+</main>
+
+<footer>© <span id="year"></span> MechQTools. Engineering &amp; Quality Tools for Professionals.</footer>
+
+<div id="printReport"></div>
+
+<script>
+const stepFields = [
+    { key: "activity", placeholder: "e.g. Verify material" },
+    { key: "instructions", placeholder: "Describe how to perform the step" },
+    { key: "safety", placeholder: "Precautions for this step" },
+    { key: "inspection", placeholder: "Dimension / criteria / check" },
+    { key: "responsibility", placeholder: "e.g. Operator" }
+];
+
+const stepsBody = document.getElementById("stepsBody");
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function addStep(data = {}) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td class="step-number"></td>
+        ${stepFields.map(field => `
+            <td>
+                <textarea data-field="${field.key}"
+                    aria-label="${field.key}"
+                    placeholder="${field.placeholder}">${escapeHTML(data[field.key] || "")}</textarea>
+            </td>
+        `).join("")}
+        <td><button type="button" class="danger" onclick="removeStep(this)">Delete</button></td>
+    `;
+    stepsBody.appendChild(row);
+    updateStepNumbers();
+}
+
+function removeStep(button) {
+    button.closest("tr").remove();
+    updateStepNumbers();
+}
+
+function updateStepNumbers() {
+    [...stepsBody.rows].forEach((row, index) => {
+        row.querySelector(".step-number").textContent = index + 1;
+    });
+}
+
+function getValue(id) {
+    return document.getElementById(id).value.trim();
+}
+
+function getSteps() {
+    return [...stepsBody.rows].map((row, index) => ({
+        number: index + 1,
+        activity: row.querySelector('[data-field="activity"]').value.trim(),
+        instructions: row.querySelector('[data-field="instructions"]').value.trim(),
+        safety: row.querySelector('[data-field="safety"]').value.trim(),
+        inspection: row.querySelector('[data-field="inspection"]').value.trim(),
+        responsibility: row.querySelector('[data-field="responsibility"]').value.trim()
+    })).filter(step =>
+        step.activity || step.instructions || step.safety ||
+        step.inspection || step.responsibility
+    );
+}
+
+function showStatus(message) {
+    document.getElementById("status").textContent = message;
+}
+
+function loadExample() {
+    document.getElementById("sopTitle").value = "Sheet Metal Bending Operation";
+    document.getElementById("sopNo").value = "SOP/PROD/001";
+    document.getElementById("revision").value = "00";
+    document.getElementById("department").value = "Production";
+    document.getElementById("process").value = "Press Brake Bending";
+    document.getElementById("machine").value = "Press Brake Machine";
+    document.getElementById("preparedBy").value = "Production Engineer";
+    document.getElementById("checkedBy").value = "Quality Engineer";
+    document.getElementById("approvedBy").value = "Production Manager";
+    document.getElementById("product").value = "Sheet Metal Component";
+    document.getElementById("partNo").value = "PART-001";
+    document.getElementById("purpose").value = "To define a consistent method for sheet metal bending.";
+    document.getElementById("scope").value = "Applicable to the specified sheet metal bending operation.";
+    document.getElementById("tools").value = "Approved drawing, press brake, suitable measuring instruments and required PPE.";
+    document.getElementById("ppe").value = "Safety shoes and safety glasses. Use other PPE as required by the site risk assessment.";
+    document.getElementById("hazards").value = "Pinch points, sharp sheet edges and moving machine parts. Keep hands clear of the tooling and follow machine safety procedures.";
+    document.getElementById("qualityPoints").value = "Verify material and drawing revision. Check first-off dimensions, bend angle, orientation and surface condition.";
+    document.getElementById("abnormal").value = "Stop and inform the supervisor if a safety issue or nonconforming part is found. Identify and segregate suspect parts.";
+    document.getElementById("records").value = "First-off inspection report and production inspection records, as applicable.";
+    document.getElementById("changeHistory").value = "Rev. 00 - Initial issue.";
+    document.getElementById("remarks").value = "";
+
+    stepsBody.innerHTML = "";
+    [
+        {
+            activity: "Review drawing",
+            instructions: "Confirm part number, drawing revision, material and required dimensions.",
+            safety: "Handle drawings and materials safely.",
+            inspection: "Drawing and material details match the job requirement.",
+            responsibility: "Operator / Supervisor"
+        },
+        {
+            activity: "Set up machine",
+            instructions: "Select suitable tooling and settings according to the approved setup instructions.",
+            safety: "Follow machine guarding and lockout procedures where required. Never bypass safety devices.",
+            inspection: "Tooling and setup are verified before production.",
+            responsibility: "Trained Operator"
+        },
+        {
+            activity: "Perform first-off bending",
+            instructions: "Bend the trial component using the approved setup and work instructions.",
+            safety: "Keep hands clear of pinch points and moving tooling.",
+            inspection: "Check dimensions, angle and orientation against the approved drawing.",
+            responsibility: "Operator"
+        },
+        {
+            activity: "Inspect and record",
+            instructions: "Measure the required characteristics and record results.",
+            safety: "Use measuring instruments safely and handle sharp edges carefully.",
+            inspection: "Results meet the drawing specifications and approved control plan.",
+            responsibility: "Quality Inspector"
+        },
+        {
+            activity: "Continue production",
+            instructions: "Proceed only after required approval; inspect at the defined frequency.",
+            safety: "Maintain safe operating practices throughout production.",
+            inspection: "Maintain conformity and complete required inspection records.",
+            responsibility: "Operator / Quality"
+        }
+    ].forEach(addStepData => addStep(addStepData));
+
+    showStatus("Example loaded. Review and edit all details before use.");
+}
+
+function buildRows(items) {
+    return items.map(([label, value]) => `
+        <tr>
+            <th>${escapeHTML(label)}</th>
+            <td>${escapeHTML(value) || "—"}</td>
+        </tr>
+    `).join("");
+}
+
+function printReport() {
+    const title = getValue("sopTitle");
+    if (!title) {
+        showStatus("Please enter the SOP Title before printing.");
+        document.getElementById("sopTitle").focus();
+        return;
+    }
+
+    const steps = getSteps();
+    if (steps.length === 0) {
+        showStatus("Please add at least one process step before printing.");
+        return;
+    }
+
+    const basicInfo = [
+        ["SOP Title", title],
+        ["SOP Number", getValue("sopNo")],
+        ["Revision", getValue("revision")],
+        ["Department", getValue("department")],
+        ["Process / Operation", getValue("process")],
+        ["Machine / Equipment", getValue("machine")],
+        ["Product / Part Name", getValue("product")],
+        ["Part Number", getValue("partNo")],
+        ["Effective Date", getValue("effectiveDate")],
+        ["Prepared By", getValue("preparedBy")],
+        ["Checked By", getValue("checkedBy")],
+        ["Approved By", getValue("approvedBy")]
+    ];
+
+    const otherInfo = [
+        ["Purpose", getValue("purpose")],
+        ["Scope", getValue("scope")],
+        ["Tools, Equipment and Materials", getValue("tools")],
+        ["PPE", getValue("ppe")],
+        ["Potential Hazards / Precautions", getValue("hazards")],
+        ["Key Quality Points", getValue("qualityPoints")],
+        ["Abnormality / Nonconformance Action", getValue("abnormal")],
+        ["Records to Maintain", getValue("records")],
+        ["Revision History", getValue("changeHistory")],
+        ["Remarks", getValue("remarks")]
+    ];
+
+    const report = document.getElementById("printReport");
+    report.innerHTML = `
+        <style>
+            #printReport { font-family: Arial, Helvetica, sans-serif; color: #111; }
+            #printReport h1 { text-align: center; font-size: 22px; margin: 0 0 5px; }
+            #printReport .subtitle { text-align: center; margin: 0 0 18px; font-size: 12px; }
+            #printReport h2 { font-size: 15px; margin: 20px 0 8px; }
+            #printReport table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 0; }
+            #printReport th, #printReport td {
+                border: 1px solid #333; padding: 6px; font-size: 10px;
+                vertical-align: top; white-space: pre-wrap; overflow-wrap: anywhere;
+            }
+            #printReport th { background: #eee; }
+            #printReport .info th { width: 27%; text-align: left; }
+            #printReport .steps th { text-align: left; }
+            #printReport .steps { page-break-inside: auto; }
+            #printReport .steps tr { page-break-inside: avoid; }
+            #printReport .approval { margin-top: 30px; }
+            #printReport .approval td { height: 48px; vertical-align: bottom; }
+            #printReport .footer-note { margin-top: 15px; font-size: 10px; }
+            @page { size: A4 landscape; margin: 12mm; }
+            @media print {
+                #printReport { display: block !important; }
+                #printReport h2 { page-break-after: avoid; }
+                #printReport thead { display: table-header-group; }
+            }
+        </style>
+        <h1>STANDARD OPERATING PROCEDURE (SOP)</h1>
+        <p class="subtitle">MechQTools — Engineering &amp; Quality Tools for Professionals</p>
+
+        <h2>1. Document Information</h2>
+        <table class="info"><tbody>${buildRows(basicInfo)}</tbody></table>
+
+        <h2>2. Process Steps and Work Instructions</h2>
+        <table class="steps">
+            <thead><tr>
+                <th style="width:4%">Step</th>
+                <th style="width:15%">Process Step / Activity</th>
+                <th style="width:23%">Operating Instructions</th>
+                <th style="width:18%">Safety Precautions</th>
+                <th style="width:22%">Inspection / Acceptance Criteria</th>
+                <th style="width:18%">Responsibility</th>
+            </tr></thead>
+            <tbody>${steps.map(step => `
+                <tr>
+                    <td>${step.number}</td>
+                    <td>${escapeHTML(step.activity) || "—"}</td>
+                    <td>${escapeHTML(step.instructions) || "—"}</td>
+                    <td>${escapeHTML(step.safety) || "—"}</td>
+                    <td>${escapeHTML(step.inspection) || "—"}</td>
+                    <td>${escapeHTML(step.responsibility) || "—"}</td>
+                </tr>
+            `).join("")}</tbody>
+        </table>
+
+        <h2>3. Safety, Quality and Supporting Requirements</h2>
+        <table class="info"><tbody>${buildRows(otherInfo)}</tbody></table>
+
+        <h2>4. Review and Approval</h2>
+        <table class="approval">
+            <thead><tr><th>Prepared By</th><th>Checked By</th><th>Approved By</th></tr></thead>
+            <tbody><tr>
+                <td>${escapeHTML(getValue("preparedBy")) || "Name / Signature / Date"}</td>
+                <td>${escapeHTML(getValue("checkedBy")) || "Name / Signature / Date"}</td>
+                <td>${escapeHTML(getValue("approvedBy")) || "Name / Signature / Date"}</td>
+            </tr></tbody>
+        </table>
+        <p class="footer-note">
+            Controlled document: verify the current approved revision before use.
+            This report is a draft until reviewed and approved by authorized personnel.
+        </p>
+    `;
+
+    showStatus("SOP report prepared. In the print window, select a printer or Save as PDF.");
+    window.print();
+}
+
+function clearAll() {
+    if (!confirm("Clear all SOP information and process steps?")) return;
+
+    document.querySelectorAll("main input, main textarea, main select").forEach(element => {
+        element.value = "";
+    });
+
+    stepsBody.innerHTML = "";
+    addStep();
+    showStatus("All fields cleared.");
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+addStep();
+</script>
+</body>
+</html>
