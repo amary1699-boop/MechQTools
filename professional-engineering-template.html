@@ -287,86 +287,218 @@ footer a:hover { text-decoration: underline; }
     .actions button { flex: 1 1 100%; }
 }
 
+#printDocument { display: none; }
+
 @page {
-    size: A4;
-    margin: 12mm;
+    size: A4 portrait;
+    margin: 12mm 11mm 14mm;
 }
 
 @media print {
-    body {
-        background: #ffffff;
-        color: #000000;
-        font-size: 10px;
+    html, body {
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+        color: #111 !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 9pt !important;
+        line-height: 1.35 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
-    header, footer, .no-print, .remove-row {
+    body > header,
+    body > main,
+    body > footer {
         display: none !important;
     }
 
-    main {
-        max-width: none;
-        padding: 0;
-        margin: 0;
+    #printDocument {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #111 !important;
+        background: #fff !important;
     }
 
-    .page-heading { margin: 0 0 12px; }
-    .page-heading h1 { font-size: 20px; }
-
-    .card {
-        box-shadow: none;
-        border: 1px solid #999999;
-        border-radius: 0;
-        padding: 12px;
-        margin-bottom: 10px;
-        break-inside: avoid;
+    #printDocument > main {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-    .card h2 {
-        font-size: 13px;
-        margin-bottom: 8px;
+    #printDocument .page-heading {
+        text-align: center !important;
+        margin: 0 0 6mm !important;
+        padding: 0 0 4mm !important;
+        border-bottom: 1.2pt solid #333 !important;
+        break-after: avoid-page !important;
+        page-break-after: avoid !important;
     }
 
-    .form-grid { gap: 8px; }
-
-    input, select, textarea {
-        color: #000000;
-        border: 0;
-        padding: 3px;
-        font-size: 10px;
-        background: transparent;
-        appearance: none;
+    #printDocument .page-heading h1 {
+        font-size: 17pt !important;
+        color: #111 !important;
+        margin: 0 0 2mm !important;
+        line-height: 1.2 !important;
     }
 
-    .table-wrap {
-        overflow: visible;
-        border: none;
+    #printDocument .page-heading p {
+        max-width: none !important;
+        color: #444 !important;
+        margin: 0 !important;
+        font-size: 8.5pt !important;
     }
 
-    table {
-        min-width: 0;
-        width: 100%;
-        table-layout: fixed;
-        font-size: 9px;
+    #printDocument .card {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 0 5mm !important;
+        padding: 0 0 2mm !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #fff !important;
+        color: #111 !important;
+        break-inside: auto !important;
+        page-break-inside: auto !important;
     }
 
-    th, td {
-        padding: 4px;
-        overflow-wrap: anywhere;
-        border: 1px solid #777777;
+    #printDocument .card h2 {
+        font-size: 10.5pt !important;
+        margin: 0 0 3mm !important;
+        padding: 2mm 2.5mm !important;
+        border-left: 3pt solid #e53232 !important;
+        border-bottom: .5pt solid #aaa !important;
+        background: #f2f2f2 !important;
+        color: #111 !important;
+        break-after: avoid-page !important;
+        page-break-after: avoid !important;
     }
 
-    th {
-        background: #eeeeee !important;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
+    #printDocument .form-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 3mm 4mm !important;
     }
 
-    td input, td select {
-        min-width: 0;
-        font-size: 9px;
+    #printDocument .field {
+        display: flex !important;
+        flex-direction: column !important;
+        min-width: 0 !important;
+        gap: 1mm !important;
+        margin-bottom: 2mm !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
     }
 
-    tr { break-inside: avoid; }
+    #printDocument label {
+        display: block !important;
+        color: #333 !important;
+        font-size: 8pt !important;
+        font-weight: 700 !important;
+    }
+
+    #printDocument .print-value {
+        display: block !important;
+        width: 100% !important;
+        min-height: 5mm !important;
+        margin: 0 !important;
+        padding: 1mm 0 1.2mm !important;
+        border: 0 !important;
+        border-bottom: .5pt solid #aaa !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #fff !important;
+        color: #111 !important;
+        font: 8.5pt/1.35 Arial, Helvetica, sans-serif !important;
+        white-space: pre-wrap !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+    }
+
+    #printDocument .print-value.multiline {
+        min-height: 8mm !important;
+        padding: 1mm 0 2mm !important;
+        border: 0 !important;
+        border-bottom: .5pt solid #aaa !important;
+    }
+
+    #printDocument .help-text {
+        color: #444 !important;
+        font-size: 7.5pt !important;
+        margin: 1mm 0 2.5mm !important;
+    }
+
+    #printDocument .table-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    #printDocument table {
+        display: table !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        background: #fff !important;
+        font-size: 7.2pt !important;
+    }
+
+    #printDocument thead {
+        display: table-header-group !important;
+    }
+
+    #printDocument th,
+    #printDocument td {
+        padding: 1.4mm !important;
+        border: .6pt solid #777 !important;
+        vertical-align: top !important;
+        text-align: left !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+    }
+
+    #printDocument th {
+        background: #eee !important;
+        color: #111 !important;
+        font-size: 7pt !important;
+        font-weight: 700 !important;
+    }
+
+    #printDocument td .print-value {
+        min-height: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        font-size: 7.2pt !important;
+    }
+
+    #printDocument tr {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    #printDocument .no-print,
+    #printDocument button,
+    #printDocument .actions {
+        display: none !important;
+    }
+
+    #printDocument .status-note {
+        border: .5pt solid #aaa !important;
+        background: #fff !important;
+        padding: 2mm !important;
+    }
 }
 </style>
 </head>
@@ -731,8 +863,59 @@ footer a:hover { text-decoration: underline; }
         updateNumbers(tbody);
     });
 
+    function buildPrintDocument() {
+        const oldPrintDocument = document.getElementById("printDocument");
+        if (oldPrintDocument) oldPrintDocument.remove();
+
+        const printDocument = document.createElement("div");
+        printDocument.id = "printDocument";
+
+        const clonedMain = document.querySelector("body > main").cloneNode(true);
+
+        clonedMain.querySelectorAll(".no-print, button, .actions").forEach(function (element) {
+            element.remove();
+        });
+
+        clonedMain.querySelectorAll("input, textarea, select").forEach(function (field) {
+            const valueBox = document.createElement("div");
+            valueBox.className = "print-value";
+
+            let value = "";
+
+            if (field.tagName === "SELECT") {
+                value = field.value
+                    ? field.options[field.selectedIndex].text.trim()
+                    : "";
+            } else if (field.type === "date" && field.value) {
+                const parts = field.value.split("-");
+                value = parts.length === 3
+                    ? parts[2] + "-" + parts[1] + "-" + parts[0]
+                    : field.value;
+            } else {
+                value = field.value || "";
+            }
+
+            valueBox.textContent = value.trim() ? value : "—";
+
+            if (field.tagName === "TEXTAREA") {
+                valueBox.classList.add("multiline");
+            }
+
+            field.replaceWith(valueBox);
+        });
+
+        printDocument.appendChild(clonedMain);
+        document.body.appendChild(printDocument);
+    }
+
     document.getElementById("printBtn").addEventListener("click", function () {
+        buildPrintDocument();
         window.print();
+    });
+
+    window.addEventListener("afterprint", function () {
+        const printDocument = document.getElementById("printDocument");
+        if (printDocument) printDocument.remove();
     });
 
     document.getElementById("clearBtn").addEventListener("click", function () {
