@@ -34,6 +34,7 @@ body {
     line-height: 1.5;
 }
 
+/* Website header */
 header {
     background: var(--white);
     border-bottom: 1px solid #e5e5e5;
@@ -78,6 +79,7 @@ header {
     background: var(--primary-dark);
 }
 
+/* Website layout */
 main {
     max-width: 1200px;
     margin: 28px auto 45px;
@@ -124,6 +126,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 0;
 }
 
 .field label {
@@ -131,7 +134,9 @@ main {
     font-size: 13px;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     min-width: 0;
     padding: 10px 11px;
@@ -143,7 +148,9 @@ input, select, textarea {
     font-size: 14px;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
     outline: 2px solid rgba(229,50,50,0.18);
     border-color: var(--primary);
 }
@@ -173,7 +180,8 @@ table {
     background: #ffffff;
 }
 
-th, td {
+th,
+td {
     border: 1px solid var(--border);
     padding: 9px;
     text-align: left;
@@ -186,7 +194,8 @@ th {
     line-height: 1.4;
 }
 
-td input, td select {
+td input,
+td select {
     padding: 8px;
     border-radius: 4px;
     font-size: 13px;
@@ -214,7 +223,8 @@ td input, td select {
     margin-top: 18px;
 }
 
-.primary-btn, .secondary-btn {
+.primary-btn,
+.secondary-btn {
     border: none;
     border-radius: 6px;
     padding: 11px 16px;
@@ -234,7 +244,9 @@ td input, td select {
     border: 1px solid #dddddd;
 }
 
-.secondary-btn:hover { background: #e2e2e2; }
+.secondary-btn:hover {
+    background: #e2e2e2;
+}
 
 .status-note {
     background: #fff8e8;
@@ -246,6 +258,7 @@ td input, td select {
     margin-top: 16px;
 }
 
+/* Website footer */
 footer {
     background: #222222;
     color: #ffffff;
@@ -263,6 +276,7 @@ footer a {
 
 footer a:hover { text-decoration: underline; }
 
+/* Responsive layout */
 @media (max-width: 750px) {
     .form-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -287,21 +301,24 @@ footer a:hover { text-decoration: underline; }
     .actions button { flex: 1 1 100%; }
 }
 
+/* The report copy is hidden on the website screen. */
 #printDocument { display: none; }
 
+/* A4 Landscape professional report */
 @page {
-    size: A4 portrait;
-    margin: 12mm 11mm 14mm;
+    size: A4 landscape;
+    margin: 10mm 10mm 12mm;
 }
 
 @media print {
-    html, body {
+    html,
+    body {
         width: 100% !important;
         min-width: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: #fff !important;
-        color: #111 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
         font-family: Arial, Helvetica, sans-serif !important;
         font-size: 9pt !important;
         line-height: 1.35 !important;
@@ -309,19 +326,23 @@ footer a:hover { text-decoration: underline; }
         print-color-adjust: exact !important;
     }
 
+    /* Hide website navigation and original form while printing. */
     body > header,
     body > main,
     body > footer {
         display: none !important;
     }
 
+    /* Show only the temporary report document. */
     #printDocument {
         display: block !important;
+        position: static !important;
         width: 100% !important;
+        max-width: none !important;
         margin: 0 !important;
         padding: 0 !important;
-        color: #111 !important;
-        background: #fff !important;
+        color: #111111 !important;
+        background: #ffffff !important;
     }
 
     #printDocument > main {
@@ -333,29 +354,33 @@ footer a:hover { text-decoration: underline; }
         padding: 0 !important;
     }
 
+    /* Report heading */
     #printDocument .page-heading {
         text-align: center !important;
         margin: 0 0 6mm !important;
         padding: 0 0 4mm !important;
-        border-bottom: 1.2pt solid #333 !important;
-        break-after: avoid-page !important;
+        border-bottom: 1.2pt solid #333333 !important;
+        break-after: avoid !important;
         page-break-after: avoid !important;
     }
 
     #printDocument .page-heading h1 {
         font-size: 17pt !important;
-        color: #111 !important;
+        color: #111111 !important;
         margin: 0 0 2mm !important;
         line-height: 1.2 !important;
+        overflow-wrap: anywhere !important;
     }
 
     #printDocument .page-heading p {
         max-width: none !important;
-        color: #444 !important;
+        color: #444444 !important;
         margin: 0 !important;
         font-size: 8.5pt !important;
+        overflow-wrap: anywhere !important;
     }
 
+    /* Report section headings */
     #printDocument .card {
         display: block !important;
         width: 100% !important;
@@ -364,8 +389,8 @@ footer a:hover { text-decoration: underline; }
         border: 0 !important;
         border-radius: 0 !important;
         box-shadow: none !important;
-        background: #fff !important;
-        color: #111 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
         break-inside: auto !important;
         page-break-inside: auto !important;
     }
@@ -375,10 +400,10 @@ footer a:hover { text-decoration: underline; }
         margin: 0 0 3mm !important;
         padding: 2mm 2.5mm !important;
         border-left: 3pt solid #e53232 !important;
-        border-bottom: .5pt solid #aaa !important;
+        border-bottom: .5pt solid #aaaaaa !important;
         background: #f2f2f2 !important;
-        color: #111 !important;
-        break-after: avoid-page !important;
+        color: #111111 !important;
+        break-after: avoid !important;
         page-break-after: avoid !important;
     }
 
@@ -400,23 +425,25 @@ footer a:hover { text-decoration: underline; }
 
     #printDocument label {
         display: block !important;
-        color: #333 !important;
+        color: #333333 !important;
         font-size: 8pt !important;
         font-weight: 700 !important;
     }
 
+    /* Real text values, not screenshots. */
     #printDocument .print-value {
         display: block !important;
         width: 100% !important;
+        min-width: 0 !important;
         min-height: 5mm !important;
         margin: 0 !important;
-        padding: 1mm 0 1.2mm !important;
+        padding: 1mm 1.2mm !important;
         border: 0 !important;
-        border-bottom: .5pt solid #aaa !important;
+        border-bottom: .5pt solid #aaaaaa !important;
         border-radius: 0 !important;
         box-shadow: none !important;
-        background: #fff !important;
-        color: #111 !important;
+        background: #ffffff !important;
+        color: #111111 !important;
         font: 8.5pt/1.35 Arial, Helvetica, sans-serif !important;
         white-space: pre-wrap !important;
         overflow-wrap: anywhere !important;
@@ -426,17 +453,11 @@ footer a:hover { text-decoration: underline; }
     #printDocument .print-value.multiline {
         min-height: 8mm !important;
         padding: 1mm 0 2mm !important;
-        border: 0 !important;
-        border-bottom: .5pt solid #aaa !important;
     }
 
-    #printDocument .help-text {
-        color: #444 !important;
-        font-size: 7.5pt !important;
-        margin: 1mm 0 2.5mm !important;
-    }
-
+    /* Inspection and corrective-action tables */
     #printDocument .table-wrap {
+        display: block !important;
         width: 100% !important;
         max-width: 100% !important;
         overflow: visible !important;
@@ -451,7 +472,7 @@ footer a:hover { text-decoration: underline; }
         max-width: 100% !important;
         table-layout: fixed !important;
         border-collapse: collapse !important;
-        background: #fff !important;
+        background: #ffffff !important;
         font-size: 7.2pt !important;
     }
 
@@ -462,16 +483,17 @@ footer a:hover { text-decoration: underline; }
     #printDocument th,
     #printDocument td {
         padding: 1.4mm !important;
-        border: .6pt solid #777 !important;
+        border: .6pt solid #777777 !important;
         vertical-align: top !important;
         text-align: left !important;
         overflow-wrap: anywhere !important;
         word-break: normal !important;
+        color: #111111 !important;
     }
 
     #printDocument th {
-        background: #eee !important;
-        color: #111 !important;
+        background: #eeeeee !important;
+        color: #111111 !important;
         font-size: 7pt !important;
         font-weight: 700 !important;
     }
@@ -488,15 +510,17 @@ footer a:hover { text-decoration: underline; }
         page-break-inside: avoid !important;
     }
 
+    /* Hide controls and guidance from the printed report only. */
     #printDocument .no-print,
     #printDocument button,
-    #printDocument .actions {
+    #printDocument .actions,
+    #printDocument .help-text {
         display: none !important;
     }
 
     #printDocument .status-note {
-        border: .5pt solid #aaa !important;
-        background: #fff !important;
+        border: .5pt solid #aaaaaa !important;
+        background: #ffffff !important;
         padding: 2mm !important;
     }
 }
@@ -597,7 +621,7 @@ footer a:hover { text-decoration: underline; }
     </section>
 
     <section class="card">
-        <h2>2. Objective & Scope</h2>
+        <h2>2. Objective &amp; Scope</h2>
 
         <div class="field">
             <label for="objective">Objective</label>
@@ -664,7 +688,7 @@ footer a:hover { text-decoration: underline; }
     </section>
 
     <section class="card">
-        <h2>4. Problem Analysis & Corrective Action</h2>
+        <h2>4. Problem Analysis &amp; Corrective Action</h2>
 
         <div class="field">
             <label for="problem">Problem Description</label>
@@ -720,7 +744,7 @@ footer a:hover { text-decoration: underline; }
     </section>
 
     <section class="card">
-        <h2>5. Conclusion & Approval</h2>
+        <h2>5. Conclusion &amp; Approval</h2>
 
         <div class="field">
             <label for="conclusion">Conclusion / Recommendation</label>
@@ -777,7 +801,7 @@ footer a:hover { text-decoration: underline; }
 </main>
 
 <footer>
-    <p><strong>MechQTools</strong> - Engineering & Quality Tools</p>
+    <p><strong>MechQTools</strong> - Engineering &amp; Quality Tools</p>
     <p>Free tools and templates for mechanical engineering and quality professionals.</p>
     <p>© 2026 MechQTools. All rights reserved.</p>
     <p><a href="index.html">Home</a></p>
@@ -789,7 +813,10 @@ footer a:hover { text-decoration: underline; }
 
     function updateNumbers(tbody) {
         tbody.querySelectorAll("tr").forEach(function (row, index) {
-            row.querySelector(".row-number").textContent = index + 1;
+            const numberCell = row.querySelector(".row-number");
+            if (numberCell) {
+                numberCell.textContent = index + 1;
+            }
         });
     }
 
@@ -844,8 +871,11 @@ footer a:hover { text-decoration: underline; }
         updateNumbers(tbody);
     }
 
-    document.getElementById("addObservation").addEventListener("click", addObservationRow);
-    document.getElementById("addAction").addEventListener("click", addActionRow);
+    document.getElementById("addObservation")
+        .addEventListener("click", addObservationRow);
+
+    document.getElementById("addAction")
+        .addEventListener("click", addActionRow);
 
     document.addEventListener("click", function (event) {
         const button = event.target.closest(".remove-row");
@@ -863,80 +893,158 @@ footer a:hover { text-decoration: underline; }
         updateNumbers(tbody);
     });
 
+    function formatPrintDate(value) {
+        if (!value) return "";
+
+        const parts = value.split("-");
+        return parts.length === 3
+            ? parts[2] + "-" + parts[1] + "-" + parts[0]
+            : value;
+    }
+
     function buildPrintDocument() {
-        const oldPrintDocument = document.getElementById("printDocument");
-        if (oldPrintDocument) oldPrintDocument.remove();
+        const existing = document.getElementById("printDocument");
 
-        const printDocument = document.createElement("div");
-        printDocument.id = "printDocument";
+        if (existing) {
+            existing.remove();
+        }
 
-        const clonedMain = document.querySelector("body > main").cloneNode(true);
+        const sourceMain = document.querySelector("body > main");
 
-        clonedMain.querySelectorAll(".no-print, button, .actions").forEach(function (element) {
-            element.remove();
-        });
+        if (!sourceMain) {
+            alert("Report could not be prepared. Please refresh the page and try again.");
+            return false;
+        }
 
-        clonedMain.querySelectorAll("input, textarea, select").forEach(function (field) {
-            const valueBox = document.createElement("div");
-            valueBox.className = "print-value";
+        const reportMain = sourceMain.cloneNode(true);
+
+        const sourceFields = Array.from(
+            sourceMain.querySelectorAll("input, textarea, select")
+        );
+
+        const reportFields = Array.from(
+            reportMain.querySelectorAll("input, textarea, select")
+        );
+
+        /* Read live values, including fields in newly added rows. */
+        sourceFields.forEach(function (sourceField, index) {
+            const reportField = reportFields[index];
+            if (!reportField) return;
 
             let value = "";
 
-            if (field.tagName === "SELECT") {
-                value = field.value
-                    ? field.options[field.selectedIndex].text.trim()
-                    : "";
-            } else if (field.type === "date" && field.value) {
-                const parts = field.value.split("-");
-                value = parts.length === 3
-                    ? parts[2] + "-" + parts[1] + "-" + parts[0]
-                    : field.value;
+            if (sourceField.tagName === "SELECT") {
+                if (sourceField.value !== "" && sourceField.selectedIndex >= 0) {
+                    value = sourceField.options[sourceField.selectedIndex].text.trim();
+                }
             } else {
-                value = field.value || "";
+                value = sourceField.value || "";
             }
 
-            valueBox.textContent = value.trim() ? value : "—";
+            if (sourceField.type === "date" && value) {
+                value = formatPrintDate(value);
+            }
 
-            if (field.tagName === "TEXTAREA") {
+            const valueBox = document.createElement("div");
+            valueBox.className = "print-value";
+            valueBox.textContent = value.trim() ? value : "";
+
+            if (sourceField.tagName === "TEXTAREA") {
                 valueBox.classList.add("multiline");
             }
 
-            field.replaceWith(valueBox);
+            reportField.replaceWith(valueBox);
         });
 
-        printDocument.appendChild(clonedMain);
+        /* Create a proper report heading. */
+        const reportTitle = document.getElementById("reportTitle").value.trim();
+        const company = document.getElementById("company").value.trim();
+        const reportNo = document.getElementById("reportNo").value.trim();
+        const reportDate = document.getElementById("reportDate").value;
+
+        const heading = reportMain.querySelector(".page-heading h1");
+        const subtitle = reportMain.querySelector(".page-heading p");
+
+        if (heading) {
+            heading.textContent =
+                reportTitle || "Professional Engineering Report";
+        }
+
+        const summary = [];
+
+        if (company) summary.push(company);
+        if (reportNo) summary.push("Report No.: " + reportNo);
+        if (reportDate) summary.push("Date: " + formatPrintDate(reportDate));
+
+        if (subtitle) {
+            subtitle.textContent = summary.length
+                ? summary.join("  |  ")
+                : "Engineering & Quality Report";
+        }
+
+        /* Remove website buttons and helper text from the copy only. */
+        reportMain.querySelectorAll(
+            ".no-print, button, .actions, .help-text"
+        ).forEach(function (element) {
+            element.remove();
+        });
+
+        const printDocument = document.createElement("div");
+        printDocument.id = "printDocument";
+        printDocument.appendChild(reportMain);
         document.body.appendChild(printDocument);
+
+        return true;
     }
 
-    document.getElementById("printBtn").addEventListener("click", function () {
-        buildPrintDocument();
-        window.print();
-    });
+    /* PRINT: same tab, no popup, no screenshot or canvas. */
+    document.getElementById("printBtn")
+        .addEventListener("click", function () {
+            try {
+                if (!buildPrintDocument()) return;
+                window.print();
+            } catch (error) {
+                console.error("Print error:", error);
+                alert("Print preview could not be opened. Please refresh the page and try again.");
+            }
+        });
 
     window.addEventListener("afterprint", function () {
         const printDocument = document.getElementById("printDocument");
-        if (printDocument) printDocument.remove();
+        if (printDocument) {
+            printDocument.remove();
+        }
     });
 
-    document.getElementById("clearBtn").addEventListener("click", function () {
-        if (!window.confirm("Clear all report details and table rows?")) return;
+    /* CLEAR FORM */
+    document.getElementById("clearBtn")
+        .addEventListener("click", function () {
+            if (!window.confirm("Clear all report details and table rows?")) {
+                return;
+            }
 
-        document.querySelectorAll("main input, main select, main textarea").forEach(function (field) {
-            field.value = "";
+            document.querySelectorAll(
+                "main input, main select, main textarea"
+            ).forEach(function (field) {
+                field.value = "";
+            });
+
+            const observationBody =
+                document.getElementById("observationBody");
+
+            const actionBody =
+                document.getElementById("actionBody");
+
+            observationBody.innerHTML = "";
+            actionBody.innerHTML = "";
+
+            addObservationRow();
+            addActionRow();
         });
-
-        const observationBody = document.getElementById("observationBody");
-        const actionBody = document.getElementById("actionBody");
-
-        observationBody.innerHTML = "";
-        actionBody.innerHTML = "";
-
-        addObservationRow();
-        addActionRow();
-    });
 
     updateNumbers(document.getElementById("observationBody"));
     updateNumbers(document.getElementById("actionBody"));
+
 })();
 </script>
 
