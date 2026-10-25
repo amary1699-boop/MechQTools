@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://amary1699-boop.github.io/MechQTools/sitemap.xml
