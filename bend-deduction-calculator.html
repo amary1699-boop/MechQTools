@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +7,14 @@
 
 <title>Bend Deduction Calculator - MechQTools</title>
 
-<meta name="description" content="Free Sheet Metal Bend Deduction Calculator. Calculate Bend Allowance, Setback and Bend Deduction using thickness, radius, bend angle and K-Factor.">
+<meta name="description" content="Free Sheet Metal Bend Deduction Calculator for MS, SS, Aluminium, GI, Copper and Brass. Calculate Bend Allowance, Setback and Bend Deduction.">
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
     margin:0;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     background:#f7f8fa;
     color:#222;
     line-height:1.6;
@@ -29,7 +28,6 @@ header{
     top:0;
     z-index:1000;
 }
-
 .navbar{
     max-width:1200px;
     margin:auto;
@@ -38,14 +36,12 @@ header{
     align-items:center;
     justify-content:space-between;
 }
-
 .logo{
     font-size:25px;
     font-weight:700;
     color:#e53232;
     text-decoration:none;
 }
-
 .nav-links{
     display:flex;
     gap:25px;
@@ -53,16 +49,12 @@ header{
     margin:0;
     padding:0;
 }
-
 .nav-links a{
     text-decoration:none;
     color:#333;
     font-size:15px;
 }
-
-.nav-links a:hover{
-    color:#e53232;
-}
+.nav-links a:hover{color:#e53232;}
 
 /* MAIN */
 main{
@@ -70,17 +62,12 @@ main{
     margin:auto;
     padding:50px 20px;
 }
-
 .section-title{
     text-align:center;
     font-size:32px;
     margin:0 0 10px;
 }
-
-.section-title span{
-    color:#e53232;
-}
-
+.section-title span{color:#e53232;}
 .subtitle{
     text-align:center;
     color:#666;
@@ -97,43 +84,77 @@ main{
     border-radius:10px;
     padding:30px;
 }
-
 .form-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:20px;
 }
-
 .form-group{
     display:flex;
     flex-direction:column;
 }
-
 .form-group label{
     font-weight:600;
     margin-bottom:7px;
 }
-
-.form-group input{
+.form-group input,
+.form-group select{
     width:100%;
     padding:12px;
     border:1px solid #ccc;
     border-radius:6px;
     font-size:16px;
     background:#fff;
+    color:#222;
 }
-
-.form-group input:focus{
+.form-group input:focus,
+.form-group select:focus{
     outline:none;
     border-color:#e53232;
-    box-shadow:0 0 0 2px rgba(229,50,50,0.08);
+    box-shadow:0 0 0 2px rgba(229,50,50,.08);
 }
-
 .input-note{
     color:#777;
     font-size:12px;
     margin-top:5px;
 }
+
+/* BA SECTION */
+.ba-section{
+    margin-top:25px;
+    padding:20px;
+    background:#fffafa;
+    border:1px solid #f0caca;
+    border-radius:8px;
+}
+.ba-section h3{
+    margin:0 0 12px;
+    font-size:19px;
+}
+.ba-section .form-group{
+    max-width:100%;
+}
+.ba-source{
+    margin-top:10px;
+    color:#555;
+    font-size:13px;
+}
+.ba-actions{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+.small-btn{
+    padding:9px 14px;
+    border:1px solid #e53232;
+    background:#fff;
+    color:#e53232;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
+}
+.small-btn:hover{background:#fff0f0;}
 
 /* BUTTONS */
 .button-row{
@@ -141,7 +162,6 @@ main{
     gap:12px;
     margin-top:25px;
 }
-
 button{
     flex:1;
     padding:13px 20px;
@@ -151,25 +171,17 @@ button{
     font-weight:600;
     cursor:pointer;
 }
-
 .calculate-btn{
     background:#e53232;
     color:#fff;
 }
-
-.calculate-btn:hover{
-    background:#c92525;
-}
-
+.calculate-btn:hover{background:#c92525;}
 .clear-btn{
     background:#fff;
     color:#e53232;
     border:1px solid #e53232;
 }
-
-.clear-btn:hover{
-    background:#fff4f4;
-}
+.clear-btn:hover{background:#fff4f4;}
 
 /* RESULT */
 .result{
@@ -180,36 +192,26 @@ button{
     border:1px solid #f0caca;
     border-radius:8px;
 }
-
 .result h2{
     margin-top:0;
     color:#e53232;
     font-size:22px;
 }
-
 .result-box{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:15px;
     margin-top:20px;
 }
-
 .result-item{
     background:#fff;
     border:1px solid #e5e5e5;
     border-radius:8px;
     padding:18px;
+    min-width:0;
 }
-
-.result-item.primary{
-    border:2px solid #e53232;
-}
-
-.result-label{
-    color:#666;
-    font-size:14px;
-}
-
+.result-item.primary{border:2px solid #e53232;}
+.result-label{color:#666;font-size:14px;}
 .result-value{
     margin-top:5px;
     font-size:23px;
@@ -217,19 +219,15 @@ button{
     color:#222;
     overflow-wrap:anywhere;
 }
-
-.result-item.primary .result-value{
-    color:#e53232;
-}
-
+.result-item.primary .result-value{color:#e53232;}
 .details{
     margin-top:20px;
     background:#fff;
     border:1px solid #e5e5e5;
     border-radius:8px;
     padding:15px;
+    overflow-wrap:anywhere;
 }
-
 .formula{
     margin-top:20px;
     padding:18px;
@@ -237,6 +235,14 @@ button{
     border-left:4px solid #e53232;
     border-radius:6px;
     line-height:1.9;
+}
+.result-warning{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    background:#fff8e8;
+    border-left:4px solid #f0a000;
+    border-radius:5px;
 }
 
 /* INFORMATION */
@@ -247,27 +253,15 @@ button{
     grid-template-columns:1fr 1fr;
     gap:20px;
 }
-
 .info-card{
     background:#fff;
     border:1px solid #e5e5e5;
     border-radius:8px;
     padding:22px;
 }
-
-.info-card h2,
-.info-card h3{
-    margin-top:0;
-}
-
-.info-card h2{
-    font-size:21px;
-}
-
-.info-card h3{
-    font-size:18px;
-}
-
+.info-card h2,.info-card h3{margin-top:0;}
+.info-card h2{font-size:21px;}
+.info-card h3{font-size:18px;}
 .warning{
     margin-top:20px;
     padding:18px;
@@ -282,7 +276,6 @@ footer{
     color:#fff;
     margin-top:30px;
 }
-
 .footer-container{
     max-width:1200px;
     margin:auto;
@@ -291,26 +284,15 @@ footer{
     grid-template-columns:2fr 1fr 1fr;
     gap:40px;
 }
-
-.footer-container h3{
-    margin-top:0;
-}
-
-.footer-container p{
-    color:#ccc;
-}
-
+.footer-container h3{margin-top:0;}
+.footer-container p{color:#ccc;}
 .footer-container a{
     color:#ccc;
     text-decoration:none;
     display:block;
     margin:7px 0;
 }
-
-.footer-container a:hover{
-    color:#fff;
-}
-
+.footer-container a:hover{color:#fff;}
 .footer-bottom{
     text-align:center;
     border-top:1px solid #333;
@@ -319,47 +301,24 @@ footer{
     font-size:14px;
 }
 
-/* MOBILE AND TABLET */
+/* MOBILE */
 @media(max-width:700px){
     .navbar{
         flex-direction:column;
         align-items:flex-start;
         gap:12px;
     }
-
     .nav-links{
         flex-wrap:wrap;
         gap:15px;
     }
-
-    main{
-        padding:35px 15px;
-    }
-
-    .section-title{
-        font-size:27px;
-    }
-
-    .calculator-card{
-        padding:20px;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .result-box{
-        grid-template-columns:1fr;
-    }
-
-    .info-grid{
-        grid-template-columns:1fr;
-    }
-
-    .button-row{
-        flex-direction:column;
-    }
-
+    main{padding:35px 15px;}
+    .section-title{font-size:27px;}
+    .calculator-card{padding:20px;}
+    .form-grid{grid-template-columns:1fr;}
+    .result-box{grid-template-columns:1fr;}
+    .info-grid{grid-template-columns:1fr;}
+    .button-row,.ba-actions{flex-direction:column;}
     .footer-container{
         grid-template-columns:1fr;
         gap:25px;
@@ -372,389 +331,363 @@ footer{
 
 <!-- HEADER -->
 <header>
-    <div class="navbar">
+<div class="navbar">
 
-        <a href="index.html" class="logo">MechQTools</a>
+<a href="index.html" class="logo">MechQTools</a>
 
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="index.html#mechanical">Mechanical</a>
-            <a href="index.html#quality">Quality</a>
-            <a href="index.html#templates">Templates</a>
-            <a href="index.html#guides">Guides</a>
-            <a href="index.html#about">About</a>
-        </nav>
+<nav class="nav-links">
+<a href="index.html">Home</a>
+<a href="index.html#mechanical">Mechanical</a>
+<a href="index.html#quality">Quality</a>
+<a href="index.html#templates">Templates</a>
+<a href="index.html#guides">Guides</a>
+<a href="index.html#about">About</a>
+</nav>
 
-    </div>
+</div>
 </header>
 
 <!-- MAIN -->
 <main>
 
-    <h1 class="section-title">
-        Bend Deduction <span>Calculator</span>
-    </h1>
+<h1 class="section-title">
+Bend Deduction <span>Calculator</span>
+</h1>
 
-    <p class="subtitle">
-        Calculate Sheet Metal Bend Deduction using material
-        thickness, inside radius, bend angle and K-Factor.
-    </p>
+<p class="subtitle">
+Calculate Sheet Metal Bend Deduction for different materials,
+thicknesses, inside radii and bend angles.
+</p>
 
-    <!-- CALCULATOR -->
-    <div class="calculator-card">
+<div class="calculator-card">
 
-        <div class="form-grid">
+    <div class="form-grid">
 
-            <div class="form-group">
-                <label for="thickness">
-                    Material Thickness (T) — mm
-                </label>
-                <input
-                    type="number"
-                    id="thickness"
-                    step="any"
-                    min="0.001"
-                    placeholder="Example: 2"
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="radius">
-                    Inside Bend Radius (R) — mm
-                </label>
-                <input
-                    type="number"
-                    id="radius"
-                    step="any"
-                    min="0"
-                    placeholder="Example: 3"
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="angle">
-                    Bend Angle (°)
-                </label>
-                <input
-                    type="number"
-                    id="angle"
-                    step="any"
-                    min="0.001"
-                    max="179.999"
-                    placeholder="Example: 90"
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="kFactor">
-                    K-Factor
-                </label>
-                <input
-                    type="number"
-                    id="kFactor"
-                    step="any"
-                    min="0"
-                    max="1"
-                    value="0.33"
-                    placeholder="Example: 0.33"
-                >
-                <span class="input-note">
-                    Typical starting value: 0.33
-                </span>
-            </div>
-
+        <div class="form-group">
+            <label for="material">Material Type</label>
+            <select id="material">
+                <option value="MS">Mild Steel (MS)</option>
+                <option value="SS">Stainless Steel (SS)</option>
+                <option value="AL">Aluminium</option>
+                <option value="GI">Galvanized Iron (GI)</option>
+                <option value="CU">Copper</option>
+                <option value="BR">Brass</option>
+                <option value="OTHER">Other Material</option>
+            </select>
+            <span class="input-note">
+                Select the material being used.
+            </span>
         </div>
 
-        <div class="button-row">
+        <div class="form-group">
+            <label for="thickness">Material Thickness (T) — mm</label>
+            <input type="number" id="thickness"
+                   step="any" min="0.001" placeholder="Example: 2">
+        </div>
 
-            <button
-                type="button"
+        <div class="form-group">
+            <label for="radius">Inside Bend Radius (R) — mm</label>
+            <input type="number" id="radius"
+                   step="any" min="0" placeholder="Example: 3">
+        </div>
+
+        <div class="form-group">
+            <label for="angle">Bend Angle (°)</label>
+            <input type="number" id="angle"
+                   step="any" min="0.001" max="179.999"
+                   placeholder="Example: 90">
+        </div>
+
+        <div class="form-group">
+            <label for="kFactor">K-Factor</label>
+            <input type="number" id="kFactor"
+                   step="any" min="0" max="1"
+                   value="0.33" placeholder="Example: 0.33">
+            <span class="input-note">
+                Editable value. Default starting value: 0.33.
+            </span>
+        </div>
+
+    </div>
+
+    <!-- EDITABLE BEND ALLOWANCE -->
+    <div class="ba-section">
+
+        <h3>Bend Allowance (BA) — mm</h3>
+
+        <div class="form-group">
+            <label for="ba">Enter or Receive Bend Allowance</label>
+            <input type="number" id="ba"
+                   step="any" min="0"
+                   placeholder="Leave blank to calculate using K-Factor">
+            <span class="input-note">
+                If BA is received from Bend Allowance Calculator,
+                it will appear here. You can edit it.
+                If left blank, BA will be calculated using K-Factor.
+            </span>
+        </div>
+
+        <div class="ba-source" id="baSource">
+            BA source: K-Factor calculation will be used if this field is empty.
+        </div>
+
+        <div class="ba-actions">
+            <button type="button" class="small-btn"
+                    onclick="useKFactorBA()">
+                Use K-Factor Calculated BA
+            </button>
+        </div>
+
+    </div>
+
+    <div class="button-row">
+
+        <button type="button"
                 class="calculate-btn"
-                onclick="calculateBD()"
-            >
-                Calculate
-            </button>
+                onclick="calculateBD()">
+            Calculate Bend Deduction
+        </button>
 
-            <button
-                type="button"
+        <button type="button"
                 class="clear-btn"
-                onclick="clearCalculator()"
-            >
-                Clear
-            </button>
+                onclick="clearCalculator()">
+            Clear
+        </button>
+
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+
+        <h2>Calculation Result</h2>
+
+        <div class="result-box">
+
+            <div class="result-item primary">
+                <div class="result-label">Bend Deduction (BD)</div>
+                <div class="result-value" id="bdResult">0.000 mm</div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-label">Bend Allowance (BA)</div>
+                <div class="result-value" id="baResult">0.000 mm</div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-label">Setback</div>
+                <div class="result-value" id="setbackResult">0.000 mm</div>
+            </div>
 
         </div>
 
-        <!-- RESULT -->
-        <div class="result" id="result">
+        <div class="result-warning" id="resultWarning"></div>
 
-            <h2>Calculation Result</h2>
+        <div class="details" id="details"></div>
 
-            <div class="result-box">
+        <div class="formula">
+            <strong>Calculation Formulas:</strong>
+            <br><br>
 
-                <div class="result-item primary">
-                    <div class="result-label">
-                        Bend Deduction (BD)
-                    </div>
-                    <div class="result-value" id="bdResult">
-                        0.000 mm
-                    </div>
-                </div>
+            Angle in Radians = Bend Angle × π / 180
+            <br><br>
 
-                <div class="result-item">
-                    <div class="result-label">
-                        Bend Allowance (BA)
-                    </div>
-                    <div class="result-value" id="baResult">
-                        0.000 mm
-                    </div>
-                </div>
+            Bend Allowance (BA) =
+            Angle in Radians × (R + K × T)
+            <br><br>
 
-                <div class="result-item">
-                    <div class="result-label">
-                        Setback
-                    </div>
-                    <div class="result-value" id="setbackResult">
-                        0.000 mm
-                    </div>
-                </div>
+            Setback = (R + T) × tan(Bend Angle / 2)
+            <br><br>
 
-            </div>
+            <strong>
+                Bend Deduction (BD) = 2 × Setback − BA
+            </strong>
+        </div>
 
-            <div class="details" id="details"></div>
+    </div>
 
-            <div class="formula">
+</div>
 
-                <strong>Calculation Formulas:</strong>
+<!-- INFORMATION -->
+<div class="info-grid">
 
-                <br><br>
+    <div class="info-card">
+        <h2>How to Use</h2>
+        <ol>
+            <li>Select Material Type.</li>
+            <li>Enter Material Thickness.</li>
+            <li>Enter Inside Bend Radius.</li>
+            <li>Enter Bend Angle.</li>
+            <li>Enter K-Factor, or use the default.</li>
+            <li>Enter BA manually or receive it from Bend Allowance Calculator.</li>
+            <li>Click Calculate Bend Deduction.</li>
+        </ol>
+    </div>
 
-                Angle in Radians =
-                Bend Angle × π / 180
+    <div class="info-card">
+        <h2>BA Calculation Options</h2>
 
-                <br><br>
+        <p><strong>Option 1 — Automatic:</strong></p>
+        <p>Leave the BA field empty. The calculator calculates BA from K-Factor.</p>
 
-                Bend Allowance (BA) =
-                Angle in Radians × (R + K × T)
+        <p><strong>Option 2 — Manual / Transferred:</strong></p>
+        <p>Enter BA yourself or receive it using the Use in Bend Deduction button in the Bend Allowance Calculator.</p>
+    </div>
 
-                <br><br>
+</div>
 
-                Setback =
-                (R + T) × tan(Bend Angle / 2)
+<div class="info-grid">
 
-                <br><br>
+    <div class="info-card" style="grid-column:1 / -1;">
 
-                <strong>
-                    Bend Deduction (BD) =
-                    2 × Setback − Bend Allowance
-                </strong>
+        <h2>Important Engineering Notes</h2>
 
-            </div>
+        <div class="warning">
+
+            <strong>Material and K-Factor:</strong>
+            <br><br>
+
+            This calculator supports MS, SS, Aluminium, GI,
+            Copper, Brass and other materials.
+
+            Material selection identifies the material but does
+            not automatically determine its exact K-Factor.
+            K-Factor depends on material properties, thickness,
+            inside radius, tooling and bending method.
+
+            <br><br>
+
+            The default K-Factor of 0.33 is only a starting
+            assumption. Use a verified K-Factor or a measured
+            Bend Allowance for production accuracy.
+
+            <br><br>
+
+            Large inside radii are accepted by the calculator.
+            However, verify the actual bend geometry and
+            process data before using results for production.
 
         </div>
 
     </div>
 
-    <!-- INFORMATION -->
-    <div class="info-grid">
-
-        <div class="info-card">
-
-            <h2>How to Use</h2>
-
-            <ol>
-                <li>Enter Material Thickness (T).</li>
-                <li>Enter Inside Bend Radius (R).</li>
-                <li>Enter Bend Angle in degrees.</li>
-                <li>Enter K-Factor (default 0.33).</li>
-                <li>Click Calculate.</li>
-                <li>Check the Bend Deduction result.</li>
-            </ol>
-
-        </div>
-
-        <div class="info-card">
-
-            <h2>Calculation Example</h2>
-
-            <p>
-                Thickness (T) = 2 mm<br>
-                Inside Radius (R) = 3 mm<br>
-                Bend Angle = 90°<br>
-                K-Factor = 0.33
-            </p>
-
-            <p>
-                Bend Allowance ≈ 5.749 mm<br>
-                Setback = 5.000 mm
-            </p>
-
-            <p>
-                Bend Deduction ≈
-                <strong>4.251 mm</strong>
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="info-grid">
-
-        <div class="info-card" style="grid-column:1 / -1;">
-
-            <div class="warning">
-
-                <strong>Important:</strong>
-                <br><br>
-
-                K-Factor depends on material, thickness,
-                inside radius, tooling and bending process.
-
-                The default value 0.33 is only a starting
-                assumption. For accurate production results,
-                use a K-Factor established from your actual
-                material and machine bending data.
-
-                <br><br>
-
-                This calculator uses the entered bend angle
-                as the included bend angle in the formulas.
-                Confirm the angle convention used by your
-                drawing and shop-floor process.
-
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </main>
 
 <!-- FOOTER -->
 <footer>
 
-    <div class="footer-container">
+<div class="footer-container">
 
-        <div>
-            <h3>MechQTools</h3>
-
-            <p>
-                Engineering & Quality Tools for Professionals.
-            </p>
-
-            <p>
-                Free practical calculators and tools for
-                Mechanical and Quality Engineers.
-            </p>
-        </div>
-
-        <div>
-            <h3>Mechanical</h3>
-
-            <a href="bend-allowance-calculator.html">
-                Bend Allowance
-            </a>
-
-            <a href="bend-deduction-calculator.html">
-                Bend Deduction
-            </a>
-
-            <a href="material-weight-calculator.html">
-                Material Weight
-            </a>
-
-            <a href="tolerance-calculator.html">
-                Tolerance Calculator
-            </a>
-        </div>
-
-        <div>
-            <h3>Quality</h3>
-
-            <a href="gdt-calculator.html">
-                GD&T Calculator
-            </a>
-
-            <a href="index.html#quality">
-                Quality Tools
-            </a>
-        </div>
-
+    <div>
+        <h3>MechQTools</h3>
+        <p>Engineering & Quality Tools for Professionals.</p>
+        <p>
+            Free practical calculators and tools for
+            Mechanical and Quality Engineers.
+        </p>
     </div>
 
-    <div class="footer-bottom">
-        © 2026 MechQTools. All Rights Reserved.
+    <div>
+        <h3>Mechanical</h3>
+        <a href="bend-allowance-calculator.html">Bend Allowance</a>
+        <a href="bend-deduction-calculator.html">Bend Deduction</a>
+        <a href="material-weight-calculator.html">Material Weight</a>
+        <a href="tolerance-calculator.html">Tolerance Calculator</a>
     </div>
+
+    <div>
+        <h3>Quality</h3>
+        <a href="gdt-calculator.html">GD&T Calculator</a>
+        <a href="index.html#quality">Quality Tools</a>
+    </div>
+
+</div>
+
+<div class="footer-bottom">
+    © 2026 MechQTools. All Rights Reserved.
+</div>
 
 </footer>
 
-<!-- JAVASCRIPT -->
 <script>
+
+/* =====================================
+   BEND DEDUCTION CALCULATION
+===================================== */
 
 function calculateBD(){
 
-    const T = parseFloat(
-        document.getElementById("thickness").value
-    );
+    const material =
+        document.getElementById("material").value;
 
-    const R = parseFloat(
-        document.getElementById("radius").value
-    );
+    const T =
+        parseFloat(document.getElementById("thickness").value);
 
-    const angle = parseFloat(
-        document.getElementById("angle").value
-    );
+    const R =
+        parseFloat(document.getElementById("radius").value);
 
-    const K = parseFloat(
-        document.getElementById("kFactor").value
-    );
+    const angle =
+        parseFloat(document.getElementById("angle").value);
 
-    /* VALIDATION */
+    const K =
+        parseFloat(document.getElementById("kFactor").value);
 
-    if(
-        !Number.isFinite(T) ||
-        !Number.isFinite(R) ||
-        !Number.isFinite(angle) ||
-        !Number.isFinite(K)
-    ){
-        alert("Please enter all values.");
+    const baInput =
+        document.getElementById("ba").value.trim();
+
+    let BA;
+    let baMethod;
+
+    /* BASIC VALIDATION */
+
+    if(!Number.isFinite(T) || T <= 0){
+        alert("Please enter a valid Material Thickness greater than 0.");
         return;
     }
 
-    if(T <= 0){
-        alert("Material Thickness must be greater than 0.");
+    if(!Number.isFinite(R) || R < 0){
+        alert("Please enter a valid Inside Bend Radius.");
         return;
     }
 
-    if(R < 0){
-        alert("Inside Bend Radius cannot be negative.");
-        return;
-    }
-
-    if(angle <= 0 || angle >= 180){
+    if(!Number.isFinite(angle) || angle <= 0 || angle >= 180){
         alert("Bend Angle must be greater than 0° and less than 180°.");
         return;
     }
 
-    if(K < 0 || K > 1){
-        alert("K-Factor must be between 0 and 1.");
-        return;
-    }
-
-    /* ANGLE CONVERSION */
-
     const angleRadians = angle * Math.PI / 180;
 
-    /* BEND ALLOWANCE */
+    /* BA: MANUAL / TRANSFERRED OR AUTOMATIC */
 
-    const BA = angleRadians * (R + K * T);
+    if(baInput !== ""){
+
+        BA = Number(baInput);
+
+        if(!Number.isFinite(BA) || BA <= 0){
+            alert("Please enter a valid Bend Allowance greater than 0, or leave the field empty.");
+            return;
+        }
+
+        baMethod = "Manual / Transferred Bend Allowance";
+
+    }else{
+
+        if(!Number.isFinite(K) || K < 0 || K > 1){
+            alert("K-Factor must be between 0 and 1.");
+            return;
+        }
+
+        BA = angleRadians * (R + K * T);
+
+        baMethod = "Automatically calculated using K-Factor";
+
+    }
 
     /* SETBACK */
 
-    const halfAngleRadians = angleRadians / 2;
-
     const setback =
-        (R + T) * Math.tan(halfAngleRadians);
+        (R + T) * Math.tan(angleRadians / 2);
 
     /* BEND DEDUCTION */
 
@@ -766,11 +699,11 @@ function calculateBD(){
         !Number.isFinite(setback) ||
         !Number.isFinite(bendDeduction)
     ){
-        alert("Calculation error. Please check the input values.");
+        alert("Calculation error. Please check the entered values.");
         return;
     }
 
-    /* DISPLAY RESULTS */
+    /* SHOW RESULTS */
 
     document.getElementById("bdResult").textContent =
         bendDeduction.toFixed(3) + " mm";
@@ -781,85 +714,197 @@ function calculateBD(){
     document.getElementById("setbackResult").textContent =
         setback.toFixed(3) + " mm";
 
-    /* DISPLAY CALCULATION DETAILS */
+    /* NEGATIVE BD WARNING */
+
+    const warning =
+        document.getElementById("resultWarning");
+
+    if(bendDeduction < 0){
+
+        warning.style.display = "block";
+
+        warning.textContent =
+            "Warning: Bend Deduction is negative. Please verify the Bend Allowance, bend angle, radius and angle convention before using this result.";
+
+    }else{
+
+        warning.style.display = "none";
+        warning.textContent = "";
+
+    }
+
+    /* CALCULATION DETAILS */
 
     document.getElementById("details").innerHTML = `
+
         <strong>Input Details</strong><br><br>
 
-        Material Thickness (T): ${T} mm<br>
-        Inside Bend Radius (R): ${R} mm<br>
+        Material: ${material}<br>
+        Thickness (T): ${T} mm<br>
+        Inside Radius (R): ${R} mm<br>
         Bend Angle: ${angle}°<br>
-        K-Factor: ${K}<br><br>
+        K-Factor: ${K}<br>
+        BA Method: ${baMethod}<br><br>
 
         <strong>Calculation Process</strong><br><br>
 
-        Angle in Radians:
-        ${angleRadians.toFixed(6)}<br>
+        Angle in Radians =
+        ${angle} × π / 180 =
+        ${angleRadians.toFixed(6)}<br><br>
 
-        Bend Allowance:
-        ${angleRadians.toFixed(6)} ×
-        (${R} + ${K} × ${T}) =
-        ${BA.toFixed(3)} mm<br>
+        Bend Allowance (BA) =
+        ${BA.toFixed(3)} mm<br><br>
 
-        Setback:
+        Setback =
         (${R} + ${T}) × tan(${angle}/2) =
-        ${setback.toFixed(3)} mm<br>
+        ${setback.toFixed(3)} mm<br><br>
 
-        Bend Deduction:
+        Bend Deduction (BD) =
         2 × ${setback.toFixed(3)} −
         ${BA.toFixed(3)} =
         <strong>${bendDeduction.toFixed(3)} mm</strong>
+
     `;
 
     document.getElementById("result").style.display = "block";
 
 }
 
-/* CLEAR */
+/* =====================================
+   USE K-FACTOR CALCULATED BA
+===================================== */
 
-function clearCalculator(){
+function useKFactorBA(){
 
-    document.getElementById("thickness").value = "";
-    document.getElementById("radius").value = "";
-    document.getElementById("angle").value = "";
+    document.getElementById("ba").value = "";
 
-    document.getElementById("kFactor").value = "0.33";
+    document.getElementById("baSource").textContent =
+        "BA source: Automatic K-Factor calculation selected. BA field is empty.";
 
     document.getElementById("result").style.display = "none";
 
 }
 
-/* LOAD PREVIOUS INPUT DATA IF AVAILABLE */
+/* =====================================
+   BA INPUT SOURCE MESSAGE
+===================================== */
 
-function loadPreviousData(){
+document.getElementById("ba").addEventListener("input", function(){
+
+    if(this.value.trim() !== ""){
+
+        document.getElementById("baSource").textContent =
+            "BA source: Manual / transferred value. This value will be used in Bend Deduction.";
+
+    }else{
+
+        document.getElementById("baSource").textContent =
+            "BA source: K-Factor calculation will be used if this field is empty.";
+
+    }
+
+});
+
+/* =====================================
+   CLEAR CALCULATOR
+===================================== */
+
+function clearCalculator(){
+
+    document.getElementById("material").value = "MS";
+    document.getElementById("thickness").value = "";
+    document.getElementById("radius").value = "";
+    document.getElementById("angle").value = "";
+    document.getElementById("kFactor").value = "0.33";
+    document.getElementById("ba").value = "";
+
+    document.getElementById("baSource").textContent =
+        "BA source: K-Factor calculation will be used if this field is empty.";
+
+    document.getElementById("result").style.display = "none";
+
+}
+
+/* =====================================
+   LOAD DATA FROM BEND ALLOWANCE TOOL
+   Existing MechQTools LocalStorage keys
+===================================== */
+
+function loadBendAllowanceData(){
 
     try{
 
-        const T = localStorage.getItem("mechqtools_thickness");
-        const R = localStorage.getItem("mechqtools_radius");
-        const angle = localStorage.getItem("mechqtools_angle");
+        const BA =
+            localStorage.getItem("mechqtools_bendAllowance");
 
-        if(T !== null){
+        const T =
+            localStorage.getItem("mechqtools_thickness");
+
+        const R =
+            localStorage.getItem("mechqtools_radius");
+
+        const angle =
+            localStorage.getItem("mechqtools_angle");
+
+        let dataLoaded = false;
+
+        if(BA !== null && BA.trim() !== ""){
+
+            document.getElementById("ba").value = BA;
+            dataLoaded = true;
+
+        }
+
+        if(T !== null && T.trim() !== ""){
+
             document.getElementById("thickness").value = T;
+            dataLoaded = true;
+
         }
 
-        if(R !== null){
+        if(R !== null && R.trim() !== ""){
+
             document.getElementById("radius").value = R;
+            dataLoaded = true;
+
         }
 
-        if(angle !== null){
+        if(angle !== null && angle.trim() !== ""){
+
             document.getElementById("angle").value = angle;
+            dataLoaded = true;
+
+        }
+
+        if(BA !== null && BA.trim() !== ""){
+
+            document.getElementById("baSource").textContent =
+                "BA received from Bend Allowance Calculator. You can edit this value before calculating.";
+
+        }else if(dataLoaded){
+
+            document.getElementById("baSource").textContent =
+                "Input data received. BA will be calculated using K-Factor unless you enter BA manually.";
+
         }
 
     }catch(error){
 
-        console.warn("Previous calculator data could not be loaded.");
+        console.warn("Could not load Bend Allowance data:", error);
 
     }
 
 }
 
-loadPreviousData();
+/* LOAD ON PAGE OPEN */
+
+loadBendAllowanceData();
+
+/* LOAD AGAIN WHEN PAGE IS RESTORED */
+
+window.addEventListener("pageshow", function(){
+    loadBendAllowanceData();
+});
 
 </script>
 
