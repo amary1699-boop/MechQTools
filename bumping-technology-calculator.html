@@ -5,18 +5,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bumping Technology Calculator - MechQTools</title>
-<meta name="description" content="Sheet metal bumping calculator for inside radius, bend size, progressive bump angles, bend line positions and final size verification.">
+<meta name="description" content="Calculate sheet metal bumping radius, hit angles, bend line positions and theoretical bumping layout.">
 
 <style>
-:root{
+:root {
   --red:#e53232;
   --dark:#222;
   --muted:#666;
   --border:#e5e5e5;
-  --bg:#f7f7f7;
-  --white:#fff;
-  --green:#168447;
-  --orange:#b7791f;
+  --bg:#f6f7f9;
 }
 *{box-sizing:border-box}
 body{
@@ -29,29 +26,32 @@ body{
 header{
   background:#fff;
   border-bottom:1px solid var(--border);
-  padding:15px 5%;
+  padding:14px 5%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:15px;
+  gap:12px;
   flex-wrap:wrap;
 }
-.logo{font-size:23px;font-weight:800;color:var(--red)}
-.logo span{color:#222}
-nav{display:flex;gap:17px;flex-wrap:wrap}
-nav a{color:#333;text-decoration:none;font-size:14px}
-nav a:hover{color:var(--red)}
+.logo{
+  color:var(--red);
+  font-size:24px;
+  font-weight:800;
+  text-decoration:none;
+}
 .home-btn{
-  display:inline-block;
   background:var(--red);
-  color:#fff;
+  color:white;
   padding:9px 17px;
   border-radius:6px;
   text-decoration:none;
-  font-weight:bold;
-  font-size:14px;
+  font-weight:600;
 }
-.container{max-width:1250px;margin:25px auto;padding:0 16px}
+.container{
+  width:94%;
+  max-width:1150px;
+  margin:25px auto;
+}
 .page-title{text-align:center;margin-bottom:22px}
 .page-title h1{font-size:27px;margin:0 0 7px}
 .page-title p{color:var(--muted);margin:0}
@@ -63,160 +63,138 @@ nav a:hover{color:var(--red)}
   margin-bottom:18px;
   box-shadow:0 2px 8px rgba(0,0,0,.035);
 }
-.card h2{font-size:19px;margin:0 0 16px}
-.card h3{font-size:15px;margin:0 0 10px}
-.section-title{
-  color:var(--red);
-  font-size:16px;
-  font-weight:bold;
-  border-bottom:1px solid var(--border);
-  padding-bottom:8px;
-  margin:20px 0 13px;
+.card h2{
+  font-size:19px;
+  margin:0 0 16px;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--red);
 }
 .grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
+  gap:15px;
 }
-.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
-.field input,.field select{
+.field label{
+  display:block;
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+input,select{
   width:100%;
+  min-width:0;
   padding:11px;
   border:1px solid #ccc;
   border-radius:6px;
   font-size:15px;
-  background:#fff;
-  min-width:0;
+  background:white;
 }
-.field input:focus,.field select:focus{
-  outline:2px solid rgba(229,50,50,.15);
+input:focus,select:focus{
+  outline:none;
   border-color:var(--red);
+  box-shadow:0 0 0 2px rgba(229,50,50,.1);
 }
-.hint{font-size:11px;color:var(--muted);margin-top:4px}
-.mode-row{display:flex;gap:10px;flex-wrap:wrap}
-.mode-option{
-  border:1px solid #ccc;
-  padding:11px 18px;
-  border-radius:7px;
-  cursor:pointer;
-  font-weight:bold;
+.help{font-size:12px;color:var(--muted);margin-top:4px}
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
 }
-.mode-option:has(input:checked){
-  border-color:var(--red);
-  background:#fff4f4;
-  color:var(--red);
-}
-.mode-option input{accent-color:var(--red)}
-.btn{
+button{
   border:0;
   border-radius:6px;
   padding:11px 18px;
-  background:var(--red);
-  color:#fff;
   font-size:14px;
-  font-weight:bold;
+  font-weight:700;
   cursor:pointer;
 }
-.btn.secondary{background:#444}
-.btn.light{background:#eee;color:#222}
-.btn:hover{opacity:.9}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.note{
-  background:#fff8e8;
-  border-left:4px solid #e4a126;
-  padding:12px;
-  border-radius:5px;
-  font-size:13px;
-  margin:12px 0;
-}
-.info{
-  background:#f1f6ff;
-  border-left:4px solid #4285d4;
-  padding:12px;
-  border-radius:5px;
-  font-size:13px;
-  margin:12px 0;
-}
-.error{
-  background:#fff0f0;
-  border-left:4px solid var(--red);
-  padding:12px;
-  border-radius:5px;
-  font-size:13px;
-  margin:12px 0;
-}
+.primary{background:var(--red);color:#fff}
+.secondary{background:#333;color:#fff}
+.light{background:#eee;color:#222}
+button:hover{opacity:.9}
 .results{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:12px;
 }
 .result{
   background:#fff5f5;
   border:1px solid #f2d1d1;
-  padding:13px;
   border-radius:8px;
-  min-width:0;
+  padding:14px;
 }
-.result small{display:block;color:#666;font-size:12px}
-.result strong{
-  font-size:19px;
-  color:var(--red);
-  overflow-wrap:anywhere;
-}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:780px;font-size:13px}
-th,td{padding:10px;border:1px solid var(--border);text-align:center}
-th{background:#fff1f1;color:#333}
-td input{
-  width:100px;
-  max-width:100%;
-  padding:7px;
-  border:1px solid #ccc;
-  border-radius:5px;
-}
-.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.svg-wrap{
+.result span{display:block;font-size:13px;color:#666}
+.result strong{font-size:22px;color:var(--red);overflow-wrap:anywhere}
+.table-wrap{width:100%;overflow-x:auto}
+table{
+  border-collapse:collapse;
   width:100%;
-  overflow:auto;
-  border:1px solid var(--border);
-  border-radius:7px;
-  background:#fff;
-}
-svg{display:block;width:100%;min-width:320px;height:auto}
-.process{font-size:13px;color:#444;line-height:1.9}
-.status{
-  display:inline-block;
-  padding:5px 12px;
-  border-radius:5px;
-  font-weight:bold;
+  min-width:720px;
   font-size:13px;
 }
-.status.ok{background:#e7f7ed;color:#146c37}
-.status.bad{background:#ffe8e8;color:#b42323}
-.status.pending{background:#fff4dc;color:#875900}
+th,td{
+  border:1px solid var(--border);
+  padding:9px;
+  text-align:center;
+}
+th{background:#f5f5f5}
+td input{
+  padding:7px;
+  min-width:90px;
+  text-align:center;
+}
+.visual-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+.visual-box{
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:12px;
+  min-width:0;
+}
+.visual-box h3{font-size:15px;margin:0 0 10px}
+svg{width:100%;height:auto;display:block;background:#fff}
+.note{
+  background:#fff8e8;
+  border-left:4px solid #e5a000;
+  padding:12px;
+  font-size:13px;
+  margin-top:14px;
+}
+.status{
+  padding:12px;
+  border-radius:7px;
+  margin-top:12px;
+  font-weight:700;
+}
+.good{background:#e9f8ed;color:#167333}
+.bad{background:#fff0f0;color:#b00020}
+.hidden{display:none!important}
 footer{
   background:#222;
-  color:#eee;
+  color:#fff;
   text-align:center;
-  padding:22px 12px;
+  padding:22px 10px;
   margin-top:35px;
   font-size:13px;
 }
-footer a{color:#fff;text-decoration:none;margin:0 7px}
-.hidden{display:none!important}
+footer a{color:#fff;text-decoration:none;margin:0 8px}
 @media(max-width:800px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .results{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:520px){
-  header{padding:13px 4%}
-  nav{width:100%;gap:12px}
-  .container{padding:0 10px;margin:17px auto}
+@media(max-width:560px){
+  header{padding:12px 4%}
+  .logo{font-size:21px}
+  .container{width:94%;margin:16px auto}
   .card{padding:14px}
-  .grid,.geometry-grid{grid-template-columns:1fr}
   .page-title h1{font-size:22px}
-  .results{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .result strong{font-size:16px}
+  .grid,.results,.visual-grid{grid-template-columns:1fr}
+  .result strong{font-size:20px}
+  .buttons button{flex:1 1 100%}
 }
 </style>
 </head>
@@ -224,813 +202,643 @@ footer a{color:#fff;text-decoration:none;margin:0 7px}
 <body>
 
 <header>
-  <div class="logo">MechQ<span>Tools</span></div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="index.html#mechanical-tools">Mechanical</a>
-    <a href="index.html#quality-tools">Quality</a>
-    <a href="index.html#guides-section">Guides</a>
-    <a href="index.html#about">About</a>
-  </nav>
+  <a class="logo" href="index.html">MechQTools</a>
   <a class="home-btn" href="index.html">⌂ Home</a>
 </header>
 
 <main class="container">
 
-  <div class="page-title">
-    <h1>Bumping Technology Calculator</h1>
-    <p>Large Radius Sheet Metal Bumping, Bend Line & Final Size Calculator</p>
+<div class="page-title">
+  <h1>Bumping Technology Calculator</h1>
+  <p>Sheet Metal Large Radius Bumping & Bend Line Planning</p>
+</div>
+
+<section class="card">
+  <h2>1. Bumping Parameters</h2>
+
+  <div class="grid">
+    <div class="field">
+      <label for="radius">Required Inside Radius (mm)</label>
+      <input type="number" id="radius" value="200" min="0.1" step="any">
+    </div>
+
+    <div class="field">
+      <label for="totalAngle">Total Bend Angle (°)</label>
+      <input type="number" id="totalAngle" value="90" min="0.1" max="360" step="any">
+      <div class="help">Total angle of the required curved portion.</div>
+    </div>
+
+    <div class="field">
+      <label for="material">Material Type</label>
+      <select id="material">
+        <option value="MS">MS</option>
+        <option value="GI">GI</option>
+        <option value="SS">SS</option>
+        <option value="Aluminium">Aluminium</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="thickness">Material Thickness (mm)</label>
+      <input type="number" id="thickness" value="4" min="0.1" step="any">
+    </div>
+
+    <div class="field">
+      <label for="kfactor">K-Factor</label>
+      <input type="number" id="kfactor" value="0.33" min="0" max="1" step="0.01">
+    </div>
+
+    <div class="field">
+      <label for="mode">Calculation Mode</label>
+      <select id="mode">
+        <option value="auto">Automatic</option>
+        <option value="manual">Manual</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>2. Bumping Settings</h2>
+
+  <div class="grid">
+    <div class="field">
+      <label for="pattern">Bumping Angle Pattern</label>
+      <select id="pattern">
+        <option value="uniform">Uniform</option>
+        <option value="progressive">Progressive</option>
+      </select>
+    </div>
+
+    <div class="field" id="maxAngleBox">
+      <label for="maxAngle">Maximum Angle Per Hit (°)</label>
+      <input type="number" id="maxAngle" value="5" min="0.1" max="45" step="any">
+    </div>
+
+    <div class="field hidden" id="hitCountBox">
+      <label for="hitCount">Number of Bumps</label>
+      <input type="number" id="hitCount" value="18" min="1" max="500" step="1">
+    </div>
+
+    <div class="field hidden" id="startWeightBox">
+      <label for="startWeight">Starting Angle Weight</label>
+      <input type="number" id="startWeight" value="0.8" min="0.01" step="any">
+    </div>
+
+    <div class="field hidden" id="increaseBox">
+      <label for="increase">Weight Increase Per Hit</label>
+      <input type="number" id="increase" value="0.02" min="0" step="any">
+    </div>
   </div>
 
-  <div class="card">
-    <h2>1. Calculation Settings</h2>
+  <div class="buttons">
+    <button class="primary" id="calculateBtn">Calculate Bumping</button>
+    <button class="light" id="resetBtn">Reset</button>
+  </div>
+  <div id="error" class="status bad hidden"></div>
+</section>
 
-    <div class="section-title">Calculation Mode</div>
-    <div class="mode-row">
-      <label class="mode-option">
-        <input type="radio" name="mode" value="auto" checked>
-        Automatic
-      </label>
-      <label class="mode-option">
-        <input type="radio" name="mode" value="manual">
-        Manual
-      </label>
+<section class="card">
+  <h2>3. Calculation Results</h2>
+  <div class="results">
+    <div class="result">
+      <span>Neutral Layer Radius</span>
+      <strong id="neutralRadius">—</strong>
+      <span>mm</span>
     </div>
-
-    <div class="section-title">Required Bend Size Input</div>
-    <div class="grid">
-      <div class="field">
-        <label for="geometryMethod">Input Method</label>
-        <select id="geometryMethod">
-          <option value="widthRise">Width + Height</option>
-          <option value="radiusArc">Inside Radius + Arc Length</option>
-        </select>
-      </div>
-
-      <div class="field" id="widthField">
-        <label for="targetWidth">Required Bend Width / Chord (mm)</label>
-        <input id="targetWidth" type="number" min="0.01" step="any" value="500">
-      </div>
-
-      <div class="field" id="heightField">
-        <label for="targetHeight">Required Bend Height / Rise (mm)</label>
-        <input id="targetHeight" type="number" min="0.01" step="any" value="66.987">
-      </div>
-
-      <div class="field hidden" id="radiusField">
-        <label for="targetRadius">Target Inside Radius (mm)</label>
-        <input id="targetRadius" type="number" min="0.01" step="any" value="500">
-      </div>
-
-      <div class="field hidden" id="arcField">
-        <label for="targetArcLength">Required Inside Arc Length (mm)</label>
-        <input id="targetArcLength" type="number" min="0.01" step="any" value="785.398">
-      </div>
+    <div class="result">
+      <span>Total Bend Angle</span>
+      <strong id="totalResult">—</strong>
+      <span>Degree</span>
     </div>
-
-    <div class="info">
-      Width + Height method: Width is the straight chord between curve endpoints. Height is the maximum rise from chord to the arc. Radius + Arc Length method uses the inside surface arc length.
+    <div class="result">
+      <span>Total Number of Bumps</span>
+      <strong id="bumpsResult">—</strong>
+      <span>Hits</span>
     </div>
-
-    <div class="section-title">Material & Sheet Details</div>
-    <div class="grid">
-      <div class="field">
-        <label for="material">Material</label>
-        <select id="material">
-          <option>MS</option>
-          <option>GI</option>
-          <option>SS</option>
-          <option>Aluminium</option>
-          <option>Copper</option>
-          <option>Brass</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="thickness">Sheet Thickness T (mm)</label>
-        <input id="thickness" type="number" min="0.01" step="any" value="2">
-      </div>
-
-      <div class="field">
-        <label for="kFactor">K-Factor (editable)</label>
-        <input id="kFactor" type="number" min="0" max="1" step="0.01" value="0.33">
-      </div>
+    <div class="result">
+      <span>Theoretical Developed Arc Length</span>
+      <strong id="arcLength">—</strong>
+      <span>mm</span>
     </div>
-
-    <div class="section-title">Bumping Settings</div>
-    <div class="grid">
-      <div class="field" id="maxAngleField">
-        <label for="maxBumpAngle">Maximum Angle Per Hit (°)</label>
-        <input id="maxBumpAngle" type="number" min="0.1" max="45" step="any" value="5">
-        <div class="hint">Automatic mode calculates the required number of hits.</div>
-      </div>
-
-      <div class="field" id="countField">
-        <label for="bumpCount">Number of Bumps / Hits</label>
-        <input id="bumpCount" type="number" min="1" max="500" step="1" value="18">
-      </div>
-
-      <div class="field">
-        <label for="anglePattern">Hit Angle Pattern</label>
-        <select id="anglePattern">
-          <option value="uniform">Uniform – Equal Angle</option>
-          <option value="progressive">Progressive – Increasing Angle</option>
-        </select>
-      </div>
-
-      <div class="field hidden" id="progressiveStartField">
-        <label for="progressiveStart">Starting Hit Angle Weight (°)</label>
-        <input id="progressiveStart" type="number" min="0.01" step="any" value="2">
-        <div class="hint">Starting value for progressive angle distribution. Values are normalized to the required total angle.</div>
-      </div>
-
-      <div class="field hidden" id="progressiveStepField">
-        <label for="progressiveStep">Angle Increase Weight Per Hit (°)</label>
-        <input id="progressiveStep" type="number" min="0" step="any" value="0.5">
-        <div class="hint">Example weights: 2, 2.5, 3, 3.5... then normalized.</div>
-      </div>
+    <div class="result">
+      <span>Total Flat Bump Layout Length</span>
+      <strong id="layoutLength">—</strong>
+      <span>mm</span>
     </div>
-
-    <div class="note">
-      Automatic mode uses the maximum permitted hit angle to determine the number of bumps. Manual mode uses the number of hits you enter. Progressive mode distributes the required total angle in an increasing sequence.
+    <div class="result">
+      <span>Average Angle Per Hit</span>
+      <strong id="averageAngle">—</strong>
+      <span>Degree</span>
     </div>
+  </div>
+  <div class="note">
+    Neutral layer radius = Inside Radius + (K-Factor × Thickness).
+    Flat bump layout uses theoretical chord pitch between consecutive bend lines.
+  </div>
+</section>
 
-    <div class="actions">
-      <button class="btn" id="calculateBtn">Calculate Bumping</button>
-      <button class="btn secondary" id="resetBtn">Reset</button>
-    </div>
+<section class="card">
+  <h2>4. Bend Line Position & Hit Angle</h2>
+  <p class="help">You can edit each bend-line position and hit angle. Editing values changes the planned sequence; verify the total angle before using it on the machine.</p>
 
-    <div id="errorBox" class="error hidden" role="alert"></div>
+  <div class="table-wrap">
+    <table id="bumpTable">
+      <thead>
+        <tr>
+          <th>Hit No.</th>
+          <th>Bend Line Position (mm)</th>
+          <th>Distance from Previous (mm)</th>
+          <th>Current Hit Angle (°)</th>
+          <th>Next Hit Angle (°)</th>
+          <th>Cumulative Angle (°)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="6">Calculate to generate bend lines.</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <section id="output" class="hidden">
+  <div id="angleStatus"></div>
 
-    <div class="card">
-      <h2>2. Theoretical Bumping Results</h2>
-      <div class="results">
-        <div class="result">
-          <small>Target Inside Radius</small>
-          <strong id="outRadius">-</strong>
-        </div>
-        <div class="result">
-          <small>Number of Hits</small>
-          <strong id="outBumps">-</strong>
-        </div>
-        <div class="result">
-          <small>Average Hit Angle</small>
-          <strong id="outAngle">-</strong>
-        </div>
-        <div class="result">
-          <small>Average Neutral Pitch</small>
-          <strong id="outPitch">-</strong>
-        </div>
-        <div class="result">
-          <small>Required Bend Width</small>
-          <strong id="outWidth">-</strong>
-        </div>
-        <div class="result">
-          <small>Required Bend Height</small>
-          <strong id="outHeight">-</strong>
-        </div>
-        <div class="result">
-          <small>Inside Arc Length</small>
-          <strong id="outArc">-</strong>
-        </div>
-        <div class="result">
-          <small>Neutral Developed Length</small>
-          <strong id="outDeveloped">-</strong>
-        </div>
-      </div>
-      <div class="hint">
-        These are ideal circular-geometry and neutral-layer results. Actual press-brake hit positions and springback require process validation.
-      </div>
+  <div class="buttons">
+    <button class="secondary" id="csvBtn">Download CSV</button>
+    <button class="light" id="recalculateBtn">Regenerate Original Positions</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2>5. Bumping Geometry Preview</h2>
+  <div class="visual-grid">
+    <div class="visual-box">
+      <h3>Flat Sheet - Bend Line Layout</h3>
+      <svg id="flatSvg" viewBox="0 0 600 180" role="img" aria-label="Flat sheet bend line layout">
+        <text x="300" y="90" text-anchor="middle" fill="#777">Calculate to view layout</text>
+      </svg>
     </div>
-
-    <div class="card">
-      <h2>3. Bend Line & Hit Angle Table</h2>
-      <p class="hint">
-        Position is measured from the starting edge of the theoretical flat neutral layout. You can edit both position and hit angle. The next hit angle and cumulative angle update automatically.
-      </p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Hit No.</th>
-              <th>Bend Line Position (mm)</th>
-              <th>Distance from Previous (mm)</th>
-              <th>Current Hit Angle (°)</th>
-              <th>Next Hit Angle (°)</th>
-              <th>Cumulative Angle (°)</th>
-            </tr>
-          </thead>
-          <tbody id="bendTable"></tbody>
-        </table>
-      </div>
-
-      <div class="actions">
-        <button class="btn secondary" id="restoreBtn">Restore Calculated Values</button>
-        <button class="btn light" id="csvBtn">Download CSV</button>
-      </div>
-      <div id="tableError" class="error hidden"></div>
+    <div class="visual-box">
+      <h3>Formed Profile - Bumping Preview</h3>
+      <svg id="profileSvg" viewBox="0 0 600 260" role="img" aria-label="Bumped sheet profile">
+        <text x="300" y="130" text-anchor="middle" fill="#777">Calculate to view profile</text>
+      </svg>
     </div>
+  </div>
+  <div class="note">
+    Geometry is a theoretical segmented profile based on the entered hit angles. It is not a simulation of the actual press-brake punch, die, stroke or springback.
+  </div>
+</section>
 
-    <div class="card">
-      <h2>4. Geometry Preview</h2>
-      <div class="geometry-grid">
-        <div>
-          <h3>Flat Sheet – Bend Line Layout</h3>
-          <div class="svg-wrap">
-            <svg id="flatSvg" viewBox="0 0 700 190" role="img" aria-label="Flat sheet bend line layout"></svg>
-          </div>
-        </div>
-
-        <div>
-          <h3>Formed Profile – Side View</h3>
-          <div class="svg-wrap">
-            <svg id="formedSvg" viewBox="0 0 700 300" role="img" aria-label="Formed curved profile"></svg>
-          </div>
-        </div>
-      </div>
-      <div class="note">
-        The profile view is a theoretical circular-arc illustration, not a press-brake simulation. It does not show tooling contact, local flattening, springback or machine deflection.
-      </div>
+<section class="card">
+  <h2>6. Final Radius Verification</h2>
+  <div class="grid">
+    <div class="field">
+      <label for="actualRadius">Measured Actual Inside Radius (mm)</label>
+      <input type="number" id="actualRadius" min="0" step="any" placeholder="Enter measured radius">
     </div>
-
-    <div class="card">
-      <h2>5. Final Size Verification</h2>
-      <p class="hint">
-        The calculator shows theoretical target dimensions above. After physical bumping, measure the actual part and enter the readings below to check whether the part is within tolerance.
-      </p>
-
-      <div class="section-title">Actual Part Measurements</div>
-      <div class="grid">
-        <div class="field">
-          <label for="actualWidth">Actual Bend Width (mm)</label>
-          <input id="actualWidth" type="number" min="0" step="any" placeholder="Enter measured width">
-        </div>
-        <div class="field">
-          <label for="actualHeight">Actual Bend Height / Rise (mm)</label>
-          <input id="actualHeight" type="number" min="0" step="any" placeholder="Enter measured height">
-        </div>
-        <div class="field">
-          <label for="actualRadius">Actual Inside Radius (mm)</label>
-          <input id="actualRadius" type="number" min="0" step="any" placeholder="Optional measured radius">
-        </div>
-        <div class="field">
-          <label for="sizeTolerance">Width / Height Tolerance ± (mm)</label>
-          <input id="sizeTolerance" type="number" min="0" step="any" value="1">
-        </div>
-        <div class="field">
-          <label for="radiusTolerance">Radius Tolerance ± (mm)</label>
-          <input id="radiusTolerance" type="number" min="0" step="any" value="2">
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="btn" id="verifyBtn">Verify Actual Size</button>
-      </div>
-
-      <div id="verification" class="info">
-        Enter actual measured dimensions and click Verify Actual Size.
-      </div>
+    <div class="field">
+      <label for="tolerance">Allowed Radius Tolerance (± mm)</label>
+      <input type="number" id="tolerance" value="2" min="0" step="any">
     </div>
+  </div>
+  <div class="buttons">
+    <button class="primary" id="verifyBtn">Verify Radius</button>
+  </div>
+  <div id="verification"></div>
+</section>
 
-    <div class="card">
-      <h2>6. Calculation Process</h2>
-      <div id="process" class="process"></div>
-    </div>
+<section class="card">
+  <h2>7. Calculation Process</h2>
+  <div id="process">
+    Enter the parameters and click Calculate Bumping.
+  </div>
+</section>
 
-  </section>
 </main>
 
 <footer>
-  <div><b>MechQTools</b> - Engineering & Quality Tools</div>
-  <p>
-    <a href="index.html">Home</a>
-    <a href="index.html#mechanical-tools">Mechanical</a>
-    <a href="index.html#quality-tools">Quality</a>
-    <a href="index.html#about">About</a>
-  </p>
-  <div>© 2026 MechQTools. All Rights Reserved.</div>
+  <p>© 2026 MechQTools. All Rights Reserved.</p>
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
 </footer>
 
 <script>
 "use strict";
 
-const $ = id => document.getElementById(id);
-const fmt = (n,d=3) => Number(n).toFixed(d);
-
-let lastCalculation = null;
 let currentRows = [];
+let targetAngle = 0;
+let neutralR = 0;
+let calculated = false;
 
-function currentMode(){
-  return document.querySelector('input[name="mode"]:checked').value;
+const $ = id => document.getElementById(id);
+
+function number(id) {
+  return Number($(id).value);
 }
 
-function showError(message){
-  $("errorBox").textContent=message;
-  $("errorBox").classList.remove("hidden");
+function fmt(value, digits=3) {
+  return Number(value).toFixed(digits);
 }
 
-function clearError(){
-  $("errorBox").textContent="";
-  $("errorBox").classList.add("hidden");
+function showError(message) {
+  $("error").textContent = message;
+  $("error").classList.remove("hidden");
 }
 
-function positive(value,label){
-  const n=Number(value);
-  if(!Number.isFinite(n)||n<=0){
-    throw new Error(label+" must be greater than zero.");
-  }
-  return n;
+function clearError() {
+  $("error").textContent = "";
+  $("error").classList.add("hidden");
 }
 
-function updateControls(){
-  const method=$("geometryMethod").value;
-  $("widthField").classList.toggle("hidden",method!=="widthRise");
-  $("heightField").classList.toggle("hidden",method!=="widthRise");
-  $("radiusField").classList.toggle("hidden",method!=="radiusArc");
-  $("arcField").classList.toggle("hidden",method!=="radiusArc");
+function updateMode() {
+  const manual = $("mode").value === "manual";
+  $("hitCountBox").classList.toggle("hidden", !manual);
+  $("maxAngleBox").classList.toggle("hidden", manual);
 
-  const mode=currentMode();
-  $("maxAngleField").classList.toggle("hidden",mode!=="auto");
-  $("countField").classList.toggle("hidden",mode!=="manual");
-
-  const progressive=$("anglePattern").value==="progressive";
-  $("progressiveStartField").classList.toggle("hidden",!progressive);
-  $("progressiveStepField").classList.toggle("hidden",!progressive);
+  const progressive = $("pattern").value === "progressive";
+  $("startWeightBox").classList.toggle("hidden", !progressive);
+  $("increaseBox").classList.toggle("hidden", !progressive);
 }
 
-document.querySelectorAll('input[name="mode"]').forEach(el=>{
-  el.addEventListener("change",updateControls);
-});
-$("geometryMethod").addEventListener("change",updateControls);
-$("anglePattern").addEventListener("change",updateControls);
+$("mode").addEventListener("change", updateMode);
+$("pattern").addEventListener("change", updateMode);
+updateMode();
 
-function getTargetGeometry(){
-  const method=$("geometryMethod").value;
-  let Ri,width,height,angle,arcLength;
+function validateInputs() {
+  const R = number("radius");
+  const T = number("thickness");
+  const K = number("kfactor");
+  const A = number("totalAngle");
 
-  if(method==="widthRise"){
-    width=positive($("targetWidth").value,"Bend width");
-    height=positive($("targetHeight").value,"Bend height");
+  if (!Number.isFinite(R) || R <= 0) return "Enter a valid positive inside radius.";
+  if (!Number.isFinite(T) || T <= 0) return "Enter a valid material thickness.";
+  if (!Number.isFinite(K) || K < 0 || K > 1) return "K-Factor must be between 0 and 1.";
+  if (!Number.isFinite(A) || A <= 0 || A > 360) return "Total bend angle must be greater than 0 and up to 360 degrees.";
 
-    if(height>=width/2){
-      throw new Error("For this minor-arc calculator, bend height must be less than half the chord width.");
-    }
-
-    Ri=(width*width)/(8*height)+height/2;
-    angle=2*Math.asin(width/(2*Ri));
-    arcLength=Ri*angle;
-  }else{
-    Ri=positive($("targetRadius").value,"Inside radius");
-    arcLength=positive($("targetArcLength").value,"Inside arc length");
-    angle=arcLength/Ri;
-
-    if(angle<=0||angle>=Math.PI){
-      throw new Error("Arc length must produce a total angle greater than 0° and less than 180°.");
-    }
-
-    width=2*Ri*Math.sin(angle/2);
-    height=Ri*(1-Math.cos(angle/2));
+  if ($("mode").value === "auto") {
+    const max = number("maxAngle");
+    if (!Number.isFinite(max) || max <= 0 || max > 45) return "Maximum hit angle must be greater than 0 and up to 45 degrees.";
+  } else {
+    const count = number("hitCount");
+    if (!Number.isInteger(count) || count < 1 || count > 500) return "Number of bumps must be an integer from 1 to 500.";
   }
 
-  const degrees=angle*180/Math.PI;
-
-  if(!Number.isFinite(Ri)||!Number.isFinite(degrees)||degrees<=0||degrees>=180){
-    throw new Error("The supplied dimensions do not produce a valid minor circular arc.");
+  if ($("pattern").value === "progressive") {
+    if (number("startWeight") <= 0 || number("increase") < 0) return "Enter valid progressive angle weights.";
   }
-
-  return {Ri,width,height,angle,angleDeg:degrees,arcLength};
+  return "";
 }
 
-function makeHitAngles(totalAngleDeg,N){
-  const pattern=$("anglePattern").value;
-  const angles=[];
-
-  if(pattern==="uniform"){
-    const each=totalAngleDeg/N;
-    for(let i=0;i<N;i++) angles.push(each);
-  }else{
-    const start=positive($("progressiveStart").value,"Starting hit angle weight");
-    const step=Number($("progressiveStep").value);
-
-    if(!Number.isFinite(step)||step<0){
-      throw new Error("Progressive angle increase must be zero or greater.");
-    }
-
-    const weights=[];
-    for(let i=0;i<N;i++) weights.push(start+i*step);
-
-    const totalWeight=weights.reduce((a,b)=>a+b,0);
-    if(totalWeight<=0) throw new Error("Progressive angle weights are invalid.");
-
-    weights.forEach(w=>angles.push(totalAngleDeg*w/totalWeight));
+function makeAngles(total, count) {
+  const angles = [];
+  if ($("pattern").value === "uniform") {
+    return Array(count).fill(total / count);
   }
 
+  const start = number("startWeight");
+  const increase = number("increase");
+  const weights = [];
+
+  for (let i=0; i<count; i++) {
+    weights.push(start + i * increase);
+  }
+
+  const sum = weights.reduce((a,b)=>a+b,0);
+  if (!Number.isFinite(sum) || sum <= 0) throw new Error("Progressive weights are invalid.");
+
+  for (const w of weights) angles.push(total * w / sum);
   return angles;
 }
 
-function calculate(){
-  clearError();
-  try{
-    const g=getTargetGeometry();
-    const T=positive($("thickness").value,"Thickness");
-    const K=Number($("kFactor").value);
+function generateRows() {
+  const R = number("radius");
+  const T = number("thickness");
+  const K = number("kfactor");
+  targetAngle = number("totalAngle");
+  neutralR = R + K*T;
 
-    if(!Number.isFinite(K)||K<0||K>1){
-      throw new Error("K-Factor must be between 0 and 1.");
+  let count;
+
+  if ($("mode").value === "auto") {
+    count = Math.ceil(targetAngle / number("maxAngle"));
+    count = Math.max(1,count);
+
+    // Progressive distribution may create a hit larger than the selected maximum.
+    // Increase hit count until every generated hit is within the limit.
+    let safety = 0;
+    while (safety < 500) {
+      const test = makeAngles(targetAngle,count);
+      if (Math.max(...test) <= number("maxAngle") + 1e-9) break;
+      count++;
+      safety++;
     }
-
-    const Rn=g.Ri+K*T;
-    if(Rn<=0) throw new Error("Neutral radius is invalid.");
-
-    let N;
-    if(currentMode()==="auto"){
-      const maxAngle=positive($("maxBumpAngle").value,"Maximum hit angle");
-      if(maxAngle>45) throw new Error("Maximum hit angle cannot exceed 45°.");
-      N=Math.ceil(g.angleDeg/maxAngle);
-    }else{
-      N=positive($("bumpCount").value,"Number of bumps");
-      if(!Number.isInteger(N)||N>500){
-        throw new Error("Number of bumps must be a whole number between 1 and 500.");
-      }
-    }
-
-    const angles=makeHitAngles(g.angleDeg,N);
-
-    if(angles.some(a=>!Number.isFinite(a)||a<=0||a>45)){
-      throw new Error("Each calculated hit angle must be greater than 0° and not more than 45°. Increase the number of hits.");
-    }
-
-    const rows=[];
-    let position=0;
-    let cumulative=0;
-
-    angles.forEach((a,i)=>{
-      const pitch=Rn*a*Math.PI/180;
-      position+=pitch;
-      cumulative+=a;
-      rows.push({
-        hit:i+1,
-        position,
-        angle:a,
-        pitch,
-        cumulative
-      });
-    });
-
-    const averagePitch=rows.reduce((sum,r)=>sum+r.pitch,0)/N;
-    const developed=rows.reduce((sum,r)=>sum+r.pitch,0);
-
-    lastCalculation={
-      ...g,T,K,Rn,N,angles,rows,
-      averagePitch,developed,
-      material:$("material").value
-    };
-
-    currentRows=rows.map(r=>({...r}));
-    renderResults(lastCalculation);
-    renderTable();
-    renderGeometry();
-    renderProcess();
-    $("output").classList.remove("hidden");
-    $("verification").innerHTML="Enter actual measured dimensions and click Verify Actual Size.";
-    $("output").scrollIntoView({behavior:"smooth",block:"start"});
-
-  }catch(err){
-    $("output").classList.add("hidden");
-    showError(err.message||"Please check your inputs.");
+    if (safety >= 500) throw new Error("Could not generate a valid hit sequence. Adjust the maximum angle or progressive weights.");
+  } else {
+    count = number("hitCount");
   }
+
+  const angles = makeAngles(targetAngle,count);
+
+  if (angles.some(a => !Number.isFinite(a) || a <= 0 || a > 45)) {
+    throw new Error("A hit angle is outside the permitted range. Increase the number of bumps or adjust the angle settings.");
+  }
+
+  currentRows = [];
+  let position = 0;
+
+  for (let i=0; i<count; i++) {
+    // Theoretical chord pitch on the neutral-layer radius.
+    const pitch = 2 * neutralR * Math.sin(angles[i] * Math.PI / 360);
+    position += i === 0 ? 0 : pitch;
+
+    currentRows.push({
+      position: position,
+      angle: angles[i]
+    });
+  }
+
+  calculated = true;
+  renderAll();
 }
 
-function renderResults(c){
-  $("outRadius").textContent=fmt(c.Ri)+" mm";
-  $("outBumps").textContent=c.N;
-  $("outAngle").textContent=fmt(c.angleDeg/c.N,4)+"°";
-  $("outPitch").textContent=fmt(c.averagePitch)+" mm";
-  $("outWidth").textContent=fmt(c.width)+" mm";
-  $("outHeight").textContent=fmt(c.height)+" mm";
-  $("outArc").textContent=fmt(c.arcLength)+" mm";
-  $("outDeveloped").textContent=fmt(c.developed)+" mm";
+function renderResults() {
+  const total = currentRows.reduce((s,r)=>s+r.angle,0);
+  const arc = neutralR * total * Math.PI / 180;
+  const layout = currentRows.reduce((s,r,i)=>{
+    if (i===0) return s;
+    return s + (r.position-currentRows[i-1].position);
+  },0);
+
+  $("neutralRadius").textContent = fmt(neutralR);
+  $("totalResult").textContent = fmt(total,2);
+  $("bumpsResult").textContent = currentRows.length;
+  $("arcLength").textContent = fmt(arc);
+  $("layoutLength").textContent = fmt(layout);
+  $("averageAngle").textContent = fmt(total/currentRows.length,3);
 }
 
-function renderTable(){
-  const body=$("bendTable");
-  body.innerHTML="";
-  let cumulative=0;
+function renderTable() {
+  const tbody = $("bumpTable").querySelector("tbody");
+  tbody.innerHTML = "";
+
+  let cumulative = 0;
 
   currentRows.forEach((row,i)=>{
-    cumulative+=row.angle;
-    const previous=i===0?0:currentRows[i-1].position;
-    const next=i<currentRows.length-1?currentRows[i+1].angle:null;
+    cumulative += row.angle;
+    const next = currentRows[i+1] ? currentRows[i+1].angle : null;
+    const distance = i===0 ? 0 : row.position-currentRows[i-1].position;
 
-    const tr=document.createElement("tr");
-    const values=[
-      String(i+1),
-      null,
-      fmt(row.position-previous),
-      null,
-      next===null?"End":fmt(next,4),
-      fmt(cumulative,4)
-    ];
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td><input type="number" min="0" step="any" data-index="${i}" data-type="position" value="${fmt(row.position,3)}"></td>
+      <td>${fmt(distance,3)}</td>
+      <td><input type="number" min="0.001" max="45" step="any" data-index="${i}" data-type="angle" value="${fmt(row.angle,3)}"></td>
+      <td>${next===null ? "—" : fmt(next,3)}</td>
+      <td>${fmt(cumulative,3)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 
-    values.forEach((value,j)=>{
-      const td=document.createElement("td");
+  tbody.querySelectorAll("input").forEach(input=>{
+    input.addEventListener("change",()=>{
+      const i = Number(input.dataset.index);
+      const type = input.dataset.type;
+      const value = Number(input.value);
 
-      if(j===1||j===3){
-        const input=document.createElement("input");
-        input.type="number";
-        input.min=j===1?"0.001":"0.001";
-        input.step="any";
-        input.value=fmt(j===1?row.position:row.angle,4);
-        input.setAttribute("aria-label",j===1?"Bend line position "+(i+1):"Hit angle "+(i+1));
-
-        input.addEventListener("change",()=>{
-          const inputs=[...body.querySelectorAll("tr")];
-          const proposed=inputs.map((tr,index)=>{
-            const fields=tr.querySelectorAll("input");
-            return {
-              hit:index+1,
-              position:Number(fields[0].value),
-              angle:Number(fields[1].value)
-            };
-          });
-
-          const validPositions=proposed.every((r,index)=>
-            Number.isFinite(r.position)&&r.position>0&&
-            (index===0||r.position>proposed[index-1].position)
-          );
-          const validAngles=proposed.every(r=>
-            Number.isFinite(r.angle)&&r.angle>0&&r.angle<=45
-          );
-
-          if(!validPositions||!validAngles){
-            $("tableError").textContent="Positions must be positive and increasing. Each hit angle must be greater than 0° and not more than 45°.";
-            $("tableError").classList.remove("hidden");
-            renderTable();
-            return;
-          }
-
-          $("tableError").classList.add("hidden");
-          currentRows=proposed.map((r,index)=>({
-            ...r,
-            pitch:r.position-(index?proposed[index-1].position:0),
-            cumulative:0
-          }));
-          renderTable();
-          renderGeometry();
-          renderProcess();
-        });
-
-        td.appendChild(input);
-      }else{
-        td.textContent=value;
+      if (!Number.isFinite(value) || value < 0) {
+        alert("Enter a valid positive value.");
+        renderTable();
+        return;
       }
 
-      tr.appendChild(td);
+      if (type==="angle" && (value<=0 || value>45)) {
+        alert("Hit angle must be greater than 0 and up to 45 degrees.");
+        renderTable();
+        return;
+      }
+
+      currentRows[i][type] = value;
+      renderAll();
     });
-
-    body.appendChild(tr);
-  });
-}
-
-function renderGeometry(){
-  if(!lastCalculation)return;
-
-  const positions=currentRows.map(r=>r.position);
-  const maxPos=Math.max(...positions,1);
-  const start=45,end=655;
-  const scale=610/(maxPos*1.08);
-
-  let flat=`
-    <rect x="25" y="65" width="650" height="55" rx="4" fill="#e9edf2" stroke="#555"/>
-    <text x="350" y="30" text-anchor="middle" font-size="15" fill="#333">Flat sheet – bend-line layout</text>
-  `;
-
-  positions.forEach((p,i)=>{
-    const x=start+p*scale;
-    flat+=`<line x1="${x}" y1="53" x2="${x}" y2="132" stroke="#e53232" stroke-width="2"/>`;
-    flat+=`<text x="${x}" y="48" text-anchor="middle" font-size="10" fill="#c22">${i+1}</text>`;
   });
 
-  flat+=`<text x="25" y="153" font-size="11" fill="#333">Start edge</text>`;
-  flat+=`<text x="675" y="153" text-anchor="end" font-size="11" fill="#333">End direction →</text>`;
-  flat+=`<text x="350" y="178" text-anchor="middle" font-size="12" fill="#555">Schematic – positions from start edge</text>`;
-  $("flatSvg").innerHTML=flat;
+  const sum = currentRows.reduce((s,r)=>s+r.angle,0);
+  const difference = sum-targetAngle;
+  const status = $("angleStatus");
 
-  // Draw a circular arc from the current total hit-angle sum.
-  const totalDeg=currentRows.reduce((s,r)=>s+r.angle,0);
-  const angle=totalDeg*Math.PI/180;
-  const cx=350,cy=235;
-  const displayR=150;
-  const startA=-Math.PI/2-angle/2;
-  const endA=-Math.PI/2+angle/2;
-  const pts=[];
-  const samples=Math.max(60,currentRows.length*5);
-
-  for(let i=0;i<=samples;i++){
-    const a=startA+(endA-startA)*i/samples;
-    pts.push([
-      cx+displayR*Math.cos(a),
-      cy+displayR*Math.sin(a)
-    ]);
+  if (Math.abs(difference) <= 0.01) {
+    status.className = "status good";
+    status.textContent = "Hit angle total matches the required total angle.";
+  } else {
+    status.className = "status bad";
+    status.textContent = "Warning: Hit angle total differs from target by " + fmt(difference,3) + "°. Your edited sequence does not match the original target angle.";
   }
-
-  const path=pts.map((p,i)=>
-    (i?"L":"M")+p[0].toFixed(2)+","+p[1].toFixed(2)
-  ).join(" ");
-
-  let formed=`<path d="${path}" fill="none" stroke="#e53232" stroke-width="5" stroke-linecap="round"/>`;
-  formed+=`<circle cx="${cx}" cy="${cy}" r="3" fill="#333"/>`;
-  formed+=`<text x="350" y="25" text-anchor="middle" font-size="15" fill="#333">Theoretical formed profile</text>`;
-  formed+=`<text x="350" y="280" text-anchor="middle" font-size="12" fill="#555">Current total hit angle: ${fmt(totalDeg,3)}°</text>`;
-  $("formedSvg").innerHTML=formed;
 }
 
-function renderProcess(){
-  if(!lastCalculation)return;
-  const c=lastCalculation;
-  const currentTotal=currentRows.reduce((s,r)=>s+r.angle,0);
-  const currentLength=currentRows.reduce((s,r)=>s+r.pitch,0);
+function renderFlat() {
+  const svg = $("flatSvg");
+  if (!currentRows.length) return;
 
-  $("process").innerHTML=`
-    <b>1. Target geometry:</b><br>
-    Inside radius = ${fmt(c.Ri)} mm<br>
-    Required chord width = ${fmt(c.width)} mm<br>
-    Required rise = ${fmt(c.height)} mm<br>
-    Required inside arc length = ${fmt(c.arcLength)} mm<br><br>
+  const min = Math.min(...currentRows.map(r=>r.position));
+  const max = Math.max(...currentRows.map(r=>r.position));
+  const range = Math.max(max-min,1);
+  const left = 35, right = 565;
+  const y = 90;
+  const scale = (right-left)/range;
 
-    <b>2. Neutral radius:</b><br>
-    Rn = Ri + (K × T)<br>
-    Rn = ${fmt(c.Ri)} + (${fmt(c.K)} × ${fmt(c.T)}) = ${fmt(c.Rn)} mm<br><br>
+  let lines = `<rect x="${left}" y="55" width="${right-left}" height="65" fill="#f4f4f4" stroke="#777"/>`;
 
-    <b>3. Hit angle distribution:</b><br>
-    Number of hits = ${c.N}<br>
-    Target total angle = ${fmt(c.angleDeg,4)}°<br>
-    Current editable hit angle total = ${fmt(currentTotal,4)}°<br><br>
+  currentRows.forEach((r,i)=>{
+    const x = left+(r.position-min)*scale;
+    lines += `<line x1="${x}" y1="48" x2="${x}" y2="128" stroke="#e53232" stroke-width="2"/>`;
+    if (currentRows.length<=20 || i%Math.ceil(currentRows.length/20)===0) {
+      lines += `<text x="${x}" y="35" text-anchor="middle" font-size="10" fill="#333">${i+1}</text>`;
+    }
+  });
 
-    <b>4. Neutral pitch for each hit:</b><br>
-    Pitch = Rn × hit angle in radians<br>
-    Positions are cumulative neutral-layer pitches.<br><br>
+  lines += `<text x="300" y="150" text-anchor="middle" font-size="12" fill="#333">Bend line positions from first bend line</text>`;
+  lines += `<text x="300" y="170" text-anchor="middle" font-size="11" fill="#666">Layout span: ${fmt(max-min)} mm</text>`;
+  svg.innerHTML = lines;
+}
 
-    <b>5. Current theoretical neutral developed length:</b><br>
-    ${fmt(currentLength)} mm<br><br>
+function renderProfile() {
+  const svg = $("profileSvg");
+  if (!currentRows.length) return;
 
-    <b>6. Material:</b> ${c.material}<br>
-    <b>7. Thickness:</b> ${fmt(c.T)} mm<br>
-    <b>8. K-Factor:</b> ${fmt(c.K)}
+  let direction = 0;
+  let x = 40;
+  let y = 205;
+  const points = [[x,y]];
+  const segmentLength = 42;
+
+  currentRows.forEach(row=>{
+    direction += row.angle;
+    const rad = direction*Math.PI/180;
+    x += segmentLength*Math.cos(rad);
+    y -= segmentLength*Math.sin(rad);
+    points.push([x,y]);
+  });
+
+  const xs = points.map(p=>p[0]);
+  const ys = points.map(p=>p[1]);
+  const minX = Math.min(...xs), maxX = Math.max(...xs);
+  const minY = Math.min(...ys), maxY = Math.max(...ys);
+  const w = Math.max(maxX-minX,1), h = Math.max(maxY-minY,1);
+  const scale = Math.min(520/w,190/h,1.5);
+  const offsetX = 300-(minX+maxX)*scale/2;
+  const offsetY = 225-(minY+maxY)*scale/2;
+
+  const mapped = points.map(p=>[
+    offsetX+p[0]*scale,
+    offsetY+p[1]*scale
+  ]);
+
+  const polyline = mapped.map(p=>p.join(",")).join(" ");
+  let marks = "";
+
+  mapped.slice(1).forEach((p,i)=>{
+    marks += `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#e53232"/>`;
+  });
+
+  svg.innerHTML = `
+    <polyline points="${polyline}" fill="none" stroke="#e53232" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+    ${marks}
+    <text x="300" y="250" text-anchor="middle" font-size="11" fill="#666">Schematic segmented bumping profile - not to scale</text>
   `;
 }
 
-function restoreValues(){
-  if(!lastCalculation)return;
-  currentRows=lastCalculation.rows.map(r=>({...r}));
-  $("tableError").classList.add("hidden");
+function renderProcess() {
+  const sum = currentRows.reduce((s,r)=>s+r.angle,0);
+  const pitch = currentRows.length>1
+    ? currentRows.slice(1).reduce((s,r,i)=>s+r.position-currentRows[i].position,0)/(currentRows.length-1)
+    : 0;
+
+  $("process").innerHTML = `
+    <ol>
+      <li>Required inside radius = <b>${fmt(number("radius"))} mm</b>.</li>
+      <li>Material = <b>${$("material").value}</b>, thickness = <b>${fmt(number("thickness"))} mm</b>.</li>
+      <li>Neutral radius = Inside Radius + (K × Thickness) = <b>${fmt(neutralR)} mm</b>.</li>
+      <li>Required total angle = <b>${fmt(targetAngle,3)}°</b>.</li>
+      <li>Generated bump count = <b>${currentRows.length}</b>.</li>
+      <li>Current edited hit angle total = <b>${fmt(sum,3)}°</b>.</li>
+      <li>Average spacing between bend lines = <b>${fmt(pitch)} mm</b>.</li>
+    </ol>
+    <p><b>Pitch formula:</b> 2 × Neutral Radius × sin(Hit Angle ÷ 2)</p>
+    <p><b>Developed arc formula:</b> Neutral Radius × Total Angle (in radians)</p>
+  `;
+}
+
+function renderAll() {
+  renderResults();
   renderTable();
-  renderGeometry();
+  renderFlat();
+  renderProfile();
   renderProcess();
 }
 
-function verifyActual(){
-  if(!lastCalculation){
-    $("verification").textContent="Calculate the bumping geometry first.";
+function calculate() {
+  clearError();
+  const error = validateInputs();
+  if (error) {
+    showError(error);
     return;
   }
 
-  const c=lastCalculation;
-  const widthVal=$("actualWidth").value;
-  const heightVal=$("actualHeight").value;
-  const radiusVal=$("actualRadius").value;
-  const tol=Number($("sizeTolerance").value);
-  const rTol=Number($("radiusTolerance").value);
-
-  if(widthVal===""||heightVal===""){
-    $("verification").textContent="Please enter actual measured width and height.";
-    return;
+  try {
+    generateRows();
+  } catch (e) {
+    showError(e.message || "Calculation error.");
   }
-
-  const actualW=positive(widthVal,"Actual width");
-  const actualH=positive(heightVal,"Actual height");
-
-  if(!Number.isFinite(tol)||tol<0||!Number.isFinite(rTol)||rTol<0){
-    $("verification").textContent="Tolerance must be zero or greater.";
-    return;
-  }
-
-  const widthDiff=actualW-c.width;
-  const heightDiff=actualH-c.height;
-  const widthOK=Math.abs(widthDiff)<=tol;
-  const heightOK=Math.abs(heightDiff)<=tol;
-
-  let radiusHtml="";
-  let radiusOK=true;
-
-  if(radiusVal!==""){
-    const actualR=positive(radiusVal,"Actual radius");
-    const radiusDiff=actualR-c.Ri;
-    radiusOK=Math.abs(radiusDiff)<=rTol;
-    radiusHtml=`
-      <br>Actual inside radius: ${fmt(actualR)} mm
-      <br>Radius deviation: ${fmt(radiusDiff)} mm
-      <br>Radius check: <b>${radiusOK?"WITHIN TOLERANCE":"OUT OF TOLERANCE"}</b>
-    `;
-  }
-
-  const allOK=widthOK&&heightOK&&radiusOK;
-  $("verification").innerHTML=`
-    <div class="status ${allOK?"ok":"bad"}">${allOK?"SIZE CHECK: OK":"SIZE CHECK: NOT OK"}</div>
-    <br><br>
-    Required width: ${fmt(c.width)} mm
-    <br>Actual width: ${fmt(actualW)} mm
-    <br>Width deviation: ${fmt(widthDiff)} mm
-    <br>Width check: <b>${widthOK?"WITHIN TOLERANCE":"OUT OF TOLERANCE"}</b>
-    <br><br>
-    Required height: ${fmt(c.height)} mm
-    <br>Actual height: ${fmt(actualH)} mm
-    <br>Height deviation: ${fmt(heightDiff)} mm
-    <br>Height check: <b>${heightOK?"WITHIN TOLERANCE":"OUT OF TOLERANCE"}</b>
-    ${radiusHtml}
-    <br><br>
-    <small>Verification is based on the measurements and tolerances entered by the user. Confirm inspection method and drawing datum before accepting a manufactured part.</small>
-  `;
 }
 
-function downloadCSV(){
-  if(!lastCalculation)return;
+$("calculateBtn").addEventListener("click",calculate);
 
-  const rows=[
-    ["Hit No.","Bend Line Position (mm)","Distance from Previous (mm)","Hit Angle (deg)","Next Hit Angle (deg)","Cumulative Angle (deg)"]
-  ];
+$("recalculateBtn").addEventListener("click",()=>{
+  if (!calculated) return;
+  calculate();
+});
 
+$("resetBtn").addEventListener("click",()=>{
+  $("radius").value=200;
+  $("totalAngle").value=90;
+  $("material").value="MS";
+  $("thickness").value=4;
+  $("kfactor").value=0.33;
+  $("mode").value="auto";
+  $("pattern").value="uniform";
+  $("maxAngle").value=5;
+  $("hitCount").value=18;
+  $("startWeight").value=0.8;
+  $("increase").value=0.02;
+  $("actualRadius").value="";
+  $("tolerance").value=2;
+  $("verification").innerHTML="";
+  currentRows=[];
+  calculated=false;
+  updateMode();
+  clearError();
+
+  document.querySelectorAll(".result strong").forEach(el=>el.textContent="—");
+  $("bumpTable").querySelector("tbody").innerHTML='<tr><td colspan="6">Calculate to generate bend lines.</td></tr>';
+  $("angleStatus").innerHTML="";
+  $("process").textContent="Enter the parameters and click Calculate Bumping.";
+  $("flatSvg").innerHTML='<text x="300" y="90" text-anchor="middle" fill="#777">Calculate to view layout</text>';
+  $("profileSvg").innerHTML='<text x="300" y="130" text-anchor="middle" fill="#777">Calculate to view profile</text>';
+});
+
+$("verifyBtn").addEventListener("click",()=>{
+  const actual=number("actualRadius");
+  const tolerance=number("tolerance");
+  const target=number("radius");
+
+  if (!Number.isFinite(actual) || actual<=0) {
+    $("verification").className="status bad";
+    $("verification").textContent="Enter a valid measured inside radius.";
+    return;
+  }
+  if (!Number.isFinite(tolerance) || tolerance<0) {
+    $("verification").className="status bad";
+    $("verification").textContent="Enter a valid non-negative tolerance.";
+    return;
+  }
+
+  const difference=actual-target;
+  const pass=Math.abs(difference)<=tolerance;
+  $("verification").className="status "+(pass?"good":"bad");
+  $("verification").textContent=
+    (pass?"OK - Radius is within tolerance. ":"NOT OK - Radius is outside tolerance. ")+
+    "Target: "+fmt(target)+" mm | Actual: "+fmt(actual)+" mm | Difference: "+fmt(difference)+" mm";
+});
+
+$("csvBtn").addEventListener("click",()=>{
+  if (!currentRows.length) {
+    alert("Please calculate bumping first.");
+    return;
+  }
+
+  let csv="Hit No.,Bend Line Position (mm),Distance from Previous (mm),Hit Angle (deg),Next Hit Angle (deg),Cumulative Angle (deg)\n";
   let cumulative=0;
+
   currentRows.forEach((r,i)=>{
     cumulative+=r.angle;
-    const previous=i===0?0:currentRows[i-1].position;
-    const next=i<currentRows.length-1?currentRows[i+1].angle:"";
-    rows.push([
-      i+1,
-      fmt(r.position,4),
-      fmt(r.position-previous,4),
-      fmt(r.angle,4),
-      next===""?"":fmt(next,4),
-      fmt(cumulative,4)
-    ]);
+    const distance=i===0?0:r.position-currentRows[i-1].position;
+    const next=i===currentRows.length-1?"":currentRows[i+1].angle;
+    csv+=[i+1,r.position,distance,r.angle,next,cumulative].join(",")+"\n";
   });
 
-  const csv=rows.map(row=>row.map(value=>{
-    const s=String(value);
-    return `"${s.replace(/"/g,'""')}"`;
-  }).join(",")).join("\r\n");
-
-  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
   a.href=url;
-  a.download="mechqtools-bumping-bend-lines.csv";
+  a.download="MechQTools-Bumping-Calculation.csv";
   document.body.appendChild(a);
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-}
-
-$("calculateBtn").addEventListener("click",calculate);
-$("restoreBtn").addEventListener("click",restoreValues);
-$("verifyBtn").addEventListener("click",verifyActual);
-$("csvBtn").addEventListener("click",downloadCSV);
-
-$("resetBtn").addEventListener("click",()=>{
-  $("geometryMethod").value="widthRise";
-  $("targetWidth").value=500;
-  $("targetHeight").value=66.987;
-  $("targetRadius").value=500;
-  $("targetArcLength").value=785.398;
-  $("material").value="MS";
-  $("thickness").value=2;
-  $("kFactor").value=0.33;
-  $("maxBumpAngle").value=5;
-  $("bumpCount").value=18;
-  $("anglePattern").value="uniform";
-  $("progressiveStart").value=2;
-  $("progressiveStep").value=0.5;
-  $("actualWidth").value="";
-  $("actualHeight").value="";
-  $("actualRadius").value="";
-  $("sizeTolerance").value=1;
-  $("radiusTolerance").value=2;
-  document.querySelector('input[name="mode"][value="auto"]').checked=true;
-
-  lastCalculation=null;
-  currentRows=[];
-  $("output").classList.add("hidden");
-  $("tableError").classList.add("hidden");
-  clearError();
-  updateControls();
 });
-
-updateControls();
 </script>
+
 </body>
 </html>
