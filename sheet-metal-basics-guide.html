@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sheet Metal Basics Guide | MechQTools</title>
+<meta name="description" content="Learn sheet metal bending, bend allowance, bend deduction, K-factor, inside radius and flat pattern development with practical examples in English and Hindi.">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f8fa;
+    color: #222;
+    line-height: 1.7;
+}
+
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 700;
+    color: #e53232;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: #e53232;
+}
+
+.home-btn {
+    background: #e53232;
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.hero {
+    background: #fff;
+    padding: 55px 20px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.hero h1 {
+    font-size: 38px;
+    line-height: 1.25;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #e53232;
+}
+
+.hero p {
+    max-width: 800px;
+    margin: auto;
+    color: #666;
+    font-size: 17px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 35px 20px 55px;
+}
+
+.intro-box {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-left: 4px solid #e53232;
+    border-radius: 8px;
+    padding: 22px;
+    margin-bottom: 28px;
+}
+
+.section {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 9px;
+    padding: 25px;
+    margin-bottom: 22px;
+    scroll-margin-top: 100px;
+}
+
+.section h2 {
+    font-size: 25px;
+    margin-bottom: 14px;
+    line-height: 1.35;
+}
+
+.section h3 {
+    font-size: 19px;
+    margin: 20px 0 8px;
+}
+
+.section p {
+    margin-bottom: 12px;
+    color: #444;
+}
+
+.hindi {
+    background: #fff7f7;
+    border-left: 3px solid #e53232;
+    padding: 12px 15px;
+    margin: 12px 0 18px;
+    border-radius: 4px;
+    color: #444;
+}
+
+.formula {
+    background: #f4f5f7;
+    border: 1px solid #e3e5e8;
+    border-radius: 7px;
+    padding: 16px;
+    margin: 14px 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.formula small {
+    display: block;
+    font-size: 13px;
+    font-weight: normal;
+    color: #666;
+    margin-top: 6px;
+}
+
+.example {
+    background: #f8fbff;
+    border: 1px solid #dce8f5;
+    border-radius: 7px;
+    padding: 18px;
+    margin: 15px 0;
+}
+
+.example h3 {
+    margin-top: 0;
+}
+
+.result {
+    color: #16723b;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.note {
+    background: #fff9e9;
+    border-left: 4px solid #e2a52b;
+    padding: 14px 16px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.danger {
+    background: #fff4f4;
+    border-left: 4px solid #e53232;
+    padding: 14px 16px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 11px 13px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #f2f3f5;
+}
+
+.diagram {
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    border-radius: 7px;
+    margin: 18px 0;
+    text-align: center;
+}
+
+.diagram svg {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+}
+
+.toc {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 9px;
+    padding: 22px 25px;
+    margin-bottom: 25px;
+}
+
+.toc h2 {
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.toc ol {
+    padding-left: 22px;
+    columns: 2;
+}
+
+.toc li {
+    margin: 5px 0;
+}
+
+.toc a {
+    color: #e53232;
+    text-decoration: none;
+}
+
+.toc a:hover {
+    text-decoration: underline;
+}
+
+ul, ol {
+    padding-left: 23px;
+    margin: 10px 0 15px;
+}
+
+li {
+    margin-bottom: 7px;
+}
+
+footer {
+    background: #151515;
+    color: #fff;
+    margin-top: 25px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 35px;
+}
+
+.footer-logo {
+    color: #e53232;
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.footer-text {
+    color: #aaa;
+    font-size: 14px;
+    max-width: 450px;
+}
+
+.footer-column h4 {
+    margin-bottom: 12px;
+}
+
+.footer-column a {
+    display: block;
+    color: #aaa;
+    text-decoration: none;
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+
+.footer-column a:hover {
+    color: #fff;
+}
+
+.copyright {
+    border-top: 1px solid #333;
+    text-align: center;
+    padding: 17px;
+    color: #888;
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    html {
+        scroll-padding-top: 130px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-links {
+        justify-content: center;
+        gap: 10px 15px;
+    }
+
+    .nav-links a {
+        font-size: 13px;
+    }
+
+    .hero {
+        padding: 40px 17px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 22px 13px 40px;
+    }
+
+    .section {
+        padding: 19px;
+        scroll-margin-top: 130px;
+    }
+
+    .section h2 {
+        font-size: 22px;
+    }
+
+    .toc {
+        padding: 18px;
+    }
+
+    .toc ol {
+        columns: 1;
+    }
+
+    .formula {
+        font-size: 16px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 32px 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+        <a href="index.html" class="logo">MechQTools</a>
+
+        <ul class="nav-links">
+            <li><a href="index.html#mechanical-tools">Mechanical</a></li>
+            <li><a href="index.html#quality-tools">Quality</a></li>
+            <li><a href="index.html#templates">Templates</a></li>
+            <li><a href="index.html#guides-section">Guides</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html" class="home-btn">Home</a></li>
+        </ul>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Sheet Metal <span>Basics Guide</span></h1>
+    <p>
+        Understand sheet metal bending, bend allowance, bend deduction,
+        K-factor, inside radius and flat pattern development with practical examples.
+    </p>
+</section>
+
+<main class="container">
+
+<div class="intro-box">
+    <h2>About This Guide</h2>
+    <p>
+        This guide explains the basic concepts used in sheet metal bending
+        and development. It is designed for mechanical engineers, quality
+        engineers, production engineers and sheet metal operators.
+    </p>
+    <div class="hindi">
+        <strong>हिंदी में:</strong> इस गाइड में Sheet Metal Bending और
+        Development के जरूरी concepts को आसान भाषा और practical examples
+        के साथ समझाया गया है।
+    </div>
+</div>
+
+<nav class="toc">
+    <h2>Topics Covered / विषय सूची</h2>
+    <ol>
+        <li><a href="#basics">Sheet Metal Basics</a></li>
+        <li><a href="#bend-radius">Inside Bend Radius</a></li>
+        <li><a href="#bend-allowance">Bend Allowance</a></li>
+        <li><a href="#k-factor">K-Factor</a></li>
+        <li><a href="#setback">Outside Setback</a></li>
+        <li><a href="#bend-deduction">Bend Deduction</a></li>
+        <li><a href="#development">Flat Pattern Development</a></li>
+        <li><a href="#multiple-bends">Multiple Bend Calculation</a></li>
+        <li><a href="#channel">U-Channel and C-Channel</a></li>
+        <li><a href="#process">Bending Process</a></li>
+        <li><a href="#mistakes">Common Mistakes</a></li>
+        <li><a href="#checklist">Inspection Checklist</a></li>
+    </ol>
+</nav>
+
+<section class="section" id="basics">
+    <h2>1. What is Sheet Metal Bending?</h2>
+
+    <p>
+        Sheet metal bending is a manufacturing process in which a flat
+        metal sheet is deformed to obtain a required angle or shape.
+        Common machines include press brakes and bending machines.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> Sheet Metal Bending में एक flat sheet को
+        press brake या bending machine की मदद से मोड़कर required shape,
+        angle और dimensions में बदला जाता है।
+    </div>
+
+    <h3>Common Sheet Metal Parameters</h3>
+    <div class="table-wrap">
+        <table>
+            <tr><th>Parameter</th><th>Meaning</th></tr>
+            <tr><td>Thickness (T)</td><td>Sheet की मोटाई</td></tr>
+            <tr><td>Inside Radius (R)</td><td>Bend के अंदर की radius</td></tr>
+            <tr><td>Bend Angle (A)</td><td>Sheet की direction में हुआ angular change</td></tr>
+            <tr><td>K-Factor (K)</td><td>Thickness के अनुसार neutral axis की position</td></tr>
+            <tr><td>Bend Allowance (BA)</td><td>Bend area में neutral axis की developed length</td></tr>
+            <tr><td>Bend Deduction (BD)</td><td>Outside dimensions से flat length निकालने के लिए घटाई जाने वाली value</td></tr>
+        </table>
+    </div>
+
+    <div class="note">
+        <strong>Important:</strong> इस guide में bend angle का मतलब sheet की
+        direction में change है। उदाहरण के लिए, 90° bend का मतलब 90° का
+        direction change है। यह अंदर का included angle नहीं है।
+    </div>
+</section>
+
+<section class="section" id="bend-radius">
+    <h2>2. Inside Bend Radius</h2>
+
+    <p>
+        Inside bend radius is the radius measured on the inner surface
+        of the bent sheet.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> जब sheet bend होती है, तो bend के अंदर
+        जो गोलाई बनती है उसे Inside Radius कहते हैं।
+    </div>
+
+    <div class="diagram">
+        <svg viewBox="0 0 620 260" role="img" aria-label="Inside bend radius illustration">
+            <path d="M100 65 H300 A95 95 0 0 1 395 160 V220"
+                  fill="none" stroke="#e53232" stroke-width="12"
+                  stroke-linecap="round"/>
+            <path d="M100 115 H300 A45 45 0 0 1 345 160 V220"
+                  fill="none" stroke="#555" stroke-width="3"
+                  stroke-linecap="round"/>
+            <path d="M300 160 H395" stroke="#777" stroke-width="2"
+                  stroke-dasharray="5 5"/>
+            <path d="M300 160 L345 160" stroke="#16723b" stroke-width="3"/>
+            <text x="110" y="45" font-size="17" fill="#222">Sheet outer surface</text>
+            <text x="110" y="145" font-size="16" fill="#555">Inner surface</text>
+            <text x="310" y="148" font-size="15" fill="#16723b">R</text>
+            <text x="410" y="175" font-size="15" fill="#222">Bend</text>
+            <text x="410" y="198" font-size="15" fill="#222">area</text>
+        </svg>
+        <p><small>Illustrative bend-radius diagram; not to scale.</small></p>
+    </div>
+
+    <h3>Factors Affecting Inside Radius</h3>
+    <ul>
+        <li>Material type and grade.</li>
+        <li>Sheet thickness.</li>
+        <li>Punch nose radius.</li>
+        <li>V-die opening.</li>
+        <li>Bending method and machine setup.</li>
+    </ul>
+
+    <div class="note">
+        In air bending, the actual inside radius depends on material,
+        thickness, tooling and process conditions. Do not assume that
+        the punch radius or V-die opening alone guarantees the final radius.
+    </div>
+</section>
+
+<section class="section" id="bend-allowance">
+    <h2>3. Bend Allowance (BA)</h2>
+
+    <p>
+        Bend Allowance is the length of the neutral axis along the bend.
+        It represents the material length consumed in the curved bend area.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> Bend के curved portion में neutral axis
+        जितनी length लेती है, उसे Bend Allowance कहते हैं। Flat pattern
+        निकालने में इसका उपयोग होता है।
+    </div>
+
+    <div class="formula">
+        BA = (π / 180) × A × (R + K × T)
+        <small>A = Bend angle in degrees</small>
+    </div>
+
+    <h3>Required Inputs</h3>
+    <ul>
+        <li>A = Bend angle in degrees</li>
+        <li>R = Inside bend radius</li>
+        <li>T = Sheet thickness</li>
+        <li>K = K-Factor</li>
+    </ul>
+
+    <div class="example">
+        <h3>Practical Example</h3>
+        <p><strong>Given:</strong></p>
+        <ul>
+            <li>Material: Mild Steel (MS)</li>
+            <li>Thickness (T): 2 mm</li>
+            <li>Inside Radius (R): 3 mm</li>
+            <li>K-Factor: 0.33</li>
+            <li>Bend Angle (A): 90°</li>
+        </ul>
+
+        <p><strong>Calculation:</strong></p>
+        <p>BA = (3.1416 / 180) × 90 × (3 + 0.33 × 2)</p>
+        <p>BA = 1.5708 × (3 + 0.66)</p>
+        <p class="result">Bend Allowance = 5.75 mm (approx.)</p>
+    </div>
+
+    <div class="note">
+        BA is calculated along the neutral axis. The correct K-Factor should
+        be determined from material and actual bending conditions.
+    </div>
+</section>
+
+<section class="section" id="k-factor">
+    <h2>4. What is K-Factor?</h2>
+
+    <p>
+        K-Factor is the ratio of the distance from the inside surface
+        to the neutral axis divided by the sheet thickness.
+    </p>
+
+    <div class="formula">
+        K = t<sub>n</sub> / T
+        <small>tₙ = Distance from inside surface to neutral axis</small>
+    </div>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> Bending के समय sheet के अंदर का material
+        compress होता है और बाहर का material stretch होता है। इनके बीच
+        एक neutral axis होती है। K-Factor बताता है कि neutral axis,
+        अंदर की surface से thickness के कितने हिस्से पर है।
+    </div>
+
+    <div class="diagram">
+        <svg viewBox="0 0 620 220" role="img" aria-label="K factor neutral axis illustration">
+            <rect x="90" y="45" width="420" height="125"
+                  fill="#f4f5f7" stroke="#555" stroke-width="2"/>
+            <line x1="90" y1="45" x2="510" y2="45"
+                  stroke="#e53232" stroke-width="5"/>
+            <line x1="90" y1="170" x2="510" y2="170"
+                  stroke="#e53232" stroke-width="5"/>
+            <line x1="90" y1="125" x2="510" y2="125"
+                  stroke="#16723b" stroke-width="3"
+                  stroke-dasharray="8 5"/>
+            <text x="520" y="49" font-size="14" fill="#e53232">Outer</text>
+            <text x="520" y="129" font-size="14" fill="#16723b">Neutral axis</text>
+            <text x="520" y="174" font-size="14" fill="#e53232">Inner</text>
+            <text x="105" y="105" font-size="16" fill="#222">Sheet thickness (T)</text>
+            <text x="105" y="147" font-size="13" fill="#16723b">tₙ = K × T</text>
+        </svg>
+        <p><small>Schematic explanation of neutral axis and K-Factor.</small></p>
+    </div>
+
+    <h3>Important Points</h3>
+    <ul>
+        <li>K-Factor is not the same for every material and bending setup.</li>
+        <li>It depends on material, thickness, radius and bending process.</li>
+        <li>Use a verified value from your process, tooling trials or validated calculator.</li>
+    </ul>
+
+    <div class="danger">
+        Do not treat a single K-Factor value as universal. A wrong K-Factor
+        can cause incorrect flat pattern dimensions.
+    </div>
+</section>
+
+<section class="section" id="setback">
+    <h2>5. Outside Setback (OSSB)</h2>
+
+    <p>
+        Outside Setback is the distance from the theoretical sharp corner
+        to the bend tangent point, measured along the outside flange.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> अगर bend को एक sharp corner मानें, तो
+        उस काल्पनिक corner से bend के tangent point तक की दूरी
+        Outside Setback कहलाती है।
+    </div>
+
+    <div class="formula">
+        OSSB = (R + T) × tan(A / 2)
+        <small>A = Bend angle / direction change</small>
+    </div>
+
+    <div class="example">
+        <h3>Example: 90° Bend</h3>
+        <p>Inside Radius = 3 mm</p>
+        <p>Thickness = 2 mm</p>
+        <p>Angle = 90°</p>
+        <p>OSSB = (3 + 2) × tan(45°)</p>
+        <p class="result">Outside Setback = 5 mm</p>
+    </div>
+</section>
+
+<section class="section" id="bend-deduction">
+    <h2>6. Bend Deduction (BD)</h2>
+
+    <p>
+        Bend Deduction is the amount subtracted from the sum of outside
+        flange dimensions to obtain the flat pattern length.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> सभी outside flange dimensions को जोड़ने
+        के बाद flat length निकालने के लिए जितनी value घटाई जाती है,
+        उसे Bend Deduction कहते हैं।
+    </div>
+
+    <div class="formula">
+        BD = 2 × OSSB − BA
+    </div>
+
+    <div class="example">
+        <h3>Practical Example</h3>
+        <p>Inside Radius = 3 mm</p>
+        <p>Thickness = 2 mm</p>
+        <p>K-Factor = 0.33</p>
+        <p>Bend Angle = 90°</p>
+        <p>OSSB = 5 mm</p>
+        <p>BA = 5.75 mm (approx.)</p>
+        <p>BD = (2 × 5) − 5.75</p>
+        <p class="result">Bend Deduction = 4.25 mm (approx.)</p>
+    </div>
+</section>
+
+<section class="section" id="development">
+    <h2>7. Flat Pattern / Developed Length</h2>
+
+    <p>
+        Flat pattern is the required length of the sheet before bending.
+        For a part dimensioned using outside flange dimensions, the
+        bend deductions are subtracted from their total.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> Bending से पहले sheet को जिस flat length
+        में काटना होता है, उसे Developed Length या Flat Pattern Length कहते हैं।
+    </div>
+
+    <div class="formula">
+        Flat Length = Sum of Outside Dimensions − Sum of Bend Deductions
+    </div>
+
+    <div class="example">
+        <h3>Example: Two Flanges with One 90° Bend</h3>
+        <p>Outside Dimension 1 = 100 mm</p>
+        <p>Outside Dimension 2 = 100 mm</p>
+        <p>Bend Deduction = 4.25 mm</p>
+        <p>Flat Length = 100 + 100 − 4.25</p>
+        <p class="result">Flat Length = 195.75 mm</p>
+    </div>
+
+    <div class="note">
+        This formula assumes the supplied dimensions are outside dimensions
+        measured to the theoretical sharp corner. If dimensions are given
+        to tangent points, inside surfaces or by another drawing convention,
+        the calculation must be adjusted.
+    </div>
+</section>
+
+<section class="section" id="multiple-bends">
+    <h2>8. Multiple Bend Calculation</h2>
+
+    <p>
+        When a component has more than one bend, calculate the bend
+        deduction for each bend and subtract their total from the
+        sum of the outside dimensions.
+    </p>
+
+    <div class="formula">
+        Flat Length = Total Outside Dimensions − (BD₁ + BD₂ + BD₃ + ...)
+    </div>
+
+    <div class="example">
+        <h3>Example: Three Flanges and Two 90° Bends</h3>
+        <p>Outside dimensions = 50 + 100 + 50 mm</p>
+        <p>BD for Bend 1 = 4.25 mm</p>
+        <p>BD for Bend 2 = 4.25 mm</p>
+        <p>Flat Length = 200 − (4.25 + 4.25)</p>
+        <p class="result">Flat Length = 191.50 mm</p>
+    </div>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> अगर component में दो या अधिक bends हैं,
+        तो हर bend का BD अलग निकालें। फिर सभी BD को जोड़कर total
+        outside dimensions से घटाएँ।
+    </div>
+
+    <div class="danger">
+        Different bends may have different radii, angles or process conditions.
+        Do not use one BD value for every bend unless the bend conditions
+        are actually the same.
+    </div>
+</section>
+
+<section class="section" id="channel">
+    <h2>9. U-Channel and C-Channel Development</h2>
+
+    <p>
+        U-Channel and C-Channel parts are made by bending a flat blank
+        at multiple locations. Their developed length depends on the
+        straight flange dimensions and the bend deductions.
+    </p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 620 230" role="img" aria-label="U channel cross section">
+            <path d="M150 45 V175 H470 V45"
+                  fill="none" stroke="#e53232" stroke-width="9"
+                  stroke-linejoin="round"/>
+            <text x="90" y="105" font-size="17" fill="#222">Left flange</text>
+            <text x="480" y="105" font-size="17" fill="#222">Right flange</text>
+            <text x="260" y="205" font-size="17" fill="#222">Base</text>
+            <text x="235" y="25" font-size="15" fill="#666">U-Channel</text>
+        </svg>
+        <p><small>Illustrative U-channel cross section.</small></p>
+    </div>
+
+    <h3>Basic Development Method</h3>
+    <ol>
+        <li>Read the drawing and identify all outside dimensions.</li>
+        <li>Identify the number of bends.</li>
+        <li>Confirm inside radius and sheet thickness for every bend.</li>
+        <li>Calculate BA, OSSB and BD for each bend.</li>
+        <li>Add the outside dimensions.</li>
+        <li>Subtract the total bend deductions.</li>
+        <li>Verify the blank by trial bending and inspection.</li>
+    </ol>
+
+    <div class="formula">
+        Developed Length = Total Outside Dimensions − Total BD
+    </div>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> U-Channel या C-Channel की development
+        में सभी flanges और base की drawing dimensions को सही तरीके से
+        पहचानना जरूरी है। हर bend का BD निकालकर total dimensions से घटाएँ।
+    </div>
+</section>
+
+<section class="section" id="process">
+    <h2>10. Sheet Metal Bending Process</h2>
+
+    <h3>Typical Press Brake Workflow</h3>
+    <ol>
+        <li>Read the engineering drawing.</li>
+        <li>Confirm material grade and thickness.</li>
+        <li>Confirm punch and die selection.</li>
+        <li>Check required inside bend radius.</li>
+        <li>Calculate flat pattern dimensions.</li>
+        <li>Mark bend lines on the blank.</li>
+        <li>Set the machine and back gauge.</li>
+        <li>Perform a trial bend.</li>
+        <li>Inspect angle, radius and flange dimensions.</li>
+        <li>Adjust the process if required and approve the final part.</li>
+    </ol>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> पहले drawing और material verify करें।
+        फिर tooling select करके flat pattern और bend line निकालें।
+        Trial bend के बाद angle, radius और dimensions check करें।
+        सही result मिलने पर production शुरू करें।
+    </div>
+</section>
+
+<section class="section" id="mistakes">
+    <h2>11. Common Sheet Metal Bending Mistakes</h2>
+
+    <div class="table-wrap">
+        <table>
+            <tr><th>Common Mistake</th><th>Possible Result</th></tr>
+            <tr><td>Wrong K-Factor</td><td>Incorrect developed length</td></tr>
+            <tr><td>Wrong inside radius</td><td>Radius mismatch and dimension variation</td></tr>
+            <tr><td>Wrong bend angle</td><td>Incorrect flange dimensions</td></tr>
+            <tr><td>Incorrect bend direction</td><td>Part geometry mismatch</td></tr>
+            <tr><td>Wrong bend sequence</td><td>Tool interference or incorrect shape</td></tr>
+            <tr><td>Incorrect material thickness</td><td>Development and tooling mismatch</td></tr>
+            <tr><td>No trial inspection</td><td>Repeated production defects</td></tr>
+        </table>
+    </div>
+</section>
+
+<section class="section" id="checklist">
+    <h2>12. Sheet Metal Inspection Checklist</h2>
+
+    <p>Use this checklist during first-piece or process inspection.</p>
+
+    <ul>
+        <li>Material grade verified.</li>
+        <li>Sheet thickness checked.</li>
+        <li>Blank size checked.</li>
+        <li>Bend angle checked.</li>
+        <li>Inside radius checked.</li>
+        <li>Flange dimensions checked.</li>
+        <li>Overall dimensions checked.</li>
+        <li>Part orientation and bend direction checked.</li>
+        <li>Drawing revision verified.</li>
+        <li>Inspection results recorded.</li>
+    </ul>
+
+    <div class="note">
+        Always follow the approved engineering drawing, customer
+        specifications and applicable inspection requirements.
+    </div>
+</section>
+
+<section class="section">
+    <h2>Important Engineering Note</h2>
+    <p>
+        The formulas in this guide are standard geometric calculation
+        methods for common sheet metal bends. Actual production results
+        can vary because of material properties, tooling, machine setup,
+        springback and bending method.
+    </p>
+
+    <div class="hindi">
+        <strong>हिंदी में:</strong> Formula से मिलने वाला result calculation
+        के लिए है। Actual production में material, tooling, machine setting
+        और springback के कारण थोड़ा अंतर हो सकता है। इसलिए trial bend और
+        inspection जरूरी हैं।
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <div class="footer-logo">MechQTools</div>
+            <p class="footer-text">
+                Engineering &amp; Quality Tools for Professionals.
+                Free calculators, practical engineering resources and
+                professional templates.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="index.html#mechanical-tools">Mechanical Tools</a>
+            <a href="index.html#quality-tools">Quality Tools</a>
+            <a href="index.html#templates">Templates</a>
+        </div>
+
+        <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="index.html#guides-section">Engineering Guides</a>
+            <a href="index.html#about">About</a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        © 2026 MechQTools. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>
