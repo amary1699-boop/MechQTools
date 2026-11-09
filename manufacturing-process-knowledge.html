@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manufacturing Process Knowledge - MechQTools</title>
+<meta name="description" content="Learn fabrication, welding and painting processes, defects, inspection methods and quality engineer interview questions.">
+
+<style>
+:root {
+    --primary: #e53232;
+    --dark: #222;
+    --text: #333;
+    --muted: #666;
+    --bg: #f5f6f8;
+    --border: #e2e2e2;
+    --white: #fff;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+}
+header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+.logo {
+    color: var(--primary);
+    font-size: 27px;
+    font-weight: bold;
+    text-decoration: none;
+}
+nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+nav a:hover { color: var(--primary); }
+.home-btn {
+    background: var(--primary);
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
+.hero {
+    background: linear-gradient(135deg, #fff, #ffe9e9);
+    padding: 40px 20px;
+    border-bottom: 1px solid var(--border);
+}
+.hero-inner, .container {
+    max-width: 1200px;
+    margin: auto;
+}
+.hero h1 {
+    color: var(--primary);
+    font-size: clamp(28px, 5vw, 42px);
+    margin: 0 0 10px;
+}
+.hero p {
+    max-width: 780px;
+    margin: 0;
+    font-size: 17px;
+}
+.breadcrumb {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--muted);
+}
+.breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+}
+.container { padding: 28px 20px 40px; }
+.section { margin-bottom: 30px; }
+.section h2 {
+    color: var(--primary);
+    font-size: 26px;
+    margin: 0 0 15px;
+}
+.section h3 { margin-top: 0; }
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.035);
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+.topic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+.topic {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 16px;
+}
+.topic h3 { color: var(--primary); }
+.hindi {
+    background: #fff5ef;
+    border-left: 4px solid var(--primary);
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin-top: 13px;
+}
+.hindi strong { color: #bd2222; }
+.badge {
+    display: inline-block;
+    background: #fff0f0;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 4px 9px;
+    margin-bottom: 8px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 550px;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+th { background: #fff0f0; color: #a51d1d; }
+.table-wrap { overflow-x: auto; }
+.question {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+}
+.question:last-child { border-bottom: 0; }
+.question h3 { font-size: 17px; margin-bottom: 6px; }
+.answer { margin: 5px 0; }
+.answer strong { color: var(--primary); }
+.callout {
+    background: #fff0f0;
+    border: 1px solid #ffd0d0;
+    padding: 16px;
+    border-radius: 8px;
+}
+footer {
+    background: #202020;
+    color: white;
+    padding: 28px 20px 15px;
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+footer h3 { color: var(--primary); }
+footer a {
+    color: #eee;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+footer a:hover { color: #ff7777; }
+.copyright {
+    text-align: center;
+    border-top: 1px solid #444;
+    margin-top: 22px;
+    padding-top: 14px;
+    color: #ccc;
+    font-size: 13px;
+}
+@media(max-width: 800px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .grid { grid-template-columns: 1fr; }
+    .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media(max-width: 500px) {
+    .topic-grid, .footer-inner { grid-template-columns: 1fr; }
+    .container { padding: 20px 14px; }
+    .card { padding: 16px; }
+    nav { gap: 10px; font-size: 14px; }
+}
+@media print {
+    header, footer, .home-btn { display: none !important; }
+    body { background: white; }
+    .container { max-width: 100%; }
+    .card, .topic { break-inside: avoid; box-shadow: none; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="logo">MechQTools</a>
+        <nav>
+            <a href="index.html#mechanical-tools">Mechanical</a>
+            <a href="index.html#quality-tools">Quality</a>
+            <a href="index.html#templates">Templates</a>
+            <a href="index.html#guides-section">Guides</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html" class="home-btn">Home</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-inner">
+        <h1>Manufacturing Process Knowledge</h1>
+        <p>
+            Practical knowledge of Fabrication, Welding and Painting
+            for Mechanical and Quality Engineers.
+        </p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> &nbsp;›&nbsp;
+            <a href="index.html#guides-section">Guides</a> &nbsp;›&nbsp;
+            Manufacturing Process Knowledge
+        </div>
+    </div>
+</section>
+
+<main class="container">
+
+<section class="section">
+    <div class="card">
+        <h2>About This Guide</h2>
+        <p>
+            This guide covers common manufacturing processes and their
+            quality inspection requirements. It is useful for Quality
+            Engineers, Production Engineers and Mechanical Engineers.
+        </p>
+        <div class="hindi">
+            <strong>Hindi:</strong> Is guide mein fabrication, welding aur
+            painting ki basic se practical knowledge di gayi hai.
+            Saath mein defects, inspection points aur interview questions bhi hain.
+        </div>
+    </div>
+</section>
+
+<!-- FABRICATION -->
+<section class="section" id="fabrication">
+    <h2>1. Fabrication Knowledge</h2>
+
+    <div class="card">
+        <h3>What is Fabrication?</h3>
+        <p>
+            Fabrication is the process of converting raw material such as
+            sheet, plate, pipe and structural sections into a finished
+            component or assembly through cutting, forming, fitting and joining.
+        </p>
+        <div class="hindi">
+            <strong>Hindi:</strong> Raw material ko cutting, bending, forming,
+            fitting aur joining karke required component banana fabrication hai.
+        </div>
+    </div>
+
+    <div class="topic-grid">
+        <div class="topic">
+            <h3>Cutting</h3>
+            <p>Shearing, laser cutting, plasma cutting, gas cutting and sawing.</p>
+            <p><strong>Check:</strong> Length, width, profile, burr and edge quality.</p>
+        </div>
+        <div class="topic">
+            <h3>Bending</h3>
+            <p>Press brake bending, V-bending, U-bending and air bending.</p>
+            <p><strong>Check:</strong> Angle, flange length, radius and springback.</p>
+        </div>
+        <div class="topic">
+            <h3>Rolling</h3>
+            <p>Sheet or plate is passed through rollers to make curved shapes.</p>
+            <p><strong>Check:</strong> Diameter, radius, roundness and straightness.</p>
+        </div>
+        <div class="topic">
+            <h3>Drilling</h3>
+            <p>Making holes using a drill machine or CNC equipment.</p>
+            <p><strong>Check:</strong> Hole diameter, location, burr and pitch.</p>
+        </div>
+        <div class="topic">
+            <h3>Fit-up</h3>
+            <p>Positioning and aligning components before welding.</p>
+            <p><strong>Check:</strong> Root gap, alignment, squareness and tack weld.</p>
+        </div>
+        <div class="topic">
+            <h3>Grinding</h3>
+            <p>Removing sharp edges, excess weld metal or surface irregularities.</p>
+            <p><strong>Check:</strong> Surface damage, undercut and excessive material removal.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Common Fabrication Defects</h3>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Defect</th><th>Meaning</th><th>Quality Check</th></tr>
+                <tr><td>Dimension mismatch</td><td>Size differs from drawing</td><td>Measure dimensions</td></tr>
+                <tr><td>Distortion</td><td>Unwanted deformation</td><td>Check flatness and alignment</td></tr>
+                <tr><td>Burr</td><td>Sharp unwanted edge</td><td>Visual and touch-safe inspection</td></tr>
+                <tr><td>Crack</td><td>Material separation</td><td>Visual or suitable NDT</td></tr>
+                <tr><td>Wrong hole position</td><td>Hole location mismatch</td><td>Check coordinates and datum</td></tr>
+                <tr><td>Wrong bend angle</td><td>Formed angle differs from drawing</td><td>Angle measurement</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Fabrication Inspection Checklist</h3>
+        <ul>
+            <li>Verify material grade and thickness.</li>
+            <li>Check drawing number and revision.</li>
+            <li>Inspect cutting dimensions and profile.</li>
+            <li>Check bend angle, radius and flange dimensions.</li>
+            <li>Verify hole size and hole location.</li>
+            <li>Check assembly alignment and squareness.</li>
+            <li>Inspect sharp edges, cracks and visible damage.</li>
+            <li>Record inspection results.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- WELDING -->
+<section class="section" id="welding">
+    <h2>2. Welding Knowledge</h2>
+
+    <div class="card">
+        <h3>What is Welding?</h3>
+        <p>
+            Welding is a joining process in which two or more materials
+            are joined using heat, pressure or both, with or without
+            filler material.
+        </p>
+        <div class="hindi">
+            <strong>Hindi:</strong> Heat, pressure ya dono ki help se do metal
+            parts ko permanently join karna welding hai.
+        </div>
+    </div>
+
+    <div class="topic-grid">
+        <div class="topic">
+            <h3>Arc Welding</h3>
+            <p>Uses an electric arc to generate heat for joining metals.</p>
+            <p><strong>Common name:</strong> SMAW / Manual Metal Arc.</p>
+        </div>
+        <div class="topic">
+            <h3>MIG / MAG</h3>
+            <p>Uses a continuously fed wire electrode and shielding gas.</p>
+            <p><strong>Use:</strong> Common fabrication and production work.</p>
+        </div>
+        <div class="topic">
+            <h3>TIG Welding</h3>
+            <p>Uses a non-consumable tungsten electrode.</p>
+            <p><strong>Use:</strong> Controlled, clean welding applications.</p>
+        </div>
+        <div class="topic">
+            <h3>Spot Welding</h3>
+            <p>Resistance welding that joins overlapping sheet metal at points.</p>
+            <p><strong>Check:</strong> Weld nugget and joint requirements.</p>
+        </div>
+        <div class="topic">
+            <h3>Submerged Arc</h3>
+            <p>Arc is covered by granular flux during welding.</p>
+            <p><strong>Use:</strong> Suitable heavy fabrication applications.</p>
+        </div>
+        <div class="topic">
+            <h3>Gas Welding</h3>
+            <p>Uses a fuel gas and oxygen flame as the heat source.</p>
+            <p><strong>Use:</strong> Selected repair and joining applications.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Important Welding Terms</h3>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Term</th><th>Meaning</th></tr>
+                <tr><td>Weld Bead</td><td>Deposited weld metal.</td></tr>
+                <tr><td>Leg Length</td><td>Distance along a fillet weld leg from root to toe.</td></tr>
+                <tr><td>Throat Thickness</td><td>Shortest distance from root to the face of a fillet weld.</td></tr>
+                <tr><td>Root Gap</td><td>Specified separation between joint members at the root.</td></tr>
+                <tr><td>WPS</td><td>Welding Procedure Specification.</td></tr>
+                <tr><td>PQR</td><td>Procedure Qualification Record.</td></tr>
+                <tr><td>Welder Qualification</td><td>Evidence of a welder's qualification for a defined scope.</td></tr>
+                <tr><td>HAZ</td><td>Heat Affected Zone.</td></tr>
+                <tr><td>Penetration</td><td>Depth of fusion into the joint root.</td></tr>
+            </table>
+        </div>
+        <div class="hindi">
+            <strong>Hindi:</strong> Welding drawing aur specification mein weld
+            size, length, location, joint type aur acceptance criteria ko check
+            karna important hai.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Common Welding Defects</h3>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Defect</th><th>Meaning</th><th>Inspection</th></tr>
+                <tr><td>Porosity</td><td>Gas cavities in weld metal</td><td>Visual / applicable NDT</td></tr>
+                <tr><td>Undercut</td><td>Groove at weld toe or root</td><td>Visual and profile check</td></tr>
+                <tr><td>Crack</td><td>Fracture in weld or base metal</td><td>Visual / suitable NDT</td></tr>
+                <tr><td>Lack of Fusion</td><td>Incomplete fusion between weld and base metal</td><td>Suitable NDT or test</td></tr>
+                <tr><td>Incomplete Penetration</td><td>Insufficient penetration at joint root</td><td>As per inspection plan</td></tr>
+                <tr><td>Spatter</td><td>Scattered metal droplets</td><td>Visual inspection</td></tr>
+                <tr><td>Overlap</td><td>Weld metal rolls over base metal without fusion</td><td>Visual inspection</td></tr>
+                <tr><td>Distortion</td><td>Unwanted shape change due to welding</td><td>Dimensional inspection</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Welding Quality Inspection Checklist</h3>
+        <ul>
+            <li>Verify approved drawing and weld symbols.</li>
+            <li>Check material identification and joint preparation.</li>
+            <li>Verify fit-up and root gap as specified.</li>
+            <li>Check approved WPS and qualified welder requirements.</li>
+            <li>Inspect weld size, length and location.</li>
+            <li>Check visible defects and weld profile.</li>
+            <li>Perform required NDT as per inspection plan.</li>
+            <li>Verify dimensional distortion after welding.</li>
+            <li>Maintain inspection and traceability records.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- PAINTING -->
+<section class="section" id="painting">
+    <h2>3. Painting Knowledge</h2>
+
+    <div class="card">
+        <h3>What is Industrial Painting?</h3>
+        <p>
+            Industrial painting is a protective coating process used to
+            protect metal surfaces against corrosion, chemicals, moisture
+            and environmental exposure, while also providing the required finish.
+        </p>
+        <div class="hindi">
+            <strong>Hindi:</strong> Metal surface ko rust aur environment se
+            protect karne ke liye coating lagane ki process industrial painting hai.
+        </div>
+    </div>
+
+    <div class="topic-grid">
+        <div class="topic">
+            <h3>Surface Preparation</h3>
+            <p>Cleaning, degreasing, grinding and removal of contamination.</p>
+            <p><strong>Check:</strong> Surface cleanliness and preparation grade.</p>
+        </div>
+        <div class="topic">
+            <h3>Shot Blasting</h3>
+            <p>Abrasive particles are used to clean and prepare metal surfaces.</p>
+            <p><strong>Check:</strong> Surface cleanliness and profile.</p>
+        </div>
+        <div class="topic">
+            <h3>Primer</h3>
+            <p>First coating layer that supports adhesion and corrosion protection.</p>
+            <p><strong>Check:</strong> Product, mixing and specified thickness.</p>
+        </div>
+        <div class="topic">
+            <h3>Intermediate Coat</h3>
+            <p>Additional coating layer used in specified paint systems.</p>
+            <p><strong>Check:</strong> Recoat interval and thickness.</p>
+        </div>
+        <div class="topic">
+            <h3>Top Coat</h3>
+            <p>Final coating that provides appearance and specified protection.</p>
+            <p><strong>Check:</strong> Colour, finish and DFT.</p>
+        </div>
+        <div class="topic">
+            <h3>Curing</h3>
+            <p>Coating develops its required properties over the specified time.</p>
+            <p><strong>Check:</strong> Curing conditions and time.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Important Painting Terms</h3>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Term</th><th>Full Form / Meaning</th></tr>
+                <tr><td>DFT</td><td>Dry Film Thickness</td></tr>
+                <tr><td>WFT</td><td>Wet Film Thickness</td></tr>
+                <tr><td>Surface Profile</td><td>Roughness pattern created during surface preparation.</td></tr>
+                <tr><td>Adhesion</td><td>Ability of coating to remain bonded to the substrate.</td></tr>
+                <tr><td>Recoat Interval</td><td>Specified time window before applying the next coat.</td></tr>
+                <tr><td>Pot Life</td><td>Usable time after mixing a multi-component coating.</td></tr>
+                <tr><td>VOC</td><td>Volatile Organic Compounds.</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Common Painting Defects</h3>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Defect</th><th>Meaning</th><th>Inspection</th></tr>
+                <tr><td>Sagging</td><td>Paint flows downward and forms runs</td><td>Visual inspection</td></tr>
+                <tr><td>Orange Peel</td><td>Uneven textured surface like orange skin</td><td>Visual inspection</td></tr>
+                <tr><td>Pinholes</td><td>Small holes in coating</td><td>Visual / specified test</td></tr>
+                <tr><td>Blistering</td><td>Bubbles or raised areas in coating</td><td>Visual inspection</td></tr>
+                <tr><td>Peeling</td><td>Coating separates from substrate or another coat</td><td>Visual / adhesion test</td></tr>
+                <tr><td>Low DFT</td><td>Film thickness below specified requirement</td><td>DFT gauge</td></tr>
+                <tr><td>Colour Variation</td><td>Colour differs from approved requirement</td><td>Visual / approved reference</td></tr>
+                <tr><td>Dust Inclusion</td><td>Dust particles trapped in coating</td><td>Visual inspection</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Painting Inspection Checklist</h3>
+        <ul>
+            <li>Verify approved paint specification and coating system.</li>
+            <li>Check surface cleanliness and preparation.</li>
+            <li>Verify environmental conditions as specified.</li>
+            <li>Check paint batch, shelf life and mixing instructions.</li>
+            <li>Verify recoat interval and curing requirements.</li>
+            <li>Measure DFT at required locations.</li>
+            <li>Inspect colour, finish, sagging, pinholes and peeling.</li>
+            <li>Perform adhesion or other specified tests when required.</li>
+            <li>Record results and maintain traceability.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- INTERVIEW -->
+<section class="section">
+    <h2>4. Common Quality Engineer Interview Questions</h2>
+
+    <div class="card">
+
+        <div class="question">
+            <h3>Q1. What is fabrication?</h3>
+            <p class="answer"><strong>Answer:</strong> Fabrication is the process of making components through cutting, forming, fitting and joining.</p>
+            <div class="hindi"><strong>Hindi:</strong> Cutting, bending, fitting aur joining se component banana fabrication hai.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q2. What is the difference between MIG and TIG welding?</h3>
+            <p class="answer"><strong>Answer:</strong> MIG uses a continuously fed consumable wire electrode. TIG uses a non-consumable tungsten electrode and may use separate filler material.</p>
+            <div class="hindi"><strong>Hindi:</strong> MIG mein wire electrode continuously feed hota hai, jabki TIG mein tungsten electrode use hota hai.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q3. What is WPS?</h3>
+            <p class="answer"><strong>Answer:</strong> WPS means Welding Procedure Specification. It defines the approved welding variables and instructions for a welding operation.</p>
+            <div class="hindi"><strong>Hindi:</strong> WPS batata hai ki approved procedure ke according welding kaise karni hai.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q4. What is porosity?</h3>
+            <p class="answer"><strong>Answer:</strong> Porosity is the presence of gas cavities in weld metal.</p>
+            <div class="hindi"><strong>Hindi:</strong> Weld ke andar gas ke chhote cavities ya holes hona porosity hai.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q5. What is DFT?</h3>
+            <p class="answer"><strong>Answer:</strong> DFT means Dry Film Thickness. It is the thickness of the coating after drying or curing, measured as specified.</p>
+            <div class="hindi"><strong>Hindi:</strong> Paint dry hone ke baad coating ki thickness DFT hoti hai.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q6. How do you inspect a welded component?</h3>
+            <p class="answer"><strong>Answer:</strong> Review the drawing and WPS requirements, check fit-up, weld size and location, perform visual inspection and arrange specified NDT if required.</p>
+            <div class="hindi"><strong>Hindi:</strong> Drawing, weld size, location, visible defects aur required NDT check karenge.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q7. How do you inspect a painted component?</h3>
+            <p class="answer"><strong>Answer:</strong> Check surface preparation, coating specification, DFT, colour, finish, curing and specified tests.</p>
+            <div class="hindi"><strong>Hindi:</strong> Surface preparation, DFT, colour, finish aur paint defects check karenge.</div>
+        </div>
+
+        <div class="question">
+            <h3>Q8. What will you do if a defect is found?</h3>
+            <p class="answer"><strong>Answer:</strong> Identify and record the defect, segregate or control the nonconforming product, inform the responsible team, follow the approved disposition and verify corrective action.</p>
+            <div class="hindi"><strong>Hindi:</strong> Defect record karenge, part ko control karenge, concerned team ko inform karenge aur approved correction ke baad re-inspection karenge.</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- IMPORTANT NOTE -->
+<section class="section">
+    <div class="callout">
+        <strong>Important Engineering Note:</strong>
+        Actual acceptance criteria, weld size, NDT method, paint DFT,
+        surface preparation grade and testing frequency must follow the
+        approved engineering drawing, applicable standard, customer
+        specification and inspection plan. This guide is for learning;
+        it does not replace approved production requirements.
+    </div>
+</section>
+
+<section class="section">
+    <div class="card" style="text-align:center;">
+        <h2>Keep Learning with MechQTools</h2>
+        <p>Explore engineering calculators, quality tools and professional guides.</p>
+        <a href="index.html#quality-tools"
+           style="display:inline-block;background:#e53232;color:white;padding:11px 22px;border-radius:7px;text-decoration:none;font-weight:bold;">
+           Explore Quality Tools →
+        </a>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div>
+            <h3>MechQTools</h3>
+            <p>Engineering &amp; Quality Tools for Professionals.</p>
+        </div>
+        <div>
+            <strong>Quick Links</strong>
+            <a href="index.html">Home</a>
+            <a href="index.html#mechanical-tools">Mechanical Tools</a>
+            <a href="index.html#quality-tools">Quality Tools</a>
+            <a href="index.html#templates">Templates</a>
+        </div>
+        <div>
+            <strong>Resources</strong>
+            <a href="index.html#guides-section">Engineering Guides</a>
+            <a href="index.html#about">About</a>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2026 MechQTools. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>
