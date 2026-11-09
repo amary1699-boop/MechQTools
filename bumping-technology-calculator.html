@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bumping Technology Calculator - MechQTools</title>
+<meta name="description" content="Calculate sheet metal bumping bend positions, pitch, angles and theoretical radius for press brake forming.">
+<style>
+:root {
+  --red:#e53232;
+  --dark:#222;
+  --muted:#666;
+  --border:#e5e5e5;
+  --bg:#f7f7f7;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;
+  color:var(--dark);background:var(--bg);line-height:1.5
+}
+header{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:15px 5%;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;flex-wrap:wrap
+}
+.logo{font-size:23px;font-weight:800;color:var(--red)}
+.logo span{color:#222}
+nav{display:flex;gap:17px;flex-wrap:wrap}
+nav a{color:#333;text-decoration:none;font-size:14px}
+nav a:hover{color:var(--red)}
+.home-btn{
+  display:inline-block;background:var(--red);color:#fff;
+  padding:9px 17px;border-radius:6px;text-decoration:none;
+  font-weight:bold;font-size:14px
+}
+.container{max-width:1200px;margin:25px auto;padding:0 16px}
+.page-title{text-align:center;margin-bottom:22px}
+.page-title h1{font-size:27px;margin:0 0 7px}
+.page-title p{color:var(--muted);margin:0}
+.card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:10px;padding:20px;margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.035)
+}
+.card h2{font-size:19px;margin:0 0 16px}
+.section-title{
+  color:var(--red);font-size:16px;font-weight:bold;
+  border-bottom:1px solid var(--border);
+  padding-bottom:8px;margin:20px 0 13px
+}
+.grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px
+}
+.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.field input,.field select{
+  width:100%;padding:11px;border:1px solid #ccc;
+  border-radius:6px;font-size:15px;background:#fff;min-width:0
+}
+.field input:focus,.field select:focus{
+  outline:2px solid rgba(229,50,50,.15);border-color:var(--red)
+}
+.hint{font-size:11px;color:var(--muted);margin-top:4px}
+.mode-row{display:flex;gap:10px;flex-wrap:wrap}
+.mode-option{
+  border:1px solid #ccc;padding:11px 18px;border-radius:7px;
+  cursor:pointer;font-weight:bold
+}
+.mode-option:has(input:checked){
+  border-color:var(--red);background:#fff4f4;color:var(--red)
+}
+.mode-option input{accent-color:var(--red)}
+.btn{
+  border:0;border-radius:6px;padding:11px 18px;
+  background:var(--red);color:#fff;font-size:14px;
+  font-weight:bold;cursor:pointer
+}
+.btn.secondary{background:#444}
+.btn.light{background:#eee;color:#222}
+.btn:hover{opacity:.9}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.note{
+  background:#fff8e8;border-left:4px solid #e4a126;
+  padding:12px;border-radius:5px;font-size:13px;margin:12px 0
+}
+.info{
+  background:#f1f6ff;border-left:4px solid #4285d4;
+  padding:12px;border-radius:5px;font-size:13px;margin:12px 0
+}
+.results{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px
+}
+.result{
+  background:#fff5f5;border:1px solid #f2d1d1;
+  padding:13px;border-radius:8px;min-width:0
+}
+.result small{display:block;color:#666;font-size:12px}
+.result strong{font-size:20px;color:var(--red);overflow-wrap:anywhere}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px;font-size:13px}
+th,td{padding:10px;border:1px solid var(--border);text-align:center}
+th{background:#fff1f1;color:#333}
+td input{width:100px;padding:7px;border:1px solid #ccc;border-radius:5px}
+.svg-wrap{
+  width:100%;overflow:auto;border:1px solid var(--border);
+  border-radius:7px;background:#fff
+}
+svg{display:block;width:100%;min-width:320px;height:auto}
+.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.geometry-grid h3{font-size:15px;margin:0 0 9px}
+.process{font-size:13px;color:#444;line-height:1.8}
+footer{
+  background:#222;color:#eee;text-align:center;
+  padding:22px 12px;margin-top:35px;font-size:13px
+}
+footer a{color:#fff;text-decoration:none;margin:0 7px}
+.hidden{display:none!important}
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .results{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  header{padding:13px 4%}
+  nav{width:100%;gap:12px}
+  .container{padding:0 10px;margin:17px auto}
+  .card{padding:14px}
+  .grid,.geometry-grid{grid-template-columns:1fr}
+  .page-title h1{font-size:22px}
+  .results{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .result strong{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">MechQ<span>Tools</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#mechanical-tools">Mechanical</a>
+    <a href="index.html#quality-tools">Quality</a>
+    <a href="index.html#guides-section">Guides</a>
+    <a href="index.html#about">About</a>
+  </nav>
+  <a class="home-btn" href="index.html">⌂ Home</a>
+</header>
+
+<main class="container">
+  <div class="page-title">
+    <h1>Bumping Technology Calculator</h1>
+    <p>Sheet Metal Large Radius Bumping & Bend Line Calculator</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Calculation Settings</h2>
+
+    <div class="section-title">Calculation Mode</div>
+    <div class="mode-row">
+      <label class="mode-option">
+        <input type="radio" name="mode" value="auto" checked> Automatic
+      </label>
+      <label class="mode-option">
+        <input type="radio" name="mode" value="manual"> Manual
+      </label>
+    </div>
+
+    <div class="section-title">Geometry Input Method</div>
+    <div class="grid">
+      <div class="field">
+        <label for="geometryMethod">Geometry Method</label>
+        <select id="geometryMethod">
+          <option value="radius">Inside Radius + Total Angle</option>
+          <option value="chord">Chord Width + Rise</option>
+        </select>
+      </div>
+      <div class="field" id="radiusField">
+        <label for="targetRadius">Target Inside Radius (mm)</label>
+        <input id="targetRadius" type="number" min="0.01" step="any" value="500">
+      </div>
+      <div class="field" id="angleField">
+        <label for="totalAngle">Total Curve Angle (°)</label>
+        <input id="totalAngle" type="number" min="0.1" max="179.9" step="any" value="90">
+      </div>
+      <div class="field hidden" id="chordField">
+        <label for="chordWidth">Chord Width (mm)</label>
+        <input id="chordWidth" type="number" min="0.01" step="any" value="500">
+      </div>
+      <div class="field hidden" id="riseField">
+        <label for="rise">Rise / Sagitta (mm)</label>
+        <input id="rise" type="number" min="0.01" step="any" value="66.987">
+      </div>
+    </div>
+    <div class="hint">Radius convention: Inside Radius. Chord and rise method calculates the theoretical inside radius.</div>
+
+    <div class="section-title">Material & Sheet Details</div>
+    <div class="grid">
+      <div class="field">
+        <label for="material">Material</label>
+        <select id="material">
+          <option>MS</option><option>GI</option><option>SS</option>
+          <option>Aluminium</option><option>Copper</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="thickness">Thickness T (mm)</label>
+        <input id="thickness" type="number" min="0.01" step="any" value="2">
+      </div>
+      <div class="field">
+        <label for="kFactor">K-Factor (editable)</label>
+        <input id="kFactor" type="number" min="0" max="1" step="0.01" value="0.33">
+      </div>
+    </div>
+
+    <div class="section-title">Bumping Parameters</div>
+    <div class="grid">
+      <div class="field" id="maxAngleField">
+        <label for="maxBumpAngle">Maximum Angle Per Bump (°)</label>
+        <input id="maxBumpAngle" type="number" min="0.1" max="45" step="any" value="5">
+        <div class="hint">Automatic mode uses this as the maximum hit angle.</div>
+      </div>
+      <div class="field" id="bumpCountField">
+        <label for="bumpCount">Number of Bumps</label>
+        <input id="bumpCount" type="number" min="1" max="500" step="1" value="18">
+      </div>
+      <div class="field" id="manualAngleField">
+        <label for="manualAngle">Manual Angle Per Bump (°)</label>
+        <input id="manualAngle" type="number" min="0.01" max="45" step="any" value="5">
+      </div>
+      <div class="field">
+        <label for="pitchMode">Pitch Setting</label>
+        <select id="pitchMode">
+          <option value="auto">Automatic Pitch</option>
+          <option value="manual">Manual Pitch</option>
+        </select>
+      </div>
+      <div class="field hidden" id="manualPitchField">
+        <label for="manualPitch">Manual Pitch (mm)</label>
+        <input id="manualPitch" type="number" min="0.01" step="any" value="40">
+        <div class="hint">Overrides theoretical chord pitch and changes the calculated actual radius.</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>Important:</b> Number of bumps means the number of bend hits. Bend-line positions are measured from the starting edge of the flat sheet. This is a theoretical layout, not a machine-specific springback compensation.
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="calculateBtn">Calculate Bumping</button>
+      <button class="btn secondary" id="resetBtn">Reset</button>
+    </div>
+    <div id="errorBox" class="note hidden" role="alert"></div>
+  </div>
+
+  <section id="output" class="hidden">
+    <div class="card">
+      <h2>2. Calculation Results</h2>
+      <div class="results">
+        <div class="result"><small>Calculated Inside Radius</small><strong id="outRadius">-</strong></div>
+        <div class="result"><small>Number of Bumps</small><strong id="outBumps">-</strong></div>
+        <div class="result"><small>Angle Per Bump</small><strong id="outAngle">-</strong></div>
+        <div class="result"><small>Bump Pitch</small><strong id="outPitch">-</strong></div>
+        <div class="result"><small>Total Flat Length*</small><strong id="outLength">-</strong></div>
+        <div class="result"><small>Chord Width</small><strong id="outChord">-</strong></div>
+        <div class="result"><small>Rise / Sagitta</small><strong id="outRise">-</strong></div>
+        <div class="result"><small>Neutral Radius</small><strong id="outNeutral">-</strong></div>
+      </div>
+      <div class="hint">*Theoretical developed length uses the neutral radius and total tangent rotation angle. Confirm the actual blank and end allowances against your drawing and process.</div>
+    </div>
+
+    <div class="card">
+      <h2>3. Bend Line Position Table</h2>
+      <p class="hint">Positions are measured from the starting edge. You can edit individual positions; the geometry preview will update from the edited spacing.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Bend No.</th>
+              <th>Bend Line Position (mm)</th>
+              <th>Distance from Previous Line (mm)</th>
+              <th>Angle Per Hit (°)</th>
+            </tr>
+          </thead>
+          <tbody id="bendTable"></tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="recalculateTableBtn">Restore Calculated Positions</button>
+        <button class="btn light" id="downloadCsvBtn">Download CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. Geometry Preview</h2>
+      <div class="geometry-grid">
+        <div>
+          <h3>Flat Sheet – Bend Line Layout</h3>
+          <div class="svg-wrap"><svg id="flatSvg" viewBox="0 0 700 190" role="img" aria-label="Flat sheet bend line layout"></svg></div>
+        </div>
+        <div>
+          <h3>Formed Profile – Side View</h3>
+          <div class="svg-wrap"><svg id="formedSvg" viewBox="0 0 700 300" role="img" aria-label="Theoretical formed profile"></svg></div>
+        </div>
+      </div>
+      <div class="note">The formed view is a theoretical circular-profile illustration. It does not simulate tool contact, actual press brake deflection, springback, or local deformation.</div>
+    </div>
+
+    <div class="card">
+      <h2>5. Calculation Process</h2>
+      <div id="process" class="process"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div><b>MechQTools</b> - Engineering & Quality Tools</div>
+  <p>
+    <a href="index.html">Home</a>
+    <a href="index.html#mechanical-tools">Mechanical</a>
+    <a href="index.html#quality-tools">Quality</a>
+    <a href="index.html#about">About</a>
+  </p>
+  <div>© 2026 MechQTools. All Rights Reserved.</div>
+</footer>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+const fmt = (n, d=3) => Number(n).toFixed(d);
+let lastCalculation = null;
+let calculatedPositions = [];
+
+function currentMode(){
+  return document.querySelector('input[name="mode"]:checked').value;
+}
+function showError(message){
+  $("errorBox").textContent = message;
+  $("errorBox").classList.remove("hidden");
+}
+function clearError(){
+  $("errorBox").textContent = "";
+  $("errorBox").classList.add("hidden");
+}
+function positive(value,label){
+  const n = Number(value);
+  if(!Number.isFinite(n) || n <= 0) throw new Error(label+" must be greater than zero.");
+  return n;
+}
+function updateControls(){
+  const method = $("geometryMethod").value;
+  $("radiusField").classList.toggle("hidden",method!=="radius");
+  $("angleField").classList.toggle("hidden",method!=="radius");
+  $("chordField").classList.toggle("hidden",method!=="chord");
+  $("riseField").classList.toggle("hidden",method!=="chord");
+
+  const mode = currentMode();
+  $("maxAngleField").classList.toggle("hidden",mode!=="auto");
+  $("bumpCountField").classList.toggle("hidden",mode!=="manual");
+  $("manualAngleField").classList.toggle("hidden",mode!=="manual");
+
+  const manualPitch = $("pitchMode").value==="manual";
+  $("manualPitchField").classList.toggle("hidden",!manualPitch);
+}
+document.querySelectorAll('input[name="mode"]').forEach(el=>el.addEventListener("change",updateControls));
+$("geometryMethod").addEventListener("change",updateControls);
+$("pitchMode").addEventListener("change",updateControls);
+
+function getGeometry(){
+  const method = $("geometryMethod").value;
+  let Ri, totalAngle, chord, rise;
+
+  if(method==="radius"){
+    Ri = positive($("targetRadius").value,"Inside radius");
+    totalAngle = positive($("totalAngle").value,"Total angle");
+    if(totalAngle>=180) throw new Error("Total curve angle must be less than 180° in this calculator.");
+    chord = 2*Ri*Math.sin(totalAngle*Math.PI/360);
+    rise = Ri*(1-Math.cos(totalAngle*Math.PI/360));
+  }else{
+    chord = positive($("chordWidth").value,"Chord width");
+    rise = positive($("rise").value,"Rise");
+    if(rise>=chord) throw new Error("Rise must be smaller than chord width.");
+    Ri = chord*chord/(8*rise)+rise/2;
+    totalAngle = 2*Math.asin(chord/(2*Ri))*180/Math.PI;
+    if(!Number.isFinite(totalAngle) || totalAngle<=0 || totalAngle>=180){
+      throw new Error("Please check chord width and rise values.");
+    }
+  }
+  return {Ri,totalAngle,chord,rise};
+}
+
+function calculate(){
+  clearError();
+  try{
+    const g = getGeometry();
+    const T = positive($("thickness").value,"Thickness");
+    const K = Number($("kFactor").value);
+    if(!Number.isFinite(K) || K<0 || K>1) throw new Error("K-Factor must be between 0 and 1.");
+
+    const Rn = g.Ri + K*T;
+    if(Rn<=0) throw new Error("Neutral radius is not valid.");
+
+    const mode = currentMode();
+    let N, delta;
+
+    if(mode==="auto"){
+      const maxAngle = positive($("maxBumpAngle").value,"Maximum bump angle");
+      if(maxAngle>45) throw new Error("Maximum bump angle cannot exceed 45°.");
+      N = Math.ceil(g.totalAngle/maxAngle);
+      delta = g.totalAngle/N;
+    }else{
+      const count = positive($("bumpCount").value,"Number of bumps");
+      if(!Number.isInteger(count) || count>500) throw new Error("Number of bumps must be a whole number from 1 to 500.");
+      N = count;
+      delta = positive($("manualAngle").value,"Manual bump angle");
+      if(delta>45) throw new Error("Manual bump angle cannot exceed 45°.");
+      // The manually entered angle controls the actual total rotation.
+      g.totalAngle = N*delta;
+      if(g.totalAngle>=180) throw new Error("Total angle from manual bumps must be less than 180°.");
+      g.chord = 2*g.Ri*Math.sin(g.totalAngle*Math.PI/360);
+      g.rise = g.Ri*(1-Math.cos(g.totalAngle*Math.PI/360));
+    }
+
+    const deltaRad = delta*Math.PI/180;
+    const theoreticalPitch = 2*Rn*Math.sin(deltaRad/2);
+    let pitch = theoreticalPitch;
+    let actualRn = Rn;
+
+    if($("pitchMode").value==="manual"){
+      pitch = positive($("manualPitch").value,"Manual pitch");
+      actualRn = pitch/(2*Math.sin(deltaRad/2));
+    }
+
+    const actualRi = actualRn-K*T;
+    if(actualRi<=0) throw new Error("Manual pitch produces an invalid inside radius. Increase pitch or check thickness/K-Factor.");
+
+    const actualChord = 2*actualRi*Math.sin(g.totalAngle*Math.PI/360);
+    const actualRise = actualRi*(1-Math.cos(g.totalAngle*Math.PI/360));
+    const developed = N*pitch;
+    const positions = [];
+
+    for(let i=1;i<=N;i++){
+      positions.push(i*pitch);
+    }
+
+    lastCalculation = {
+      ...g,T,K,Rn,actualRn,actualRi,N,delta,pitch,
+      theoreticalPitch,developed,actualChord,actualRise,
+      material:$("material").value,positions
+    };
+    calculatedPositions = [...positions];
+    renderResults(lastCalculation);
+    renderTable(lastCalculation);
+    renderGeometry(lastCalculation);
+    renderProcess(lastCalculation);
+    $("output").classList.remove("hidden");
+    $("output").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(err){
+    $("output").classList.add("hidden");
+    showError(err.message || "Please check your inputs.");
+  }
+}
+
+function renderResults(c){
+  $("outRadius").textContent=fmt(c.actualRi)+" mm";
+  $("outBumps").textContent=c.N;
+  $("outAngle").textContent=fmt(c.delta,4)+"°";
+  $("outPitch").textContent=fmt(c.pitch)+" mm";
+  $("outLength").textContent=fmt(c.developed)+" mm";
+  $("outChord").textContent=fmt(c.actualChord)+" mm";
+  $("outRise").textContent=fmt(c.actualRise)+" mm";
+  $("outNeutral").textContent=fmt(c.actualRn)+" mm";
+}
+
+function renderTable(c,positions=c.positions){
+  const body=$("bendTable");
+  body.innerHTML="";
+  positions.forEach((pos,i)=>{
+    const tr=document.createElement("tr");
+    const previous=i===0?0:positions[i-1];
+    const values=[
+      String(i+1),
+      null,
+      fmt(pos-previous),
+      fmt(c.delta,4)
+    ];
+    values.forEach((value,j)=>{
+      const td=document.createElement("td");
+      if(j===1){
+        const input=document.createElement("input");
+        input.type="number";input.min="0.001";input.step="any";
+        input.value=fmt(pos,3);
+        input.dataset.index=i;
+        input.setAttribute("aria-label","Bend line "+(i+1)+" position");
+        input.addEventListener("change",()=>{
+          const inputs=[...body.querySelectorAll("input")];
+          const updated=inputs.map(el=>Number(el.value));
+          if(updated.some(v=>!Number.isFinite(v)||v<=0) ||
+             updated.some((v,index)=>index>0 && v<=updated[index-1])){
+            showError("Bend-line positions must be positive and in increasing order.");
+            renderTable(c,positions);
+            return;
+          }
+          clearError();
+          renderTable(c,updated);
+          renderGeometry(c,updated);
+        });
+        td.appendChild(input);
+      }else td.textContent=value;
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+
+function svgLine(x1,y1,x2,y2,color,width=2,dash=""){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}" ${dash?`stroke-dasharray="${dash}"`:""}/>`;
+}
+function renderGeometry(c,positions=c.positions){
+  const maxPos=Math.max(...positions,c.pitch);
+  const start=45,end=655,usable=end-start;
+  const scale=usable/(maxPos+c.pitch);
+  let flat=`<rect x="25" y="65" width="650" height="55" rx="4" fill="#e9edf2" stroke="#555"/>`;
+  flat+=`<text x="350" y="35" text-anchor="middle" font-size="15" fill="#333">Flat sheet – theoretical bend-line locations</text>`;
+  positions.forEach((p,i)=>{
+    const x=start+p*scale;
+    flat+=svgLine(x,52,x,130,"#e53232",2);
+    flat+=`<text x="${x}" y="48" text-anchor="middle" font-size="10" fill="#c22">${i+1}</text>`;
+  });
+  flat+=`<text x="25" y="150" font-size="11" fill="#333">Start edge</text>`;
+  flat+=`<text x="675" y="150" text-anchor="end" font-size="11" fill="#333">End direction →</text>`;
+  flat+=`<text x="350" y="178" text-anchor="middle" font-size="12" fill="#555">Positions are shown in sequence; diagram is not to physical scale.</text>`;
+  $("flatSvg").innerHTML=flat;
+
+  // Theoretical circular arc in side view. The path uses the actual
+  // inside radius and total tangent rotation as a schematic preview.
+  const angle=c.totalAngle*Math.PI/180;
+  const radius=c.actualRi;
+  const cx=350,cy=238;
+  const displayR=Math.min(170,250/Math.max(1,Math.sin(angle/2)));
+  const startA=-Math.PI/2-angle/2;
+  const endA=-Math.PI/2+angle/2;
+  const pts=[];
+  const samples=Math.max(40,c.N*4);
+  for(let i=0;i<=samples;i++){
+    const a=startA+(endA-startA)*i/samples;
+    pts.push([cx+displayR*Math.cos(a),cy+displayR*Math.sin(a)]);
+  }
+  const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(2)+","+p[1].toFixed(2)).join(" ");
+  let formed=`<path d="${path}" fill="none" stroke="#e53232" stroke-width="5" stroke-linecap="round"/>`;
+  formed+=`<text x="350" y="25" text-anchor="middle" font-size="15" fill="#333">Theoretical inside profile</text>`;
+  formed+=`<circle cx="${cx}" cy="${cy}" r="3" fill="#333"/>`;
+  formed+=`<text x="${cx+8}" y="${cy-8}" font-size="11" fill="#555">Centre</text>`;
+  formed+=`<text x="350" y="285" text-anchor="middle" font-size="12" fill="#555">Ri = ${fmt(radius)} mm | Total angle = ${fmt(c.totalAngle,3)}°</text>`;
+  $("formedSvg").innerHTML=formed;
+}
+
+function renderProcess(c){
+  $("process").innerHTML=`
+    <b>1. Neutral radius:</b> Rn = Ri + (K × T)<br>
+    Rn = ${fmt(c.actualRi)} + (${fmt(c.K)} × ${fmt(c.T)}) = ${fmt(c.actualRn)} mm<br><br>
+    <b>2. Angle per bump:</b> Total angle ÷ Number of bumps<br>
+    ${fmt(c.totalAngle,4)}° ÷ ${c.N} = ${fmt(c.delta,4)}°<br><br>
+    <b>3. Theoretical chord pitch:</b> P = 2 × Rn × sin(δ/2)<br>
+    P = 2 × ${fmt(c.actualRn)} × sin(${fmt(c.delta/2,4)}°) = ${fmt(c.theoreticalPitch)} mm<br><br>
+    <b>4. Selected pitch:</b> ${fmt(c.pitch)} mm<br>
+    <b>5. Theoretical flat length:</b> Number of pitches × selected pitch<br>
+    ${c.N} × ${fmt(c.pitch)} = ${fmt(c.developed)} mm<br><br>
+    <b>6. Material:</b> ${c.material}<br>
+    <b>7. Calculated inside radius:</b> ${fmt(c.actualRi)} mm
+  `;
+}
+
+$("calculateBtn").addEventListener("click",calculate);
+$("recalculateTableBtn").addEventListener("click",()=>{
+  if(!lastCalculation)return;
+  clearError();
+  calculatedPositions=[...lastCalculation.positions];
+  renderTable(lastCalculation,calculatedPositions);
+  renderGeometry(lastCalculation,calculatedPositions);
+});
+$("resetBtn").addEventListener("click",()=>{
+  $("targetRadius").value=500;
+  $("totalAngle").value=90;
+  $("chordWidth").value=500;
+  $("rise").value=66.987;
+  $("thickness").value=2;
+  $("kFactor").value=0.33;
+  $("maxBumpAngle").value=5;
+  $("bumpCount").value=18;
+  $("manualAngle").value=5;
+  $("manualPitch").value=40;
+  $("geometryMethod").value="radius";
+  $("pitchMode").value="auto";
+  $("material").value="MS";
+  document.querySelector('input[name="mode"][value="auto"]').checked=true;
+  lastCalculation=null;
+  $("output").classList.add("hidden");
+  clearError();
+  updateControls();
+});
+
+$("downloadCsvBtn").addEventListener("click",()=>{
+  if(!lastCalculation)return;
+  const inputs=[...$("bendTable").querySelectorAll("input")];
+  const positions=inputs.map(el=>Number(el.value));
+  const rows=[["Bend No.","Bend Line Position (mm)","Distance from Previous (mm)","Angle per Hit (deg)"]];
+  positions.forEach((p,i)=>{
+    rows.push([i+1,fmt(p),fmt(p-(i?positions[i-1]:0)),fmt(lastCalculation.delta,4)]);
+  });
+  const csv=rows.map(row=>row.join(",")).join("\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="mechqtools-bumping-bend-lines.csv";
+  document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+});
+
+updateControls();
+</script>
+</body>
+</html>
