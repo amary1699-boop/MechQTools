@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sheet Metal Development Calculator - MechQTools</title>
-<meta name="description" content="Calculate sheet metal flat pattern length, bend allowance and bend deduction for C-channel, U-channel and other sheet metal profiles.">
+<meta name="description" content="Calculate sheet metal flat pattern length, bend allowance and bend deduction for C-channel and other sheet metal profiles.">
 
 <style>
 :root{
@@ -16,8 +16,6 @@
   --muted:#6b7280;
   --border:#e5e7eb;
   --bg:#f5f6f8;
-  --white:#fff;
-  --green:#16834a;
 }
 *{box-sizing:border-box}
 body{
@@ -88,7 +86,6 @@ nav a:hover{color:var(--red)}
   padding-bottom:11px;
   border-bottom:1px solid var(--border);
 }
-.panel h3{font-size:16px;margin:18px 0 12px}
 .form-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
@@ -131,11 +128,6 @@ nav a:hover{color:var(--red)}
   font-size:14px;
 }
 .bend-title span{color:var(--red)}
-.segment-title{
-  font-weight:700;
-  font-size:14px;
-  margin:16px 0 10px;
-}
 .actions{
   display:flex;
   gap:10px;
@@ -191,7 +183,7 @@ button:hover{opacity:.9}
   display:block;
   width:100%;
   height:auto;
-  min-height:210px;
+  min-height:230px;
 }
 .geometry-note{
   font-size:12px;
@@ -206,7 +198,14 @@ button:hover{opacity:.9}
   font-size:13px;
 }
 .process li{margin-bottom:7px}
-.process strong{color:#222}
+.formula{
+  background:#f7f7f8;
+  border-radius:7px;
+  padding:13px;
+  font-size:13px;
+  line-height:1.8;
+  overflow-wrap:anywhere;
+}
 .error{
   display:none;
   background:#fff0f0;
@@ -217,15 +216,6 @@ button:hover{opacity:.9}
   font-size:13px;
   margin-top:12px;
 }
-.formula{
-  background:#f7f7f8;
-  border-radius:7px;
-  padding:13px;
-  font-size:13px;
-  line-height:1.8;
-  overflow-wrap:anywhere;
-}
-.formula strong{color:#222}
 footer{
   background:#222;
   color:#ddd;
@@ -282,7 +272,6 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 
   <div class="main-grid">
 
-    <!-- LEFT SIDE -->
     <div>
 
       <section class="panel">
@@ -329,14 +318,13 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
         <p style="font-size:13px;color:#666;line-height:1.6;margin-top:-5px">
           Enter each side's outside dimension. For a C-channel with 3 sides, enter 50, 50 and 50 mm.
         </p>
-
         <div id="sideInputs"></div>
       </section>
 
       <section class="panel">
         <h2>3. Bend Details</h2>
         <p style="font-size:13px;color:#666;line-height:1.6;margin-top:-5px">
-          Enter the inside radius and bend angle for every bend.
+          Enter inside radius, angle and direction for every bend.
         </p>
 
         <div id="bendInputs"></div>
@@ -351,22 +339,22 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
 
     </div>
 
-    <!-- RIGHT SIDE -->
     <div>
 
       <section class="panel">
         <h2>4. Profile Geometry</h2>
 
         <div class="geometry-wrap">
-          <svg id="geometry" viewBox="0 0 420 260" role="img" aria-label="Sheet metal profile schematic">
-            <text x="210" y="125" text-anchor="middle" fill="#777" font-size="14">
+          <svg id="geometry" viewBox="0 0 420 280" role="img" aria-label="Sheet metal profile geometry">
+            <text x="210" y="135" text-anchor="middle" fill="#777" font-size="14">
               Enter dimensions and calculate
             </text>
           </svg>
         </div>
 
         <p class="geometry-note">
-          Schematic profile only. It shows the bend sequence and is not a scale-accurate CAD drawing.
+          Up = profile turns upward. Down = profile turns downward.
+          This is a 2D schematic, not a scale-accurate CAD drawing.
         </p>
       </section>
 
@@ -410,7 +398,7 @@ footer a{color:#fff;text-decoration:none;margin:0 8px}
         <h2>7. Calculation Process</h2>
         <ol class="process" id="processList">
           <li>Enter material, thickness, K-factor and bend details.</li>
-          <li>Enter the outside dimensions of all sides.</li>
+          <li>Enter outside dimensions of all sides.</li>
           <li>Click Calculate Development.</li>
         </ol>
       </section>
@@ -458,7 +446,7 @@ function numberValue(id){
   return Number(document.getElementById(id).value);
 }
 
-function makeInput(id, label, value, min="0", step="any"){
+function makeInput(id,label,value,min="0",step="any"){
   return `
     <div class="field">
       <label for="${id}">${label}</label>
@@ -471,16 +459,15 @@ function makeInput(id, label, value, min="0", step="any"){
 function createInputs(){
   let count = parseInt(bendCountInput.value,10);
 
-  if(!Number.isInteger(count) || count < 1) count = 1;
-  if(count > 50) count = 50;
+  if(!Number.isInteger(count) || count < 1) count=1;
+  if(count > 50) count=50;
 
-  bendCountInput.value = count;
+  bendCountInput.value=count;
 
-  // Number of sides = number of bends + 1
-  let sideHTML = "";
+  let sideHTML="";
 
   for(let i=0;i<=count;i++){
-    sideHTML += `
+    sideHTML+=`
       <div class="side-card">
         <div class="bend-title">
           <span>Side ${i+1}</span>
@@ -493,12 +480,12 @@ function createInputs(){
     `;
   }
 
-  sideInputs.innerHTML = sideHTML;
+  sideInputs.innerHTML=sideHTML;
 
-  let bendHTML = "";
+  let bendHTML="";
 
   for(let i=0;i<count;i++){
-    bendHTML += `
+    bendHTML+=`
       <div class="bend-card">
         <div class="bend-title">
           <span>Bend ${i+1}</span>
@@ -506,15 +493,18 @@ function createInputs(){
         </div>
 
         <div class="form-grid">
+
           <div class="field">
             <label for="angle${i}">Bend Angle</label>
-            <input type="number" id="angle${i}" value="90" min="0.1" max="179.9" step="any">
+            <input type="number" id="angle${i}" value="90"
+              min="0.1" max="179.9" step="any">
             <div class="unit">Degree (°)</div>
           </div>
 
           <div class="field">
             <label for="radius${i}">Inside Radius (R)</label>
-            <input type="number" id="radius${i}" value="3" min="0" step="any">
+            <input type="number" id="radius${i}" value="3"
+              min="0" step="any">
             <div class="unit">Unit: mm</div>
           </div>
 
@@ -525,96 +515,281 @@ function createInputs(){
               <option value="Down">Down</option>
             </select>
           </div>
+
         </div>
       </div>
     `;
   }
 
-  bendInputs.innerHTML = bendHTML;
-
+  bendInputs.innerHTML=bendHTML;
   drawGeometry(count);
 }
 
 function showError(message){
-  errorBox.textContent = message;
-  errorBox.style.display = "block";
+  errorBox.textContent=message;
+  errorBox.style.display="block";
 }
 
 function clearError(){
-  errorBox.textContent = "";
-  errorBox.style.display = "none";
+  errorBox.textContent="";
+  errorBox.style.display="none";
 }
 
 function fmt(value){
   return Number(value).toFixed(3);
 }
 
+/*
+  GEOMETRY DIRECTION LOGIC
+
+  Initial profile direction = right.
+
+  Up:
+  Turn counter-clockwise.
+  The next profile segment moves upward for a 90-degree bend.
+
+  Down:
+  Turn clockwise.
+  The next profile segment moves downward for a 90-degree bend.
+
+  Each bend uses its own selected direction and angle.
+*/
+
+function drawGeometry(count,sides=[],bends=[]){
+  const svg=document.getElementById("geometry");
+
+  if(!sides.length || !bends.length){
+    svg.innerHTML=`
+      <text x="210" y="135" text-anchor="middle"
+        fill="#777" font-size="14">
+        Enter dimensions and calculate
+      </text>`;
+    return;
+  }
+
+  // Create profile coordinates using the actual side lengths.
+  let rawPoints=[];
+  let bendPoints=[];
+
+  let x=0;
+  let y=0;
+  let heading=0;
+
+  rawPoints.push({x,y});
+
+  for(let i=0;i<=count;i++){
+
+    // Draw current straight side
+    const length=sides[i];
+
+    x += length*Math.cos(heading*Math.PI/180);
+    y -= length*Math.sin(heading*Math.PI/180);
+
+    rawPoints.push({x,y});
+
+    // Apply this bend before the next side
+    if(i<count){
+      bendPoints.push({
+        x:x,
+        y:y,
+        angle:bends[i].angle,
+        direction:bends[i].direction
+      });
+
+      if(bends[i].direction==="Up"){
+        heading += bends[i].angle;
+      }else{
+        heading -= bends[i].angle;
+      }
+    }
+  }
+
+  // Find profile limits
+  const xs=rawPoints.map(p=>p.x);
+  const ys=rawPoints.map(p=>p.y);
+
+  let minX=Math.min(...xs);
+  let maxX=Math.max(...xs);
+  let minY=Math.min(...ys);
+  let maxY=Math.max(...ys);
+
+  let profileWidth=maxX-minX;
+  let profileHeight=maxY-minY;
+
+  if(profileWidth<0.001) profileWidth=1;
+  if(profileHeight<0.001) profileHeight=1;
+
+  // Fit complete profile inside SVG drawing area
+  const area={
+    left:45,
+    top:35,
+    width:330,
+    height:190
+  };
+
+  const scale=Math.min(
+    area.width/profileWidth,
+    area.height/profileHeight
+  );
+
+  const scaledWidth=profileWidth*scale;
+  const scaledHeight=profileHeight*scale;
+
+  const offsetX=area.left+(area.width-scaledWidth)/2;
+  const offsetY=area.top+(area.height-scaledHeight)/2;
+
+  function toScreen(point){
+    return {
+      x:offsetX+(point.x-minX)*scale,
+      y:offsetY+(point.y-minY)*scale
+    };
+  }
+
+  const screenPoints=rawPoints.map(toScreen);
+  const polyline=screenPoints
+    .map(p=>`${p.x},${p.y}`)
+    .join(" ");
+
+  // Dimension labels on each straight side
+  let dimensionLabels="";
+
+  for(let i=0;i<count+1;i++){
+    const p1=screenPoints[i];
+    const p2=screenPoints[i+1];
+
+    const mx=(p1.x+p2.x)/2;
+    const my=(p1.y+p2.y)/2;
+
+    const dx=p2.x-p1.x;
+    const dy=p2.y-p1.y;
+    const length=Math.sqrt(dx*dx+dy*dy)||1;
+
+    // Offset labels away from the profile line
+    const nx=-dy/length;
+    const ny=dx/length;
+
+    const labelX=mx+nx*13;
+    const labelY=my+ny*13;
+
+    dimensionLabels+=`
+      <text x="${labelX}" y="${labelY}"
+        text-anchor="middle"
+        font-size="11"
+        fill="#333">
+        ${fmt(sides[i])} mm
+      </text>
+    `;
+  }
+
+  // Bend direction and angle labels
+  let bendLabels="";
+
+  bendPoints.forEach((b,i)=>{
+    const p=toScreen(b);
+
+    const labelY=b.direction==="Up"
+      ? p.y-13
+      : p.y+19;
+
+    bendLabels+=`
+      <circle cx="${p.x}" cy="${p.y}" r="4"
+        fill="#e53232"/>
+      <text x="${p.x+7}" y="${labelY}"
+        font-size="11"
+        font-weight="bold"
+        fill="#e53232">
+        ${b.direction} ${b.angle}°
+      </text>
+    `;
+  });
+
+  svg.innerHTML=`
+    <polyline
+      points="${polyline}"
+      fill="none"
+      stroke="#e53232"
+      stroke-width="5"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+
+    ${dimensionLabels}
+    ${bendLabels}
+
+    <text x="210" y="265"
+      text-anchor="middle"
+      font-size="11"
+      fill="#777">
+      Profile schematic - not to scale
+    </text>
+  `;
+}
+
 function calculate(){
   clearError();
 
-  const thickness = numberValue("thickness");
-  const k = numberValue("kfactor");
-  const count = parseInt(bendCountInput.value,10);
+  const thickness=numberValue("thickness");
+  const k=numberValue("kfactor");
+  const count=parseInt(bendCountInput.value,10);
 
-  if(!Number.isFinite(thickness) || thickness <= 0){
+  if(!Number.isFinite(thickness)||thickness<=0){
     showError("Please enter a valid sheet thickness greater than zero.");
     return false;
   }
 
-  if(!Number.isFinite(k) || k < 0 || k > 1){
+  if(!Number.isFinite(k)||k<0||k>1){
     showError("K-factor must be between 0 and 1.");
     return false;
   }
 
-  if(!Number.isInteger(count) || count < 1 || count > 50){
+  if(!Number.isInteger(count)||count<1||count>50){
     showError("Please enter a bend count between 1 and 50.");
     return false;
   }
 
-  let totalOutside = 0;
-  let totalBA = 0;
-  let totalBD = 0;
-  let bendDetails = [];
-  let process = [];
+  let totalOutside=0;
+  let totalBA=0;
+  let totalBD=0;
+  let sides=[];
+  let bendDetails=[];
 
-  const sides = [];
-
+  // Read outside dimensions
   for(let i=0;i<=count;i++){
-    const el = document.getElementById("side"+i);
-    const value = Number(el.value);
+    const value=Number(document.getElementById("side"+i).value);
 
-    if(!Number.isFinite(value) || value <= 0){
+    if(!Number.isFinite(value)||value<=0){
       showError("Please enter a valid outside dimension for Side "+(i+1)+".");
       return false;
     }
 
     sides.push(value);
-    totalOutside += value;
+    totalOutside+=value;
   }
 
+  // Read bend details and calculate BA / OSSB / BD
   for(let i=0;i<count;i++){
-    const angle = Number(document.getElementById("angle"+i).value);
-    const radius = Number(document.getElementById("radius"+i).value);
-    const direction = document.getElementById("direction"+i).value;
 
-    if(!Number.isFinite(angle) || angle <= 0 || angle >= 180){
+    const angle=Number(document.getElementById("angle"+i).value);
+    const radius=Number(document.getElementById("radius"+i).value);
+    const direction=document.getElementById("direction"+i).value;
+
+    if(!Number.isFinite(angle)||angle<=0||angle>=180){
       showError("Bend "+(i+1)+": angle must be greater than 0° and less than 180°.");
       return false;
     }
 
-    if(!Number.isFinite(radius) || radius < 0){
+    if(!Number.isFinite(radius)||radius<0){
       showError("Bend "+(i+1)+": inside radius cannot be negative.");
       return false;
     }
 
-    const radians = angle * Math.PI / 180;
+    const radians=angle*Math.PI/180;
 
-    const BA = radians * (radius + k * thickness);
-    const OSSB = (radius + thickness) * Math.tan(radians/2);
-    const BD = (2 * OSSB) - BA;
+    const BA=radians*(radius+k*thickness);
+    const OSSB=(radius+thickness)*Math.tan(radians/2);
+    const BD=(2*OSSB)-BA;
 
-    totalBA += BA;
-    totalBD += BD;
+    totalBA+=BA;
+    totalBD+=BD;
 
     bendDetails.push({
       number:i+1,
@@ -627,169 +802,122 @@ function calculate(){
     });
   }
 
-  // Outside-dimension method:
-  // Flat length = sum of outside side dimensions - sum of bend deductions
-  const flatLength = totalOutside - totalBD;
+  // Outside dimension method
+  const flatLength=totalOutside-totalBD;
 
-  if(!Number.isFinite(flatLength) || flatLength <= 0){
+  if(!Number.isFinite(flatLength)||flatLength<=0){
     showError("Calculated flat length is zero or negative. Please check dimensions and bend details.");
     return false;
   }
 
-  document.getElementById("flatResult").textContent = fmt(flatLength);
-  document.getElementById("outsideResult").textContent = fmt(totalOutside)+" mm";
-  document.getElementById("totalBDResult").textContent = fmt(totalBD)+" mm";
-  document.getElementById("totalBAResult").textContent = fmt(totalBA)+" mm";
-  document.getElementById("bendResult").textContent = count;
+  // Show main results
+  document.getElementById("flatResult").textContent=fmt(flatLength);
+  document.getElementById("outsideResult").textContent=fmt(totalOutside)+" mm";
+  document.getElementById("totalBDResult").textContent=fmt(totalBD)+" mm";
+  document.getElementById("totalBAResult").textContent=fmt(totalBA)+" mm";
+  document.getElementById("bendResult").textContent=count;
 
-  let breakdownHTML = "";
+  // Bend-wise breakdown
+  let breakdownHTML="";
 
   bendDetails.forEach(b=>{
-    breakdownHTML += `
+    breakdownHTML+=`
       <div style="border-bottom:1px solid #eee;padding:10px 0">
-        <strong style="color:#222">Bend ${b.number} (${b.angle}°)</strong><br>
+        <strong style="color:#222">
+          Bend ${b.number} - ${b.direction} (${b.angle}°)
+        </strong><br>
         Inside Radius: ${fmt(b.radius)} mm<br>
         Bend Allowance: ${fmt(b.BA)} mm<br>
         Outside Setback: ${fmt(b.OSSB)} mm<br>
         <strong>Bend Deduction: ${fmt(b.BD)} mm</strong>
       </div>
     `;
-
-    process.push(
-      `Bend ${b.number}: BA = ${fmt(b.BA)} mm; OSSB = ${fmt(b.OSSB)} mm; BD = ${fmt(b.BD)} mm.`
-    );
   });
 
-  document.getElementById("bendBreakdown").innerHTML = breakdownHTML;
+  document.getElementById("bendBreakdown").innerHTML=breakdownHTML;
 
-  let processHTML = `
-    <li><strong>Total outside dimensions:</strong> ${sides.map(fmt).join(" + ")} = ${fmt(totalOutside)} mm.</li>
-    <li><strong>Material:</strong> ${document.getElementById("material").value}, Thickness = ${fmt(thickness)} mm, K-factor = ${k}.</li>
+  // Process explanation
+  let processHTML=`
+    <li><strong>Material:</strong> ${document.getElementById("material").value},
+      Thickness = ${fmt(thickness)} mm,
+      K-factor = ${k}.</li>
+
+    <li><strong>Outside dimensions:</strong>
+      ${sides.map(fmt).join(" + ")} = ${fmt(totalOutside)} mm.</li>
   `;
 
-  process.forEach(item=>{
-    processHTML += `<li>${item}</li>`;
+  bendDetails.forEach(b=>{
+    processHTML+=`
+      <li>
+        <strong>Bend ${b.number} (${b.direction}, ${b.angle}°):</strong>
+        BA = ${fmt(b.BA)} mm,
+        OSSB = ${fmt(b.OSSB)} mm,
+        BD = ${fmt(b.BD)} mm.
+      </li>
+    `;
   });
 
-  processHTML += `
-    <li><strong>Total Bend Deduction:</strong> ${fmt(totalBD)} mm.</li>
-    <li><strong>Final Flat Length:</strong> ${fmt(totalOutside)} − ${fmt(totalBD)} = <strong>${fmt(flatLength)} mm.</strong></li>
+  processHTML+=`
+    <li><strong>Total Bend Deduction:</strong>
+      ${fmt(totalBD)} mm.</li>
+
+    <li><strong>Final Flat Length:</strong>
+      ${fmt(totalOutside)} − ${fmt(totalBD)}
+      = <strong>${fmt(flatLength)} mm.</strong>
+    </li>
   `;
 
-  document.getElementById("processList").innerHTML = processHTML;
+  document.getElementById("processList").innerHTML=processHTML;
 
-  drawGeometry(count, sides, bendDetails);
+  // Update geometry using the selected directions and angles
+  drawGeometry(count,sides,bendDetails);
 
   return true;
 }
 
-function drawGeometry(count, sides=[], bends=[]){
-  const svg = document.getElementById("geometry");
-
-  if(!sides.length){
-    svg.innerHTML = `
-      <text x="210" y="125" text-anchor="middle" fill="#777" font-size="14">
-        Enter dimensions and calculate
-      </text>`;
-    return;
-  }
-
-  // Schematic zig-zag profile. Not a scale drawing.
-  const margin = 45;
-  const width = 330;
-  const height = 175;
-  const points = [];
-
-  let x = margin;
-  let y = 55;
-  points.push([x,y]);
-
-  for(let i=0;i<count+1;i++){
-    const direction = i===0 ? 1 : -1;
-    x += width/(count+1);
-    points.push([x,y]);
-
-    if(i<count){
-      const bendDirection = bends[i]?.direction || (i%2===0 ? "Down":"Up");
-      y += bendDirection==="Down" ? 65 : -65;
-      y = Math.max(35,Math.min(220,y));
-      points.push([x,y]);
-    }
-  }
-
-  const polyline = points.map(p=>p.join(",")).join(" ");
-
-  let labels = "";
-  for(let i=0;i<sides.length;i++){
-    const p1 = points[Math.min(i*2,points.length-1)];
-    const p2 = points[Math.min(i*2+1,points.length-1)];
-
-    const lx = (p1[0]+p2[0])/2;
-    const ly = (p1[1]+p2[1])/2 - 10;
-
-    labels += `
-      <text x="${lx}" y="${ly}" text-anchor="middle"
-        font-size="11" fill="#333">${fmt(sides[i])} mm</text>
-    `;
-  }
-
-  let bendLabels = "";
-  bends.forEach((b,i)=>{
-    const p = points[Math.min(i*2+2,points.length-1)];
-    bendLabels += `
-      <text x="${p[0]+7}" y="${p[1]+(b.direction==="Down"?15:-9)}"
-        font-size="10" fill="#e53232">${b.angle}°</text>
-    `;
-  });
-
-  svg.innerHTML = `
-    <polyline points="${polyline}"
-      fill="none" stroke="#e53232" stroke-width="5"
-      stroke-linecap="round" stroke-linejoin="round"/>
-    ${labels}
-    ${bendLabels}
-    <text x="210" y="248" text-anchor="middle" font-size="11" fill="#777">
-      Outside profile - schematic view
-    </text>
-  `;
-}
-
 function resetCalculator(){
-  document.getElementById("material").value = "MS";
-  document.getElementById("thickness").value = "3";
-  document.getElementById("kfactor").value = "0.33";
-  bendCountInput.value = "2";
+  document.getElementById("material").value="MS";
+  document.getElementById("thickness").value="3";
+  document.getElementById("kfactor").value="0.33";
+  bendCountInput.value="2";
 
   createInputs();
 
-  document.getElementById("flatResult").textContent = "—";
-  document.getElementById("outsideResult").textContent = "—";
-  document.getElementById("totalBDResult").textContent = "—";
-  document.getElementById("totalBAResult").textContent = "—";
-  document.getElementById("bendResult").textContent = "—";
+  document.getElementById("flatResult").textContent="—";
+  document.getElementById("outsideResult").textContent="—";
+  document.getElementById("totalBDResult").textContent="—";
+  document.getElementById("totalBAResult").textContent="—";
+  document.getElementById("bendResult").textContent="—";
 
-  document.getElementById("bendBreakdown").textContent =
+  document.getElementById("bendBreakdown").textContent=
     "Calculation details will appear here.";
 
-  document.getElementById("processList").innerHTML = `
+  document.getElementById("processList").innerHTML=`
     <li>Enter material, thickness, K-factor and bend details.</li>
-    <li>Enter the outside dimensions of all sides.</li>
+    <li>Enter outside dimensions of all sides.</li>
     <li>Click Calculate Development.</li>
   `;
 
   clearError();
 }
 
-document.getElementById("calculateBtn").addEventListener("click",calculate);
-document.getElementById("resetBtn").addEventListener("click",resetCalculator);
+// Button events
+document.getElementById("calculateBtn")
+  .addEventListener("click",calculate);
+
+document.getElementById("resetBtn")
+  .addEventListener("click",resetCalculator);
+
 bendCountInput.addEventListener("change",createInputs);
 
-document.getElementById("printBtn").addEventListener("click",()=>{
-  if(calculate()){
-    window.print();
-  }
-});
+document.getElementById("printBtn")
+  .addEventListener("click",()=>{
+    if(calculate()){
+      window.print();
+    }
+  });
 
+// Initial setup
 createInputs();
 </script>
 
