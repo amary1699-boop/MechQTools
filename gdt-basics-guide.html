@@ -1,0 +1,918 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GD&T Basics Guide - MechQTools</title>
+<meta name="description" content="Learn GD&T basics, datums, feature control frames, position, flatness, perpendicularity and engineering drawing inspection with practical examples.">
+
+<style>
+:root {
+    --primary: #e53232;
+    --primary-dark: #c82020;
+    --text: #222;
+    --muted: #666;
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --border: #e1e1e1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+}
+
+/* HEADER */
+header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: var(--primary);
+}
+
+.home-btn {
+    background: var(--primary);
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
+
+.home-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(135deg, #fff, #fceaea);
+    border-bottom: 1px solid var(--border);
+    padding: 42px 20px;
+}
+
+.hero-inner {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(28px, 5vw, 42px);
+    color: var(--primary);
+}
+
+.hero p {
+    max-width: 750px;
+    margin: 0;
+    font-size: 17px;
+    color: #444;
+}
+
+.breadcrumb {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* MAIN */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 28px 20px 40px;
+}
+
+.section {
+    margin-bottom: 28px;
+}
+
+.section h2 {
+    color: var(--primary);
+    font-size: 26px;
+    margin: 0 0 15px;
+}
+
+.section h3 {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 19px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.035);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.concept {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 9px;
+}
+
+.concept h3 {
+    color: var(--primary);
+    font-size: 17px;
+}
+
+.concept p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    background: #fff0f0;
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* HINDI EXPLANATION */
+.hindi {
+    background: #fff6f0;
+    border-left: 4px solid var(--primary);
+    padding: 13px 16px;
+    margin-top: 14px;
+    border-radius: 5px;
+}
+
+.hindi strong {
+    color: var(--primary-dark);
+}
+
+/* TABLE */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 11px;
+    text-align: left;
+}
+
+th {
+    background: #fff0f0;
+    color: #a51d1d;
+}
+
+/* FEATURE CONTROL FRAME */
+.fcf {
+    display: inline-flex;
+    align-items: stretch;
+    border: 2px solid #222;
+    background: white;
+    margin: 12px 0;
+    max-width: 100%;
+}
+
+.fcf span {
+    padding: 8px 12px;
+    border-right: 2px solid #222;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.fcf span:last-child {
+    border-right: none;
+}
+
+/* DIAGRAM */
+.diagram {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+}
+
+.diagram svg {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+.diagram-caption {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* CALLOUT */
+.callout {
+    background: #fff0f0;
+    border: 1px solid #ffd0d0;
+    padding: 18px;
+    border-radius: 9px;
+}
+
+.callout strong {
+    color: var(--primary);
+}
+
+/* FOOTER */
+footer {
+    background: #202020;
+    color: white;
+    padding: 28px 20px 15px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+footer h3 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+footer a {
+    color: #eee;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+
+footer a:hover {
+    color: #ff7777;
+}
+
+.copyright {
+    text-align: center;
+    border-top: 1px solid #444;
+    margin-top: 25px;
+    padding-top: 15px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .concept-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .concept-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 30px 16px;
+    }
+
+    .container {
+        padding: 20px 14px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    nav {
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .fcf span {
+        padding: 6px 8px;
+        font-size: 13px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    header, footer, .home-btn {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .card, .concept {
+        break-inside: avoid;
+        box-shadow: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-container">
+        <a href="index.html" class="logo">MechQTools</a>
+
+        <nav>
+            <a href="index.html#mechanical-tools">Mechanical</a>
+            <a href="index.html#quality-tools">Quality</a>
+            <a href="index.html#templates">Templates</a>
+            <a href="index.html#guides-section">Guides</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html" class="home-btn">Home</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-inner">
+        <h1>GD&T Basics Guide</h1>
+        <p>Understand Geometric Dimensioning and Tolerancing with practical engineering and inspection examples.</p>
+
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> &nbsp;›&nbsp;
+            <a href="index.html#guides-section">Guides</a> &nbsp;›&nbsp;
+            GD&T Basics
+        </div>
+    </div>
+</section>
+
+<main class="container">
+
+<!-- INTRODUCTION -->
+<section class="section">
+    <div class="grid">
+        <div class="card">
+            <h2>What is GD&T?</h2>
+            <p>
+                GD&T stands for <strong>Geometric Dimensioning and Tolerancing</strong>.
+                It is a standardized engineering language used to define acceptable
+                variation in the geometry of a component.
+            </p>
+            <p>
+                It controls features such as size, form, orientation, location
+                and relationship between different surfaces or axes.
+            </p>
+
+            <div class="hindi">
+                <strong>Hindi:</strong> GD&T drawing par part ki shape, position,
+                direction aur geometric variation ko clearly define karne ka
+                standard method hai.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Why Use GD&T?</h2>
+            <ul>
+                <li>Clear engineering drawing interpretation</li>
+                <li>Better manufacturing communication</li>
+                <li>Controlled assembly and fit</li>
+                <li>Consistent inspection method</li>
+                <li>Reduced rejection and manufacturing confusion</li>
+            </ul>
+
+            <div class="hindi">
+                <strong>Hindi:</strong> GD&T se manufacturing aur inspection team
+                ko pata chalta hai ki feature kitni variation ke saath acceptable hai.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DATUM -->
+<section class="section">
+    <h2>1. Datum A, B, C</h2>
+
+    <div class="card">
+        <h3>What is a Datum?</h3>
+        <p>
+            A datum is a theoretically exact reference used for measurement
+            and geometric control. A datum feature is the actual surface,
+            hole or feature used to establish that reference.
+        </p>
+
+        <div class="diagram">
+            <svg viewBox="0 0 400 210" role="img" aria-label="Datum reference illustration">
+                <rect x="90" y="45" width="220" height="120"
+                      fill="#f5f5f5" stroke="#222" stroke-width="2"/>
+                <line x1="90" y1="165" x2="310" y2="165"
+                      stroke="#e53232" stroke-width="5"/>
+                <line x1="90" y1="45" x2="90" y2="165"
+                      stroke="#2878d0" stroke-width="5"/>
+                <line x1="90" y1="45" x2="310" y2="45"
+                      stroke="#2b9b55" stroke-width="5"/>
+                <text x="190" y="190" text-anchor="middle"
+                      font-size="16" fill="#e53232">Datum A</text>
+                <text x="45" y="110" font-size="16"
+                      fill="#2878d0">B</text>
+                <text x="190" y="30" text-anchor="middle"
+                      font-size="16" fill="#2b9b55">C</text>
+            </svg>
+            <p class="diagram-caption">Illustration only — actual datum selection depends on drawing design.</p>
+        </div>
+
+        <ul>
+            <li><strong>Datum A:</strong> Primary reference</li>
+            <li><strong>Datum B:</strong> Secondary reference</li>
+            <li><strong>Datum C:</strong> Tertiary reference</li>
+        </ul>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Datum measurement ke liye reference hota hai.
+            A, B, C ka order drawing ke according primary, secondary aur tertiary
+            reference ko represent karta hai.
+        </div>
+
+        <div class="callout">
+            <strong>Important:</strong> Datum A, B, C ko apni taraf se assume nahi
+            karna chahiye. Drawing par specified datum features ko follow karein.
+        </div>
+    </div>
+</section>
+
+<!-- FEATURE CONTROL FRAME -->
+<section class="section">
+    <h2>2. Feature Control Frame (FCF)</h2>
+
+    <div class="card">
+        <p>
+            Feature Control Frame tells the geometric tolerance, tolerance value,
+            and applicable datum references.
+        </p>
+
+        <div class="fcf" aria-label="Position tolerance frame example">
+            <span>⌖</span>
+            <span>⌀ 0.10</span>
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+
+        <p><strong>Example interpretation:</strong></p>
+        <ul>
+            <li>⌖ = Position tolerance symbol</li>
+            <li>⌀ 0.10 = Cylindrical tolerance zone diameter 0.10 mm</li>
+            <li>A, B, C = Datum references</li>
+        </ul>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Feature Control Frame mein geometric symbol,
+            tolerance value aur datum references diye hote hain.
+            Isko complete drawing context ke saath read karna chahiye.
+        </div>
+    </div>
+</section>
+
+<!-- GD&T SYMBOLS -->
+<section class="section">
+    <h2>3. Important GD&T Controls</h2>
+
+    <div class="concept-grid">
+
+        <div class="concept">
+            <span class="badge">Form</span>
+            <h3>Flatness</h3>
+            <p>Surface ko do parallel planes ke beech control karta hai.</p>
+            <p><strong>Hindi:</strong> Surface kitni flat hai.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Form</span>
+            <h3>Straightness</h3>
+            <p>Line element ya axis ki straightness control karta hai.</p>
+            <p><strong>Hindi:</strong> Line ya axis kitni seedhi hai.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Form</span>
+            <h3>Circularity</h3>
+            <p>Each circular cross-section ki roundness control karta hai.</p>
+            <p><strong>Hindi:</strong> Circle kitna round hai.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Form</span>
+            <h3>Cylindricity</h3>
+            <p>Complete cylindrical surface form control karta hai.</p>
+            <p><strong>Hindi:</strong> Cylinder ki overall surface accuracy.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Orientation</span>
+            <h3>Parallelism</h3>
+            <p>Feature ko datum ke parallel control karta hai.</p>
+            <p><strong>Hindi:</strong> Do surfaces ya axes parallel rehna.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Orientation</span>
+            <h3>Perpendicularity</h3>
+            <p>90-degree relationship control karta hai.</p>
+            <p><strong>Hindi:</strong> Feature ka datum ke saath 90° relation.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Orientation</span>
+            <h3>Angularity</h3>
+            <p>Specified angle other than 90° control karta hai.</p>
+            <p><strong>Hindi:</strong> Drawing par diya hua angle maintain karna.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Location</span>
+            <h3>Position</h3>
+            <p>Hole, pin or feature location control karta hai.</p>
+            <p><strong>Hindi:</strong> Feature ki exact location control karna.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Profile</span>
+            <h3>Profile of Line</h3>
+            <p>2D profile variation control karta hai.</p>
+            <p><strong>Hindi:</strong> Cross-section ki shape control.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Profile</span>
+            <h3>Profile of Surface</h3>
+            <p>3D surface variation control karta hai.</p>
+            <p><strong>Hindi:</strong> Complete surface ki shape control.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Runout</span>
+            <h3>Circular Runout</h3>
+            <p>Rotation ke during individual circular elements variation.</p>
+            <p><strong>Hindi:</strong> Ghumane par ek circular section ka variation.</p>
+        </div>
+
+        <div class="concept">
+            <span class="badge">Runout</span>
+            <h3>Total Runout</h3>
+            <p>Rotation ke during complete surface variation.</p>
+            <p><strong>Hindi:</strong> Ghumane par complete surface ka variation.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- MMC LMC -->
+<section class="section">
+    <h2>4. MMC, LMC and RFS</h2>
+
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modifier</th>
+                        <th>Full Form</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ⓜ MMC</td>
+                        <td>Maximum Material Condition</td>
+                        <td>Feature contains maximum material.</td>
+                    </tr>
+                    <tr>
+                        <td>Ⓛ LMC</td>
+                        <td>Least Material Condition</td>
+                        <td>Feature contains minimum material.</td>
+                    </tr>
+                    <tr>
+                        <td>RFS</td>
+                        <td>Regardless of Feature Size</td>
+                        <td>Tolerance does not vary with feature size.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Hole Example</h3>
+        <p>Hole size: 10.00 ± 0.10 mm</p>
+        <ul>
+            <li>MMC hole size = 9.90 mm (smallest hole)</li>
+            <li>LMC hole size = 10.10 mm (largest hole)</li>
+        </ul>
+
+        <h3>Shaft Example</h3>
+        <p>Shaft size: 10.00 ± 0.10 mm</p>
+        <ul>
+            <li>MMC shaft size = 10.10 mm (largest shaft)</li>
+            <li>LMC shaft size = 9.90 mm (smallest shaft)</li>
+        </ul>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Hole mein material zyada hone ka matlab hole chhota.
+            Shaft mein material zyada hone ka matlab shaft bada.
+            Isliye MMC hole aur MMC shaft ki direction opposite hoti hai.
+        </div>
+
+        <div class="callout">
+            <strong>Note:</strong> Bonus tolerance aur virtual condition tabhi
+            calculate karein jab drawing par applicable material condition
+            modifier aur required dimensions clearly specified hon.
+        </div>
+    </div>
+</section>
+
+<!-- PRACTICAL EXAMPLES -->
+<section class="section">
+    <h2>5. Practical Inspection Examples</h2>
+
+    <div class="card">
+        <h3>Example 1: Hole Position</h3>
+        <p>
+            A plate has four holes. Drawing specifies position tolerance
+            relative to Datum A, B and C.
+        </p>
+
+        <div class="fcf">
+            <span>⌖</span>
+            <span>⌀ 0.10</span>
+            <span>A</span>
+            <span>B</span>
+            <span>C</span>
+        </div>
+
+        <p><strong>Inspection:</strong></p>
+        <ul>
+            <li>Establish datum reference frame as drawing specifies.</li>
+            <li>Measure hole axes/centers using suitable equipment.</li>
+            <li>Compare actual position with specified tolerance zone.</li>
+        </ul>
+
+        <p><strong>Equipment:</strong> CMM, suitable functional gauge or other
+        approved method depending on drawing and tolerance.</p>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Hole ka center drawing ke specified position
+            tolerance zone ke andar hona chahiye.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Example 2: Flatness</h3>
+        <p>Drawing specifies Flatness 0.05 mm.</p>
+
+        <div class="fcf">
+            <span>▱</span>
+            <span>0.05</span>
+        </div>
+
+        <p><strong>Meaning:</strong> Controlled surface must lie between two
+        parallel planes separated by 0.05 mm.</p>
+
+        <p><strong>Inspection:</strong> Suitable surface plate, height gauge,
+        dial indicator or CMM method as appropriate.</p>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Surface ka total form variation 0.05 mm
+            tolerance ke andar hona chahiye. Flatness ke liye datum reference
+            required nahi hota.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Example 3: Perpendicularity</h3>
+        <p>Drawing specifies perpendicularity 0.05 mm relative to Datum A.</p>
+
+        <div class="fcf">
+            <span>⊥</span>
+            <span>0.05</span>
+            <span>A</span>
+        </div>
+
+        <p><strong>Meaning:</strong> Controlled feature must remain within the
+        specified perpendicular tolerance zone relative to Datum A.</p>
+
+        <p><strong>Inspection:</strong> Surface plate, square, dial indicator,
+        CMM or another suitable method.</p>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Feature ko Datum A ke reference mein 90°
+            relationship maintain karna hai, specified tolerance ke andar.
+        </div>
+    </div>
+</section>
+
+<!-- DRAWING READING -->
+<section class="section">
+    <h2>6. How to Read GD&T on a Drawing</h2>
+
+    <div class="card">
+        <ol>
+            <li>Identify the controlled feature.</li>
+            <li>Read the geometric characteristic symbol.</li>
+            <li>Read tolerance value and tolerance zone.</li>
+            <li>Check datum references and their sequence.</li>
+            <li>Check MMC/LMC modifier if present.</li>
+            <li>Understand the tolerance zone shape and orientation.</li>
+            <li>Select a suitable inspection method.</li>
+            <li>Record actual measurement and acceptance result.</li>
+        </ol>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Drawing mein pehle feature identify karein,
+            phir symbol, tolerance, datum aur modifier read karein.
+            Uske baad inspection method decide karein.
+        </div>
+    </div>
+</section>
+
+<!-- COMMON MISTAKES -->
+<section class="section">
+    <h2>7. Common GD&T Mistakes</h2>
+
+    <div class="card">
+        <ul>
+            <li>Datum sequence ko ignore karna.</li>
+            <li>Size tolerance ko geometric tolerance samajhna.</li>
+            <li>MMC/LMC modifier ko incorrectly apply karna.</li>
+            <li>Flatness ko parallelism samajhna.</li>
+            <li>Position tolerance ko simple coordinate tolerance samajhna.</li>
+            <li>Wrong datum setup se inspection karna.</li>
+            <li>Drawing ke standard aur revision ko check na karna.</li>
+        </ul>
+
+        <div class="hindi">
+            <strong>Hindi:</strong> Sirf symbol dekh kar inspection mat karein.
+            Feature, datum setup aur complete drawing requirement ko saath mein read karein.
+        </div>
+    </div>
+</section>
+
+<!-- QUICK REVISION -->
+<section class="section">
+    <h2>8. Quick Revision for Quality Engineers</h2>
+
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Control</th>
+                        <th>Quick Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Flatness</td><td>Surface form</td></tr>
+                    <tr><td>Parallelism</td><td>Parallel relationship</td></tr>
+                    <tr><td>Perpendicularity</td><td>90° relationship</td></tr>
+                    <tr><td>Position</td><td>Feature location</td></tr>
+                    <tr><td>Profile</td><td>Line or surface shape</td></tr>
+                    <tr><td>Circular Runout</td><td>Individual circular section variation</td></tr>
+                    <tr><td>Total Runout</td><td>Complete surface variation</td></tr>
+                    <tr><td>Datum</td><td>Measurement reference</td></tr>
+                    <tr><td>MMC</td><td>Maximum material</td></tr>
+                    <tr><td>LMC</td><td>Least material</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- IMPORTANT NOTE -->
+<section class="section">
+    <div class="callout">
+        <strong>Engineering Note:</strong>
+        GD&T interpretation should follow the drawing's specified standard,
+        such as ASME Y14.5 or ISO GPS, and its applicable edition.
+        ASME and ISO rules are not automatically interchangeable.
+        For production inspection, use the approved drawing, datum setup,
+        measurement method and acceptance criteria.
+    </div>
+</section>
+
+<section class="section">
+    <div class="card" style="text-align:center;">
+        <h2>Improve Your GD&T Knowledge</h2>
+        <p>Learn drawing interpretation, datum selection and practical inspection step by step.</p>
+        <a href="index.html#quality-tools"
+           style="display:inline-block;background:#e53232;color:white;padding:11px 22px;border-radius:7px;text-decoration:none;font-weight:bold;">
+            Explore Quality Tools →
+        </a>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>MechQTools</h3>
+            <p>Engineering &amp; Quality Tools for Professionals.</p>
+        </div>
+
+        <div>
+            <strong>Quick Links</strong>
+            <a href="index.html">Home</a>
+            <a href="index.html#mechanical-tools">Mechanical Tools</a>
+            <a href="index.html#quality-tools">Quality Tools</a>
+            <a href="index.html#templates">Templates</a>
+        </div>
+
+        <div>
+            <strong>Resources</strong>
+            <a href="index.html#guides-section">Engineering Guides</a>
+            <a href="index.html#about">About</a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        © 2026 MechQTools. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>
