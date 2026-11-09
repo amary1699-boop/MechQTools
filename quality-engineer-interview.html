@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quality Engineer Interview Questions & Answers | MechQTools</title>
+<meta name="description" content="Prepare for Quality Engineer interviews with practical questions and answers on quality core tools, sheet metal inspection, GD&T, instruments, PPAP, APQP, FMEA, SPC and manufacturing.">
+
+<style>
+:root{
+  --red:#e53232;
+  --dark:#222;
+  --muted:#666;
+  --border:#e5e5e5;
+  --bg:#f7f8fa;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+  line-height:1.65;
+}
+header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+.navbar{
+  max-width:1200px;
+  margin:auto;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.logo{
+  font-size:25px;
+  font-weight:700;
+  color:var(--red);
+  text-decoration:none;
+}
+.home-btn{
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  padding:9px 18px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+}
+.container{
+  max-width:1100px;
+  width:94%;
+  margin:25px auto;
+}
+.hero{
+  background:#fff;
+  text-align:center;
+  padding:38px 20px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  margin-bottom:20px;
+}
+.hero h1{
+  font-size:30px;
+  line-height:1.3;
+  margin-bottom:10px;
+}
+.hero h1 span{color:var(--red)}
+.hero p{
+  color:var(--muted);
+  max-width:750px;
+  margin:auto;
+}
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+.btn{
+  display:inline-block;
+  padding:10px 17px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+  border:0;
+  cursor:pointer;
+  font-size:14px;
+}
+.btn-primary{background:var(--red);color:#fff}
+.btn-dark{background:#333;color:#fff}
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:18px;
+}
+.card h2{
+  font-size:21px;
+  margin-bottom:14px;
+  padding-bottom:9px;
+  border-bottom:2px solid var(--red);
+}
+.card h3{
+  font-size:17px;
+  margin:15px 0 8px;
+}
+.card p{margin:7px 0}
+.muted{color:var(--muted)}
+.search-box{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:7px;
+  font-size:15px;
+  margin:8px 0 12px;
+}
+.category-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+.category-nav a{
+  text-decoration:none;
+  color:var(--red);
+  border:1px solid #f0bcbc;
+  background:#fff8f8;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+.question{
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin:10px 0;
+  overflow:hidden;
+}
+.question summary{
+  cursor:pointer;
+  list-style:none;
+  padding:13px 15px;
+  font-weight:700;
+  background:#fafafa;
+  position:relative;
+  padding-right:40px;
+}
+.question summary::-webkit-details-marker{display:none}
+.question summary:after{
+  content:"+";
+  position:absolute;
+  right:15px;
+  color:var(--red);
+  font-size:20px;
+  top:8px;
+}
+.question[open] summary:after{content:"−"}
+.answer{
+  padding:14px 16px;
+  border-top:1px solid var(--border);
+}
+.answer p{margin:7px 0}
+.answer strong{color:#333}
+.answer ul{padding-left:22px;margin:8px 0}
+.answer li{margin:4px 0}
+.english{
+  background:#f7f8fa;
+  border-left:3px solid var(--red);
+  padding:10px 12px;
+  margin-top:10px;
+  border-radius:4px;
+}
+.tag{
+  display:inline-block;
+  background:#fceaea;
+  color:#bd2222;
+  padding:3px 8px;
+  border-radius:4px;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+.tip{
+  background:#fff8e8;
+  border-left:4px solid #e5a000;
+  padding:13px;
+  border-radius:5px;
+  margin-top:12px;
+  font-size:14px;
+}
+.table-wrap{overflow-x:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:500px;
+  font-size:14px;
+}
+th,td{
+  border:1px solid var(--border);
+  padding:10px;
+  text-align:left;
+}
+th{background:#f5f5f5}
+.no-result{
+  display:none;
+  color:#b00020;
+  padding:15px 0;
+  font-weight:600;
+}
+.checklist{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.check-item{
+  border:1px solid var(--border);
+  padding:10px;
+  border-radius:6px;
+  font-size:14px;
+}
+.check-item input{margin-right:7px}
+footer{
+  background:#151515;
+  color:#fff;
+  margin-top:30px;
+}
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:35px 20px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:30px;
+}
+.footer-logo{
+  color:var(--red);
+  font-size:23px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+.footer-text{color:#aaa;font-size:14px}
+.footer-column h4{margin-bottom:10px}
+.footer-column a{
+  display:block;
+  color:#aaa;
+  text-decoration:none;
+  margin-bottom:7px;
+  font-size:14px;
+}
+.footer-column a:hover{color:#fff}
+.copyright{
+  border-top:1px solid #333;
+  text-align:center;
+  padding:16px;
+  color:#888;
+  font-size:13px;
+}
+@media(max-width:700px){
+  html{scroll-padding-top:85px}
+  .navbar{padding:12px 15px}
+  .logo{font-size:22px}
+  .hero h1{font-size:24px}
+  .container{margin:15px auto}
+  .card{padding:14px}
+  .card h2{font-size:19px}
+  .checklist{grid-template-columns:1fr}
+  .footer-container{grid-template-columns:1fr;gap:22px}
+}
+@media print{
+  header,.hero-buttons,.search-box,.category-nav,footer,
+  .print-hide{display:none!important}
+  body{background:#fff}
+  .container{width:100%;max-width:none;margin:0}
+  .card{box-shadow:none;break-inside:avoid}
+  .question{break-inside:avoid}
+  .question:not([open]) .answer{display:block}
+  .question summary:after{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <a href="index.html" class="logo">MechQTools</a>
+    <a href="index.html" class="home-btn">⌂ Home</a>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <h1>Quality Engineer <span>Interview Preparation</span></h1>
+  <p>
+    Practical interview questions and answers for Quality Engineers,
+    Manufacturing Engineers and Sheet Metal Quality Professionals.
+    Learn concepts in Hindi and practice professional answers in English.
+  </p>
+
+  <div class="hero-buttons">
+    <a href="#basic" class="btn btn-primary">Start Preparation</a>
+    <button class="btn btn-dark" onclick="window.print()">Print / Save PDF</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2>How to Use This Interview Guide</h2>
+  <ul style="padding-left:22px">
+    <li>पहले question पढ़ें और खुद answer देने की कोशिश करें।</li>
+    <li>फिर answer खोलकर concept समझें।</li>
+    <li>English answer को अपने शब्दों में बोलने की practice करें।</li>
+    <li>अपने वास्तविक work experience के अनुसार examples जोड़ें।</li>
+  </ul>
+  <div class="tip">
+    <strong>Interview Tip:</strong> केवल definition याद न करें।
+    Interviewer अक्सर पूछता है कि आपने इस tool या inspection method को
+    अपने plant में कैसे use किया है।
+  </div>
+</section>
+
+<section class="card">
+  <h2>Search Interview Questions</h2>
+  <input type="search" id="questionSearch" class="search-box"
+    placeholder="Search: PPAP, GD&T, CMM, 8D, Sheet Metal...">
+  <div class="category-nav">
+    <a href="#basic">Basic</a>
+    <a href="#inspection">Inspection</a>
+    <a href="#gdt">GD&T</a>
+    <a href="#coretools">Core Tools</a>
+    <a href="#sheetmetal">Sheet Metal</a>
+    <a href="#scenario">Practical Questions</a>
+    <a href="#hr">HR Questions</a>
+  </div>
+  <p class="no-result" id="noResult">No matching questions found.</p>
+</section>
+
+<!-- BASIC -->
+
+<section class="card question-section" id="basic">
+<h2>1. Basic Quality Engineering Questions</h2>
+
+<details class="question">
+<summary>Q1. What is Quality?</summary>
+<div class="answer">
+<p><strong>हिंदी में:</strong> Quality का मतलब है product का customer की requirements, drawing specifications और applicable standards के अनुसार होना।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Quality is the ability of a product or service to meet customer requirements, specifications and applicable standards consistently.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q2. What is the difference between Quality Assurance and Quality Control?</summary>
+<div class="answer">
+<p><strong>Quality Assurance (QA):</strong> Process को सही बनाने और defects रोकने पर focus करता है।</p>
+<p><strong>Quality Control (QC):</strong> Product या process output को inspect करके defects identify करता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Quality Assurance is process-oriented and focuses on defect prevention, whereas Quality Control is product-oriented and focuses on identifying defects through inspection and testing.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q3. What is the difference between Inspection and Testing?</summary>
+<div class="answer">
+<p>Inspection में product की dimensions, appearance और specified characteristics check की जाती हैं। Testing में material या product की performance और properties verify की जाती हैं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Inspection verifies product characteristics against specifications, while testing evaluates product performance or properties using a defined test method.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q4. What is a Non-Conformity?</summary>
+<div class="answer">
+<p>जब product, process या documentation किसी specified requirement को पूरा नहीं करता, तो उसे Non-Conformity कहते हैं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+A non-conformity is the failure to meet a specified requirement, drawing specification, customer requirement or applicable standard.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q5. What is the difference between Correction and Corrective Action?</summary>
+<div class="answer">
+<p><strong>Correction:</strong> अभी मिले defect को ठीक करना या defective part को अलग करना।</p>
+<p><strong>Corrective Action:</strong> Defect के root cause को हटाना ताकि वह दोबारा न हो।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Correction fixes the detected non-conformity, whereas corrective action eliminates its root cause to prevent recurrence.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q6. What is Preventive Action?</summary>
+<div class="answer">
+<p>Preventive approach में potential problem को होने से पहले identify करके risk कम किया जाता है। Modern ISO 9001 risk-based thinking पर जोर देता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Preventive action is an action taken to eliminate the cause of a potential non-conformity or reduce the risk of its occurrence.</div>
+</div>
+</details>
+</section>
+
+<!-- INSPECTION -->
+
+<section class="card question-section" id="inspection">
+<h2>2. Inspection & Measuring Instruments</h2>
+
+<details class="question">
+<summary>Q7. What is a Vernier Caliper?</summary>
+<div class="answer">
+<p>Vernier Caliper से external, internal और depth dimensions measure कर सकते हैं। इसकी least count instrument के design पर depend करती है; common metric vernier में 0.02 mm हो सकती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+A Vernier Caliper is a precision measuring instrument used to measure external dimensions, internal dimensions and depth.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q8. What is a Micrometer?</summary>
+<div class="answer">
+<p>Micrometer एक precision instrument है जिसका उपयोग thickness, outside diameter या inside dimensions measure करने के लिए किया जाता है। Instrument range और type के अनुसार least count बदलती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+A micrometer is a precision measuring instrument used for accurate measurement of small dimensions, such as thickness and diameter.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q9. What is Least Count?</summary>
+<div class="answer">
+<p>किसी measuring instrument से पढ़ी जा सकने वाली सबसे छोटी measurement increment को Least Count कहते हैं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Least count is the smallest value that can be measured or read by a measuring instrument.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q10. What is Calibration?</summary>
+<div class="answer">
+<p>Instrument की reading को known reference standard से compare करना Calibration है। इससे measurement reliability और traceability सुनिश्चित करने में मदद मिलती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Calibration is the comparison of an instrument's measurement against a known reference standard to establish its measurement accuracy and traceability.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q11. What is a CMM?</summary>
+<div class="answer">
+<p>CMM यानी Coordinate Measuring Machine। इससे probe की सहायता से X, Y और Z coordinates measure करके dimensions, position, profile और geometry inspect की जाती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+A Coordinate Measuring Machine is used to measure the geometric characteristics of a component by collecting coordinate points in three-dimensional space.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q12. What is the difference between Accuracy and Precision?</summary>
+<div class="answer">
+<p><strong>Accuracy:</strong> Measurement true/reference value के कितने करीब है।</p>
+<p><strong>Precision:</strong> Repeated measurements आपस में कितनी close हैं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Accuracy indicates closeness to the true value, whereas precision indicates the closeness of repeated measurements to each other.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q13. What is a First Piece Inspection?</summary>
+<div class="answer">
+<p>Production शुरू होने पर पहली तैयार component की drawing और inspection plan के अनुसार complete checking करना First Piece Inspection है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+First Piece Inspection is the verification of the first manufactured component against all specified drawing and quality requirements before proceeding with regular production.</div>
+</div>
+</details>
+</section>
+
+<!-- GDT -->
+
+<section class="card question-section" id="gdt">
+<h2>3. GD&T and Drawing Questions</h2>
+
+<details class="question">
+<summary>Q14. What is GD&T?</summary>
+<div class="answer">
+<p>GD&amp;T यानी Geometric Dimensioning and Tolerancing। यह engineering drawing पर size, form, orientation, location और runout requirements को define करने की standardized language है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+GD&amp;T is a symbolic engineering language used to define and control the geometric requirements of a component on an engineering drawing.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q15. What is a Datum?</summary>
+<div class="answer">
+<p>Datum एक theoretically exact reference है, जिसे actual part पर datum feature से establish किया जाता है। इसका उपयोग measurement और geometric tolerancing के लिए किया जाता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+A datum is a theoretically exact reference used to establish a coordinate system for measurement and geometric tolerancing.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q16. What is Flatness?</summary>
+<div class="answer">
+<p>Flatness एक form tolerance है। यह surface को दो parallel planes के बीच सीमित करती है। Flatness control के लिए datum की आवश्यकता नहीं होती।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Flatness is a form tolerance that controls how much a surface may deviate from a perfectly flat condition within two parallel planes.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q17. What is Perpendicularity?</summary>
+<div class="answer">
+<p>Perpendicularity एक orientation tolerance है, जो किसी feature को 90° orientation में datum के reference में control करती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Perpendicularity is an orientation control that specifies how perpendicular a surface, axis or feature must be to a referenced datum.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q18. What is Position Tolerance?</summary>
+<div class="answer">
+<p>Position tolerance किसी feature की theoretically exact location के आसपास allowable positional variation control करती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Position tolerance controls the allowable variation in the location of a feature, such as a hole or pin, relative to its theoretically exact position.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q19. What is the difference between MMC and LMC?</summary>
+<div class="answer">
+<p><strong>MMC:</strong> Feature of size में सबसे अधिक material condition। Hole के लिए smallest diameter और shaft के लिए largest diameter।</p>
+<p><strong>LMC:</strong> Feature of size में सबसे कम material condition। Hole के लिए largest diameter और shaft के लिए smallest diameter।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Maximum Material Condition is the condition where a feature contains the maximum amount of material, while Least Material Condition is the condition where it contains the minimum amount of material.</div>
+</div>
+</details>
+</section>
+
+<!-- CORE TOOLS -->
+
+<section class="card question-section" id="coretools">
+<h2>4. Quality Core Tools</h2>
+
+<details class="question">
+<summary>Q20. What are the 7 Quality Management Principles or 7 QC Tools?</summary>
+<div class="answer">
+<p>ध्यान दें: 7 QC Tools और Quality Management Principles अलग concepts हैं। Traditional 7 QC Tools हैं:</p>
+<ul>
+<li>Check Sheet</li>
+<li>Histogram</li>
+<li>Pareto Chart</li>
+<li>Cause and Effect Diagram</li>
+<li>Control Chart</li>
+<li>Scatter Diagram</li>
+<li>Stratification / Flow Chart (कई practical lists में Flow Chart या अन्य tool शामिल किया जाता है)</li>
+</ul>
+<div class="english"><strong>Interview Answer:</strong><br>
+The seven basic QC tools are used to collect, analyze, visualize and control quality-related data to identify and solve process problems.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q21. What is Pareto Analysis?</summary>
+<div class="answer">
+<p>Pareto Analysis में defects को frequency या impact के आधार पर rank किया जाता है। इससे major problems पर priority तय करने में मदद मिलती है। 80/20 एक common guideline है, fixed rule नहीं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Pareto Analysis is a prioritization technique used to identify the most significant causes or categories contributing to a problem.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q22. What is 5 Why Analysis?</summary>
+<div class="answer">
+<p>Problem का root cause जानने के लिए बार-बार Why पूछा जाता है। हर problem के लिए ठीक पाँच बार Why पूछना जरूरी नहीं है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+5 Why Analysis is a root cause analysis technique in which repeated questioning helps identify the underlying cause of a problem.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q23. What is an 8D Report?</summary>
+<div class="answer">
+<p>8D एक structured problem-solving method है:</p>
+<ul>
+<li>D1: Establish the team</li>
+<li>D2: Describe the problem</li>
+<li>D3: Develop interim containment actions</li>
+<li>D4: Identify and verify root causes</li>
+<li>D5: Choose permanent corrective actions</li>
+<li>D6: Implement and validate actions</li>
+<li>D7: Prevent recurrence</li>
+<li>D8: Recognize the team and close the problem</li>
+</ul>
+<div class="english"><strong>Interview Answer:</strong><br>
+8D is a structured problem-solving methodology used to identify root causes, implement corrective actions and prevent recurrence of quality problems.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q24. What is APQP?</summary>
+<div class="answer">
+<p>APQP यानी Advanced Product Quality Planning। यह product development और launch के दौरान quality planning के लिए structured framework है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+APQP is a structured approach used to plan and manage product quality activities throughout product development and launch.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q25. What is PPAP?</summary>
+<div class="answer">
+<p>PPAP यानी Production Part Approval Process। इसमें supplier production process और part को customer requirements के अनुसार demonstrate करता है। Automotive industry में submission level और customer-specific requirements लागू होते हैं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+PPAP is a process used to demonstrate that the supplier understands all customer engineering design records and specifications and can consistently produce parts meeting those requirements.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q26. What is FMEA?</summary>
+<div class="answer">
+<p>FMEA यानी Failure Mode and Effects Analysis। इसमें potential failure modes, उनके effects, causes और risk को evaluate किया जाता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+FMEA is a systematic method used to identify potential failure modes, evaluate their effects and causes, and prioritize actions to reduce risk.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q27. What is MSA and Gauge R&amp;R?</summary>
+<div class="answer">
+<p>MSA यानी Measurement System Analysis। Gauge R&amp;R measurement system में Repeatability और Reproducibility variation को evaluate करता है।</p>
+<ul>
+<li>Repeatability: Same operator, same instrument, same part और same conditions में variation.</li>
+<li>Reproducibility: Different operators के बीच measurement variation.</li>
+</ul>
+<div class="english"><strong>Interview Answer:</strong><br>
+MSA evaluates the measurement system. Gauge R&amp;R studies repeatability and reproducibility to understand measurement variation.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q28. What is SPC, Cp and Cpk?</summary>
+<div class="answer">
+<p>SPC यानी Statistical Process Control। Control charts से process behavior monitor किया जाता है।</p>
+<p><strong>Cp:</strong> Process spread की तुलना specification width से करता है।</p>
+<p><strong>Cpk:</strong> Process spread और specification के बीच process centering को भी consider करता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+SPC uses statistical methods to monitor process performance. Cp measures potential process capability, while Cpk considers both process spread and centering relative to specification limits.</div>
+</div>
+</details>
+</section>
+
+<!-- SHEET METAL -->
+
+<section class="card question-section" id="sheetmetal">
+<h2>5. Sheet Metal Quality & Manufacturing Questions</h2>
+
+<details class="question">
+<summary>Q29. What is Bend Allowance?</summary>
+<div class="answer">
+<p>Bend Allowance bend के curved portion की neutral axis पर developed length है।</p>
+<p><strong>Formula:</strong> BA = (π / 180) × Bend Angle × (R + K × T)</p>
+<p>जहाँ R = Inside Radius, T = Thickness और K = K-Factor है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Bend Allowance is the length of the neutral axis material consumed in the curved portion of a sheet metal bend.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q30. What is Bend Deduction?</summary>
+<div class="answer">
+<p>Bend Deduction वह value है जिसे formed outside dimensions के total से subtract करके flat blank length calculate की जाती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Bend Deduction is the amount subtracted from the sum of outside flange dimensions to calculate the flat pattern length.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q31. What is K-Factor?</summary>
+<div class="answer">
+<p>K-Factor neutral axis की inside surface से दूरी और sheet thickness का ratio है। इसकी value material, thickness, radius और bending process के अनुसार बदल सकती है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+K-Factor is the ratio of the distance of the neutral axis from the inside surface to the total material thickness.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q32. What is Springback?</summary>
+<div class="answer">
+<p>Bending के बाद load हटाने पर material elastic recovery के कारण थोड़ा वापस खुलता है। इसे Springback कहते हैं।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Springback is the elastic recovery of sheet metal after the bending force is removed, resulting in a change in the final bend angle or radius.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q33. What is the difference between Punch and Die?</summary>
+<div class="answer">
+<p>Punch ऊपर का tool है जो sheet को push करता है। Die नीचे का tool है जो sheet को support और form करता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+The punch applies force to form the sheet metal, while the die supports and shapes the material during the bending operation.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q34. What are common sheet metal defects?</summary>
+<div class="answer">
+<ul>
+<li>Cracks</li>
+<li>Wrinkles</li>
+<li>Surface scratches</li>
+<li>Dimensional variation</li>
+<li>Springback</li>
+<li>Twist and distortion</li>
+<li>Hole position mismatch</li>
+<li>Burrs and edge defects</li>
+<li>Tool marks and dents</li>
+</ul>
+<div class="english"><strong>Interview Answer:</strong><br>
+Common sheet metal defects include cracks, wrinkles, scratches, dimensional variation, springback, distortion, burrs and hole position mismatch.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q35. What is the purpose of a Bumping Operation?</summary>
+<div class="answer">
+<p>Bumping में कई छोटे bends लगाकर एक बड़ा radius या curved profile बनाया जाता है। हर hit के angle और bend-line spacing से final profile प्रभावित होता है।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+Bumping is a sheet metal forming method in which multiple small bends are applied at calculated intervals to produce a larger-radius curve.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q36. How do you inspect a sheet metal bending component?</summary>
+<div class="answer">
+<p>Inspection में drawing और control plan के अनुसार ये checks किए जा सकते हैं:</p>
+<ul>
+<li>Material grade and thickness</li>
+<li>Overall length, width and height</li>
+<li>Bend angle and inside radius</li>
+<li>Hole diameter and position</li>
+<li>Flatness, perpendicularity and profile</li>
+<li>Visual defects and surface condition</li>
+</ul>
+<div class="english"><strong>Interview Answer:</strong><br>
+I inspect sheet metal components according to the drawing and control plan. I check material, thickness, dimensions, bend angles, radius, hole positions, geometry and visual defects using suitable calibrated instruments and gauges.</div>
+</div>
+</details>
+</section>
+
+<!-- SCENARIO -->
+
+<section class="card question-section" id="scenario">
+<h2>6. Practical & Scenario-Based Questions</h2>
+
+<details class="question">
+<summary>Q37. If a dimension is out of tolerance, what will you do?</summary>
+<div class="answer">
+<p>पहले measurement confirm करें, instrument और drawing revision check करें। फिर affected parts identify करके containment करें और root cause investigate करें। Approved corrective action के बाद re-inspection करें।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+First, I verify the measurement and check the drawing revision and measuring instrument. Then I segregate the affected parts, inform the concerned team, investigate the root cause, implement approved corrective action and verify the results.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q38. What will you do if production asks you to accept a rejected part?</summary>
+<div class="answer">
+<p>बिना approval के rejected part accept नहीं करना चाहिए। Specification, evidence और risk के आधार पर authorized quality/customer approval process follow करना चाहिए।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+I will not accept a non-conforming part without proper authorization. I will verify the specification, document the non-conformity and follow the approved deviation or concession process, if applicable.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q39. How will you handle a customer complaint?</summary>
+<div class="answer">
+<p>Complaint को record करें, stock और in-transit material contain करें, problem verify करें, root cause निकालें, corrective action implement करें और effectiveness verify करके customer को evidence के साथ response दें।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+I will register the complaint, initiate containment, verify the issue, identify the root cause, implement corrective actions and provide evidence of effectiveness to the customer.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q40. If the same defect occurs repeatedly, what will you do?</summary>
+<div class="answer">
+<p>Repeated defect के लिए केवल operator को blame नहीं करना चाहिए। Process parameters, machine, tooling, material, method, measurement और environment investigate करें।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+I will analyze the process using data and root cause analysis tools. I will investigate machine, material, method, manpower, measurement and environmental factors, then implement and verify permanent corrective actions.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q41. How do you control rejection in production?</summary>
+<div class="answer">
+<p>Defect data collect करें, Pareto analysis करें, high-risk processes identify करें, first-piece inspection, in-process inspection, process monitoring और corrective actions लागू करें।</p>
+<div class="english"><strong>Interview Answer:</strong><br>
+I control rejection through process monitoring, first-piece and in-process inspection, defect analysis, standardization, operator training and corrective action verification.</div>
+</div>
+</details>
+</section>
+
+<!-- HR -->
+
+<section class="card question-section" id="hr">
+<h2>7. HR & Personal Interview Questions</h2>
+
+<details class="question">
+<summary>Q42. Tell me about yourself.</summary>
+<div class="answer">
+<p>नीचे एक sample है। अपनी actual qualification, company और experience के अनुसार इसे बदलें।</p>
+<div class="english"><strong>Sample Answer:</strong><br>
+Good morning, sir/madam. My name is Amar Kumar Yadav. I am from Bihar and currently living in Pune. I have completed my B.Tech in Mechanical Engineering. I am working as a Quality Engineer in the sheet metal manufacturing field. My work involves component inspection, drawing interpretation, dimensional checking and quality documentation. I am interested in learning new technologies and improving my technical and professional skills. Thank you.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q43. What are your strengths?</summary>
+<div class="answer">
+<p>ऐसी strength बताएं जिसका example आप दे सकें।</p>
+<div class="english"><strong>Sample Answer:</strong><br>
+My strengths are that I am a quick learner, responsible and willing to learn new things. I focus on understanding problems and improving my work.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q44. What is your weakness?</summary>
+<div class="answer">
+<p>ऐसी weakness बताएं जिस पर आप सुधार कर रहे हों।</p>
+<div class="english"><strong>Sample Answer:</strong><br>
+Sometimes I trust people easily. I am improving by verifying information, communicating clearly and making decisions based on facts.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q45. Why should we hire you?</summary>
+<div class="answer">
+<div class="english"><strong>Sample Answer:</strong><br>
+You should hire me because I have practical experience in sheet metal quality inspection, I understand engineering drawings and dimensional requirements, and I am willing to learn and contribute to improving product quality.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q46. Why do you want to change your job?</summary>
+<div class="answer">
+<p>पुरानी company की बुराई न करें। Growth और learning पर focus रखें।</p>
+<div class="english"><strong>Sample Answer:</strong><br>
+I am looking for better learning opportunities, more technical responsibilities and professional growth. I want to improve my knowledge and contribute to a well-established organization.</div>
+</div>
+</details>
+
+<details class="question">
+<summary>Q47. Where do you see yourself in five years?</summary>
+<div class="answer">
+<div class="english"><strong>Sample Answer:</strong><br>
+In five years, I want to become a skilled Quality Engineer with strong knowledge of quality systems, customer requirements, problem-solving and process improvement. I also want to take greater responsibilities in the organization.</div>
+</div>
+</details>
+
+</section>
+
+<section class="card">
+<h2>8. Important Interview Revision Checklist</h2>
+<p class="muted">Interview से पहले इन topics की तैयारी check करें:</p>
+<div class="checklist">
+  <label class="check-item"><input type="checkbox"> Engineering drawing reading</label>
+  <label class="check-item"><input type="checkbox"> GD&amp;T symbols and datums</label>
+  <label class="check-item"><input type="checkbox"> Vernier and Micrometer</label>
+  <label class="check-item"><input type="checkbox"> CMM basics</label>
+  <label class="check-item"><input type="checkbox"> 7 QC Tools</label>
+  <label class="check-item"><input type="checkbox"> 5 Why and 8D</label>
+  <label class="check-item"><input type="checkbox"> APQP and PPAP</label>
+  <label class="check-item"><input type="checkbox"> FMEA</label>
+  <label class="check-item"><input type="checkbox"> MSA and Gauge R&amp;R</label>
+  <label class="check-item"><input type="checkbox"> SPC, Cp and Cpk</label>
+  <label class="check-item"><input type="checkbox"> Sheet metal bending</label>
+  <label class="check-item"><input type="checkbox"> Bend Allowance and Deduction</label>
+  <label class="check-item"><input type="checkbox"> First Piece Inspection</label>
+  <label class="check-item"><input type="checkbox"> Customer complaint handling</label>
+  <label class="check-item"><input type="checkbox"> Root cause analysis</label>
+  <label class="check-item"><input type="checkbox"> Self introduction in English</label>
+</div>
+<div class="tip">
+  Checklist की selection इसी browser page पर बनी रहेगी, लेकिन page refresh करने पर reset हो सकती है।
+</div>
+</section>
+
+<section class="card">
+<h2>9. Important Note</h2>
+<p>
+These questions are a preparation guide, not a guarantee of interview selection.
+Actual interview questions depend on the company, job description, industry,
+customer requirements and your experience.
+</p>
+<p>
+For standards-based topics, always refer to the applicable latest standard
+and customer-specific requirements.
+</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-container">
+    <div>
+      <div class="footer-logo">MechQTools</div>
+      <p class="footer-text">
+        Engineering &amp; Quality Tools for Professionals.
+        Free calculators, practical engineering resources and professional templates.
+      </p>
+    </div>
+    <div class="footer-column">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="index.html#mechanical-tools">Mechanical Tools</a>
+      <a href="index.html#quality-tools">Quality Tools</a>
+    </div>
+    <div class="footer-column">
+      <h4>Resources</h4>
+      <a href="index.html#guides-section">Engineering Guides</a>
+      <a href="index.html#about">About</a>
+    </div>
+  </div>
+  <div class="copyright">© 2026 MechQTools. All Rights Reserved.</div>
+</footer>
+
+<script>
+const searchInput = document.getElementById("questionSearch");
+const questions = [...document.querySelectorAll(".question")];
+const sections = [...document.querySelectorAll(".question-section")];
+const noResult = document.getElementById("noResult");
+
+searchInput.addEventListener("input", function(){
+  const query = this.value.trim().toLowerCase();
+  let visibleCount = 0;
+
+  questions.forEach(question => {
+    const match = question.textContent.toLowerCase().includes(query);
+    question.style.display = match ? "" : "none";
+    if(match) visibleCount++;
+  });
+
+  sections.forEach(section => {
+    const visible = [...section.querySelectorAll(".question")]
+      .some(q => q.style.display !== "none");
+    section.style.display = visible ? "" : "none";
+  });
+
+  noResult.style.display = visibleCount ? "none" : "block";
+});
+</script>
+
+</body>
+</html>
