@@ -1,0 +1,1015 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Welding Inspection Report Template - MechQTools</title>
+<meta name="description" content="Create and print professional welding inspection reports with weld details, visual inspection results, defects and acceptance status.">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f8fa;
+    color: #222;
+    line-height: 1.6;
+}
+
+header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    color: #e53232;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.home-btn {
+    background: #e53232;
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.home-btn:hover {
+    background: #c92727;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.page-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-heading p {
+    color: #666;
+}
+
+.panel {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    font-size: 21px;
+    border-bottom: 2px solid #e53232;
+    padding-bottom: 9px;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.field label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font: inherit;
+    font-size: 14px;
+    background: #fff;
+}
+
+.field textarea {
+    min-height: 75px;
+    resize: vertical;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 9px;
+    text-align: left;
+    font-size: 13px;
+}
+
+th {
+    background: #f1f1f1;
+    white-space: nowrap;
+}
+
+td input,
+td select {
+    width: 100%;
+    min-width: 85px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+    font-size: 13px;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.summary-box {
+    background: #f7f8fa;
+    border: 1px solid #e5e5e5;
+    border-radius: 7px;
+    text-align: center;
+    padding: 15px;
+}
+
+.summary-box strong {
+    display: block;
+    font-size: 25px;
+}
+
+.summary-box span {
+    color: #666;
+    font-size: 13px;
+}
+
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    padding: 11px 17px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #e53232;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #c92727;
+}
+
+.btn-secondary {
+    background: #333;
+    color: #fff;
+}
+
+.btn-light {
+    background: #eee;
+    color: #222;
+}
+
+.delete-btn {
+    background: #e53232;
+    color: white;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.note {
+    background: #fff8e8;
+    border-left: 4px solid #e5a323;
+    padding: 12px;
+    font-size: 13px;
+    color: #555;
+    margin-top: 15px;
+}
+
+footer {
+    background: #151515;
+    color: #fff;
+    margin-top: 30px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.footer-logo {
+    color: #e53232;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.footer-text {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.copyright {
+    border-top: 1px solid #333;
+    text-align: center;
+    padding: 17px;
+    color: #888;
+    font-size: 13px;
+}
+
+@media(max-width: 800px) {
+    .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media(max-width: 600px) {
+    .navbar {
+        padding: 12px 15px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .container {
+        padding: 25px 12px;
+    }
+
+    .page-heading h1 {
+        font-size: 24px;
+    }
+
+    .panel {
+        padding: 17px 13px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        flex: 1 1 100%;
+    }
+}
+
+/* PRINT REPORT */
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 10px;
+    }
+
+    header,
+    footer,
+    .page-heading,
+    .no-print,
+    .note {
+        display: none !important;
+    }
+
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    .panel {
+        border: none;
+        padding: 5px 0;
+        margin: 0 0 12px;
+        border-radius: 0;
+        break-inside: avoid;
+    }
+
+    .panel h2 {
+        font-size: 14px;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .field label {
+        font-size: 9px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+        border: none;
+        border-bottom: 1px solid #777;
+        border-radius: 0;
+        padding: 3px 0;
+        font-size: 10px;
+        background: transparent;
+        color: #000;
+        appearance: none;
+    }
+
+    .field textarea {
+        min-height: 35px;
+    }
+
+    .table-wrap {
+        overflow: visible;
+    }
+
+    table {
+        min-width: 0;
+        width: 100%;
+    }
+
+    th, td {
+        font-size: 8px;
+        padding: 5px;
+        color: #000;
+    }
+
+    td input,
+    td select {
+        min-width: 0;
+        width: 100%;
+        padding: 2px;
+        border: none;
+        background: transparent;
+        font-size: 8px;
+        color: #000;
+        appearance: none;
+    }
+
+    .delete-column {
+        display: none !important;
+    }
+
+    .summary {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .summary-box {
+        padding: 7px;
+    }
+
+    .summary-box strong {
+        font-size: 16px;
+    }
+
+    .summary-box span {
+        font-size: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+        <a href="index.html" class="logo">MechQTools</a>
+        <a href="index.html" class="home-btn">← Home</a>
+    </div>
+</header>
+
+<main class="container">
+
+<div class="page-heading">
+    <h1>Welding Inspection Report Template</h1>
+    <p>Create, record and print professional welding inspection reports.</p>
+</div>
+
+<!-- REPORT INFORMATION -->
+
+<section class="panel">
+    <h2>1. Report Information</h2>
+
+    <div class="form-grid">
+
+        <div class="field">
+            <label>Report Number</label>
+            <input type="text" placeholder="e.g. WIR-001">
+        </div>
+
+        <div class="field">
+            <label>Inspection Date</label>
+            <input type="date">
+        </div>
+
+        <div class="field">
+            <label>Customer / Client</label>
+            <input type="text" placeholder="Customer name">
+        </div>
+
+        <div class="field">
+            <label>Company Name</label>
+            <input type="text" placeholder="Company name">
+        </div>
+
+        <div class="field">
+            <label>Project / Job Name</label>
+            <input type="text" placeholder="Project name">
+        </div>
+
+        <div class="field">
+            <label>Part / Component Name</label>
+            <input type="text" placeholder="Component name">
+        </div>
+
+        <div class="field">
+            <label>Part Number</label>
+            <input type="text" placeholder="Part number">
+        </div>
+
+        <div class="field">
+            <label>Drawing Number</label>
+            <input type="text" placeholder="Drawing number">
+        </div>
+
+        <div class="field">
+            <label>Drawing Revision</label>
+            <input type="text" placeholder="Revision">
+        </div>
+
+        <div class="field">
+            <label>Material Grade</label>
+            <input type="text" placeholder="e.g. IS 2062 E250">
+        </div>
+
+        <div class="field">
+            <label>Material Thickness (mm)</label>
+            <input type="number" step="any" placeholder="Thickness">
+        </div>
+
+        <div class="field">
+            <label>Quantity Inspected</label>
+            <input type="number" min="0" placeholder="Quantity">
+        </div>
+
+    </div>
+</section>
+
+<!-- WELDING DETAILS -->
+
+<section class="panel">
+    <h2>2. Welding Process Details</h2>
+
+    <div class="form-grid">
+
+        <div class="field">
+            <label>Welding Process</label>
+            <select>
+                <option value="">Select Process</option>
+                <option>SMAW / ARC Welding</option>
+                <option>GMAW / MIG-MAG Welding</option>
+                <option>GTAW / TIG Welding</option>
+                <option>Resistance Spot Welding</option>
+                <option>SAW / Submerged Arc Welding</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>WPS Number</label>
+            <input type="text" placeholder="WPS reference">
+        </div>
+
+        <div class="field">
+            <label>Welder ID</label>
+            <input type="text" placeholder="Welder identification">
+        </div>
+
+        <div class="field">
+            <label>Filler Material</label>
+            <input type="text" placeholder="Filler material / electrode">
+        </div>
+
+        <div class="field">
+            <label>Welding Position</label>
+            <select>
+                <option value="">Select Position</option>
+                <option>Flat (1G / 1F)</option>
+                <option>Horizontal (2G / 2F)</option>
+                <option>Vertical (3G / 3F)</option>
+                <option>Overhead (4G / 4F)</option>
+                <option>Pipe 5G</option>
+                <option>Pipe 6G</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Inspection Type</label>
+            <select>
+                <option>Visual Inspection (VT)</option>
+                <option>Dimensional Inspection</option>
+                <option>Visual + Dimensional</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+    </div>
+</section>
+
+<!-- WELD INSPECTION TABLE -->
+
+<section class="panel">
+    <h2>3. Weld-wise Inspection Details</h2>
+
+    <div class="table-wrap">
+        <table id="weldTable">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Weld ID / Location</th>
+                    <th>Joint Type</th>
+                    <th>Weld Type</th>
+                    <th>Required Size (mm)</th>
+                    <th>Actual Size (mm)</th>
+                    <th>Visual Inspection</th>
+                    <th>Defect / Observation</th>
+                    <th>Result</th>
+                    <th class="delete-column no-print">Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="weldBody">
+                <tr>
+                    <td class="sr">1</td>
+                    <td><input type="text" placeholder="W1"></td>
+                    <td>
+                        <select>
+                            <option value="">Select</option>
+                            <option>Butt</option>
+                            <option>Fillet</option>
+                            <option>Lap</option>
+                            <option>T-Joint</option>
+                            <option>Corner</option>
+                            <option>Edge</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select>
+                            <option value="">Select</option>
+                            <option>Continuous</option>
+                            <option>Intermittent</option>
+                        </select>
+                    </td>
+                    <td><input type="number" step="any" placeholder="Required"></td>
+                    <td><input type="number" step="any" placeholder="Actual"></td>
+                    <td>
+                        <select>
+                            <option value="">Select</option>
+                            <option>Acceptable</option>
+                            <option>Not Acceptable</option>
+                            <option>Not Applicable</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="Observation"></td>
+                    <td>
+                        <select class="result">
+                            <option value="">Select</option>
+                            <option>PASS</option>
+                            <option>FAIL</option>
+                            <option>HOLD</option>
+                        </select>
+                    </td>
+                    <td class="delete-column no-print">
+                        <button type="button" class="delete-btn" onclick="deleteRow(this)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-row no-print">
+        <button type="button" class="btn btn-primary" onclick="addRow()">+ Add Weld Row</button>
+    </div>
+
+    <div class="summary">
+        <div class="summary-box">
+            <strong id="totalCount">1</strong>
+            <span>Total Weld Records</span>
+        </div>
+
+        <div class="summary-box">
+            <strong id="passCount">0</strong>
+            <span>PASS</span>
+        </div>
+
+        <div class="summary-box">
+            <strong id="failCount">0</strong>
+            <span>FAIL</span>
+        </div>
+    </div>
+</section>
+
+<!-- DEFECT CHECKLIST -->
+
+<section class="panel">
+    <h2>4. Common Welding Defect Inspection</h2>
+
+    <div class="form-grid">
+
+        <div class="field">
+            <label>Cracks</label>
+            <select>
+                <option value="">Select</option>
+                <option>No visible crack</option>
+                <option>Crack observed</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Porosity</label>
+            <select>
+                <option value="">Select</option>
+                <option>Not observed</option>
+                <option>Observed</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Undercut</label>
+            <select>
+                <option value="">Select</option>
+                <option>Not observed</option>
+                <option>Observed</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Spatter</label>
+            <select>
+                <option value="">Select</option>
+                <option>Acceptable</option>
+                <option>Not Acceptable</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Incomplete Fusion</label>
+            <select>
+                <option value="">Select</option>
+                <option>Not observed</option>
+                <option>Observed</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Overlap</label>
+            <select>
+                <option value="">Select</option>
+                <option>Not observed</option>
+                <option>Observed</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Crater / End Defect</label>
+            <select>
+                <option value="">Select</option>
+                <option>Acceptable</option>
+                <option>Not Acceptable</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Weld Profile</label>
+            <select>
+                <option value="">Select</option>
+                <option>Acceptable</option>
+                <option>Not Acceptable</option>
+                <option>Not inspected</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="note">
+        Note: Visual observations alone cannot confirm internal weld quality.
+        Use specified NDT methods such as PT, MT, UT or RT when required by
+        the approved inspection plan.
+    </div>
+</section>
+
+<!-- NDT DETAILS -->
+
+<section class="panel">
+    <h2>5. NDT Details (If Applicable)</h2>
+
+    <div class="form-grid">
+
+        <div class="field">
+            <label>NDT Method</label>
+            <select>
+                <option value="">Not Applicable / Select</option>
+                <option>PT - Liquid Penetrant Testing</option>
+                <option>MT - Magnetic Particle Testing</option>
+                <option>UT - Ultrasonic Testing</option>
+                <option>RT - Radiographic Testing</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>NDT Report Number</label>
+            <input type="text" placeholder="Report reference">
+        </div>
+
+        <div class="field">
+            <label>NDT Result</label>
+            <select>
+                <option value="">Select</option>
+                <option>Acceptable</option>
+                <option>Not Acceptable</option>
+                <option>Pending</option>
+                <option>Not Applicable</option>
+            </select>
+        </div>
+
+    </div>
+</section>
+
+<!-- FINAL RESULT -->
+
+<section class="panel">
+    <h2>6. Final Inspection Result & Remarks</h2>
+
+    <div class="form-grid">
+
+        <div class="field">
+            <label>Overall Inspection Result</label>
+            <select>
+                <option value="">Select Result</option>
+                <option>ACCEPTED</option>
+                <option>REJECTED</option>
+                <option>HOLD</option>
+                <option>CONDITIONAL ACCEPTANCE</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Inspected By</label>
+            <input type="text" placeholder="Inspector name">
+        </div>
+
+        <div class="field">
+            <label>Approved By</label>
+            <input type="text" placeholder="Approver name">
+        </div>
+
+        <div class="field full-width">
+            <label>Remarks / Corrective Action</label>
+            <textarea placeholder="Enter inspection remarks, rejection details or corrective actions..."></textarea>
+        </div>
+
+    </div>
+</section>
+
+<!-- SIGNATURE -->
+
+<section class="panel">
+    <h2>7. Inspection Approval</h2>
+
+    <div class="form-grid">
+
+        <div class="field">
+            <label>Inspector Signature / Name</label>
+            <input type="text" placeholder="Name / Signature reference">
+        </div>
+
+        <div class="field">
+            <label>Quality In-charge</label>
+            <input type="text" placeholder="Name / Signature reference">
+        </div>
+
+        <div class="field">
+            <label>Approval Date</label>
+            <input type="date">
+        </div>
+
+    </div>
+</section>
+
+<div class="btn-row no-print">
+    <button type="button" class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    <button type="button" class="btn btn-secondary" onclick="addRow()">+ Add Weld Row</button>
+    <button type="button" class="btn btn-light" onclick="resetForm()">Reset Form</button>
+</div>
+
+<div class="note no-print">
+    <strong>Important:</strong> This is a general inspection record template.
+    Always use the approved drawing, WPS, applicable welding standard,
+    customer specification and inspection acceptance criteria for final decisions.
+</div>
+
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">MechQTools</div>
+        <p class="footer-text">
+            Engineering &amp; Quality Tools for Professionals.
+            Free calculators, practical engineering resources and professional templates.
+        </p>
+    </div>
+
+    <div class="copyright">
+        © 2026 MechQTools. All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+const weldBody = document.getElementById("weldBody");
+
+function addRow() {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td class="sr"></td>
+        <td><input type="text" placeholder="Weld ID"></td>
+        <td>
+            <select>
+                <option value="">Select</option>
+                <option>Butt</option>
+                <option>Fillet</option>
+                <option>Lap</option>
+                <option>T-Joint</option>
+                <option>Corner</option>
+                <option>Edge</option>
+            </select>
+        </td>
+        <td>
+            <select>
+                <option value="">Select</option>
+                <option>Continuous</option>
+                <option>Intermittent</option>
+            </select>
+        </td>
+        <td><input type="number" step="any" placeholder="Required"></td>
+        <td><input type="number" step="any" placeholder="Actual"></td>
+        <td>
+            <select>
+                <option value="">Select</option>
+                <option>Acceptable</option>
+                <option>Not Acceptable</option>
+                <option>Not Applicable</option>
+            </select>
+        </td>
+        <td><input type="text" placeholder="Observation"></td>
+        <td>
+            <select class="result">
+                <option value="">Select</option>
+                <option>PASS</option>
+                <option>FAIL</option>
+                <option>HOLD</option>
+            </select>
+        </td>
+        <td class="delete-column no-print">
+            <button type="button" class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        </td>
+    `;
+
+    weldBody.appendChild(row);
+    updateSummary();
+}
+
+function deleteRow(button) {
+    if (weldBody.rows.length <= 1) {
+        alert("At least one weld row is required.");
+        return;
+    }
+
+    button.closest("tr").remove();
+    updateSummary();
+}
+
+function updateSummary() {
+    const rows = weldBody.querySelectorAll("tr");
+    let pass = 0;
+    let fail = 0;
+
+    rows.forEach((row, index) => {
+        row.querySelector(".sr").textContent = index + 1;
+
+        const result = row.querySelector(".result").value;
+
+        if (result === "PASS") pass++;
+        if (result === "FAIL") fail++;
+    });
+
+    document.getElementById("totalCount").textContent = rows.length;
+    document.getElementById("passCount").textContent = pass;
+    document.getElementById("failCount").textContent = fail;
+}
+
+weldBody.addEventListener("change", function(event) {
+    if (event.target.classList.contains("result")) {
+        updateSummary();
+    }
+});
+
+function resetForm() {
+    if (!confirm("Are you sure you want to clear all report data?")) {
+        return;
+    }
+
+    document.querySelectorAll("main input, main select, main textarea").forEach(field => {
+        if (field.tagName === "SELECT") {
+            field.selectedIndex = 0;
+        } else {
+            field.value = "";
+        }
+    });
+
+    weldBody.innerHTML = "";
+    addRow();
+    updateSummary();
+}
+
+window.addEventListener("beforeprint", updateSummary);
+
+updateSummary();
+</script>
+
+</body>
+</html>
