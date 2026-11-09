@@ -4,120 +4,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Sheet Metal Development Calculator - MechQTools</title>
-<meta name="description" content="Calculate multi-bend sheet metal flat development length with bend allowance, radius, thickness and K-factor.">
+<meta name="description" content="Calculate sheet metal flat pattern length, bend allowance and bend deduction for C-channel, U-channel and other sheet metal profiles.">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--red:#e53232;--dark:#202124;--muted:#687385;--line:#e5e7eb;--bg:#f7f8fa}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
-a{text-decoration:none;color:inherit}
-
-/* HEADER */
-header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-.navbar{max-width:1200px;margin:auto;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-size:25px;font-weight:800;color:var(--red)}
-.nav-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.nav-links a{font-size:14px;color:#444}
-.nav-links a:hover{color:var(--red)}
-.home-btn{background:var(--red);color:#fff!important;padding:9px 16px;border-radius:6px}
-
-/* PAGE */
-.page{max-width:1200px;margin:auto;padding:35px 20px 50px}
-.page-title{text-align:center;font-size:34px;margin-bottom:8px}
-.page-title span{color:var(--red)}
-.subtitle{text-align:center;color:var(--muted);max-width:780px;margin:0 auto 30px}
-.layout{display:grid;grid-template-columns:1.35fr .85fr;gap:22px;align-items:start}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:20px;box-shadow:0 3px 15px rgba(0,0,0,.04);overflow:hidden}
-.card-header{padding:17px 20px;border-bottom:1px solid var(--line);font-size:19px;font-weight:700}
-.card-body{padding:20px}
-.section-heading{font-size:16px;font-weight:700;margin-bottom:15px}
-
-/* FORM */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-group{margin-bottom:15px}
-.form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
-.form-group input,.form-group select{
- width:100%;padding:11px;border:1px solid #ccc;border-radius:6px;
- font-size:15px;background:#fff;outline:none
+:root{
+  --red:#e53232;
+  --dark:#222;
+  --text:#333;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --bg:#f5f6f8;
+  --white:#fff;
+  --green:#16834a;
 }
-.form-group input:focus,.form-group select:focus{border-color:var(--red)}
-.help{font-size:12px;color:var(--muted);margin-top:5px}
-hr{border:0;border-top:1px solid var(--line);margin:22px 0}
-
-/* BEND ROWS */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:530px}
-th,td{padding:10px;border:1px solid var(--line);text-align:left;font-size:13px}
-th{background:#f7f8fa}
-td input,td select{width:100%;min-width:75px;padding:8px;border:1px solid #ccc;border-radius:5px;font-size:14px}
-.segment-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.segment-box{background:#fafafa;border:1px solid var(--line);border-radius:7px;padding:12px}
-.segment-box label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
-.segment-box input{width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;font-size:14px}
-
-/* BUTTONS */
-.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.btn{border:0;border-radius:6px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer}
-.btn-primary{background:var(--red);color:#fff}
-.btn-primary:hover{background:#c92727}
-.btn-secondary{background:#f0f1f3;color:#333}
-.btn-secondary:hover{background:#e3e4e6}
-.btn-outline{background:#fff;color:var(--red);border:1px solid var(--red)}
-
-/* GEOMETRY */
-#geometry{width:100%;height:auto;min-height:240px;display:block;background:#fafbfe;border:1px solid var(--line);border-radius:7px}
-.geometry-note{font-size:12px;color:var(--muted);margin-top:10px}
-
-/* RESULTS */
-.result-main{padding:20px;background:#fff4f4;border-bottom:1px solid #f2dada}
-.result-label{font-size:13px;font-weight:700;color:#7c4444}
-.result-value{font-size:36px;color:var(--red);font-weight:800;margin-top:5px;overflow-wrap:anywhere}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px}
-.metric{border:1px solid var(--line);border-radius:7px;padding:13px}
-.metric span{display:block;color:var(--muted);font-size:12px}
-.metric strong{font-size:19px}
-.result-details{padding:0 18px 18px}
-.process{padding:18px}
-.process-step{padding:13px;border:1px solid var(--line);border-radius:7px;margin-bottom:10px;font-size:13px;background:#fff}
-.process-step strong{display:block;margin-bottom:7px}
-.formula{background:#f7f8fa;padding:10px;border-radius:5px;margin:7px 0;font-family:Consolas,monospace;overflow-wrap:anywhere}
-.status{display:none;padding:11px;border-radius:6px;margin-top:15px;font-size:13px}
-.status.error{display:block;background:#fff0f0;color:#a51d1d}
-.status.success{display:block;background:#effaf3;color:#17633b}
-.note{font-size:13px;color:#666;background:#f8f8f8;border:1px solid var(--line);padding:12px;border-radius:6px;margin-top:12px}
-
-/* FOOTER */
-footer{background:#171717;color:#fff;margin-top:25px}
-.footer-container{max-width:1200px;margin:auto;padding:40px 20px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
-.footer-logo{font-size:23px;color:var(--red);font-weight:800;margin-bottom:10px}
-.footer-text,.footer-column a{color:#aaa;font-size:14px}
-.footer-column h4{margin-bottom:12px}
-.footer-column a{display:block;margin-bottom:8px}
-.footer-column a:hover{color:#fff}
-.copyright{text-align:center;border-top:1px solid #333;padding:16px;color:#999;font-size:13px}
-
-/* RESPONSIVE */
-@media(max-width:850px){
- .layout{grid-template-columns:1fr}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-@media(max-width:600px){
- .navbar{flex-direction:column}
- .nav-links{justify-content:center;gap:12px}
- .page{padding:25px 12px}
- .page-title{font-size:27px}
- .card-body{padding:15px}
- .form-grid,.segment-grid{grid-template-columns:1fr}
- .buttons{flex-direction:column}
- .btn{width:100%}
- .footer-container{grid-template-columns:1fr}
+header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.logo{
+  font-size:23px;
+  font-weight:800;
+  color:var(--red);
+  text-decoration:none;
+}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{
+  color:#333;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+}
+nav a:hover{color:var(--red)}
+.home-btn{
+  background:var(--red);
+  color:#fff;
+  text-decoration:none;
+  padding:9px 17px;
+  border-radius:6px;
+  font-size:14px;
+  font-weight:bold;
+}
+.container{
+  max-width:1250px;
+  margin:28px auto;
+  padding:0 18px;
+}
+.page-heading{text-align:center;margin-bottom:25px}
+.page-heading h1{margin:0 0 8px;font-size:28px;color:#222}
+.page-heading p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.main-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);
+  gap:20px;
+  align-items:start;
+}
+.panel{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:21px;
+  margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.035);
+}
+.panel h2{
+  font-size:19px;
+  margin:0 0 17px;
+  color:#222;
+  padding-bottom:11px;
+  border-bottom:1px solid var(--border);
+}
+.panel h3{font-size:16px;margin:18px 0 12px}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+.field input,.field select{
+  width:100%;
+  padding:11px 10px;
+  border:1px solid #d5d8de;
+  border-radius:6px;
+  font-size:14px;
+  background:#fff;
+  color:#222;
+}
+.field input:focus,.field select:focus{
+  outline:none;
+  border-color:var(--red);
+  box-shadow:0 0 0 2px rgba(229,50,50,.1);
+}
+.unit{font-size:11px;color:var(--muted);margin-top:4px}
+.bend-card,.side-card{
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:14px;
+  margin:12px 0;
+  background:#fcfcfd;
+}
+.bend-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+  font-weight:700;
+  font-size:14px;
+}
+.bend-title span{color:var(--red)}
+.segment-title{
+  font-weight:700;
+  font-size:14px;
+  margin:16px 0 10px;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+button{
+  border:0;
+  border-radius:6px;
+  padding:12px 18px;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+}
+.primary{background:var(--red);color:#fff}
+.secondary{background:#f0f1f3;color:#333}
+button:hover{opacity:.9}
+.result-box{
+  background:#fff8f8;
+  border:1px solid #f3caca;
+  border-radius:9px;
+  padding:17px;
+}
+.result-label{font-size:13px;color:#666;font-weight:700}
+.result-value{
+  font-size:32px;
+  font-weight:800;
+  color:var(--red);
+  margin:7px 0;
+}
+.result-unit{font-size:14px;color:#555}
+.result-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.result-item{
+  background:#f7f7f8;
+  padding:12px;
+  border-radius:7px;
+}
+.result-item small{display:block;color:#666;font-size:12px}
+.result-item strong{display:block;margin-top:5px;font-size:17px}
+.geometry-wrap{
+  background:#fafafa;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px;
+  min-height:230px;
+}
+#geometry{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:210px;
+}
+.geometry-note{
+  font-size:12px;
+  color:#777;
+  line-height:1.5;
+  margin:9px 0 0;
+}
+.process{
+  margin:0;
+  padding-left:20px;
+  line-height:1.8;
+  font-size:13px;
+}
+.process li{margin-bottom:7px}
+.process strong{color:#222}
+.error{
+  display:none;
+  background:#fff0f0;
+  border:1px solid #f1b7b7;
+  color:#a40000;
+  padding:11px;
+  border-radius:6px;
+  font-size:13px;
+  margin-top:12px;
+}
+.formula{
+  background:#f7f7f8;
+  border-radius:7px;
+  padding:13px;
+  font-size:13px;
+  line-height:1.8;
+  overflow-wrap:anywhere;
+}
+.formula strong{color:#222}
+footer{
+  background:#222;
+  color:#ddd;
+  text-align:center;
+  padding:22px 12px;
+  margin-top:35px;
+  font-size:13px;
+}
+footer a{color:#fff;text-decoration:none;margin:0 8px}
+@media(max-width:800px){
+  .main-grid{grid-template-columns:1fr}
+  header{padding:14px 18px}
+  nav{order:3;width:100%;gap:13px}
+}
+@media(max-width:480px){
+  .form-grid{grid-template-columns:1fr}
+  .panel{padding:15px}
+  .page-heading h1{font-size:23px}
+  .result-value{font-size:28px}
 }
 @media print{
- header,footer,.subtitle,.buttons,.no-print{display:none!important}
- body{background:#fff}
- .page{padding:0}
- .layout{display:block}
- .card{box-shadow:none;break-inside:avoid}
+  header,footer,.actions,.page-heading p{display:none!important}
+  body{background:#fff}
+  .container{margin:0;max-width:100%}
+  .panel{box-shadow:none;break-inside:avoid}
+  .main-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -125,477 +259,538 @@ footer{background:#171717;color:#fff;margin-top:25px}
 <body>
 
 <header>
- <div class="navbar">
-  <a href="index.html" class="logo">MechQTools</a>
-  <nav class="nav-links">
-   <a href="index.html" class="home-btn">Home</a>
-   <a href="index.html#mechanical">Mechanical</a>
-   <a href="index.html#quality">Quality</a>
-   <a href="index.html#templates">Templates</a>
-   <a href="index.html#guides">Guides</a>
-   <a href="index.html#about">About</a>
+  <a class="logo" href="index.html">MechQTools</a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#mechanical">Mechanical</a>
+    <a href="index.html#quality">Quality</a>
+    <a href="index.html#templates">Templates</a>
+    <a href="index.html#guides">Guides</a>
+    <a href="index.html#about">About</a>
   </nav>
- </div>
+
+  <a class="home-btn" href="index.html">Home</a>
 </header>
 
-<main class="page">
+<main class="container">
 
-<h1 class="page-title">Sheet Metal <span>Development Calculator</span></h1>
-<p class="subtitle">Calculate flat development length for multiple sheet metal bends with individual bend angles, radii and directions.</p>
-
-<div class="layout">
-
-<!-- LEFT SIDE -->
-<div>
-
-<div class="card">
- <div class="card-header">Material & Sheet Details</div>
- <div class="card-body">
-
-  <div class="form-grid">
-
-   <div class="form-group">
-    <label>Material Type</label>
-    <select id="material">
-     <option>MS / Mild Steel</option>
-     <option>GI / Galvanized Steel</option>
-     <option>SS / Stainless Steel</option>
-     <option>Aluminium</option>
-     <option>Other</option>
-    </select>
-   </div>
-
-   <div class="form-group">
-    <label>Sheet Thickness T (mm)</label>
-    <input type="number" id="thickness" min="0.01" step="any" value="2">
-   </div>
-
-   <div class="form-group">
-    <label>K-Factor</label>
-    <input type="number" id="kfactor" min="0" max="1" step="any" value="0.33">
-    <div class="help">Enter the K-factor suitable for your material and tooling.</div>
-   </div>
-
-   <div class="form-group">
-    <label>Number of Bends</label>
-    <input type="number" id="bendCount" min="1" max="50" step="1" value="2">
-   </div>
-
+  <div class="page-heading">
+    <h1>Sheet Metal Development Calculator</h1>
+    <p>Calculate flat pattern length using outside dimensions and bend deduction.</p>
   </div>
 
-  <div class="buttons">
-   <button class="btn btn-secondary" id="updateBtn">Update Bend Details</button>
+  <div class="main-grid">
+
+    <!-- LEFT SIDE -->
+    <div>
+
+      <section class="panel">
+        <h2>1. Material & Sheet Details</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="material">Material Type</label>
+            <select id="material">
+              <option value="MS">MS - Mild Steel</option>
+              <option value="GI">GI - Galvanized Iron</option>
+              <option value="CR">CR - Cold Rolled</option>
+              <option value="HR">HR - Hot Rolled</option>
+              <option value="SS">SS - Stainless Steel</option>
+              <option value="AL">Aluminium</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="thickness">Sheet Thickness (T)</label>
+            <input type="number" id="thickness" value="3" min="0.01" step="any">
+            <div class="unit">Unit: mm</div>
+          </div>
+
+          <div class="field">
+            <label for="kfactor">K-Factor</label>
+            <input type="number" id="kfactor" value="0.33" min="0" max="1" step="0.01">
+            <div class="unit">Range: 0 to 1</div>
+          </div>
+
+          <div class="field">
+            <label for="bendCount">Number of Bends</label>
+            <input type="number" id="bendCount" value="2" min="1" max="50" step="1">
+            <div class="unit">Maximum 50 bends</div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>2. Outside Side Dimensions</h2>
+        <p style="font-size:13px;color:#666;line-height:1.6;margin-top:-5px">
+          Enter each side's outside dimension. For a C-channel with 3 sides, enter 50, 50 and 50 mm.
+        </p>
+
+        <div id="sideInputs"></div>
+      </section>
+
+      <section class="panel">
+        <h2>3. Bend Details</h2>
+        <p style="font-size:13px;color:#666;line-height:1.6;margin-top:-5px">
+          Enter the inside radius and bend angle for every bend.
+        </p>
+
+        <div id="bendInputs"></div>
+
+        <div class="actions">
+          <button class="primary" id="calculateBtn" type="button">Calculate Development</button>
+          <button class="secondary" id="resetBtn" type="button">Reset</button>
+        </div>
+
+        <div class="error" id="errorBox"></div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div>
+
+      <section class="panel">
+        <h2>4. Profile Geometry</h2>
+
+        <div class="geometry-wrap">
+          <svg id="geometry" viewBox="0 0 420 260" role="img" aria-label="Sheet metal profile schematic">
+            <text x="210" y="125" text-anchor="middle" fill="#777" font-size="14">
+              Enter dimensions and calculate
+            </text>
+          </svg>
+        </div>
+
+        <p class="geometry-note">
+          Schematic profile only. It shows the bend sequence and is not a scale-accurate CAD drawing.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>5. Calculation Result</h2>
+
+        <div class="result-box">
+          <div class="result-label">TOTAL FLAT / DEVELOPED LENGTH</div>
+          <div class="result-value" id="flatResult">—</div>
+          <div class="result-unit">mm</div>
+        </div>
+
+        <div class="result-list">
+          <div class="result-item">
+            <small>Total Outside Dimensions</small>
+            <strong id="outsideResult">—</strong>
+          </div>
+          <div class="result-item">
+            <small>Total Bend Deduction</small>
+            <strong id="totalBDResult">—</strong>
+          </div>
+          <div class="result-item">
+            <small>Total Bend Allowance</small>
+            <strong id="totalBAResult">—</strong>
+          </div>
+          <div class="result-item">
+            <small>Number of Bends</small>
+            <strong id="bendResult">—</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>6. Bend-wise Calculation</h2>
+        <div id="bendBreakdown" style="font-size:13px;line-height:1.7;color:#555">
+          Calculation details will appear here.
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>7. Calculation Process</h2>
+        <ol class="process" id="processList">
+          <li>Enter material, thickness, K-factor and bend details.</li>
+          <li>Enter the outside dimensions of all sides.</li>
+          <li>Click Calculate Development.</li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>Formula Used</h2>
+        <div class="formula">
+          <strong>Bend Allowance (BA)</strong><br>
+          BA = (π / 180) × Angle × (R + K × T)<br><br>
+
+          <strong>Outside Setback (OSSB)</strong><br>
+          OSSB = (R + T) × tan(Angle / 2)<br><br>
+
+          <strong>Bend Deduction (BD)</strong><br>
+          BD = 2 × OSSB − BA<br><br>
+
+          <strong>Flat Length</strong><br>
+          Flat Length = Total Outside Dimensions − Total BD
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="secondary" id="printBtn" type="button">Print Result</button>
+      </div>
+
+    </div>
   </div>
-
-  <hr>
-
-  <h3 class="section-heading">Bend Details</h3>
-
-  <div class="table-wrap">
-   <table id="bendTable">
-    <thead>
-     <tr>
-      <th>Bend</th>
-      <th>Direction</th>
-      <th>Angle (°)</th>
-      <th>Inside Radius (mm)</th>
-     </tr>
-    </thead>
-    <tbody></tbody>
-   </table>
-  </div>
-
-  <hr>
-
-  <h3 class="section-heading">Straight Length Details</h3>
-  <p class="help" style="margin-bottom:12px">
-   Enter straight lengths between bend tangent points. For N bends, enter N+1 straight lengths.
-  </p>
-
-  <div class="segment-grid" id="segments"></div>
-
-  <div id="status" class="status"></div>
-
-  <div class="buttons">
-   <button class="btn btn-primary" id="calculateBtn">Calculate Development</button>
-   <button class="btn btn-secondary" id="resetBtn">Reset</button>
-   <button class="btn btn-outline" id="printBtn">Print Result</button>
-  </div>
-
- </div>
-</div>
-
-<!-- PROCESS -->
-<div class="card">
- <div class="card-header">Calculation Process</div>
- <div class="process" id="process">
-  <p class="help">Enter bend details and click Calculate Development to see the calculation process.</p>
- </div>
-</div>
-
-</div>
-
-<!-- RIGHT SIDE -->
-<aside>
-
-<div class="card">
- <div class="card-header">2D Bend Geometry</div>
- <div class="card-body">
-  <svg id="geometry" viewBox="0 0 520 280" role="img" aria-label="Sheet metal profile geometry">
-   <text x="260" y="140" text-anchor="middle" fill="#687385" font-size="14">Geometry will appear here</text>
-  </svg>
-  <p class="geometry-note">Schematic geometry preview. Bend direction and angle update according to your inputs.</p>
- </div>
-</div>
-
-<div class="card">
- <div class="card-header">Calculation Result</div>
-
- <div class="result-main">
-  <div class="result-label">Developed / Flat Length</div>
-  <div class="result-value" id="flatResult">—</div>
-  <div class="help">mm</div>
- </div>
-
- <div class="metrics">
-  <div class="metric"><span>Total Bend Allowance</span><strong id="totalBA">—</strong><span>mm</span></div>
-  <div class="metric"><span>Total Straight Length</span><strong id="totalStraight">—</strong><span>mm</span></div>
-  <div class="metric"><span>Total Bends</span><strong id="totalBends">—</strong></div>
-  <div class="metric"><span>Thickness</span><strong id="resultThickness">—</strong><span>mm</span></div>
- </div>
-
- <div class="result-details">
-  <h3 class="section-heading">Bend-wise Results</h3>
-  <div class="table-wrap">
-   <table id="resultTable">
-    <thead><tr><th>Bend</th><th>BA (mm)</th><th>BD (mm)</th></tr></thead>
-    <tbody><tr><td colspan="3">No calculation yet.</td></tr></tbody>
-   </table>
-  </div>
- </div>
-</div>
-
-<div class="card">
- <div class="card-header">Calculation Formula</div>
- <div class="card-body">
-  <div class="formula">BA = (π / 180) × θ × (R + K × T)</div>
-  <div class="formula">OSSB = (R + T) × tan(θ / 2)</div>
-  <div class="formula">BD = 2 × OSSB − BA</div>
-  <p class="help">Flat Length = Total Straight Length + Total Bend Allowance</p>
-  <div class="note">
-   This calculator uses straight lengths measured between bend tangent points. K-factor must be validated for the actual material, tooling and bending process.
-  </div>
- </div>
-</div>
-
-</aside>
-</div>
 </main>
 
 <footer>
- <div class="footer-container">
-  <div>
-   <div class="footer-logo">MechQTools</div>
-   <p class="footer-text">Engineering & Quality Tools for Professionals. Free mechanical engineering, sheet metal and quality tools.</p>
+  <div>© 2026 MechQTools. All Rights Reserved.</div>
+  <div style="margin-top:9px">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
   </div>
-  <div class="footer-column">
-   <h4>Quick Links</h4>
-   <a href="index.html">Home</a>
-   <a href="index.html#mechanical-tools">Mechanical Tools</a>
-   <a href="index.html#quality-tools">Quality Tools</a>
-  </div>
-  <div class="footer-column">
-   <h4>Resources</h4>
-   <a href="index.html#guides-section">Engineering Guides</a>
-   <a href="index.html#about">About</a>
-  </div>
- </div>
- <div class="copyright">© 2026 MechQTools. All Rights Reserved.</div>
 </footer>
 
 <script>
-"use strict";
+const bendCountInput = document.getElementById("bendCount");
+const sideInputs = document.getElementById("sideInputs");
+const bendInputs = document.getElementById("bendInputs");
+const errorBox = document.getElementById("errorBox");
 
-const $ = id => document.getElementById(id);
-const bendBody = $("bendTable").querySelector("tbody");
-
-function getCount(){
- let n = parseInt($("bendCount").value,10);
- if(!Number.isFinite(n)) n=1;
- return Math.max(1,Math.min(50,n));
+function numberValue(id){
+  return Number(document.getElementById(id).value);
 }
 
-function format(n){
- return Number(n).toFixed(3);
-}
-
-function clearResult(){
- $("flatResult").textContent="—";
- $("totalBA").textContent="—";
- $("totalStraight").textContent="—";
- $("totalBends").textContent="—";
- $("resultThickness").textContent="—";
- $("resultTable").querySelector("tbody").innerHTML='<tr><td colspan="3">No calculation yet.</td></tr>';
- $("process").innerHTML='<p class="help">Enter bend details and click Calculate Development to see the calculation process.</p>';
- $("status").className="status";
- $("status").textContent="";
-}
-
-function updateBends(){
- const n=getCount();
- $("bendCount").value=n;
- bendBody.innerHTML="";
-
- for(let i=1;i<=n;i++){
-  const tr=document.createElement("tr");
-  tr.innerHTML=`
-   <td><strong>Bend ${i}</strong></td>
-   <td>
-    <select id="direction${i}" aria-label="Bend ${i} direction">
-     <option value="up">Up</option>
-     <option value="down">Down</option>
-    </select>
-   </td>
-   <td><input id="angle${i}" type="number" min="0.1" max="179.9" step="any" value="90"></td>
-   <td><input id="radius${i}" type="number" min="0" step="any" value="2"></td>
+function makeInput(id, label, value, min="0", step="any"){
+  return `
+    <div class="field">
+      <label for="${id}">${label}</label>
+      <input type="number" id="${id}" value="${value}" min="${min}" step="${step}">
+      <div class="unit">Unit: mm</div>
+    </div>
   `;
-  bendBody.appendChild(tr);
- }
-
- renderSegments();
- clearResult();
 }
 
-function renderSegments(){
- const n=getCount();
- const box=$("segments");
- box.innerHTML="";
+function createInputs(){
+  let count = parseInt(bendCountInput.value,10);
 
- for(let i=0;i<=n;i++){
-  const item=document.createElement("div");
-  item.className="segment-box";
-  item.innerHTML=`
-   <label for="segment${i}">Straight Segment ${i+1} (mm)</label>
-   <input id="segment${i}" type="number" min="0" step="any" value="50">
-  `;
-  box.appendChild(item);
- }
+  if(!Number.isInteger(count) || count < 1) count = 1;
+  if(count > 50) count = 50;
+
+  bendCountInput.value = count;
+
+  // Number of sides = number of bends + 1
+  let sideHTML = "";
+
+  for(let i=0;i<=count;i++){
+    sideHTML += `
+      <div class="side-card">
+        <div class="bend-title">
+          <span>Side ${i+1}</span>
+          <small>Outside Dimension</small>
+        </div>
+        <div class="form-grid">
+          ${makeInput("side"+i,"Side Length",50,"0.01")}
+        </div>
+      </div>
+    `;
+  }
+
+  sideInputs.innerHTML = sideHTML;
+
+  let bendHTML = "";
+
+  for(let i=0;i<count;i++){
+    bendHTML += `
+      <div class="bend-card">
+        <div class="bend-title">
+          <span>Bend ${i+1}</span>
+          <small>BD Calculation</small>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="angle${i}">Bend Angle</label>
+            <input type="number" id="angle${i}" value="90" min="0.1" max="179.9" step="any">
+            <div class="unit">Degree (°)</div>
+          </div>
+
+          <div class="field">
+            <label for="radius${i}">Inside Radius (R)</label>
+            <input type="number" id="radius${i}" value="3" min="0" step="any">
+            <div class="unit">Unit: mm</div>
+          </div>
+
+          <div class="field">
+            <label for="direction${i}">Bend Direction</label>
+            <select id="direction${i}">
+              <option value="Up">Up</option>
+              <option value="Down">Down</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  bendInputs.innerHTML = bendHTML;
+
+  drawGeometry(count);
 }
 
-function error(message){
- $("status").textContent=message;
- $("status").className="status error";
+function showError(message){
+  errorBox.textContent = message;
+  errorBox.style.display = "block";
 }
 
-function success(message){
- $("status").textContent=message;
- $("status").className="status success";
+function clearError(){
+  errorBox.textContent = "";
+  errorBox.style.display = "none";
 }
 
-/* GEOMETRY DRAWING */
-function drawGeometry(lengths,bends){
- const scale=1.6;
- let points=[{x:35,y:140}];
- let heading=0;
+function fmt(value){
+  return Number(value).toFixed(3);
+}
 
- for(let i=0;i<bends.length;i++){
-  let prev=points[points.length-1];
-  let len=lengths[i]*scale;
-  points.push({
-   x:prev.x+len*Math.cos(heading),
-   y:prev.y+len*Math.sin(heading)
+function calculate(){
+  clearError();
+
+  const thickness = numberValue("thickness");
+  const k = numberValue("kfactor");
+  const count = parseInt(bendCountInput.value,10);
+
+  if(!Number.isFinite(thickness) || thickness <= 0){
+    showError("Please enter a valid sheet thickness greater than zero.");
+    return false;
+  }
+
+  if(!Number.isFinite(k) || k < 0 || k > 1){
+    showError("K-factor must be between 0 and 1.");
+    return false;
+  }
+
+  if(!Number.isInteger(count) || count < 1 || count > 50){
+    showError("Please enter a bend count between 1 and 50.");
+    return false;
+  }
+
+  let totalOutside = 0;
+  let totalBA = 0;
+  let totalBD = 0;
+  let bendDetails = [];
+  let process = [];
+
+  const sides = [];
+
+  for(let i=0;i<=count;i++){
+    const el = document.getElementById("side"+i);
+    const value = Number(el.value);
+
+    if(!Number.isFinite(value) || value <= 0){
+      showError("Please enter a valid outside dimension for Side "+(i+1)+".");
+      return false;
+    }
+
+    sides.push(value);
+    totalOutside += value;
+  }
+
+  for(let i=0;i<count;i++){
+    const angle = Number(document.getElementById("angle"+i).value);
+    const radius = Number(document.getElementById("radius"+i).value);
+    const direction = document.getElementById("direction"+i).value;
+
+    if(!Number.isFinite(angle) || angle <= 0 || angle >= 180){
+      showError("Bend "+(i+1)+": angle must be greater than 0° and less than 180°.");
+      return false;
+    }
+
+    if(!Number.isFinite(radius) || radius < 0){
+      showError("Bend "+(i+1)+": inside radius cannot be negative.");
+      return false;
+    }
+
+    const radians = angle * Math.PI / 180;
+
+    const BA = radians * (radius + k * thickness);
+    const OSSB = (radius + thickness) * Math.tan(radians/2);
+    const BD = (2 * OSSB) - BA;
+
+    totalBA += BA;
+    totalBD += BD;
+
+    bendDetails.push({
+      number:i+1,
+      angle,
+      radius,
+      direction,
+      BA,
+      OSSB,
+      BD
+    });
+  }
+
+  // Outside-dimension method:
+  // Flat length = sum of outside side dimensions - sum of bend deductions
+  const flatLength = totalOutside - totalBD;
+
+  if(!Number.isFinite(flatLength) || flatLength <= 0){
+    showError("Calculated flat length is zero or negative. Please check dimensions and bend details.");
+    return false;
+  }
+
+  document.getElementById("flatResult").textContent = fmt(flatLength);
+  document.getElementById("outsideResult").textContent = fmt(totalOutside)+" mm";
+  document.getElementById("totalBDResult").textContent = fmt(totalBD)+" mm";
+  document.getElementById("totalBAResult").textContent = fmt(totalBA)+" mm";
+  document.getElementById("bendResult").textContent = count;
+
+  let breakdownHTML = "";
+
+  bendDetails.forEach(b=>{
+    breakdownHTML += `
+      <div style="border-bottom:1px solid #eee;padding:10px 0">
+        <strong style="color:#222">Bend ${b.number} (${b.angle}°)</strong><br>
+        Inside Radius: ${fmt(b.radius)} mm<br>
+        Bend Allowance: ${fmt(b.BA)} mm<br>
+        Outside Setback: ${fmt(b.OSSB)} mm<br>
+        <strong>Bend Deduction: ${fmt(b.BD)} mm</strong>
+      </div>
+    `;
+
+    process.push(
+      `Bend ${b.number}: BA = ${fmt(b.BA)} mm; OSSB = ${fmt(b.OSSB)} mm; BD = ${fmt(b.BD)} mm.`
+    );
   });
 
-  let direction=bends[i].direction==="up"?-1:1;
-  heading+=direction*bends[i].angle*Math.PI/180;
- }
+  document.getElementById("bendBreakdown").innerHTML = breakdownHTML;
 
- let prev=points[points.length-1];
- let last=lengths[lengths.length-1]*scale;
- points.push({
-  x:prev.x+last*Math.cos(heading),
-  y:prev.y+last*Math.sin(heading)
- });
+  let processHTML = `
+    <li><strong>Total outside dimensions:</strong> ${sides.map(fmt).join(" + ")} = ${fmt(totalOutside)} mm.</li>
+    <li><strong>Material:</strong> ${document.getElementById("material").value}, Thickness = ${fmt(thickness)} mm, K-factor = ${k}.</li>
+  `;
 
- const xs=points.map(p=>p.x);
- const ys=points.map(p=>p.y);
- const minX=Math.min(...xs),maxX=Math.max(...xs);
- const minY=Math.min(...ys),maxY=Math.max(...ys);
- const width=Math.max(maxX-minX,1),height=Math.max(maxY-minY,1);
- const fit=Math.min(440/width,210/height,1);
- const ox=(520-width*fit)/2-minX*fit;
- const oy=(280-height*fit)/2-minY*fit;
+  process.forEach(item=>{
+    processHTML += `<li>${item}</li>`;
+  });
 
- const p=points.map(v=>({x:v.x*fit+ox,y:v.y*fit+oy}));
+  processHTML += `
+    <li><strong>Total Bend Deduction:</strong> ${fmt(totalBD)} mm.</li>
+    <li><strong>Final Flat Length:</strong> ${fmt(totalOutside)} − ${fmt(totalBD)} = <strong>${fmt(flatLength)} mm.</strong></li>
+  `;
 
- let path=`M ${p[0].x} ${p[0].y}`;
- for(let i=1;i<p.length;i++){
-  path+=` L ${p[i].x} ${p[i].y}`;
- }
+  document.getElementById("processList").innerHTML = processHTML;
 
- let labels="";
- bends.forEach((b,i)=>{
-  let v=p[i+1];
-  labels+=`<text x="${v.x}" y="${Math.max(16,v.y-13)}" text-anchor="middle" fill="#e53232" font-size="12" font-weight="bold">B${i+1} ${b.angle}° ${b.direction==="up"?"↑":"↓"}</text>`;
- });
+  drawGeometry(count, sides, bendDetails);
 
- $("geometry").innerHTML=`
-  <path d="${path}" fill="none" stroke="#e53232" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="${p[0].x}" cy="${p[0].y}" r="4" fill="#202124"/>
-  <circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="4" fill="#202124"/>
-  ${labels}
-  <text x="15" y="265" font-size="10" fill="#687385">START</text>
-  <text x="505" y="265" text-anchor="end" font-size="10" fill="#687385">END</text>
- `;
+  return true;
 }
 
-/* MAIN CALCULATION */
-function calculate(){
- const n=getCount();
- const T=Number($("thickness").value);
- const K=Number($("kfactor").value);
+function drawGeometry(count, sides=[], bends=[]){
+  const svg = document.getElementById("geometry");
 
- if(!Number.isFinite(T)||T<=0){
-  error("Please enter a valid sheet thickness greater than zero.");
-  return;
- }
-
- if(!Number.isFinite(K)||K<0||K>1){
-  error("K-factor must be between 0 and 1.");
-  return;
- }
-
- let bends=[];
- let totalBA=0,totalBD=0;
-
- for(let i=1;i<=n;i++){
-  const angle=Number($("angle"+i).value);
-  const radius=Number($("radius"+i).value);
-  const direction=$("direction"+i).value;
-
-  if(!Number.isFinite(angle)||angle<=0||angle>=180){
-   error(`Bend ${i}: angle must be greater than 0° and less than 180°.`);
-   return;
+  if(!sides.length){
+    svg.innerHTML = `
+      <text x="210" y="125" text-anchor="middle" fill="#777" font-size="14">
+        Enter dimensions and calculate
+      </text>`;
+    return;
   }
 
-  if(!Number.isFinite(radius)||radius<0){
-   error(`Bend ${i}: radius must be zero or greater.`);
-   return;
+  // Schematic zig-zag profile. Not a scale drawing.
+  const margin = 45;
+  const width = 330;
+  const height = 175;
+  const points = [];
+
+  let x = margin;
+  let y = 55;
+  points.push([x,y]);
+
+  for(let i=0;i<count+1;i++){
+    const direction = i===0 ? 1 : -1;
+    x += width/(count+1);
+    points.push([x,y]);
+
+    if(i<count){
+      const bendDirection = bends[i]?.direction || (i%2===0 ? "Down":"Up");
+      y += bendDirection==="Down" ? 65 : -65;
+      y = Math.max(35,Math.min(220,y));
+      points.push([x,y]);
+    }
   }
 
-  const BA=(Math.PI/180)*angle*(radius+K*T);
-  const OSSB=(radius+T)*Math.tan(angle*Math.PI/360);
-  const BD=2*OSSB-BA;
+  const polyline = points.map(p=>p.join(",")).join(" ");
 
-  bends.push({i,angle,radius,direction,BA,OSSB,BD});
-  totalBA+=BA;
-  totalBD+=BD;
- }
+  let labels = "";
+  for(let i=0;i<sides.length;i++){
+    const p1 = points[Math.min(i*2,points.length-1)];
+    const p2 = points[Math.min(i*2+1,points.length-1)];
 
- let lengths=[];
- for(let i=0;i<=n;i++){
-  const value=Number($("segment"+i).value);
-  if(!Number.isFinite(value)||value<0){
-   error(`Please enter a valid length for Straight Segment ${i+1}.`);
-   return;
+    const lx = (p1[0]+p2[0])/2;
+    const ly = (p1[1]+p2[1])/2 - 10;
+
+    labels += `
+      <text x="${lx}" y="${ly}" text-anchor="middle"
+        font-size="11" fill="#333">${fmt(sides[i])} mm</text>
+    `;
   }
-  lengths.push(value);
- }
 
- const totalStraight=lengths.reduce((a,b)=>a+b,0);
- const flat=totalStraight+totalBA;
+  let bendLabels = "";
+  bends.forEach((b,i)=>{
+    const p = points[Math.min(i*2+2,points.length-1)];
+    bendLabels += `
+      <text x="${p[0]+7}" y="${p[1]+(b.direction==="Down"?15:-9)}"
+        font-size="10" fill="#e53232">${b.angle}°</text>
+    `;
+  });
 
- if(!Number.isFinite(flat)||flat<=0){
-  error("Developed length must be greater than zero.");
-  return;
- }
-
- $("flatResult").textContent=format(flat);
- $("totalBA").textContent=format(totalBA);
- $("totalStraight").textContent=format(totalStraight);
- $("totalBends").textContent=n;
- $("resultThickness").textContent=format(T);
-
- const resultBody=$("resultTable").querySelector("tbody");
- resultBody.innerHTML="";
-
- bends.forEach(b=>{
-  const tr=document.createElement("tr");
-  tr.innerHTML=`
-   <td>Bend ${b.i}</td>
-   <td>${format(b.BA)}</td>
-   <td>${format(b.BD)}</td>
+  svg.innerHTML = `
+    <polyline points="${polyline}"
+      fill="none" stroke="#e53232" stroke-width="5"
+      stroke-linecap="round" stroke-linejoin="round"/>
+    ${labels}
+    ${bendLabels}
+    <text x="210" y="248" text-anchor="middle" font-size="11" fill="#777">
+      Outside profile - schematic view
+    </text>
   `;
-  resultBody.appendChild(tr);
- });
-
- let process=`
-  <div class="process-step">
-   <strong>Step 1 — Material Details</strong>
-   Material: ${$("material").value}<br>
-   Thickness T = ${format(T)} mm<br>
-   K-Factor = ${K}
-  </div>
- `;
-
- bends.forEach(b=>{
-  process+=`
-   <div class="process-step">
-    <strong>Step ${b.i+1} — Bend ${b.i} (${b.direction.toUpperCase()})</strong>
-    Angle = ${format(b.angle)}°<br>
-    Inside Radius R = ${format(b.radius)} mm
-    <div class="formula">
-     BA = (π / 180) × θ × (R + K × T)<br>
-     BA = (π / 180) × ${format(b.angle)} × (${format(b.radius)} + ${K} × ${format(T)})<br>
-     BA = ${format(b.BA)} mm
-    </div>
-    OSSB = (R + T) × tan(θ / 2) = ${format(b.OSSB)} mm<br>
-    BD = 2 × OSSB − BA = ${format(b.BD)} mm
-   </div>
-  `;
- });
-
- process+=`
-  <div class="process-step">
-   <strong>Final Step — Developed Length</strong>
-   Total Straight Length = ${lengths.map((v,i)=>"S"+(i+1)+" "+format(v)).join(" + ")}<br>
-   Total Straight Length = ${format(totalStraight)} mm<br>
-   Total Bend Allowance = ${format(totalBA)} mm
-   <div class="formula">
-    Flat Length = Total Straight Length + Total Bend Allowance<br>
-    Flat Length = ${format(totalStraight)} + ${format(totalBA)}<br>
-    <strong>Flat Length = ${format(flat)} mm</strong>
-   </div>
-  </div>
- `;
-
- $("process").innerHTML=process;
- drawGeometry(lengths,bends);
- success("Calculation completed. Verify K-factor and dimensions before production.");
 }
 
-/* RESET */
 function resetCalculator(){
- $("material").selectedIndex=0;
- $("thickness").value=2;
- $("kfactor").value=.33;
- $("bendCount").value=2;
- updateBends();
- $("geometry").innerHTML='<text x="260" y="140" text-anchor="middle" fill="#687385" font-size="14">Geometry will appear here</text>';
+  document.getElementById("material").value = "MS";
+  document.getElementById("thickness").value = "3";
+  document.getElementById("kfactor").value = "0.33";
+  bendCountInput.value = "2";
+
+  createInputs();
+
+  document.getElementById("flatResult").textContent = "—";
+  document.getElementById("outsideResult").textContent = "—";
+  document.getElementById("totalBDResult").textContent = "—";
+  document.getElementById("totalBAResult").textContent = "—";
+  document.getElementById("bendResult").textContent = "—";
+
+  document.getElementById("bendBreakdown").textContent =
+    "Calculation details will appear here.";
+
+  document.getElementById("processList").innerHTML = `
+    <li>Enter material, thickness, K-factor and bend details.</li>
+    <li>Enter the outside dimensions of all sides.</li>
+    <li>Click Calculate Development.</li>
+  `;
+
+  clearError();
 }
 
-$("updateBtn").addEventListener("click",updateBends);
-$("calculateBtn").addEventListener("click",calculate);
-$("resetBtn").addEventListener("click",resetCalculator);
-$("printBtn").addEventListener("click",()=>{
- if(!$("flatResult").textContent.includes("—"))window.print();
- else{
-  calculate();
-  if(!$("flatResult").textContent.includes("—"))window.print();
- }
+document.getElementById("calculateBtn").addEventListener("click",calculate);
+document.getElementById("resetBtn").addEventListener("click",resetCalculator);
+bendCountInput.addEventListener("change",createInputs);
+
+document.getElementById("printBtn").addEventListener("click",()=>{
+  if(calculate()){
+    window.print();
+  }
 });
 
-updateBends();
+createInputs();
 </script>
 
 </body>
