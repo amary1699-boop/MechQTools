@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Quality Engineer Interview Preparation - Mechanical, Sheet Metal, Quality Tools, GD&T, Inspection and HR Interview Questions with Hindi explanations.">
+<meta name="description" content="Quality Engineer Interview Preparation with English Questions and Answers and Hindi explanations.">
 <title>Quality Engineer Interview Preparation | MechQTools</title>
 
 <style>
@@ -183,7 +182,7 @@ header {
     margin-top: 7px;
 }
 
-/* CONTENT SECTIONS */
+/* SECTIONS */
 .section {
     background: white;
     border: 1px solid var(--border);
@@ -252,18 +251,24 @@ header {
     margin: 13px 0 7px;
 }
 
-.hindi {
-    color: #666;
-    font-size: 14px;
-    background: #f8f8f8;
-    padding: 9px 12px;
-    border-left: 3px solid var(--primary);
-    margin: 8px 0 12px;
+.answer-label {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 7px;
 }
 
 .english-answer {
     color: #222;
     font-weight: 500;
+}
+
+.hindi {
+    color: #555;
+    font-size: 14px;
+    background: #f8f8f8;
+    padding: 10px 12px;
+    border-left: 3px solid var(--primary);
+    margin: 10px 0 12px;
 }
 
 .intro-point {
@@ -275,22 +280,12 @@ header {
 }
 
 .intro-point strong {
-    color: var(--primary);
+    color: var(--dark);
+    display: block;
 }
 
-.intro-point p {
-    margin: 4px 0 0;
-}
-
-.tag {
-    display: inline-block;
-    background: #fff0f0;
-    color: var(--primary);
-    padding: 4px 9px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 700;
-    margin: 3px;
+.intro-point .hindi {
+    margin-bottom: 0;
 }
 
 .checklist li {
@@ -359,7 +354,7 @@ footer a:hover {
     color: #aaa;
 }
 
-/* MOBILE */
+/* MOBILE AND TABLET */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -394,13 +389,13 @@ footer a:hover {
 /* PROFESSIONAL A4 PRINT */
 @page {
     size: A4;
-    margin: 17mm 16mm 18mm 16mm;
+    margin: 16mm 15mm 17mm 15mm;
 }
 
 @media print {
 
     html, body {
-        background: white !important;
+        background: #fff !important;
         color: #111 !important;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 10.5pt;
@@ -412,9 +407,7 @@ footer a:hover {
     .hero-buttons,
     .search-box,
     .no-result,
-    .screen-only,
-    .btn,
-    nav {
+    .screen-only {
         display: none !important;
     }
 
@@ -455,7 +448,6 @@ footer a:hover {
         padding: 0;
         margin: 0 0 17px;
         background: white !important;
-        break-inside: auto;
     }
 
     .section h2 {
@@ -465,6 +457,7 @@ footer a:hover {
         padding-bottom: 5px;
         margin: 15px 0 10px;
         break-after: avoid;
+        page-break-after: avoid;
     }
 
     .section-intro {
@@ -492,7 +485,12 @@ footer a:hover {
         break-after: avoid;
     }
 
-    /* Closed accordion answers must also print */
+    .question summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Print all answers, including closed accordions */
+    .question > .answer,
     .question:not([open]) > .answer,
     .question[open] > .answer {
         display: block !important;
@@ -500,7 +498,6 @@ footer a:hover {
     }
 
     .answer {
-        display: block !important;
         padding: 9px 10px;
         border-top: 1px solid #ccc;
         color: #111 !important;
@@ -509,7 +506,8 @@ footer a:hover {
     .answer p,
     .answer li,
     .answer h4,
-    .english-answer {
+    .english-answer,
+    .answer-label {
         color: #111 !important;
     }
 
@@ -533,21 +531,6 @@ footer a:hover {
         color: #111 !important;
     }
 
-    .tag {
-        color: #111 !important;
-        background: #eee !important;
-        border: 1px solid #ccc;
-    }
-
-    a {
-        color: #111 !important;
-        text-decoration: none !important;
-    }
-
-    input[type="checkbox"] {
-        appearance: auto;
-    }
-
     .checklist li {
         break-inside: avoid;
     }
@@ -556,11 +539,16 @@ footer a:hover {
         break-after: avoid;
         page-break-after: avoid;
     }
+
+    a {
+        color: #111 !important;
+        text-decoration: none !important;
+    }
 }
 </style>
 </head>
 
-<body>
+<body id="top">
 
 <!-- HEADER -->
 <header>
@@ -580,19 +568,19 @@ footer a:hover {
 
 <main class="container">
 
-    <!-- INTRO -->
     <section class="hero">
         <h1>Quality Engineer <span>Interview Preparation</span></h1>
 
         <p>
             Prepare for Mechanical and Quality Engineer interviews with
-            practical questions, technical answers, sheet metal topics,
-            inspection methods, GD&T, Quality Core Tools and HR questions.
+            technical questions, professional English answers and simple
+            Hindi explanations.
         </p>
 
         <p>
-            <strong>Learning method:</strong>
-            English interview answers with simple Hindi explanations.
+            <strong>Topics:</strong>
+            Quality Engineering, Inspection, Measuring Instruments,
+            GD&T, Quality Core Tools, Sheet Metal and HR Questions.
         </p>
 
         <div class="hero-buttons">
@@ -609,10 +597,10 @@ footer a:hover {
         <input
             type="search"
             id="questionSearch"
-            placeholder="Search: GD&T, PPAP, 5 Why, Bend Allowance, CMM..."
+            placeholder="Search: GD&T, PPAP, 5 Why, Bend Allowance..."
         >
         <p class="search-note">
-            Type a topic or question to find matching interview answers.
+            Search using an English keyword or technical term.
         </p>
     </section>
 
@@ -625,15 +613,15 @@ footer a:hover {
         <h2>1. Tell Me About Yourself</h2>
 
         <p class="section-intro">
-            This is usually the first question in an interview.
-            Speak clearly, confidently and in a natural way.
+            Prepare this answer in a natural and confident way.
+            Speak clearly and maintain a professional tone.
         </p>
 
         <details class="question" open>
             <summary>Q1. Tell me about yourself.</summary>
 
             <div class="answer">
-                <h4>English Answer – Point Wise</h4>
+                <p class="answer-label">Answer (English - Point Wise)</p>
 
                 <div class="intro-point">
                     <strong>1. My name is Amar Kumar Yadav.</strong>
@@ -647,7 +635,7 @@ footer a:hover {
 
                 <div class="intro-point">
                     <strong>3. I have completed my B.Tech in Mechanical Engineering from AKTU, Lucknow.</strong>
-                    <p class="hindi">मैंने AKTU, लखनऊ से मैकेनिकल इंजीनियरिंग में B.Tech पूरा किया है।</p>
+                    <p class="hindi">मैंने AKTU, लखनऊ से Mechanical Engineering में B.Tech पूरा किया है।</p>
                 </div>
 
                 <div class="intro-point">
@@ -656,18 +644,18 @@ footer a:hover {
                 </div>
 
                 <div class="intro-point">
-                    <strong>5. I have previous experience working as a Quality Engineer at KCTR Versha Forging Ltd.</strong>
+                    <strong>5. I also have previous experience as a Quality Engineer at KCTR Versha Forging Ltd.</strong>
                     <p class="hindi">मुझे KCTR Versha Forging Ltd. में Quality Engineer के रूप में काम करने का पिछला अनुभव भी है।</p>
                 </div>
 
                 <div class="intro-point">
                     <strong>6. My work includes sheet metal inspection, dimensional checking and drawing verification.</strong>
-                    <p class="hindi">मेरे काम में शीट मेटल इंस्पेक्शन, डाइमेंशनल चेकिंग और ड्रॉइंग वेरिफिकेशन शामिल हैं।</p>
+                    <p class="hindi">मेरे काम में Sheet Metal Inspection, Dimensional Checking और Drawing Verification शामिल हैं।</p>
                 </div>
 
                 <div class="intro-point">
                     <strong>7. I have knowledge of engineering drawings, GD&T, measuring instruments and inspection reports.</strong>
-                    <p class="hindi">मुझे इंजीनियरिंग ड्रॉइंग, GD&T, मेजरिंग इंस्ट्रूमेंट्स और इंस्पेक्शन रिपोर्ट की जानकारी है।</p>
+                    <p class="hindi">मुझे Engineering Drawings, GD&T, Measuring Instruments और Inspection Reports की जानकारी है।</p>
                 </div>
 
                 <div class="intro-point">
@@ -681,13 +669,13 @@ footer a:hover {
                 </div>
 
                 <h4>Interview Tip</h4>
-                <p>
-                    Do not speak too fast. Practice these points in your own
-                    voice. You do not need to memorize every word.
+                <p class="english-answer">
+                    Practice these points every day. You do not need to
+                    memorize every word. Understand the meaning and speak naturally.
                 </p>
                 <p class="hindi">
-                    इन सभी पॉइंट्स को रोज बोलकर अभ्यास करें। इंटरव्यू में
-                    आत्मविश्वास के साथ स्वाभाविक तरीके से जवाब दें।
+                    इन पॉइंट्स को रोज बोलकर अभ्यास करें। हर शब्द याद करने
+                    के बजाय उसका मतलब समझकर स्वाभाविक तरीके से बोलें।
                 </p>
             </div>
         </details>
@@ -695,16 +683,17 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What are your roles and responsibilities as a Quality Engineer?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
-                    My responsibilities include incoming, in-process and final
-                    inspection, dimensional checking, drawing verification,
+                    My responsibilities include incoming, in-process and
+                    final inspection, dimensional checking, drawing verification,
                     maintaining inspection reports, identifying defects and
                     coordinating with production for corrective actions.
                 </p>
                 <p class="hindi">
-                    मेरी जिम्मेदारी मटेरियल और पार्ट की जाँच करना, ड्रॉइंग के
-                    अनुसार डाइमेंशन चेक करना, रिपोर्ट बनाना और डिफेक्ट मिलने पर
-                    प्रोडक्शन टीम के साथ सुधार करवाना है।
+                    मेरी जिम्मेदारी incoming, in-process और final inspection,
+                    drawing के अनुसार dimension check करना, inspection reports
+                    बनाना और defects मिलने पर production team के साथ सुधार करवाना है।
                 </p>
             </div>
         </details>
@@ -712,15 +701,16 @@ footer a:hover {
         <details class="question">
             <summary>Q3. Why did you choose Quality Engineering?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I am interested in manufacturing processes, dimensional
                     accuracy and problem-solving. Quality Engineering gives me
                     an opportunity to improve product quality and customer satisfaction.
                 </p>
                 <p class="hindi">
-                    मुझे मैन्युफैक्चरिंग प्रोसेस, डाइमेंशन की शुद्धता और
-                    समस्या का समाधान करना पसंद है। Quality Engineering में
-                    प्रोडक्ट की क्वालिटी सुधारने का अवसर मिलता है।
+                    मुझे manufacturing processes, dimensional accuracy और
+                    problem-solving में रुचि है। Quality Engineering में
+                    product quality सुधारने का अवसर मिलता है।
                 </p>
             </div>
         </details>
@@ -728,18 +718,19 @@ footer a:hover {
 
     <!-- SECTION 2 -->
     <section class="section interview-section">
-        <h2>2. Basic Quality Engineering Questions</h2>
+        <h2>2. Basic Quality Engineering</h2>
 
         <details class="question">
             <summary>Q1. What is Quality?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
-                    Quality means the ability of a product or service to meet
+                    Quality is the ability of a product or service to meet
                     specified requirements and customer expectations.
                 </p>
                 <p class="hindi">
-                    क्वालिटी का मतलब है कि प्रोडक्ट ग्राहक की जरूरत और
-                    निर्धारित स्पेसिफिकेशन के अनुसार हो।
+                    Quality का मतलब है कि product या service निर्धारित
+                    requirements और customer expectations को पूरा करे।
                 </p>
             </div>
         </details>
@@ -747,13 +738,14 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What is Quality Control (QC)?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
-                    Quality Control is the process of checking products and
-                    identifying defects to ensure that they meet specifications.
+                    Quality Control is the process of inspecting products
+                    and identifying defects to ensure that they meet specified requirements.
                 </p>
                 <p class="hindi">
-                    QC में प्रोडक्ट की जाँच करके डिफेक्ट पहचानते हैं और
-                    यह सुनिश्चित करते हैं कि प्रोडक्ट स्पेसिफिकेशन के अनुसार है।
+                    QC में products की inspection करके defects पहचाने जाते हैं
+                    और यह सुनिश्चित किया जाता है कि वे निर्धारित requirements के अनुसार हैं।
                 </p>
             </div>
         </details>
@@ -761,13 +753,14 @@ footer a:hover {
         <details class="question">
             <summary>Q3. What is Quality Assurance (QA)?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Quality Assurance focuses on improving processes and
                     preventing defects before they occur.
                 </p>
                 <p class="hindi">
-                    QA का मुख्य उद्देश्य प्रोसेस को सही बनाना और डिफेक्ट
-                    होने से पहले उसे रोकना है।
+                    QA का मुख्य उद्देश्य processes को सुधारना और defects
+                    होने से पहले उन्हें रोकना है।
                 </p>
             </div>
         </details>
@@ -775,13 +768,14 @@ footer a:hover {
         <details class="question">
             <summary>Q4. What is the difference between QC and QA?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <ul>
                     <li><strong>QC:</strong> Focuses on product inspection and defect detection.</li>
                     <li><strong>QA:</strong> Focuses on process improvement and defect prevention.</li>
                 </ul>
                 <p class="hindi">
-                    QC प्रोडक्ट में डिफेक्ट ढूँढता है, जबकि QA प्रोसेस को
-                    सुधारकर डिफेक्ट होने से रोकता है।
+                    QC product में defects ढूँढता है, जबकि QA process को
+                    सुधारकर defects होने से रोकता है।
                 </p>
             </div>
         </details>
@@ -789,13 +783,14 @@ footer a:hover {
         <details class="question">
             <summary>Q5. What is an NCR?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     NCR stands for Non-Conformance Report. It is used to
                     document a product or process that does not meet specified requirements.
                 </p>
                 <p class="hindi">
-                    जब कोई पार्ट या प्रोसेस ड्रॉइंग या स्पेसिफिकेशन के अनुसार
-                    नहीं होता, तो उसकी जानकारी NCR में दर्ज की जाती है।
+                    जब कोई part या process drawing अथवा specification के
+                    अनुसार नहीं होता, तो उसकी जानकारी NCR में दर्ज की जाती है।
                 </p>
             </div>
         </details>
@@ -803,14 +798,15 @@ footer a:hover {
         <details class="question">
             <summary>Q6. What is CAPA?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     CAPA stands for Corrective and Preventive Action.
-                    Corrective action removes the cause of an existing problem,
-                    while preventive action addresses potential problems.
+                    Corrective action addresses the cause of an existing
+                    problem, while preventive action addresses potential problems.
                 </p>
                 <p class="hindi">
                     Corrective Action मौजूदा समस्या के कारण को हटाता है।
-                    Preventive Action भविष्य में संभावित समस्या को रोकने के लिए होता है।
+                    Preventive Action भविष्य में संभावित समस्याओं को रोकता है।
                 </p>
             </div>
         </details>
@@ -823,13 +819,14 @@ footer a:hover {
         <details class="question">
             <summary>Q1. What is the least count of a Vernier Caliper?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
-                    The least count depends on the instrument. A commonly
-                    used metric Vernier Caliper has a least count of 0.02 mm.
+                    The least count depends on the instrument design.
+                    A commonly used metric Vernier Caliper has a least count of 0.02 mm.
                 </p>
                 <p class="hindi">
-                    Vernier Caliper का least count इंस्ट्रूमेंट पर निर्भर करता है।
-                    सामान्य रूप से 0.02 mm वाला वर्नियर कैलिपर उपयोग होता है।
+                    Least count instrument के design पर निर्भर करता है।
+                    सामान्य रूप से 0.02 mm वाला Vernier Caliper उपयोग होता है।
                 </p>
             </div>
         </details>
@@ -837,12 +834,13 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What is the least count of a Micrometer?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     A commonly used metric outside micrometer has a least count of 0.01 mm.
                 </p>
                 <p class="hindi">
-                    सामान्य Metric Outside Micrometer का least count 0.01 mm होता है।
-                    इंस्ट्रूमेंट की specification जरूर चेक करें।
+                    सामान्य metric outside micrometer का least count 0.01 mm होता है।
+                    Instrument specification जरूर check करनी चाहिए।
                 </p>
             </div>
         </details>
@@ -850,12 +848,14 @@ footer a:hover {
         <details class="question">
             <summary>Q3. What is a Height Gauge?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     A Height Gauge is a measuring instrument used to measure
                     vertical dimensions and mark reference heights from a datum surface.
                 </p>
                 <p class="hindi">
-                    Height Gauge का उपयोग सतह से ऊँचाई मापने और मार्किंग करने के लिए होता है।
+                    Height Gauge का उपयोग किसी reference surface से height
+                    मापने और marking करने के लिए होता है।
                 </p>
             </div>
         </details>
@@ -863,13 +863,14 @@ footer a:hover {
         <details class="question">
             <summary>Q4. What is a CMM?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     CMM stands for Coordinate Measuring Machine. It measures
                     the geometry of a component using coordinate points.
                 </p>
                 <p class="hindi">
-                    CMM मशीन कोऑर्डिनेट पॉइंट्स की मदद से पार्ट के डाइमेंशन
-                    और ज्योमेट्री की जाँच करती है।
+                    CMM machine coordinate points की मदद से component के
+                    dimensions और geometry की जाँच करती है।
                 </p>
             </div>
         </details>
@@ -877,13 +878,15 @@ footer a:hover {
         <details class="question">
             <summary>Q5. What is Calibration?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Calibration is the process of comparing a measuring
-                    instrument with a known reference standard to determine its measurement error.
+                    instrument with a known reference standard to determine
+                    its measurement error.
                 </p>
                 <p class="hindi">
-                    Calibration में इंस्ट्रूमेंट की रीडिंग को प्रमाणित
-                    रेफरेंस स्टैंडर्ड से तुलना करके उसकी accuracy जाँची जाती है।
+                    Calibration में instrument की reading को certified
+                    reference standard से compare करके measurement error जाँचा जाता है।
                 </p>
             </div>
         </details>
@@ -891,13 +894,14 @@ footer a:hover {
         <details class="question">
             <summary>Q6. What is the difference between Accuracy and Precision?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <ul>
                     <li><strong>Accuracy:</strong> How close a measurement is to the true or reference value.</li>
                     <li><strong>Precision:</strong> How close repeated measurements are to each other.</li>
                 </ul>
                 <p class="hindi">
-                    Accuracy बताती है कि रीडिंग सही वैल्यू के कितनी करीब है।
-                    Precision बताती है कि बार-बार लेने पर रीडिंग कितनी एक जैसी आती है।
+                    Accuracy बताती है कि reading सही value के कितनी करीब है।
+                    Precision बताती है कि बार-बार measurement लेने पर readings कितनी एक जैसी हैं।
                 </p>
             </div>
         </details>
@@ -908,16 +912,17 @@ footer a:hover {
         <h2>4. GD&T and Engineering Drawing</h2>
 
         <details class="question">
-            <summary>Q1. What is GD&T?</summary>
+            <summary>Q1. What is GD&amp;T?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
-                    GD&T stands for Geometric Dimensioning and Tolerancing.
-                    It is a symbolic system used to define the allowable
-                    variation in the geometry of a component.
+                    GD&amp;T stands for Geometric Dimensioning and Tolerancing.
+                    It is a symbolic system used to define allowable variation
+                    in the geometry of a component.
                 </p>
                 <p class="hindi">
-                    GD&T ड्रॉइंग में पार्ट की ज्योमेट्री और उसकी allowable
-                    variation बताने का एक सिस्टम है।
+                    GD&amp;T drawing में component की geometry और उसकी
+                    allowable variation बताने का एक symbolic system है।
                 </p>
             </div>
         </details>
@@ -925,13 +930,14 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What is a Datum?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     A Datum is a theoretically exact reference used for
                     measurement, inspection and geometric tolerancing.
                 </p>
                 <p class="hindi">
-                    Datum एक रेफरेंस होता है जिसके आधार पर पार्ट की
-                    पोजीशन और डाइमेंशन चेक किए जाते हैं।
+                    Datum एक reference होता है जिसके आधार पर part की
+                    position और geometry check की जाती है।
                 </p>
             </div>
         </details>
@@ -939,13 +945,14 @@ footer a:hover {
         <details class="question">
             <summary>Q3. What is Flatness?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Flatness controls how much a surface can deviate from
                     a perfectly flat surface. It does not require a datum.
                 </p>
                 <p class="hindi">
-                    Flatness से पता चलता है कि सतह कितनी समतल है।
-                    इसके लिए datum की आवश्यकता नहीं होती।
+                    Flatness यह control करती है कि कोई surface कितनी
+                    समतल है। इसके लिए datum की आवश्यकता नहीं होती।
                 </p>
             </div>
         </details>
@@ -953,12 +960,13 @@ footer a:hover {
         <details class="question">
             <summary>Q4. What is Perpendicularity?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Perpendicularity controls the orientation of a surface
                     or axis at 90 degrees relative to a datum.
                 </p>
                 <p class="hindi">
-                    Perpendicularity यह चेक करती है कि कोई सतह या अक्ष
+                    Perpendicularity यह check करती है कि कोई surface या axis
                     datum के मुकाबले 90 degree पर है या नहीं।
                 </p>
             </div>
@@ -967,14 +975,17 @@ footer a:hover {
         <details class="question">
             <summary>Q5. What is the difference between First Angle and Third Angle Projection?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
-                    First Angle and Third Angle are two different methods
-                    of representing a 3D object in 2D engineering drawings.
-                    The position of views differs between these methods.
+                    First Angle and Third Angle are two methods of representing
+                    a three-dimensional object in a two-dimensional engineering
+                    drawing. The relative positions of the views are different
+                    in these methods.
                 </p>
                 <p class="hindi">
-                    First Angle और Third Angle projection में front, top और
-                    side views की पोजीशन अलग-अलग होती है। ड्रॉइंग का projection symbol देखकर पहचानें।
+                    First Angle और Third Angle projection में Front, Top और
+                    Side views की positions अलग-अलग होती हैं। Drawing का
+                    projection symbol देखकर method पहचानना चाहिए।
                 </p>
             </div>
         </details>
@@ -982,12 +993,13 @@ footer a:hover {
         <details class="question">
             <summary>Q6. What is Tolerance?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Tolerance is the permissible variation in a dimension
                     specified by the engineering drawing.
                 </p>
                 <p class="hindi">
-                    Tolerance किसी डाइमेंशन में स्वीकार्य बदलाव की सीमा होती है।
+                    Tolerance किसी dimension में स्वीकार्य बदलाव की सीमा होती है।
                 </p>
                 <p><strong>Example:</strong> 50 ± 0.10 mm means the acceptable range is 49.90 mm to 50.10 mm.</p>
             </div>
@@ -1001,6 +1013,11 @@ footer a:hover {
         <details class="question">
             <summary>Q1. What are the 7 QC Tools?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
+                <p class="english-answer">
+                    The seven basic QC tools are commonly used to collect,
+                    analyze and understand quality-related data.
+                </p>
                 <ol>
                     <li>Check Sheet</li>
                     <li>Histogram</li>
@@ -1008,12 +1025,12 @@ footer a:hover {
                     <li>Cause and Effect Diagram</li>
                     <li>Scatter Diagram</li>
                     <li>Control Chart</li>
-                    <li>Stratification or Flow Chart (depending on the list used)</li>
+                    <li>Stratification (some lists use a Flow Chart or another variant)</li>
                 </ol>
                 <p class="hindi">
-                    7 QC Tools का उपयोग डेटा को समझने, डिफेक्ट का कारण खोजने
-                    और प्रोसेस सुधारने के लिए किया जाता है। अलग-अलग स्रोतों में
-                    सातवें टूल की सूची थोड़ी अलग मिल सकती है।
+                    7 QC Tools का उपयोग quality data को समझने, defects का
+                    कारण खोजने और process सुधारने के लिए किया जाता है।
+                    अलग-अलग references में सातवें tool की सूची अलग हो सकती है।
                 </p>
             </div>
         </details>
@@ -1021,28 +1038,30 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What is a Pareto Chart?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     A Pareto Chart is a bar graph arranged in descending
                     order of frequency or impact. It helps identify the
                     most significant problems.
                 </p>
                 <p class="hindi">
-                    Pareto Chart में सबसे ज्यादा होने वाले डिफेक्ट को पहले
+                    Pareto Chart में सबसे ज्यादा होने वाले defects को पहले
                     दिखाया जाता है, जिससे मुख्य समस्या पर ध्यान दिया जा सके।
                 </p>
             </div>
         </details>
 
         <details class="question">
-            <summary>Q3. What is the 5 Why Analysis?</summary>
+            <summary>Q3. What is 5 Why Analysis?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     5 Why Analysis is a problem-solving method in which
                     we repeatedly ask why to identify the root cause of a problem.
                 </p>
                 <p class="hindi">
                     किसी समस्या का असली कारण खोजने के लिए बार-बार Why
-                    पूछा जाता है। जरूरी नहीं कि हर समस्या में ठीक पाँच बार ही Why पूछना पड़े।
+                    पूछा जाता है। हर समस्या में ठीक पाँच बार पूछना जरूरी नहीं है।
                 </p>
             </div>
         </details>
@@ -1050,6 +1069,7 @@ footer a:hover {
         <details class="question">
             <summary>Q4. What is the 8D Problem Solving Method?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     8D is a structured problem-solving method used to
                     investigate, correct and prevent recurring problems.
@@ -1058,15 +1078,15 @@ footer a:hover {
                     <li>D1 – Establish the team</li>
                     <li>D2 – Describe the problem</li>
                     <li>D3 – Implement interim containment action</li>
-                    <li>D4 – Identify root cause</li>
+                    <li>D4 – Identify the root cause</li>
                     <li>D5 – Select permanent corrective action</li>
                     <li>D6 – Implement and validate corrective action</li>
                     <li>D7 – Prevent recurrence</li>
                     <li>D8 – Recognize the team</li>
                 </ol>
                 <p class="hindi">
-                    8D एक structured तरीका है जिससे समस्या को समझकर
-                    उसका root cause और permanent corrective action निकाला जाता है।
+                    8D एक structured method है जिससे problem को समझकर
+                    root cause और permanent corrective action निकाला जाता है।
                 </p>
             </div>
         </details>
@@ -1074,14 +1094,15 @@ footer a:hover {
         <details class="question">
             <summary>Q5. What is PPAP?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     PPAP stands for Production Part Approval Process.
                     It provides evidence that the production process can
                     consistently meet customer requirements.
                 </p>
                 <p class="hindi">
-                    PPAP में ग्राहक को यह प्रमाण दिया जाता है कि हमारा
-                    production process लगातार सही पार्ट बना सकता है।
+                    PPAP में customer को यह प्रमाण दिया जाता है कि production
+                    process लगातार सही part बना सकता है।
                 </p>
             </div>
         </details>
@@ -1089,13 +1110,14 @@ footer a:hover {
         <details class="question">
             <summary>Q6. What is APQP?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     APQP stands for Advanced Product Quality Planning.
                     It is a structured approach to planning product and
                     process quality before production.
                 </p>
                 <p class="hindi">
-                    APQP का उद्देश्य प्रोडक्शन शुरू होने से पहले product
+                    APQP का उद्देश्य production शुरू होने से पहले product
                     और process quality की planning करना है।
                 </p>
             </div>
@@ -1104,14 +1126,15 @@ footer a:hover {
         <details class="question">
             <summary>Q7. What is FMEA?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     FMEA stands for Failure Mode and Effects Analysis.
                     It is used to identify potential failure modes, their
                     effects and actions to reduce risk.
                 </p>
                 <p class="hindi">
-                    FMEA में पहले से संभावित failure और उसके प्रभाव को
-                    पहचानकर risk कम करने के लिए action लिया जाता है।
+                    FMEA में संभावित failures और उनके effects पहचानकर
+                    risk कम करने के लिए actions तय किए जाते हैं।
                 </p>
             </div>
         </details>
@@ -1119,6 +1142,7 @@ footer a:hover {
         <details class="question">
             <summary>Q8. What is SPC?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     SPC stands for Statistical Process Control. It uses
                     statistical methods and control charts to monitor
@@ -1126,7 +1150,7 @@ footer a:hover {
                 </p>
                 <p class="hindi">
                     SPC में statistical methods और control charts की मदद
-                    से process को monitor किया जाता है।
+                    से process variation को monitor किया जाता है।
                 </p>
             </div>
         </details>
@@ -1134,6 +1158,7 @@ footer a:hover {
         <details class="question">
             <summary>Q9. What are Cp and Cpk?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Cp indicates the potential process capability based
                     on process spread, while Cpk also considers how centered
@@ -1141,15 +1166,21 @@ footer a:hover {
                 </p>
                 <p class="hindi">
                     Cp process variation के आधार पर capability बताता है।
-                    Cpk यह भी देखता है कि process specification के बीच में कितना centered है।
+                    Cpk यह भी देखता है कि process specification limits के
+                    बीच कितना centered है।
                 </p>
-                <p><strong>Note:</strong> Capability indices should be interpreted only after checking process stability and the suitability of the data.</p>
+                <p>
+                    <strong>Note:</strong>
+                    Capability indices should be interpreted after checking
+                    process stability and data suitability.
+                </p>
             </div>
         </details>
 
         <details class="question">
             <summary>Q10. What is MSA and Gauge R&amp;R?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     MSA stands for Measurement System Analysis.
                     Gauge R&amp;R evaluates repeatability and reproducibility
@@ -1157,7 +1188,7 @@ footer a:hover {
                 </p>
                 <p class="hindi">
                     MSA से measurement system की reliability जाँची जाती है।
-                    Gauge R&amp;R में repeatability और reproducibility चेक करते हैं।
+                    Gauge R&amp;R में repeatability और reproducibility check करते हैं।
                 </p>
             </div>
         </details>
@@ -1170,13 +1201,14 @@ footer a:hover {
         <details class="question">
             <summary>Q1. What is Sheet Metal?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Sheet metal is metal formed into thin and relatively flat
-                    sheets, which can be cut, bent, punched and formed into components.
+                    sheets. It can be cut, bent, punched and formed into components.
                 </p>
                 <p class="hindi">
-                    Sheet Metal धातु की पतली शीट होती है जिसे cutting,
-                    bending, punching और forming से पार्ट बनाया जाता है।
+                    Sheet Metal धातु की पतली sheet होती है जिसे cutting,
+                    bending, punching और forming से component बनाया जाता है।
                 </p>
             </div>
         </details>
@@ -1184,6 +1216,7 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What is Bend Allowance?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Bend Allowance is the length of the neutral axis material
                     required for a bend.
@@ -1206,12 +1239,13 @@ footer a:hover {
         <details class="question">
             <summary>Q3. What is Bend Deduction?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Bend Deduction is the amount subtracted from the sum
                     of outside flange dimensions to calculate the flat pattern length.
                 </p>
                 <p class="hindi">
-                    Bend Deduction वह वैल्यू है जिसे outside dimensions के
+                    Bend Deduction वह value है जिसे outside dimensions के
                     कुल जोड़ से घटाकर flat length निकाली जाती है।
                 </p>
                 <p><strong>Formula:</strong></p>
@@ -1224,13 +1258,14 @@ footer a:hover {
         <details class="question">
             <summary>Q4. What is K-Factor?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     K-Factor is the ratio of the distance from the inside
                     surface to the neutral axis divided by the material thickness.
                 </p>
                 <p class="hindi">
-                    K-Factor यह बताता है कि thickness के मुकाबले neutral
-                    axis की position कहाँ है।
+                    K-Factor यह बताता है कि material thickness के मुकाबले
+                    neutral axis की position कहाँ है।
                 </p>
                 <p><strong>Formula:</strong> K = Neutral Axis Distance / Material Thickness</p>
             </div>
@@ -1239,6 +1274,7 @@ footer a:hover {
         <details class="question">
             <summary>Q5. What is Springback?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Springback is the elastic recovery of material after
                     the bending force is removed. It causes a change in the
@@ -1254,6 +1290,7 @@ footer a:hover {
         <details class="question">
             <summary>Q6. What are common sheet metal defects?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <ul>
                     <li>Cracks</li>
                     <li>Wrinkles</li>
@@ -1274,6 +1311,7 @@ footer a:hover {
         <details class="question">
             <summary>Q7. What is the difference between Punch and Die?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     The punch is the tool that applies force to the sheet,
                     while the die supports or receives the material and
@@ -1289,6 +1327,7 @@ footer a:hover {
         <details class="question">
             <summary>Q8. What is Bumping in Sheet Metal?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Bumping is a forming method in which a large radius
                     or curved profile is produced through a series of
@@ -1304,6 +1343,7 @@ footer a:hover {
         <details class="question">
             <summary>Q9. What will you do if a sheet metal dimension is out of tolerance?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     First, I will verify the measurement and drawing revision.
                     Then I will identify the affected quantity, inform the
@@ -1312,7 +1352,7 @@ footer a:hover {
                 </p>
                 <p class="hindi">
                     पहले measurement और drawing revision verify करूँगा।
-                    फिर affected parts अलग करूँगा, संबंधित टीम को बताऊँगा
+                    फिर affected parts अलग करूँगा, संबंधित team को बताऊँगा
                     और root cause तथा corrective action में मदद करूँगा।
                 </p>
             </div>
@@ -1326,6 +1366,7 @@ footer a:hover {
         <details class="question">
             <summary>Q1. What will you do if production sends a rejected part?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I will verify the defect, check the drawing and inspection
                     criteria, identify the affected parts, communicate with
@@ -1334,8 +1375,8 @@ footer a:hover {
                 </p>
                 <p class="hindi">
                     मैं पहले defect verify करूँगा, drawing और inspection
-                    criteria चेक करूँगा, affected parts को identify करके
-                    production को जानकारी दूँगा और corrective action करवाऊँगा।
+                    criteria check करूँगा, affected parts अलग करूँगा और
+                    production को जानकारी देकर corrective action करवाऊँगा।
                 </p>
             </div>
         </details>
@@ -1343,6 +1384,7 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What will you do if two measuring instruments show different readings?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I will check the calibration status, zero setting,
                     measurement method, contact points and instrument condition.
@@ -1350,9 +1392,9 @@ footer a:hover {
                     calibrated reference instrument.
                 </p>
                 <p class="hindi">
-                    दोनों इंस्ट्रूमेंट का calibration, zero setting, measuring
-                    method और condition चेक करूँगा। जरूरत होने पर calibrated
-                    reference instrument से verify करूँगा।
+                    दोनों instruments का calibration, zero setting,
+                    measuring method और condition check करूँगा। जरूरत होने
+                    पर calibrated reference instrument से verify करूँगा।
                 </p>
             </div>
         </details>
@@ -1360,6 +1402,7 @@ footer a:hover {
         <details class="question">
             <summary>Q3. What will you do if a customer raises a quality complaint?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I will understand the complaint, verify the issue,
                     identify affected stock and dispatches, take containment
@@ -1377,15 +1420,16 @@ footer a:hover {
         <details class="question">
             <summary>Q4. How do you ensure that a product meets drawing requirements?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I check the latest drawing revision, dimensions,
                     tolerances, GD&amp;T requirements, material specifications
                     and applicable inspection criteria using suitable calibrated instruments.
                 </p>
                 <p class="hindi">
-                    Latest drawing revision, dimensions, tolerance, GD&T,
+                    Latest drawing revision, dimensions, tolerance, GD&amp;T,
                     material specification और inspection criteria के अनुसार
-                    calibrated instruments से पार्ट चेक करता हूँ।
+                    calibrated instruments से part check करता हूँ।
                 </p>
             </div>
         </details>
@@ -1398,6 +1442,7 @@ footer a:hover {
         <details class="question">
             <summary>Q1. What are your strengths?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     My strengths are that I am a quick learner, responsible,
                     sincere and willing to improve my technical knowledge.
@@ -1413,13 +1458,14 @@ footer a:hover {
         <details class="question">
             <summary>Q2. What is your weakness?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Sometimes I trust people easily. I am improving by
                     verifying information and making decisions based on facts.
                 </p>
                 <p class="hindi">
                     कभी-कभी मैं लोगों पर जल्दी भरोसा कर लेता हूँ।
-                    अब मैं जानकारी verify करके और तथ्यों के आधार पर निर्णय लेने
+                    अब मैं जानकारी verify करके और facts के आधार पर निर्णय लेने
                     की आदत सुधार रहा हूँ।
                 </p>
             </div>
@@ -1428,6 +1474,7 @@ footer a:hover {
         <details class="question">
             <summary>Q3. Why should we hire you?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I have practical experience in quality inspection and
                     sheet metal manufacturing. I understand the importance
@@ -1446,13 +1493,14 @@ footer a:hover {
         <details class="question">
             <summary>Q4. Why do you want to change your job?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     I am looking for better learning opportunities,
                     professional growth and the chance to take on more
                     responsibilities in Quality Engineering.
                 </p>
                 <p class="hindi">
-                    मैं बेहतर learning opportunity, career growth और
+                    मैं बेहतर learning opportunities, career growth और
                     Quality Engineering में ज्यादा जिम्मेदारी के अवसर की तलाश में हूँ।
                 </p>
             </div>
@@ -1461,6 +1509,7 @@ footer a:hover {
         <details class="question">
             <summary>Q5. Where do you see yourself in five years?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     In five years, I want to become a skilled Quality
                     Engineer with strong technical knowledge and the ability
@@ -1476,6 +1525,7 @@ footer a:hover {
         <details class="question">
             <summary>Q6. What are your hobbies?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     My hobby is learning new things and improving my knowledge.
                 </p>
@@ -1488,6 +1538,7 @@ footer a:hover {
         <details class="question">
             <summary>Q7. Are you comfortable working in shifts?</summary>
             <div class="answer">
+                <p class="answer-label">Answer (English)</p>
                 <p class="english-answer">
                     Yes, I understand that manufacturing operations may
                     require shift work. I am comfortable working according
@@ -1506,7 +1557,7 @@ footer a:hover {
         <h2>9. Interview Preparation Checklist</h2>
 
         <p class="section-intro">
-            Use this checklist to track your preparation.
+            Use this checklist to track your interview preparation.
         </p>
 
         <ul class="checklist">
@@ -1523,9 +1574,10 @@ footer a:hover {
         </ul>
     </section>
 
-    <!-- FINAL NOTE -->
+    <!-- INTERVIEW TIPS -->
     <section class="section">
-        <h2>Important Interview Tips</h2>
+        <h2>10. Important Interview Tips</h2>
+
         <ul>
             <li>Read the job description before attending the interview.</li>
             <li>Understand your current work and responsibilities clearly.</li>
@@ -1537,8 +1589,7 @@ footer a:hover {
 
         <p class="hindi" style="margin-top:15px;">
             इंटरव्यू में वही जवाब दें जिसकी आपको वास्तविक जानकारी हो।
-            Practical examples के साथ जवाब देने की कोशिश करें और
-            आत्मविश्वास बनाए रखें।
+            Practical examples के साथ जवाब देने की कोशिश करें और आत्मविश्वास बनाए रखें।
         </p>
     </section>
 
@@ -1569,7 +1620,7 @@ footer a:hover {
         <div>
             <h3>Interview Preparation</h3>
             <div class="footer-links">
-                <a href="#top" onclick="window.scrollTo(0,0); return false;">Back to Top</a>
+                <a href="#top">Back to Top</a>
                 <a href="index.html">Explore MechQTools</a>
             </div>
         </div>
@@ -1582,21 +1633,24 @@ footer a:hover {
 </footer>
 
 <script>
-/* INTERVIEW QUESTION SEARCH */
+/* SEARCH INTERVIEW QUESTIONS */
 const searchInput = document.getElementById("questionSearch");
 const sections = document.querySelectorAll(".interview-section");
 const noResult = document.getElementById("noResult");
 
 if (searchInput) {
     searchInput.addEventListener("input", function () {
+
         const searchText = this.value.toLowerCase().trim();
         let totalMatches = 0;
 
         sections.forEach(section => {
+
             const questions = section.querySelectorAll(".question");
             let sectionMatches = 0;
 
             questions.forEach(question => {
+
                 const questionText = question.textContent.toLowerCase();
                 const matched = questionText.includes(searchText);
 
