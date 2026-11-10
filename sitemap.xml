@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
@@ -10,7 +11,9 @@
   <url><loc>https://amary1699-boop.github.io/MechQTools/8d-problem-solving-tool.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/bend-allowance-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/bend-deduction-calculator.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/bend-line-position-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/bolt-torque-calculator.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/bumping-technology-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/calibration-due-date-tracker.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/capa-generator-tool.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/control-plan-tool.html</loc></url>
@@ -22,12 +25,14 @@
   <url><loc>https://amary1699-boop.github.io/MechQTools/fishbone-analysis-tool.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/fmea-tool.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/gauge-rr-calculator.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/gdt-basics-guide.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/gdt-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/hole-shaft-tolerance-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/incoming-material-inspection-register.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/inspection-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/inspection-checklist-generator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/inspection-report-template.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/manufacturing-process-knowledge.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/material-weight-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/mtc-tracker.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/ncr-generator-tool.html</loc></url>
@@ -37,8 +42,10 @@
   <url><loc>https://amary1699-boop.github.io/MechQTools/press-force-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/professional-engineering-template.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/quality-audit-checklist.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/quality-engineer-interview.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/quality-tools.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/rejection-rework-tracker.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/sheet-metal-basics-guide.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/sheet-metal-blank-size-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/sheet-metal-development.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/sop-generator-tool.html</loc></url>
@@ -48,6 +55,7 @@
   <url><loc>https://amary1699-boop.github.io/MechQTools/tap-drill-size-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/thread-depth-calculator.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/tolerance-calculator.html</loc></url>
+  <url><loc>https://amary1699-boop.github.io/MechQTools/welding-inspection-report-template.html</loc></url>
   <url><loc>https://amary1699-boop.github.io/MechQTools/work-instruction-tool.html</loc></url>
 
 </urlset>
